@@ -1,0 +1,43 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "men.doku.donation",
+      "nativeLanguage": "in"
+    },
+    "jhipsterVersion": "6.8.0",
+    "applicationType": "monolith",
+    "baseName": "donation",
+    "packageName": "men.doku.donation",
+    "packageFolder": "men/doku/donation",
+    "serverPort": "8080",
+    "authenticationType": "jwt",
+    "cacheProvider": "ehcache",
+    "enableHibernateCache": true,
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "h2Disk",
+    "prodDatabaseType": "postgresql",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": false,
+    "buildTool": "maven",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "Y2Q1YmNmZDYzNDA0ZWM5NDI4OGMyNTk4YmIxMjRjNWU5YWM0NDRkZTEzZDcxYjdhMDRjOGVjNzNkNzYwODQ5MzhmNTFlYjI2N2I0OWRlYzg1OWNmOTg5NzZiZDAzYjMyMzVkNWNjZjFiZGJiNWZhZjVhMmQ5OGIwYWMzZGE2OGE=",
+    "embeddableLaunchScript": false,
+    "useSass": true,
+    "clientPackageManager": "npm",
+    "clientFramework": "angularX",
+    "clientTheme": "none",
+    "clientThemeVariant": "",
+    "creationTimestamp": 1587225290155,
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": true,
+    "nativeLanguage": "in",
+    "languages": ["in"],
+    "blueprints": []
+  }
+}
