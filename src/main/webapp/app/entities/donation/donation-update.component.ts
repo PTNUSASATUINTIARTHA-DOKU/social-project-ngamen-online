@@ -4,8 +4,6 @@ import { HttpResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import * as moment from 'moment';
-import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 
 import { IDonation, Donation } from 'app/shared/model/donation.model';
 import { DonationService } from './donation.service';
@@ -30,8 +28,6 @@ export class DonationUpdateComponent implements OnInit {
     bankAccountNumber: [null, [Validators.maxLength(15)]],
     bankAccountName: [null, [Validators.maxLength(100)]],
     bankName: [null, [Validators.maxLength(100)]],
-    lastUpdatedBy: [null, [Validators.maxLength(100)]],
-    lastUpdatedAt: [],
     status: [],
     organizer: []
   });
@@ -45,11 +41,6 @@ export class DonationUpdateComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ donation }) => {
-      if (!donation.id) {
-        const today = moment().startOf('day');
-        donation.lastUpdatedAt = today;
-      }
-
       this.updateForm(donation);
 
       this.organizerService.query().subscribe((res: HttpResponse<IOrganizer[]>) => (this.organizers = res.body || []));
@@ -67,8 +58,6 @@ export class DonationUpdateComponent implements OnInit {
       bankAccountNumber: donation.bankAccountNumber,
       bankAccountName: donation.bankAccountName,
       bankName: donation.bankName,
-      lastUpdatedBy: donation.lastUpdatedBy,
-      lastUpdatedAt: donation.lastUpdatedAt ? donation.lastUpdatedAt.format(DATE_TIME_FORMAT) : null,
       status: donation.status,
       organizer: donation.organizer
     });
@@ -100,10 +89,6 @@ export class DonationUpdateComponent implements OnInit {
       bankAccountNumber: this.editForm.get(['bankAccountNumber'])!.value,
       bankAccountName: this.editForm.get(['bankAccountName'])!.value,
       bankName: this.editForm.get(['bankName'])!.value,
-      lastUpdatedBy: this.editForm.get(['lastUpdatedBy'])!.value,
-      lastUpdatedAt: this.editForm.get(['lastUpdatedAt'])!.value
-        ? moment(this.editForm.get(['lastUpdatedAt'])!.value, DATE_TIME_FORMAT)
-        : undefined,
       status: this.editForm.get(['status'])!.value,
       organizer: this.editForm.get(['organizer'])!.value
     };
