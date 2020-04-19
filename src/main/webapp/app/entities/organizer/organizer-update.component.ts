@@ -28,9 +28,9 @@ export class OrganizerUpdateComponent implements OnInit {
     bankName: [null, [Validators.maxLength(100)]],
     mdr: [null, [Validators.max(100)]],
     sharing: [null, [Validators.max(100)]],
-    lastUpdatedBy: [null, [Validators.required, Validators.maxLength(100)]],
-    lastUpdatedAt: [null, [Validators.required]],
-    status: [null, [Validators.required]]
+    lastUpdatedBy: [null, [Validators.maxLength(100)]],
+    lastUpdatedAt: [],
+    status: []
   });
 
   constructor(protected organizerService: OrganizerService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}

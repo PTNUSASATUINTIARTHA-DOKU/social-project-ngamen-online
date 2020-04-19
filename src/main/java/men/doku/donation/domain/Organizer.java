@@ -67,18 +67,15 @@ public class Organizer implements Serializable {
     @Column(name = "sharing")
     private Float sharing;
 
-    @NotNull
     @Size(max = 100)
-    @Column(name = "last_updated_by", length = 100, nullable = false)
+    @Column(name = "last_updated_by", length = 100)
     private String lastUpdatedBy;
 
-    @NotNull
-    @Column(name = "last_updated_at", nullable = false)
+    @Column(name = "last_updated_at")
     private Instant lastUpdatedAt;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false)
+    @Column(name = "status")
     private IsActiveStatus status;
 
     @OneToMany(mappedBy = "organizer")

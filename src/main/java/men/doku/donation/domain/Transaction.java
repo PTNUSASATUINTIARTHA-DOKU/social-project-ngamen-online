@@ -51,18 +51,15 @@ public class Transaction implements Serializable {
     @Column(name = "device_information", length = 1000)
     private String deviceInformation;
 
-    @NotNull
     @Size(max = 100)
-    @Column(name = "last_updated_by", length = 100, nullable = false)
+    @Column(name = "last_updated_by", length = 100)
     private String lastUpdatedBy;
 
-    @NotNull
-    @Column(name = "last_updated_at", nullable = false)
+    @Column(name = "last_updated_at")
     private Instant lastUpdatedAt;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false)
+    @Column(name = "status")
     private TransactionStatus status;
 
     @ManyToOne

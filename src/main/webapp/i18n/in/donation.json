@@ -20,7 +20,7 @@
       "description": "Description",
       "url": "Url",
       "imageUrl": "Image Url",
-      "paymentUrl": "Payment Url",
+      "paymentSlug": "Payment Slug",
       "bankAccountNumber": "Bank Account Number",
       "bankAccountName": "Bank Account Name",
       "bankName": "Bank Name",

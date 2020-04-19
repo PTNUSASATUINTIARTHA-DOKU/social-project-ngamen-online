@@ -11,9 +11,9 @@ entity Organizer {
     bankName String maxlength(100)
     mdr Float max(100)
     sharing Float max(100)
-    lastUpdatedBy String maxlength(100) required
-    lastUpdatedAt Instant required
-    status IsActiveStatus required
+    lastUpdatedBy String maxlength(100)
+    lastUpdatedAt Instant
+    status IsActiveStatus
 }
 
 /**
@@ -25,13 +25,13 @@ entity Donation {
     description String maxlength(2000)
     url String maxlength(100)
     imageUrl String maxlength(100)
-    paymentUrl String maxlength(100) required unique
+    paymentSlug String maxlength(100)
     bankAccountNumber String maxlength(15)
     bankAccountName String maxlength(100)
     bankName String maxlength(100)
-    lastUpdatedBy String maxlength(100) required
-    lastUpdatedAt Instant required
-    status IsActiveStatus required
+    lastUpdatedBy String maxlength(100)
+    lastUpdatedAt Instant
+    status IsActiveStatus
 }
 
 /**
@@ -44,17 +44,17 @@ entity Transaction {
     basket String maxlength(1024)
     ovoIdMasked String maxlength(15)
     deviceInformation String maxlength(1000)
-    lastUpdatedBy String maxlength(100) required
-    lastUpdatedAt Instant required
-    status TransactionStatus required
+    lastUpdatedBy String maxlength(100)
+    lastUpdatedAt Instant
+    status TransactionStatus
 }
 
 enum IsActiveStatus {
-    ACTIVE, DISABLED, DELETED
+    ACTIVE, DISABLED
 }
 
 enum TransactionStatus {
-	INITIATE, PROCESS, SUCCESS, FAILED, DELETED 
+	INITIATE, PROCESS, SUCCESS, FAILED 
 }
 
 relationship OneToMany {
@@ -62,10 +62,11 @@ relationship OneToMany {
     Donation to Transaction{donation}
 }
 
+//readOnly Transaction
 paginate Organizer, Donation with infinite-scroll
 paginate Transaction with pagination
 
-service all with serviceImpl //except Organizer
+service all with serviceImpl
 
 //relationship ManyToOne {
 //}

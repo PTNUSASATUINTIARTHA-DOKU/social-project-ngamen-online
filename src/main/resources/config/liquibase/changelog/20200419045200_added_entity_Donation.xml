@@ -27,8 +27,8 @@
             <column name="image_url" type="varchar(100)">
                 <constraints nullable="true" />
             </column>
-            <column name="payment_url" type="varchar(100)">
-                <constraints nullable="false" unique="true" uniqueConstraintName="ux_donation_payment_url" />
+            <column name="payment_slug" type="varchar(100)">
+                <constraints nullable="true" />
             </column>
             <column name="bank_account_number" type="varchar(15)">
                 <constraints nullable="true" />
@@ -40,13 +40,13 @@
                 <constraints nullable="true" />
             </column>
             <column name="last_updated_by" type="varchar(100)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
             <column name="last_updated_at" type="datetime">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
             <column name="status" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
             <column name="organizer_id" type="bigint">
                 <constraints nullable="true" />
@@ -79,7 +79,7 @@
             <column name="description" type="string"/>
             <column name="url" type="string"/>
             <column name="image_url" type="string"/>
-            <column name="payment_url" type="string"/>
+            <column name="payment_slug" type="string"/>
             <column name="bank_account_number" type="string"/>
             <column name="bank_account_name" type="string"/>
             <column name="bank_name" type="string"/>

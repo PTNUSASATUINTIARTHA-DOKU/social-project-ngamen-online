@@ -47,25 +47,18 @@
             "fieldName": "lastUpdatedBy",
             "fieldType": "String",
             "fieldValidateRules": [
-                "maxlength",
-                "required"
+                "maxlength"
             ],
             "fieldValidateRulesMaxlength": "100"
         },
         {
             "fieldName": "lastUpdatedAt",
-            "fieldType": "Instant",
-            "fieldValidateRules": [
-                "required"
-            ]
+            "fieldType": "Instant"
         },
         {
             "fieldName": "status",
             "fieldType": "TransactionStatus",
-            "fieldValues": "INITIATE,PROCESS,SUCCESS,FAILED,DELETED",
-            "fieldValidateRules": [
-                "required"
-            ]
+            "fieldValues": "INITIATE,PROCESS,SUCCESS,FAILED"
         }
     ],
     "relationships": [

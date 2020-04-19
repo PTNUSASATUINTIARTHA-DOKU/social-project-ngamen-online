@@ -36,12 +36,10 @@
             "fieldValidateRulesMaxlength": "100"
         },
         {
-            "fieldName": "paymentUrl",
+            "fieldName": "paymentSlug",
             "fieldType": "String",
             "fieldValidateRules": [
-                "maxlength",
-                "required",
-                "unique"
+                "maxlength"
             ],
             "fieldValidateRulesMaxlength": "100"
         },
@@ -73,25 +71,18 @@
             "fieldName": "lastUpdatedBy",
             "fieldType": "String",
             "fieldValidateRules": [
-                "maxlength",
-                "required"
+                "maxlength"
             ],
             "fieldValidateRulesMaxlength": "100"
         },
         {
             "fieldName": "lastUpdatedAt",
-            "fieldType": "Instant",
-            "fieldValidateRules": [
-                "required"
-            ]
+            "fieldType": "Instant"
         },
         {
             "fieldName": "status",
             "fieldType": "IsActiveStatus",
-            "fieldValues": "ACTIVE,DISABLED,DELETED",
-            "fieldValidateRules": [
-                "required"
-            ]
+            "fieldValues": "ACTIVE,DISABLED"
         }
     ],
     "relationships": [

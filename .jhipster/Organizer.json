@@ -72,25 +72,18 @@
             "fieldName": "lastUpdatedBy",
             "fieldType": "String",
             "fieldValidateRules": [
-                "maxlength",
-                "required"
+                "maxlength"
             ],
             "fieldValidateRulesMaxlength": "100"
         },
         {
             "fieldName": "lastUpdatedAt",
-            "fieldType": "Instant",
-            "fieldValidateRules": [
-                "required"
-            ]
+            "fieldType": "Instant"
         },
         {
             "fieldName": "status",
             "fieldType": "IsActiveStatus",
-            "fieldValues": "ACTIVE,DISABLED,DELETED",
-            "fieldValidateRules": [
-                "required"
-            ]
+            "fieldValues": "ACTIVE,DISABLED"
         }
     ],
     "relationships": [

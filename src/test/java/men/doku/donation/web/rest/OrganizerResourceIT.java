@@ -215,60 +215,6 @@ public class OrganizerResourceIT {
 
     @Test
     @Transactional
-    public void checkLastUpdatedByIsRequired() throws Exception {
-        int databaseSizeBeforeTest = organizerRepository.findAll().size();
-        // set the field null
-        organizer.setLastUpdatedBy(null);
-
-        // Create the Organizer, which fails.
-
-        restOrganizerMockMvc.perform(post("/api/organizers")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(organizer)))
-            .andExpect(status().isBadRequest());
-
-        List<Organizer> organizerList = organizerRepository.findAll();
-        assertThat(organizerList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkLastUpdatedAtIsRequired() throws Exception {
-        int databaseSizeBeforeTest = organizerRepository.findAll().size();
-        // set the field null
-        organizer.setLastUpdatedAt(null);
-
-        // Create the Organizer, which fails.
-
-        restOrganizerMockMvc.perform(post("/api/organizers")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(organizer)))
-            .andExpect(status().isBadRequest());
-
-        List<Organizer> organizerList = organizerRepository.findAll();
-        assertThat(organizerList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkStatusIsRequired() throws Exception {
-        int databaseSizeBeforeTest = organizerRepository.findAll().size();
-        // set the field null
-        organizer.setStatus(null);
-
-        // Create the Organizer, which fails.
-
-        restOrganizerMockMvc.perform(post("/api/organizers")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(organizer)))
-            .andExpect(status().isBadRequest());
-
-        List<Organizer> organizerList = organizerRepository.findAll();
-        assertThat(organizerList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void getAllOrganizers() throws Exception {
         // Initialize the database
         organizerRepository.saveAndFlush(organizer);

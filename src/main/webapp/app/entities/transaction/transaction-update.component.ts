@@ -27,9 +27,9 @@ export class TransactionUpdateComponent implements OnInit {
     basket: [null, [Validators.maxLength(1024)]],
     ovoIdMasked: [null, [Validators.maxLength(15)]],
     deviceInformation: [null, [Validators.maxLength(1000)]],
-    lastUpdatedBy: [null, [Validators.required, Validators.maxLength(100)]],
-    lastUpdatedAt: [null, [Validators.required]],
-    status: [null, [Validators.required]],
+    lastUpdatedBy: [null, [Validators.maxLength(100)]],
+    lastUpdatedAt: [],
+    status: [],
     donation: []
   });
 

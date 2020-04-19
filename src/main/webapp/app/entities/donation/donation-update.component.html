@@ -64,16 +64,12 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="donationApp.donation.paymentUrl" for="field_paymentUrl">Payment Url</label>
-                    <input type="text" class="form-control" name="paymentUrl" id="field_paymentUrl"
-                           formControlName="paymentUrl"/>
-                    <div *ngIf="editForm.get('paymentUrl')!.invalid && (editForm.get('paymentUrl')!.dirty || editForm.get('paymentUrl')!.touched)">
+                    <label class="form-control-label" jhiTranslate="donationApp.donation.paymentSlug" for="field_paymentSlug">Payment Slug</label>
+                    <input type="text" class="form-control" name="paymentSlug" id="field_paymentSlug"
+                           formControlName="paymentSlug"/>
+                    <div *ngIf="editForm.get('paymentSlug')!.invalid && (editForm.get('paymentSlug')!.dirty || editForm.get('paymentSlug')!.touched)">
                         <small class="form-text text-danger"
-                               *ngIf="editForm.get('paymentUrl')?.errors?.required" jhiTranslate="entity.validation.required">
-                        This field is required.
-                        </small>
-                        <small class="form-text text-danger"
-                               *ngIf="editForm.get('paymentUrl')?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 100 }">
+                               *ngIf="editForm.get('paymentSlug')?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 100 }">
                         This field cannot be longer than 100 characters.
                         </small>
                     </div>
@@ -121,10 +117,6 @@
                            formControlName="lastUpdatedBy"/>
                     <div *ngIf="editForm.get('lastUpdatedBy')!.invalid && (editForm.get('lastUpdatedBy')!.dirty || editForm.get('lastUpdatedBy')!.touched)">
                         <small class="form-text text-danger"
-                               *ngIf="editForm.get('lastUpdatedBy')?.errors?.required" jhiTranslate="entity.validation.required">
-                        This field is required.
-                        </small>
-                        <small class="form-text text-danger"
                                *ngIf="editForm.get('lastUpdatedBy')?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 100 }">
                         This field cannot be longer than 100 characters.
                         </small>
@@ -136,16 +128,6 @@
                     <div class="d-flex">
                         <input id="field_lastUpdatedAt" type="datetime-local" class="form-control" name="lastUpdatedAt" formControlName="lastUpdatedAt" placeholder="YYYY-MM-DD HH:mm"/>
                     </div>
-                    <div *ngIf="editForm.get('lastUpdatedAt')!.invalid && (editForm.get('lastUpdatedAt')!.dirty || editForm.get('lastUpdatedAt')!.touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="editForm.get('lastUpdatedAt')?.errors?.required" jhiTranslate="entity.validation.required">
-                        This field is required.
-                        </small>
-                        <small class="form-text text-danger"
-                            [hidden]="!editForm.get('lastUpdatedAt')?.errors?.ZonedDateTimelocal" jhiTranslate="entity.validation.ZonedDateTimelocal">
-                            This field should be a date and time.
-                        </small>
-                    </div>
                 </div>
 
                 <div class="form-group">
@@ -153,14 +135,7 @@
                     <select class="form-control" name="status" formControlName="status" id="field_status">
                         <option value="ACTIVE">{{ 'donationApp.IsActiveStatus.ACTIVE' | translate }}</option>
                         <option value="DISABLED">{{ 'donationApp.IsActiveStatus.DISABLED' | translate }}</option>
-                        <option value="DELETED">{{ 'donationApp.IsActiveStatus.DELETED' | translate }}</option>
                     </select>
-                    <div *ngIf="editForm.get('status')!.invalid && (editForm.get('status')!.dirty || editForm.get('status')!.touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="editForm.get('status')?.errors?.required" jhiTranslate="entity.validation.required">
-                        This field is required.
-                        </small>
-                    </div>
                 </div>
 
                 <div class="form-group">

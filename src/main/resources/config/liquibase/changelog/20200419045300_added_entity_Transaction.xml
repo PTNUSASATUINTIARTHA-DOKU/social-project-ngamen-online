@@ -31,13 +31,13 @@
                 <constraints nullable="true" />
             </column>
             <column name="last_updated_by" type="varchar(100)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
             <column name="last_updated_at" type="datetime">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
             <column name="status" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
             <column name="donation_id" type="bigint">
                 <constraints nullable="true" />

@@ -8,4 +8,5 @@ A. Everytime update database structure:
 
 B. Tools to check ESLint
   https://eslint.org/demo
-
+  for \. remove \ into .
+  for \w add \ into \\w

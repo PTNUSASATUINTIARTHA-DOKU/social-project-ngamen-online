@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -40,18 +41,19 @@ public class Donation implements Serializable {
     @Column(name = "description", length = 2000)
     private String description;
 
+    @URL
     @Size(max = 100)
     @Column(name = "url", length = 100)
     private String url;
 
+    @URL
     @Size(max = 100)
     @Column(name = "image_url", length = 100)
     private String imageUrl;
 
-    @NotNull
     @Size(max = 100)
-    @Column(name = "payment_url", length = 100, nullable = false, unique = true)
-    private String paymentUrl;
+    @Column(name = "payment_slug", length = 100)
+    private String paymentSlug;
 
     @Size(max = 15)
     @Column(name = "bank_account_number", length = 15)
@@ -65,18 +67,15 @@ public class Donation implements Serializable {
     @Column(name = "bank_name", length = 100)
     private String bankName;
 
-    @NotNull
     @Size(max = 100)
-    @Column(name = "last_updated_by", length = 100, nullable = false)
+    @Column(name = "last_updated_by", length = 100)
     private String lastUpdatedBy;
 
-    @NotNull
-    @Column(name = "last_updated_at", nullable = false)
+    @Column(name = "last_updated_at")
     private Instant lastUpdatedAt;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false)
+    @Column(name = "status")
     private IsActiveStatus status;
 
     @OneToMany(mappedBy = "donation")
@@ -148,17 +147,17 @@ public class Donation implements Serializable {
         this.imageUrl = imageUrl;
     }
 
-    public String getPaymentUrl() {
-        return paymentUrl;
+    public String getPaymentSlug() {
+        return paymentSlug;
     }
 
-    public Donation paymentUrl(String paymentUrl) {
-        this.paymentUrl = paymentUrl;
+    public Donation paymentSlug(String paymentSlug) {
+        this.paymentSlug = paymentSlug;
         return this;
     }
 
-    public void setPaymentUrl(String paymentUrl) {
-        this.paymentUrl = paymentUrl;
+    public void setPaymentSlug(String paymentSlug) {
+        this.paymentSlug = paymentSlug;
     }
 
     public String getBankAccountNumber() {
@@ -302,7 +301,7 @@ public class Donation implements Serializable {
             ", description='" + getDescription() + "'" +
             ", url='" + getUrl() + "'" +
             ", imageUrl='" + getImageUrl() + "'" +
-            ", paymentUrl='" + getPaymentUrl() + "'" +
+            ", paymentSlug='" + getPaymentSlug() + "'" +
             ", bankAccountNumber='" + getBankAccountNumber() + "'" +
             ", bankAccountName='" + getBankAccountName() + "'" +
             ", bankName='" + getBankName() + "'" +

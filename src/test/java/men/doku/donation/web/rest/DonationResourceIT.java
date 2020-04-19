@@ -46,8 +46,8 @@ public class DonationResourceIT {
     private static final String DEFAULT_IMAGE_URL = "AAAAAAAAAA";
     private static final String UPDATED_IMAGE_URL = "BBBBBBBBBB";
 
-    private static final String DEFAULT_PAYMENT_URL = "AAAAAAAAAA";
-    private static final String UPDATED_PAYMENT_URL = "BBBBBBBBBB";
+    private static final String DEFAULT_PAYMENT_SLUG = "AAAAAAAAAA";
+    private static final String UPDATED_PAYMENT_SLUG = "BBBBBBBBBB";
 
     private static final String DEFAULT_BANK_ACCOUNT_NUMBER = "AAAAAAAAAA";
     private static final String UPDATED_BANK_ACCOUNT_NUMBER = "BBBBBBBBBB";
@@ -93,7 +93,7 @@ public class DonationResourceIT {
             .description(DEFAULT_DESCRIPTION)
             .url(DEFAULT_URL)
             .imageUrl(DEFAULT_IMAGE_URL)
-            .paymentUrl(DEFAULT_PAYMENT_URL)
+            .paymentSlug(DEFAULT_PAYMENT_SLUG)
             .bankAccountNumber(DEFAULT_BANK_ACCOUNT_NUMBER)
             .bankAccountName(DEFAULT_BANK_ACCOUNT_NAME)
             .bankName(DEFAULT_BANK_NAME)
@@ -114,7 +114,7 @@ public class DonationResourceIT {
             .description(UPDATED_DESCRIPTION)
             .url(UPDATED_URL)
             .imageUrl(UPDATED_IMAGE_URL)
-            .paymentUrl(UPDATED_PAYMENT_URL)
+            .paymentSlug(UPDATED_PAYMENT_SLUG)
             .bankAccountNumber(UPDATED_BANK_ACCOUNT_NUMBER)
             .bankAccountName(UPDATED_BANK_ACCOUNT_NAME)
             .bankName(UPDATED_BANK_NAME)
@@ -148,7 +148,7 @@ public class DonationResourceIT {
         assertThat(testDonation.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
         assertThat(testDonation.getUrl()).isEqualTo(DEFAULT_URL);
         assertThat(testDonation.getImageUrl()).isEqualTo(DEFAULT_IMAGE_URL);
-        assertThat(testDonation.getPaymentUrl()).isEqualTo(DEFAULT_PAYMENT_URL);
+        assertThat(testDonation.getPaymentSlug()).isEqualTo(DEFAULT_PAYMENT_SLUG);
         assertThat(testDonation.getBankAccountNumber()).isEqualTo(DEFAULT_BANK_ACCOUNT_NUMBER);
         assertThat(testDonation.getBankAccountName()).isEqualTo(DEFAULT_BANK_ACCOUNT_NAME);
         assertThat(testDonation.getBankName()).isEqualTo(DEFAULT_BANK_NAME);
@@ -197,78 +197,6 @@ public class DonationResourceIT {
 
     @Test
     @Transactional
-    public void checkPaymentUrlIsRequired() throws Exception {
-        int databaseSizeBeforeTest = donationRepository.findAll().size();
-        // set the field null
-        donation.setPaymentUrl(null);
-
-        // Create the Donation, which fails.
-
-        restDonationMockMvc.perform(post("/api/donations")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(donation)))
-            .andExpect(status().isBadRequest());
-
-        List<Donation> donationList = donationRepository.findAll();
-        assertThat(donationList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkLastUpdatedByIsRequired() throws Exception {
-        int databaseSizeBeforeTest = donationRepository.findAll().size();
-        // set the field null
-        donation.setLastUpdatedBy(null);
-
-        // Create the Donation, which fails.
-
-        restDonationMockMvc.perform(post("/api/donations")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(donation)))
-            .andExpect(status().isBadRequest());
-
-        List<Donation> donationList = donationRepository.findAll();
-        assertThat(donationList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkLastUpdatedAtIsRequired() throws Exception {
-        int databaseSizeBeforeTest = donationRepository.findAll().size();
-        // set the field null
-        donation.setLastUpdatedAt(null);
-
-        // Create the Donation, which fails.
-
-        restDonationMockMvc.perform(post("/api/donations")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(donation)))
-            .andExpect(status().isBadRequest());
-
-        List<Donation> donationList = donationRepository.findAll();
-        assertThat(donationList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkStatusIsRequired() throws Exception {
-        int databaseSizeBeforeTest = donationRepository.findAll().size();
-        // set the field null
-        donation.setStatus(null);
-
-        // Create the Donation, which fails.
-
-        restDonationMockMvc.perform(post("/api/donations")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(donation)))
-            .andExpect(status().isBadRequest());
-
-        List<Donation> donationList = donationRepository.findAll();
-        assertThat(donationList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void getAllDonations() throws Exception {
         // Initialize the database
         donationRepository.saveAndFlush(donation);
@@ -282,7 +210,7 @@ public class DonationResourceIT {
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].url").value(hasItem(DEFAULT_URL)))
             .andExpect(jsonPath("$.[*].imageUrl").value(hasItem(DEFAULT_IMAGE_URL)))
-            .andExpect(jsonPath("$.[*].paymentUrl").value(hasItem(DEFAULT_PAYMENT_URL)))
+            .andExpect(jsonPath("$.[*].paymentSlug").value(hasItem(DEFAULT_PAYMENT_SLUG)))
             .andExpect(jsonPath("$.[*].bankAccountNumber").value(hasItem(DEFAULT_BANK_ACCOUNT_NUMBER)))
             .andExpect(jsonPath("$.[*].bankAccountName").value(hasItem(DEFAULT_BANK_ACCOUNT_NAME)))
             .andExpect(jsonPath("$.[*].bankName").value(hasItem(DEFAULT_BANK_NAME)))
@@ -306,7 +234,7 @@ public class DonationResourceIT {
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
             .andExpect(jsonPath("$.url").value(DEFAULT_URL))
             .andExpect(jsonPath("$.imageUrl").value(DEFAULT_IMAGE_URL))
-            .andExpect(jsonPath("$.paymentUrl").value(DEFAULT_PAYMENT_URL))
+            .andExpect(jsonPath("$.paymentSlug").value(DEFAULT_PAYMENT_SLUG))
             .andExpect(jsonPath("$.bankAccountNumber").value(DEFAULT_BANK_ACCOUNT_NUMBER))
             .andExpect(jsonPath("$.bankAccountName").value(DEFAULT_BANK_ACCOUNT_NAME))
             .andExpect(jsonPath("$.bankName").value(DEFAULT_BANK_NAME))
@@ -340,7 +268,7 @@ public class DonationResourceIT {
             .description(UPDATED_DESCRIPTION)
             .url(UPDATED_URL)
             .imageUrl(UPDATED_IMAGE_URL)
-            .paymentUrl(UPDATED_PAYMENT_URL)
+            .paymentSlug(UPDATED_PAYMENT_SLUG)
             .bankAccountNumber(UPDATED_BANK_ACCOUNT_NUMBER)
             .bankAccountName(UPDATED_BANK_ACCOUNT_NAME)
             .bankName(UPDATED_BANK_NAME)
@@ -361,7 +289,7 @@ public class DonationResourceIT {
         assertThat(testDonation.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
         assertThat(testDonation.getUrl()).isEqualTo(UPDATED_URL);
         assertThat(testDonation.getImageUrl()).isEqualTo(UPDATED_IMAGE_URL);
-        assertThat(testDonation.getPaymentUrl()).isEqualTo(UPDATED_PAYMENT_URL);
+        assertThat(testDonation.getPaymentSlug()).isEqualTo(UPDATED_PAYMENT_SLUG);
         assertThat(testDonation.getBankAccountNumber()).isEqualTo(UPDATED_BANK_ACCOUNT_NUMBER);
         assertThat(testDonation.getBankAccountName()).isEqualTo(UPDATED_BANK_ACCOUNT_NAME);
         assertThat(testDonation.getBankName()).isEqualTo(UPDATED_BANK_NAME);
