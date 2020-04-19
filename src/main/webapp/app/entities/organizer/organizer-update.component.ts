@@ -9,6 +9,7 @@ import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 
 import { IOrganizer, Organizer } from 'app/shared/model/organizer.model';
 import { OrganizerService } from './organizer.service';
+import { PATTERN_URL, PATTERN_EMAIL } from 'app/shared/constants/pattern.constants';
 
 @Component({
   selector: 'jhi-organizer-update',
@@ -20,8 +21,8 @@ export class OrganizerUpdateComponent implements OnInit {
   editForm = this.fb.group({
     id: [],
     name: [null, [Validators.required, Validators.maxLength(100)]],
-    url: [null, [Validators.maxLength(100)]],
-    email: [null, [Validators.required, Validators.maxLength(100)]],
+    url: [null, [Validators.maxLength(100), Validators.pattern(PATTERN_URL)]],
+    email: [null, [Validators.required, Validators.maxLength(100), Validators.pattern(PATTERN_EMAIL)]],
     bankAccountNumber: [null, [Validators.maxLength(15)]],
     bankAccountName: [null, [Validators.maxLength(100)]],
     bankName: [null, [Validators.maxLength(100)]],

@@ -120,7 +120,9 @@
       "maxbytes": "Inputan ini tidak boleh lebih dari {{ max }} bytes.",
       "pattern": "Inputan ini harus mengikuti pola {{ pattern }}.",
       "number": "Inputan ini harus angka.",
-      "datetimelocal": "Inputan ini harus tanggal dan jam."
+      "datetimelocal": "Inputan ini harus tanggal dan jam.",
+      "email": "Inputan ini harus berupa alamat email yang valid",
+      "url": "Inputan ini harus berupa url yang valid"
     }
   },
   "error": {

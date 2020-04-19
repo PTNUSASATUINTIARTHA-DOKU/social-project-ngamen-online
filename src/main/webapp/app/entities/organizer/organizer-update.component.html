@@ -36,6 +36,10 @@
                                *ngIf="editForm.get('url')?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 100 }">
                         This field cannot be longer than 100 characters.
                         </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('url')?.errors?.pattern" jhiTranslate="entity.validation.url">
+                        This field must in URL format.
+                        </small>
                     </div>
                 </div>
 
@@ -52,6 +56,9 @@
                                *ngIf="editForm.get('email')?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 100 }">
                         This field cannot be longer than 100 characters.
                         </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('email')?.errors?.pattern" jhiTranslate="entity.validation.email">
+                        This field must in email format.
                     </div>
                 </div>
 

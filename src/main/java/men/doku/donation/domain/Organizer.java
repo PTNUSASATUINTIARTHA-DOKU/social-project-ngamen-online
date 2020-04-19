@@ -3,12 +3,12 @@ package men.doku.donation.domain;
 import io.swagger.annotations.ApiModel;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
-import java.util.Objects;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
@@ -36,10 +36,12 @@ public class Organizer implements Serializable {
     @Column(name = "name", length = 100, nullable = false, unique = true)
     private String name;
 
+    @URL
     @Size(max = 100)
     @Column(name = "url", length = 100)
     private String url;
 
+    @Email
     @NotNull
     @Size(max = 100)
     @Column(name = "email", length = 100, nullable = false)
