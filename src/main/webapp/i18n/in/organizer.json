@@ -2,32 +2,32 @@
   "donationApp": {
     "organizer": {
       "home": {
-        "title": "Organizers",
-        "createLabel": "Buat Organizer baru",
-        "createOrEditLabel": "Buat atau edit Organizer",
-        "notFound": "No Organizers found"
+        "title": "Yayasan",
+        "createLabel": "Buat Yayasan baru",
+        "createOrEditLabel": "Daftar / Ubah Yayasan",
+        "notFound": "Tidak ada Yayasan yang ditemukan"
       },
-      "created": "Organizer dengan id {{ param }} telah dibuat",
-      "updated": "Organizer dengan id {{ param }} telah diperbaharui",
-      "deleted": "Organizer dengan id {{ param }} telah dihapus",
+      "created": "Yayasan {{ param }} telah dibuat",
+      "updated": "Yayasan {{ param }} telah diperbaharui",
+      "deleted": "Yayasan {{ param }} telah dihapus",
       "delete": {
-        "question": "Apakah anda yakin ingin menghapus Organizer {{ id }}?"
+        "question": "Apakah anda yakin ingin menghapus Yayasan {{ id }}?"
       },
       "detail": {
-        "title": "Organizer"
+        "title": "Yayasan"
       },
-      "name": "Name",
-      "url": "Url",
+      "name": "Nama",
+      "url": "URL",
       "email": "Email",
-      "bankAccountNumber": "Bank Account Number",
-      "bankAccountName": "Bank Account Name",
-      "bankName": "Bank Name",
-      "mdr": "Mdr",
-      "sharing": "Sharing",
+      "bankAccountNumber": "Nomor rekening Bank",
+      "bankAccountName": "Nama rekening Bank",
+      "bankName": "Nama Bank",
+      "mdr": "MDR Pembayaran (%)",
+      "sharing": "Pembagian Amal (%)",
       "lastUpdatedBy": "Last Updated By",
       "lastUpdatedAt": "Last Updated At",
       "status": "Status",
-      "donation": "Donation"
+      "donation": "Donasi"
     }
   }
 }

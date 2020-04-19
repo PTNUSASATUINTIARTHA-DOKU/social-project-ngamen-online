@@ -99,7 +99,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="donationApp.organizer.mdr" for="field_mdr">Mdr</label>
+                    <label class="form-control-label" jhiTranslate="donationApp.organizer.mdr" for="field_mdr">MDR Payment (%)</label>
                     <input type="number" class="form-control" name="mdr" id="field_mdr"
                            formControlName="mdr"/>
                     <div *ngIf="editForm.get('mdr')!.invalid && (editForm.get('mdr')!.dirty || editForm.get('mdr')!.touched)">
@@ -115,7 +115,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="donationApp.organizer.sharing" for="field_sharing">Sharing</label>
+                    <label class="form-control-label" jhiTranslate="donationApp.organizer.sharing" for="field_sharing">Sharing for Charity (%)</label>
                     <input type="number" class="form-control" name="sharing" id="field_sharing"
                            formControlName="sharing"/>
                     <div *ngIf="editForm.get('sharing')!.invalid && (editForm.get('sharing')!.dirty || editForm.get('sharing')!.touched)">
