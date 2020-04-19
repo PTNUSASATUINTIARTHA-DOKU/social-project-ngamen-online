@@ -54,7 +54,7 @@
                     <td jhiTranslate="{{ 'donationApp.IsActiveStatus.' + donation.status }}">{{ donation.status }}</td>
                     <td>
                         <div *ngIf="donation.organizer">
-                            <a [routerLink]="['/organizer', donation.organizer?.id, 'view']" >{{ donation.organizer?.id }}</a>
+                            <a [routerLink]="['/organizer', donation.organizer?.id, 'view']" >{{ donation.organizer?.name }}</a>
                         </div>
                     </td>
                     <td class="text-right">
