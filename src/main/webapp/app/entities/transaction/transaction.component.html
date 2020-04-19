@@ -1,0 +1,97 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="donationApp.transaction.home.title">Transactions</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-transaction" [routerLink]="['/transaction/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span  jhiTranslate="donationApp.transaction.home.createLabel">
+            Create a new Transaction
+            </span>
+        </button>
+    </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="transactions?.length === 0">
+        <span jhiTranslate="donationApp.transaction.home.notFound">No transactions found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="transactions?.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+                    <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="invoiceNumber"><span jhiTranslate="donationApp.transaction.invoiceNumber">Invoice Number</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="sessionId"><span jhiTranslate="donationApp.transaction.sessionId">Session Id</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="basket"><span jhiTranslate="donationApp.transaction.basket">Basket</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="ovoIdMasked"><span jhiTranslate="donationApp.transaction.ovoIdMasked">Ovo Id Masked</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="deviceInformation"><span jhiTranslate="donationApp.transaction.deviceInformation">Device Information</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="lastUpdatedBy"><span jhiTranslate="donationApp.transaction.lastUpdatedBy">Last Updated By</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="lastUpdatedAt"><span jhiTranslate="donationApp.transaction.lastUpdatedAt">Last Updated At</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="status"><span jhiTranslate="donationApp.transaction.status">Status</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="donation.id"><span jhiTranslate="donationApp.transaction.donation">Donation</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="donation.id"><span jhiTranslate="donationApp.transaction.donation">Donation</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let transaction of transactions ;trackBy: trackId">
+                    <td><a [routerLink]="['/transaction', transaction.id, 'view']">{{ transaction.id }}</a></td>
+                    <td>{{ transaction.invoiceNumber }}</td>
+                    <td>{{ transaction.sessionId }}</td>
+                    <td>{{ transaction.basket }}</td>
+                    <td>{{ transaction.ovoIdMasked }}</td>
+                    <td>{{ transaction.deviceInformation }}</td>
+                    <td>{{ transaction.lastUpdatedBy }}</td>
+                    <td>{{ transaction.lastUpdatedAt | date:'medium' }}</td>
+                    <td jhiTranslate="{{ 'donationApp.TransactionStatus.' + transaction.status }}">{{ transaction.status }}</td>
+                    <td>
+                        <div *ngIf="transaction.donation">
+                            <a [routerLink]="['/donation', transaction.donation?.id, 'view']" >{{ transaction.donation?.id }}</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div *ngIf="transaction.donation">
+                            <a [routerLink]="['/donation', transaction.donation?.id, 'view']" >{{ transaction.donation?.id }}</a>
+                        </div>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/transaction', transaction.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/transaction', transaction.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(transaction)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div *ngIf="transactions?.length > 0">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
+        </div>
+    </div>
+</div>

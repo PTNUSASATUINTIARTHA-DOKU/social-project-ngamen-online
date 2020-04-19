@@ -1,0 +1,81 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="donationApp.organizer.home.title">Organizers</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-organizer" [routerLink]="['/organizer/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span  jhiTranslate="donationApp.organizer.home.createLabel">
+            Create a new Organizer
+            </span>
+        </button>
+    </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="organizers?.length === 0">
+        <span jhiTranslate="donationApp.organizer.home.notFound">No organizers found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="organizers?.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="reset.bind(this)">
+                    <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="name"><span jhiTranslate="donationApp.organizer.name">Name</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="url"><span jhiTranslate="donationApp.organizer.url">Url</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="email"><span jhiTranslate="donationApp.organizer.email">Email</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="bankAccountName"><span jhiTranslate="donationApp.organizer.bankAccountName">Bank Account Name</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="bankAccountNumber"><span jhiTranslate="donationApp.organizer.bankAccountNumber">Bank Account Number</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="bankName"><span jhiTranslate="donationApp.organizer.bankName">Bank Name</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="mdr"><span jhiTranslate="donationApp.organizer.mdr">Mdr</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="sharing"><span jhiTranslate="donationApp.organizer.sharing">Sharing</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="lastUpdatedBy"><span jhiTranslate="donationApp.organizer.lastUpdatedBy">Last Updated By</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="lastUpdatedAt"><span jhiTranslate="donationApp.organizer.lastUpdatedAt">Last Updated At</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="status"><span jhiTranslate="donationApp.organizer.status">Status</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+                <tr *ngFor="let organizer of organizers ;trackBy: trackId">
+                    <td><a [routerLink]="['/organizer', organizer.id, 'view']">{{ organizer.id }}</a></td>
+                    <td>{{ organizer.name }}</td>
+                    <td>{{ organizer.url }}</td>
+                    <td>{{ organizer.email }}</td>
+                    <td>{{ organizer.bankAccountName }}</td>
+                    <td>{{ organizer.bankAccountNumber }}</td>
+                    <td>{{ organizer.bankName }}</td>
+                    <td>{{ organizer.mdr }}</td>
+                    <td>{{ organizer.sharing }}</td>
+                    <td>{{ organizer.lastUpdatedBy }}</td>
+                    <td>{{ organizer.lastUpdatedAt | date:'medium' }}</td>
+                    <td jhiTranslate="{{ 'donationApp.IsActiveStatus.' + organizer.status }}">{{ organizer.status }}</td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/organizer', organizer.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/organizer', organizer.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(organizer)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

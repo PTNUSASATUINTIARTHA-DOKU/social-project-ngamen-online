@@ -1,0 +1,70 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="organizer">
+            <h2><span jhiTranslate="donationApp.organizer.detail.title">Organizer</span> {{ organizer.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="donationApp.organizer.name">Name</span></dt>
+                <dd>
+                    <span>{{ organizer.name }}</span>
+                </dd>
+                <dt><span jhiTranslate="donationApp.organizer.url">Url</span></dt>
+                <dd>
+                    <span>{{ organizer.url }}</span>
+                </dd>
+                <dt><span jhiTranslate="donationApp.organizer.email">Email</span></dt>
+                <dd>
+                    <span>{{ organizer.email }}</span>
+                </dd>
+                <dt><span jhiTranslate="donationApp.organizer.bankAccountName">Bank Account Name</span></dt>
+                <dd>
+                    <span>{{ organizer.bankAccountName }}</span>
+                </dd>
+                <dt><span jhiTranslate="donationApp.organizer.bankAccountNumber">Bank Account Number</span></dt>
+                <dd>
+                    <span>{{ organizer.bankAccountNumber }}</span>
+                </dd>
+                <dt><span jhiTranslate="donationApp.organizer.bankName">Bank Name</span></dt>
+                <dd>
+                    <span>{{ organizer.bankName }}</span>
+                </dd>
+                <dt><span jhiTranslate="donationApp.organizer.mdr">Mdr</span></dt>
+                <dd>
+                    <span>{{ organizer.mdr }}</span>
+                </dd>
+                <dt><span jhiTranslate="donationApp.organizer.sharing">Sharing</span></dt>
+                <dd>
+                    <span>{{ organizer.sharing }}</span>
+                </dd>
+                <dt><span jhiTranslate="donationApp.organizer.lastUpdatedBy">Last Updated By</span></dt>
+                <dd>
+                    <span>{{ organizer.lastUpdatedBy }}</span>
+                </dd>
+                <dt><span jhiTranslate="donationApp.organizer.lastUpdatedAt">Last Updated At</span></dt>
+                <dd>
+                    <span>{{ organizer.lastUpdatedAt }}</span>
+                </dd>
+                <dt><span jhiTranslate="donationApp.organizer.status">Status</span></dt>
+                <dd>
+                    <span jhiTranslate="{{ 'donationApp.IsActiveStatus.' + organizer.status }}">{{ organizer.status }}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/organizer', organizer.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

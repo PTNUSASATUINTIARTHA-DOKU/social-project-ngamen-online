@@ -1,0 +1,37 @@
+import { Moment } from 'moment';
+import { IDonation } from 'app/shared/model/donation.model';
+import { IsActiveStatus } from 'app/shared/model/enumerations/is-active-status.model';
+
+export interface IOrganizer {
+  id?: number;
+  name?: string;
+  url?: string;
+  email?: string;
+  bankAccountName?: string;
+  bankAccountNumber?: string;
+  bankName?: string;
+  mdr?: number;
+  sharing?: number;
+  lastUpdatedBy?: string;
+  lastUpdatedAt?: Moment;
+  status?: IsActiveStatus;
+  donations?: IDonation[];
+}
+
+export class Organizer implements IOrganizer {
+  constructor(
+    public id?: number,
+    public name?: string,
+    public url?: string,
+    public email?: string,
+    public bankAccountName?: string,
+    public bankAccountNumber?: string,
+    public bankName?: string,
+    public mdr?: number,
+    public sharing?: number,
+    public lastUpdatedBy?: string,
+    public lastUpdatedAt?: Moment,
+    public status?: IsActiveStatus,
+    public donations?: IDonation[]
+  ) {}
+}

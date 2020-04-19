@@ -1,0 +1,32 @@
+{
+  "donationApp": {
+    "donation": {
+      "home": {
+        "title": "Donations",
+        "createLabel": "Buat Donation baru",
+        "createOrEditLabel": "Buat atau edit Donation",
+        "notFound": "No Donations found"
+      },
+      "created": "Donation dengan id {{ param }} telah dibuat",
+      "updated": "Donation dengan id {{ param }} telah diperbaharui",
+      "deleted": "Donation dengan id {{ param }} telah dihapus",
+      "delete": {
+        "question": "Apakah anda yakin ingin menghapus Donation {{ id }}?"
+      },
+      "detail": {
+        "title": "Donation"
+      },
+      "name": "Name",
+      "description": "Description",
+      "url": "Url",
+      "imageUrl": "Image Url",
+      "paymentUrl": "Payment Url",
+      "lastUpdatedBy": "Last Updated By",
+      "lastUpdatedAt": "Last Updated At",
+      "status": "Status",
+      "organizer": "Organizer",
+      "transaction": "Transaction",
+      "organizer": "Organizer"
+    }
+  }
+}

@@ -1,0 +1,296 @@
+package men.doku.donation.domain;
+
+import io.swagger.annotations.ApiModel;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import javax.persistence.*;
+import javax.validation.constraints.*;
+
+import java.io.Serializable;
+import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
+
+import men.doku.donation.domain.enumeration.IsActiveStatus;
+
+/**
+ * Organizer entity.\n@author RT.
+ */
+@ApiModel(description = "Organizer entity.\n@author RT.")
+@Entity
+@Table(name = "organizer")
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+public class Organizer implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator")
+    private Long id;
+
+    @NotNull
+    @Size(max = 100)
+    @Column(name = "name", length = 100, nullable = false, unique = true)
+    private String name;
+
+    @Size(max = 100)
+    @Column(name = "url", length = 100)
+    private String url;
+
+    @NotNull
+    @Size(max = 100)
+    @Column(name = "email", length = 100, nullable = false)
+    private String email;
+
+    @Size(max = 15)
+    @Column(name = "bank_account_name", length = 15)
+    private String bankAccountName;
+
+    @Size(max = 100)
+    @Column(name = "bank_account_number", length = 100)
+    private String bankAccountNumber;
+
+    @Size(max = 100)
+    @Column(name = "bank_name", length = 100)
+    private String bankName;
+
+    @DecimalMax(value = "100")
+    @Column(name = "mdr")
+    private Float mdr;
+
+    @DecimalMax(value = "100")
+    @Column(name = "sharing")
+    private Float sharing;
+
+    @NotNull
+    @Size(max = 100)
+    @Column(name = "last_updated_by", length = 100, nullable = false)
+    private String lastUpdatedBy;
+
+    @NotNull
+    @Column(name = "last_updated_at", nullable = false)
+    private Instant lastUpdatedAt;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private IsActiveStatus status;
+
+    @OneToMany(mappedBy = "organizer")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Donation> donations = new HashSet<>();
+
+    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Organizer name(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public Organizer url(String url) {
+        this.url = url;
+        return this;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public Organizer email(String email) {
+        this.email = email;
+        return this;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getBankAccountName() {
+        return bankAccountName;
+    }
+
+    public Organizer bankAccountName(String bankAccountName) {
+        this.bankAccountName = bankAccountName;
+        return this;
+    }
+
+    public void setBankAccountName(String bankAccountName) {
+        this.bankAccountName = bankAccountName;
+    }
+
+    public String getBankAccountNumber() {
+        return bankAccountNumber;
+    }
+
+    public Organizer bankAccountNumber(String bankAccountNumber) {
+        this.bankAccountNumber = bankAccountNumber;
+        return this;
+    }
+
+    public void setBankAccountNumber(String bankAccountNumber) {
+        this.bankAccountNumber = bankAccountNumber;
+    }
+
+    public String getBankName() {
+        return bankName;
+    }
+
+    public Organizer bankName(String bankName) {
+        this.bankName = bankName;
+        return this;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
+
+    public Float getMdr() {
+        return mdr;
+    }
+
+    public Organizer mdr(Float mdr) {
+        this.mdr = mdr;
+        return this;
+    }
+
+    public void setMdr(Float mdr) {
+        this.mdr = mdr;
+    }
+
+    public Float getSharing() {
+        return sharing;
+    }
+
+    public Organizer sharing(Float sharing) {
+        this.sharing = sharing;
+        return this;
+    }
+
+    public void setSharing(Float sharing) {
+        this.sharing = sharing;
+    }
+
+    public String getLastUpdatedBy() {
+        return lastUpdatedBy;
+    }
+
+    public Organizer lastUpdatedBy(String lastUpdatedBy) {
+        this.lastUpdatedBy = lastUpdatedBy;
+        return this;
+    }
+
+    public void setLastUpdatedBy(String lastUpdatedBy) {
+        this.lastUpdatedBy = lastUpdatedBy;
+    }
+
+    public Instant getLastUpdatedAt() {
+        return lastUpdatedAt;
+    }
+
+    public Organizer lastUpdatedAt(Instant lastUpdatedAt) {
+        this.lastUpdatedAt = lastUpdatedAt;
+        return this;
+    }
+
+    public void setLastUpdatedAt(Instant lastUpdatedAt) {
+        this.lastUpdatedAt = lastUpdatedAt;
+    }
+
+    public IsActiveStatus getStatus() {
+        return status;
+    }
+
+    public Organizer status(IsActiveStatus status) {
+        this.status = status;
+        return this;
+    }
+
+    public void setStatus(IsActiveStatus status) {
+        this.status = status;
+    }
+
+    public Set<Donation> getDonations() {
+        return donations;
+    }
+
+    public Organizer donations(Set<Donation> donations) {
+        this.donations = donations;
+        return this;
+    }
+
+    public Organizer addDonation(Donation donation) {
+        this.donations.add(donation);
+        donation.setOrganizer(this);
+        return this;
+    }
+
+    public Organizer removeDonation(Donation donation) {
+        this.donations.remove(donation);
+        donation.setOrganizer(null);
+        return this;
+    }
+
+    public void setDonations(Set<Donation> donations) {
+        this.donations = donations;
+    }
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Organizer)) {
+            return false;
+        }
+        return id != null && id.equals(((Organizer) o).id);
+    }
+
+    @Override
+    public int hashCode() {
+        return 31;
+    }
+
+    @Override
+    public String toString() {
+        return "Organizer{" +
+            "id=" + getId() +
+            ", name='" + getName() + "'" +
+            ", url='" + getUrl() + "'" +
+            ", email='" + getEmail() + "'" +
+            ", bankAccountName='" + getBankAccountName() + "'" +
+            ", bankAccountNumber='" + getBankAccountNumber() + "'" +
+            ", bankName='" + getBankName() + "'" +
+            ", mdr=" + getMdr() +
+            ", sharing=" + getSharing() +
+            ", lastUpdatedBy='" + getLastUpdatedBy() + "'" +
+            ", lastUpdatedAt='" + getLastUpdatedAt() + "'" +
+            ", status='" + getStatus() + "'" +
+            "}";
+    }
+}

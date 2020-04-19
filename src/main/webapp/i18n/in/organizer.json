@@ -1,0 +1,33 @@
+{
+  "donationApp": {
+    "organizer": {
+      "home": {
+        "title": "Organizers",
+        "createLabel": "Buat Organizer baru",
+        "createOrEditLabel": "Buat atau edit Organizer",
+        "notFound": "No Organizers found"
+      },
+      "created": "Organizer dengan id {{ param }} telah dibuat",
+      "updated": "Organizer dengan id {{ param }} telah diperbaharui",
+      "deleted": "Organizer dengan id {{ param }} telah dihapus",
+      "delete": {
+        "question": "Apakah anda yakin ingin menghapus Organizer {{ id }}?"
+      },
+      "detail": {
+        "title": "Organizer"
+      },
+      "name": "Name",
+      "url": "Url",
+      "email": "Email",
+      "bankAccountName": "Bank Account Name",
+      "bankAccountNumber": "Bank Account Number",
+      "bankName": "Bank Name",
+      "mdr": "Mdr",
+      "sharing": "Sharing",
+      "lastUpdatedBy": "Last Updated By",
+      "lastUpdatedAt": "Last Updated At",
+      "status": "Status",
+      "donation": "Donation"
+    }
+  }
+}

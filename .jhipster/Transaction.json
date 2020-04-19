@@ -1,0 +1,92 @@
+{
+    "name": "Transaction",
+    "fields": [
+        {
+            "fieldName": "invoiceNumber",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength",
+                "required",
+                "unique"
+            ],
+            "fieldValidateRulesMaxlength": "30"
+        },
+        {
+            "fieldName": "sessionId",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": "128"
+        },
+        {
+            "fieldName": "basket",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": "1024"
+        },
+        {
+            "fieldName": "ovoIdMasked",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": "15"
+        },
+        {
+            "fieldName": "deviceInformation",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": "1000"
+        },
+        {
+            "fieldName": "lastUpdatedBy",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength",
+                "required"
+            ],
+            "fieldValidateRulesMaxlength": "100"
+        },
+        {
+            "fieldName": "lastUpdatedAt",
+            "fieldType": "Instant",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "TransactionStatus",
+            "fieldValues": "INITIATE,PROCESS,SUCCESS,FAILED,DELETED",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "donation",
+            "otherEntityRelationshipName": "transaction",
+            "relationshipName": "donation",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20200419045300",
+    "javadoc": "Transaction entity.\\n@author RT.",
+    "entityTableName": "transaction",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "embedded": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

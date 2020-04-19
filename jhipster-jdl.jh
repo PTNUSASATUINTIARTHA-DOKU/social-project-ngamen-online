@@ -1,0 +1,72 @@
+/**
+ * Organizer entity.
+ * @author RT.
+ */
+entity Organizer {
+	name String maxlength(100) required unique
+    url String maxlength(100)
+    email String maxlength(100) required
+    bankAccountName String maxlength(15)
+    bankAccountNumber String maxlength(100)
+    bankName String maxlength(100)
+    mdr Float max(100)
+    sharing Float max(100)
+    lastUpdatedBy String maxlength(100) required
+    lastUpdatedAt Instant required
+    status IsActiveStatus required
+}
+
+/**
+ * Donation entity.
+ * @author RT.
+ */
+entity Donation {
+	name String maxlength(100) required unique
+    description String maxlength(2000)
+    url String maxlength(100)
+    imageUrl String maxlength(100)
+    paymentUrl String maxlength(100) required unique
+    lastUpdatedBy String maxlength(100) required
+    lastUpdatedAt Instant required
+    status IsActiveStatus required
+}
+
+/**
+ * Transaction entity.
+ * @author RT.
+ */
+entity Transaction {
+	invoiceNumber String maxlength(30) required unique
+    sessionId String maxlength(128)
+    basket String maxlength(1024)
+    ovoIdMasked String maxlength(15)
+    deviceInformation String maxlength(1000)
+    lastUpdatedBy String maxlength(100) required
+    lastUpdatedAt Instant required
+    status TransactionStatus required
+}
+
+enum IsActiveStatus {
+    ACTIVE, DISABLED, DELETED
+}
+
+enum TransactionStatus {
+	INITIATE, PROCESS, SUCCESS, FAILED, DELETED 
+}
+
+relationship OneToMany {
+	Organizer to Donation{organizer}
+    Donation to Transaction{donation}
+}
+
+paginate Organizer, Donation with infinite-scroll
+paginate Transaction with pagination
+
+service all with serviceImpl //except Organizer
+
+//relationship ManyToOne {
+//}
+
+// dto * with mapstruct
+
+// angularSuffix * with mySuffix

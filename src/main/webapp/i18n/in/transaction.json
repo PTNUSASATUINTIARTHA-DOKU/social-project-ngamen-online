@@ -1,0 +1,31 @@
+{
+  "donationApp": {
+    "transaction": {
+      "home": {
+        "title": "Transactions",
+        "createLabel": "Buat Transaction baru",
+        "createOrEditLabel": "Buat atau edit Transaction",
+        "notFound": "No Transactions found"
+      },
+      "created": "Transaction dengan id {{ param }} telah dibuat",
+      "updated": "Transaction dengan id {{ param }} telah diperbaharui",
+      "deleted": "Transaction dengan id {{ param }} telah dihapus",
+      "delete": {
+        "question": "Apakah anda yakin ingin menghapus Transaction {{ id }}?"
+      },
+      "detail": {
+        "title": "Transaction"
+      },
+      "invoiceNumber": "Invoice Number",
+      "sessionId": "Session Id",
+      "basket": "Basket",
+      "ovoIdMasked": "Ovo Id Masked",
+      "deviceInformation": "Device Information",
+      "lastUpdatedBy": "Last Updated By",
+      "lastUpdatedAt": "Last Updated At",
+      "status": "Status",
+      "donation": "Donation",
+      "donation": "Donation"
+    }
+  }
+}

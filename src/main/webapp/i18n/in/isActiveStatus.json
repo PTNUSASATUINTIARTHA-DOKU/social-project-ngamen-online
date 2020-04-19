@@ -1,0 +1,10 @@
+{
+  "donationApp": {
+    "IsActiveStatus": {
+      "null": "",
+      "ACTIVE": "ACTIVE",
+      "DISABLED": "DISABLED",
+      "DELETED": "DELETED"
+    }
+  }
+}

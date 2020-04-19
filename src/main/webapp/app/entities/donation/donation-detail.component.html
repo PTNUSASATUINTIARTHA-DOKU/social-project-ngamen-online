@@ -1,0 +1,70 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="donation">
+            <h2><span jhiTranslate="donationApp.donation.detail.title">Donation</span> {{ donation.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="donationApp.donation.name">Name</span></dt>
+                <dd>
+                    <span>{{ donation.name }}</span>
+                </dd>
+                <dt><span jhiTranslate="donationApp.donation.description">Description</span></dt>
+                <dd>
+                    <span>{{ donation.description }}</span>
+                </dd>
+                <dt><span jhiTranslate="donationApp.donation.url">Url</span></dt>
+                <dd>
+                    <span>{{ donation.url }}</span>
+                </dd>
+                <dt><span jhiTranslate="donationApp.donation.imageUrl">Image Url</span></dt>
+                <dd>
+                    <span>{{ donation.imageUrl }}</span>
+                </dd>
+                <dt><span jhiTranslate="donationApp.donation.paymentUrl">Payment Url</span></dt>
+                <dd>
+                    <span>{{ donation.paymentUrl }}</span>
+                </dd>
+                <dt><span jhiTranslate="donationApp.donation.lastUpdatedBy">Last Updated By</span></dt>
+                <dd>
+                    <span>{{ donation.lastUpdatedBy }}</span>
+                </dd>
+                <dt><span jhiTranslate="donationApp.donation.lastUpdatedAt">Last Updated At</span></dt>
+                <dd>
+                    <span>{{ donation.lastUpdatedAt }}</span>
+                </dd>
+                <dt><span jhiTranslate="donationApp.donation.status">Status</span></dt>
+                <dd>
+                    <span jhiTranslate="{{ 'donationApp.IsActiveStatus.' + donation.status }}">{{ donation.status }}</span>
+                </dd>
+                <dt><span jhiTranslate="donationApp.donation.organizer">Organizer</span></dt>
+                <dd>
+                    <div *ngIf="donation.organizer">
+                        <a [routerLink]="['/organizer', donation.organizer?.id, 'view']">{{ donation.organizer?.id }}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="donationApp.donation.organizer">Organizer</span></dt>
+                <dd>
+                    <div *ngIf="donation.organizer">
+                        <a [routerLink]="['/organizer', donation.organizer?.id, 'view']">{{ donation.organizer?.id }}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/donation', donation.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>
