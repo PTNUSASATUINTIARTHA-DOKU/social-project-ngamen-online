@@ -28,6 +28,18 @@
                 <dd>
                     <span>{{ donation.paymentUrl }}</span>
                 </dd>
+                <dt><span jhiTranslate="donationApp.donation.bankAccountNumber">Bank Account Number</span></dt>
+                <dd>
+                    <span>{{ donation.bankAccountNumber }}</span>
+                </dd>
+                <dt><span jhiTranslate="donationApp.donation.bankAccountName">Bank Account Name</span></dt>
+                <dd>
+                    <span>{{ donation.bankAccountName }}</span>
+                </dd>
+                <dt><span jhiTranslate="donationApp.donation.bankName">Bank Name</span></dt>
+                <dd>
+                    <span>{{ donation.bankName }}</span>
+                </dd>
                 <dt><span jhiTranslate="donationApp.donation.lastUpdatedBy">Last Updated By</span></dt>
                 <dd>
                     <span>{{ donation.lastUpdatedBy }}</span>
@@ -39,12 +51,6 @@
                 <dt><span jhiTranslate="donationApp.donation.status">Status</span></dt>
                 <dd>
                     <span jhiTranslate="{{ 'donationApp.IsActiveStatus.' + donation.status }}">{{ donation.status }}</span>
-                </dd>
-                <dt><span jhiTranslate="donationApp.donation.organizer">Organizer</span></dt>
-                <dd>
-                    <div *ngIf="donation.organizer">
-                        <a [routerLink]="['/organizer', donation.organizer?.id, 'view']">{{ donation.organizer?.id }}</a>
-                    </div>
                 </dd>
                 <dt><span jhiTranslate="donationApp.donation.organizer">Organizer</span></dt>
                 <dd>

@@ -25,7 +25,20 @@ describe('Service Tests', () => {
       httpMock = injector.get(HttpTestingController);
       currentDate = moment();
 
-      elemDefault = new Donation(0, 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', currentDate, IsActiveStatus.ACTIVE);
+      elemDefault = new Donation(
+        0,
+        'AAAAAAA',
+        'AAAAAAA',
+        'AAAAAAA',
+        'AAAAAAA',
+        'AAAAAAA',
+        'AAAAAAA',
+        'AAAAAAA',
+        'AAAAAAA',
+        'AAAAAAA',
+        currentDate,
+        IsActiveStatus.ACTIVE
+      );
     });
 
     describe('Service methods', () => {
@@ -75,6 +88,9 @@ describe('Service Tests', () => {
             url: 'BBBBBB',
             imageUrl: 'BBBBBB',
             paymentUrl: 'BBBBBB',
+            bankAccountNumber: 'BBBBBB',
+            bankAccountName: 'BBBBBB',
+            bankName: 'BBBBBB',
             lastUpdatedBy: 'BBBBBB',
             lastUpdatedAt: currentDate.format(DATE_TIME_FORMAT),
             status: 'BBBBBB'
@@ -104,6 +120,9 @@ describe('Service Tests', () => {
             url: 'BBBBBB',
             imageUrl: 'BBBBBB',
             paymentUrl: 'BBBBBB',
+            bankAccountNumber: 'BBBBBB',
+            bankAccountName: 'BBBBBB',
+            bankName: 'BBBBBB',
             lastUpdatedBy: 'BBBBBB',
             lastUpdatedAt: currentDate.format(DATE_TIME_FORMAT),
             status: 'BBBBBB'

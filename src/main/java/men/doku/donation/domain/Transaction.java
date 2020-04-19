@@ -194,7 +194,6 @@ public class Transaction implements Serializable {
     public void setDonation(Donation donation) {
         this.donation = donation;
     }
-
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override

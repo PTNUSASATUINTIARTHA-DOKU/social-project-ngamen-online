@@ -4,7 +4,6 @@ import { HttpResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 
@@ -49,28 +48,6 @@ export class TransactionUpdateComponent implements OnInit {
       }
 
       this.updateForm(transaction);
-
-      this.donationService
-        .query({ filter: 'transaction-is-null' })
-        .pipe(
-          map((res: HttpResponse<IDonation[]>) => {
-            return res.body || [];
-          })
-        )
-        .subscribe((resBody: IDonation[]) => {
-          if (!transaction.donation || !transaction.donation.id) {
-            this.donations = resBody;
-          } else {
-            this.donationService
-              .find(transaction.donation.id)
-              .pipe(
-                map((subRes: HttpResponse<IDonation>) => {
-                  return subRes.body ? [subRes.body].concat(resBody) : resBody;
-                })
-              )
-              .subscribe((concatRes: IDonation[]) => (this.donations = concatRes));
-          }
-        });
 
       this.donationService.query().subscribe((res: HttpResponse<IDonation[]>) => (this.donations = res.body || []));
     });

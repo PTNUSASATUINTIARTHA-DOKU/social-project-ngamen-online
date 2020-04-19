@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
+import java.util.Objects;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
@@ -45,12 +46,12 @@ public class Organizer implements Serializable {
     private String email;
 
     @Size(max = 15)
-    @Column(name = "bank_account_name", length = 15)
-    private String bankAccountName;
+    @Column(name = "bank_account_number", length = 15)
+    private String bankAccountNumber;
 
     @Size(max = 100)
-    @Column(name = "bank_account_number", length = 100)
-    private String bankAccountNumber;
+    @Column(name = "bank_account_name", length = 100)
+    private String bankAccountName;
 
     @Size(max = 100)
     @Column(name = "bank_name", length = 100)
@@ -130,19 +131,6 @@ public class Organizer implements Serializable {
         this.email = email;
     }
 
-    public String getBankAccountName() {
-        return bankAccountName;
-    }
-
-    public Organizer bankAccountName(String bankAccountName) {
-        this.bankAccountName = bankAccountName;
-        return this;
-    }
-
-    public void setBankAccountName(String bankAccountName) {
-        this.bankAccountName = bankAccountName;
-    }
-
     public String getBankAccountNumber() {
         return bankAccountNumber;
     }
@@ -154,6 +142,19 @@ public class Organizer implements Serializable {
 
     public void setBankAccountNumber(String bankAccountNumber) {
         this.bankAccountNumber = bankAccountNumber;
+    }
+
+    public String getBankAccountName() {
+        return bankAccountName;
+    }
+
+    public Organizer bankAccountName(String bankAccountName) {
+        this.bankAccountName = bankAccountName;
+        return this;
+    }
+
+    public void setBankAccountName(String bankAccountName) {
+        this.bankAccountName = bankAccountName;
     }
 
     public String getBankName() {
@@ -283,8 +284,8 @@ public class Organizer implements Serializable {
             ", name='" + getName() + "'" +
             ", url='" + getUrl() + "'" +
             ", email='" + getEmail() + "'" +
-            ", bankAccountName='" + getBankAccountName() + "'" +
             ", bankAccountNumber='" + getBankAccountNumber() + "'" +
+            ", bankAccountName='" + getBankAccountName() + "'" +
             ", bankName='" + getBankName() + "'" +
             ", mdr=" + getMdr() +
             ", sharing=" + getSharing() +

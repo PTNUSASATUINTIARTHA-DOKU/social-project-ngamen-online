@@ -132,14 +132,6 @@
                         <option [ngValue]="donationOption.id === editForm.get('donation')!.value?.id ? editForm.get('donation')!.value : donationOption" *ngFor="let donationOption of donations; trackBy: trackById">{{ donationOption.id }}</option>
                     </select>
                 </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="donationApp.transaction.donation" for="field_donation">Donation</label>
-                    <select class="form-control" id="field_donation" name="donation" formControlName="donation">
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="donationOption.id === editForm.get('donation')!.value?.id ? editForm.get('donation')!.value : donationOption" *ngFor="let donationOption of donations; trackBy: trackById">{{ donationOption.id }}</option>
-                    </select>
-                </div>
             </div>
 
             <div>

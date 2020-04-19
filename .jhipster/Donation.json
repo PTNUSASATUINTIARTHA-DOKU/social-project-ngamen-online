@@ -46,6 +46,30 @@
             "fieldValidateRulesMaxlength": "100"
         },
         {
+            "fieldName": "bankAccountNumber",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": "15"
+        },
+        {
+            "fieldName": "bankAccountName",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": "100"
+        },
+        {
+            "fieldName": "bankName",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": "100"
+        },
+        {
             "fieldName": "lastUpdatedBy",
             "fieldType": "String",
             "fieldValidateRules": [

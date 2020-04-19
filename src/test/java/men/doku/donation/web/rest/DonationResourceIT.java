@@ -49,6 +49,15 @@ public class DonationResourceIT {
     private static final String DEFAULT_PAYMENT_URL = "AAAAAAAAAA";
     private static final String UPDATED_PAYMENT_URL = "BBBBBBBBBB";
 
+    private static final String DEFAULT_BANK_ACCOUNT_NUMBER = "AAAAAAAAAA";
+    private static final String UPDATED_BANK_ACCOUNT_NUMBER = "BBBBBBBBBB";
+
+    private static final String DEFAULT_BANK_ACCOUNT_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_BANK_ACCOUNT_NAME = "BBBBBBBBBB";
+
+    private static final String DEFAULT_BANK_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_BANK_NAME = "BBBBBBBBBB";
+
     private static final String DEFAULT_LAST_UPDATED_BY = "AAAAAAAAAA";
     private static final String UPDATED_LAST_UPDATED_BY = "BBBBBBBBBB";
 
@@ -85,6 +94,9 @@ public class DonationResourceIT {
             .url(DEFAULT_URL)
             .imageUrl(DEFAULT_IMAGE_URL)
             .paymentUrl(DEFAULT_PAYMENT_URL)
+            .bankAccountNumber(DEFAULT_BANK_ACCOUNT_NUMBER)
+            .bankAccountName(DEFAULT_BANK_ACCOUNT_NAME)
+            .bankName(DEFAULT_BANK_NAME)
             .lastUpdatedBy(DEFAULT_LAST_UPDATED_BY)
             .lastUpdatedAt(DEFAULT_LAST_UPDATED_AT)
             .status(DEFAULT_STATUS);
@@ -103,6 +115,9 @@ public class DonationResourceIT {
             .url(UPDATED_URL)
             .imageUrl(UPDATED_IMAGE_URL)
             .paymentUrl(UPDATED_PAYMENT_URL)
+            .bankAccountNumber(UPDATED_BANK_ACCOUNT_NUMBER)
+            .bankAccountName(UPDATED_BANK_ACCOUNT_NAME)
+            .bankName(UPDATED_BANK_NAME)
             .lastUpdatedBy(UPDATED_LAST_UPDATED_BY)
             .lastUpdatedAt(UPDATED_LAST_UPDATED_AT)
             .status(UPDATED_STATUS);
@@ -134,6 +149,9 @@ public class DonationResourceIT {
         assertThat(testDonation.getUrl()).isEqualTo(DEFAULT_URL);
         assertThat(testDonation.getImageUrl()).isEqualTo(DEFAULT_IMAGE_URL);
         assertThat(testDonation.getPaymentUrl()).isEqualTo(DEFAULT_PAYMENT_URL);
+        assertThat(testDonation.getBankAccountNumber()).isEqualTo(DEFAULT_BANK_ACCOUNT_NUMBER);
+        assertThat(testDonation.getBankAccountName()).isEqualTo(DEFAULT_BANK_ACCOUNT_NAME);
+        assertThat(testDonation.getBankName()).isEqualTo(DEFAULT_BANK_NAME);
         assertThat(testDonation.getLastUpdatedBy()).isEqualTo(DEFAULT_LAST_UPDATED_BY);
         assertThat(testDonation.getLastUpdatedAt()).isEqualTo(DEFAULT_LAST_UPDATED_AT);
         assertThat(testDonation.getStatus()).isEqualTo(DEFAULT_STATUS);
@@ -265,6 +283,9 @@ public class DonationResourceIT {
             .andExpect(jsonPath("$.[*].url").value(hasItem(DEFAULT_URL)))
             .andExpect(jsonPath("$.[*].imageUrl").value(hasItem(DEFAULT_IMAGE_URL)))
             .andExpect(jsonPath("$.[*].paymentUrl").value(hasItem(DEFAULT_PAYMENT_URL)))
+            .andExpect(jsonPath("$.[*].bankAccountNumber").value(hasItem(DEFAULT_BANK_ACCOUNT_NUMBER)))
+            .andExpect(jsonPath("$.[*].bankAccountName").value(hasItem(DEFAULT_BANK_ACCOUNT_NAME)))
+            .andExpect(jsonPath("$.[*].bankName").value(hasItem(DEFAULT_BANK_NAME)))
             .andExpect(jsonPath("$.[*].lastUpdatedBy").value(hasItem(DEFAULT_LAST_UPDATED_BY)))
             .andExpect(jsonPath("$.[*].lastUpdatedAt").value(hasItem(DEFAULT_LAST_UPDATED_AT.toString())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
@@ -286,6 +307,9 @@ public class DonationResourceIT {
             .andExpect(jsonPath("$.url").value(DEFAULT_URL))
             .andExpect(jsonPath("$.imageUrl").value(DEFAULT_IMAGE_URL))
             .andExpect(jsonPath("$.paymentUrl").value(DEFAULT_PAYMENT_URL))
+            .andExpect(jsonPath("$.bankAccountNumber").value(DEFAULT_BANK_ACCOUNT_NUMBER))
+            .andExpect(jsonPath("$.bankAccountName").value(DEFAULT_BANK_ACCOUNT_NAME))
+            .andExpect(jsonPath("$.bankName").value(DEFAULT_BANK_NAME))
             .andExpect(jsonPath("$.lastUpdatedBy").value(DEFAULT_LAST_UPDATED_BY))
             .andExpect(jsonPath("$.lastUpdatedAt").value(DEFAULT_LAST_UPDATED_AT.toString()))
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
@@ -317,6 +341,9 @@ public class DonationResourceIT {
             .url(UPDATED_URL)
             .imageUrl(UPDATED_IMAGE_URL)
             .paymentUrl(UPDATED_PAYMENT_URL)
+            .bankAccountNumber(UPDATED_BANK_ACCOUNT_NUMBER)
+            .bankAccountName(UPDATED_BANK_ACCOUNT_NAME)
+            .bankName(UPDATED_BANK_NAME)
             .lastUpdatedBy(UPDATED_LAST_UPDATED_BY)
             .lastUpdatedAt(UPDATED_LAST_UPDATED_AT)
             .status(UPDATED_STATUS);
@@ -335,6 +362,9 @@ public class DonationResourceIT {
         assertThat(testDonation.getUrl()).isEqualTo(UPDATED_URL);
         assertThat(testDonation.getImageUrl()).isEqualTo(UPDATED_IMAGE_URL);
         assertThat(testDonation.getPaymentUrl()).isEqualTo(UPDATED_PAYMENT_URL);
+        assertThat(testDonation.getBankAccountNumber()).isEqualTo(UPDATED_BANK_ACCOUNT_NUMBER);
+        assertThat(testDonation.getBankAccountName()).isEqualTo(UPDATED_BANK_ACCOUNT_NAME);
+        assertThat(testDonation.getBankName()).isEqualTo(UPDATED_BANK_NAME);
         assertThat(testDonation.getLastUpdatedBy()).isEqualTo(UPDATED_LAST_UPDATED_BY);
         assertThat(testDonation.getLastUpdatedAt()).isEqualTo(UPDATED_LAST_UPDATED_AT);
         assertThat(testDonation.getStatus()).isEqualTo(UPDATED_STATUS);

@@ -43,11 +43,11 @@ public class OrganizerResourceIT {
     private static final String DEFAULT_EMAIL = "AAAAAAAAAA";
     private static final String UPDATED_EMAIL = "BBBBBBBBBB";
 
-    private static final String DEFAULT_BANK_ACCOUNT_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_BANK_ACCOUNT_NAME = "BBBBBBBBBB";
-
     private static final String DEFAULT_BANK_ACCOUNT_NUMBER = "AAAAAAAAAA";
     private static final String UPDATED_BANK_ACCOUNT_NUMBER = "BBBBBBBBBB";
+
+    private static final String DEFAULT_BANK_ACCOUNT_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_BANK_ACCOUNT_NAME = "BBBBBBBBBB";
 
     private static final String DEFAULT_BANK_NAME = "AAAAAAAAAA";
     private static final String UPDATED_BANK_NAME = "BBBBBBBBBB";
@@ -92,8 +92,8 @@ public class OrganizerResourceIT {
             .name(DEFAULT_NAME)
             .url(DEFAULT_URL)
             .email(DEFAULT_EMAIL)
-            .bankAccountName(DEFAULT_BANK_ACCOUNT_NAME)
             .bankAccountNumber(DEFAULT_BANK_ACCOUNT_NUMBER)
+            .bankAccountName(DEFAULT_BANK_ACCOUNT_NAME)
             .bankName(DEFAULT_BANK_NAME)
             .mdr(DEFAULT_MDR)
             .sharing(DEFAULT_SHARING)
@@ -113,8 +113,8 @@ public class OrganizerResourceIT {
             .name(UPDATED_NAME)
             .url(UPDATED_URL)
             .email(UPDATED_EMAIL)
-            .bankAccountName(UPDATED_BANK_ACCOUNT_NAME)
             .bankAccountNumber(UPDATED_BANK_ACCOUNT_NUMBER)
+            .bankAccountName(UPDATED_BANK_ACCOUNT_NAME)
             .bankName(UPDATED_BANK_NAME)
             .mdr(UPDATED_MDR)
             .sharing(UPDATED_SHARING)
@@ -147,8 +147,8 @@ public class OrganizerResourceIT {
         assertThat(testOrganizer.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testOrganizer.getUrl()).isEqualTo(DEFAULT_URL);
         assertThat(testOrganizer.getEmail()).isEqualTo(DEFAULT_EMAIL);
-        assertThat(testOrganizer.getBankAccountName()).isEqualTo(DEFAULT_BANK_ACCOUNT_NAME);
         assertThat(testOrganizer.getBankAccountNumber()).isEqualTo(DEFAULT_BANK_ACCOUNT_NUMBER);
+        assertThat(testOrganizer.getBankAccountName()).isEqualTo(DEFAULT_BANK_ACCOUNT_NAME);
         assertThat(testOrganizer.getBankName()).isEqualTo(DEFAULT_BANK_NAME);
         assertThat(testOrganizer.getMdr()).isEqualTo(DEFAULT_MDR);
         assertThat(testOrganizer.getSharing()).isEqualTo(DEFAULT_SHARING);
@@ -281,8 +281,8 @@ public class OrganizerResourceIT {
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].url").value(hasItem(DEFAULT_URL)))
             .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL)))
-            .andExpect(jsonPath("$.[*].bankAccountName").value(hasItem(DEFAULT_BANK_ACCOUNT_NAME)))
             .andExpect(jsonPath("$.[*].bankAccountNumber").value(hasItem(DEFAULT_BANK_ACCOUNT_NUMBER)))
+            .andExpect(jsonPath("$.[*].bankAccountName").value(hasItem(DEFAULT_BANK_ACCOUNT_NAME)))
             .andExpect(jsonPath("$.[*].bankName").value(hasItem(DEFAULT_BANK_NAME)))
             .andExpect(jsonPath("$.[*].mdr").value(hasItem(DEFAULT_MDR.doubleValue())))
             .andExpect(jsonPath("$.[*].sharing").value(hasItem(DEFAULT_SHARING.doubleValue())))
@@ -305,8 +305,8 @@ public class OrganizerResourceIT {
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
             .andExpect(jsonPath("$.url").value(DEFAULT_URL))
             .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL))
-            .andExpect(jsonPath("$.bankAccountName").value(DEFAULT_BANK_ACCOUNT_NAME))
             .andExpect(jsonPath("$.bankAccountNumber").value(DEFAULT_BANK_ACCOUNT_NUMBER))
+            .andExpect(jsonPath("$.bankAccountName").value(DEFAULT_BANK_ACCOUNT_NAME))
             .andExpect(jsonPath("$.bankName").value(DEFAULT_BANK_NAME))
             .andExpect(jsonPath("$.mdr").value(DEFAULT_MDR.doubleValue()))
             .andExpect(jsonPath("$.sharing").value(DEFAULT_SHARING.doubleValue()))
@@ -339,8 +339,8 @@ public class OrganizerResourceIT {
             .name(UPDATED_NAME)
             .url(UPDATED_URL)
             .email(UPDATED_EMAIL)
-            .bankAccountName(UPDATED_BANK_ACCOUNT_NAME)
             .bankAccountNumber(UPDATED_BANK_ACCOUNT_NUMBER)
+            .bankAccountName(UPDATED_BANK_ACCOUNT_NAME)
             .bankName(UPDATED_BANK_NAME)
             .mdr(UPDATED_MDR)
             .sharing(UPDATED_SHARING)
@@ -360,8 +360,8 @@ public class OrganizerResourceIT {
         assertThat(testOrganizer.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testOrganizer.getUrl()).isEqualTo(UPDATED_URL);
         assertThat(testOrganizer.getEmail()).isEqualTo(UPDATED_EMAIL);
-        assertThat(testOrganizer.getBankAccountName()).isEqualTo(UPDATED_BANK_ACCOUNT_NAME);
         assertThat(testOrganizer.getBankAccountNumber()).isEqualTo(UPDATED_BANK_ACCOUNT_NUMBER);
+        assertThat(testOrganizer.getBankAccountName()).isEqualTo(UPDATED_BANK_ACCOUNT_NAME);
         assertThat(testOrganizer.getBankName()).isEqualTo(UPDATED_BANK_NAME);
         assertThat(testOrganizer.getMdr()).isEqualTo(UPDATED_MDR);
         assertThat(testOrganizer.getSharing()).isEqualTo(UPDATED_SHARING);

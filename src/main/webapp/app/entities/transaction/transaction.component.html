@@ -32,7 +32,6 @@
                     <th scope="col"  jhiSortBy="lastUpdatedAt"><span jhiTranslate="donationApp.transaction.lastUpdatedAt">Last Updated At</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="status"><span jhiTranslate="donationApp.transaction.status">Status</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="donation.id"><span jhiTranslate="donationApp.transaction.donation">Donation</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="donation.id"><span jhiTranslate="donationApp.transaction.donation">Donation</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -47,11 +46,6 @@
                     <td>{{ transaction.lastUpdatedBy }}</td>
                     <td>{{ transaction.lastUpdatedAt | date:'medium' }}</td>
                     <td jhiTranslate="{{ 'donationApp.TransactionStatus.' + transaction.status }}">{{ transaction.status }}</td>
-                    <td>
-                        <div *ngIf="transaction.donation">
-                            <a [routerLink]="['/donation', transaction.donation?.id, 'view']" >{{ transaction.donation?.id }}</a>
-                        </div>
-                    </td>
                     <td>
                         <div *ngIf="transaction.donation">
                             <a [routerLink]="['/donation', transaction.donation?.id, 'view']" >{{ transaction.donation?.id }}</a>

@@ -4,7 +4,6 @@ import { HttpResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 
@@ -28,6 +27,9 @@ export class DonationUpdateComponent implements OnInit {
     url: [null, [Validators.maxLength(100)]],
     imageUrl: [null, [Validators.maxLength(100)]],
     paymentUrl: [null, [Validators.required, Validators.maxLength(100)]],
+    bankAccountNumber: [null, [Validators.maxLength(15)]],
+    bankAccountName: [null, [Validators.maxLength(100)]],
+    bankName: [null, [Validators.maxLength(100)]],
     lastUpdatedBy: [null, [Validators.required, Validators.maxLength(100)]],
     lastUpdatedAt: [null, [Validators.required]],
     status: [null, [Validators.required]],
@@ -50,28 +52,6 @@ export class DonationUpdateComponent implements OnInit {
 
       this.updateForm(donation);
 
-      this.organizerService
-        .query({ filter: 'donation-is-null' })
-        .pipe(
-          map((res: HttpResponse<IOrganizer[]>) => {
-            return res.body || [];
-          })
-        )
-        .subscribe((resBody: IOrganizer[]) => {
-          if (!donation.organizer || !donation.organizer.id) {
-            this.organizers = resBody;
-          } else {
-            this.organizerService
-              .find(donation.organizer.id)
-              .pipe(
-                map((subRes: HttpResponse<IOrganizer>) => {
-                  return subRes.body ? [subRes.body].concat(resBody) : resBody;
-                })
-              )
-              .subscribe((concatRes: IOrganizer[]) => (this.organizers = concatRes));
-          }
-        });
-
       this.organizerService.query().subscribe((res: HttpResponse<IOrganizer[]>) => (this.organizers = res.body || []));
     });
   }
@@ -84,6 +64,9 @@ export class DonationUpdateComponent implements OnInit {
       url: donation.url,
       imageUrl: donation.imageUrl,
       paymentUrl: donation.paymentUrl,
+      bankAccountNumber: donation.bankAccountNumber,
+      bankAccountName: donation.bankAccountName,
+      bankName: donation.bankName,
       lastUpdatedBy: donation.lastUpdatedBy,
       lastUpdatedAt: donation.lastUpdatedAt ? donation.lastUpdatedAt.format(DATE_TIME_FORMAT) : null,
       status: donation.status,
@@ -114,6 +97,9 @@ export class DonationUpdateComponent implements OnInit {
       url: this.editForm.get(['url'])!.value,
       imageUrl: this.editForm.get(['imageUrl'])!.value,
       paymentUrl: this.editForm.get(['paymentUrl'])!.value,
+      bankAccountNumber: this.editForm.get(['bankAccountNumber'])!.value,
+      bankAccountName: this.editForm.get(['bankAccountName'])!.value,
+      bankName: this.editForm.get(['bankName'])!.value,
       lastUpdatedBy: this.editForm.get(['lastUpdatedBy'])!.value,
       lastUpdatedAt: this.editForm.get(['lastUpdatedAt'])!.value
         ? moment(this.editForm.get(['lastUpdatedAt'])!.value, DATE_TIME_FORMAT)

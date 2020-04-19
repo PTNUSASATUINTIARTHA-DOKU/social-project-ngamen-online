@@ -29,7 +29,7 @@
             "fieldValidateRulesMaxlength": "100"
         },
         {
-            "fieldName": "bankAccountName",
+            "fieldName": "bankAccountNumber",
             "fieldType": "String",
             "fieldValidateRules": [
                 "maxlength"
@@ -37,7 +37,7 @@
             "fieldValidateRulesMaxlength": "15"
         },
         {
-            "fieldName": "bankAccountNumber",
+            "fieldName": "bankAccountName",
             "fieldType": "String",
             "fieldValidateRules": [
                 "maxlength"

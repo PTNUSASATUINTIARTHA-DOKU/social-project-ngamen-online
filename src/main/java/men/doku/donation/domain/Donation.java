@@ -9,6 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
+import java.util.Objects;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
@@ -52,6 +53,18 @@ public class Donation implements Serializable {
     @Size(max = 100)
     @Column(name = "payment_url", length = 100, nullable = false, unique = true)
     private String paymentUrl;
+
+    @Size(max = 15)
+    @Column(name = "bank_account_number", length = 15)
+    private String bankAccountNumber;
+
+    @Size(max = 100)
+    @Column(name = "bank_account_name", length = 100)
+    private String bankAccountName;
+
+    @Size(max = 100)
+    @Column(name = "bank_name", length = 100)
+    private String bankName;
 
     @NotNull
     @Size(max = 100)
@@ -149,6 +162,45 @@ public class Donation implements Serializable {
         this.paymentUrl = paymentUrl;
     }
 
+    public String getBankAccountNumber() {
+        return bankAccountNumber;
+    }
+
+    public Donation bankAccountNumber(String bankAccountNumber) {
+        this.bankAccountNumber = bankAccountNumber;
+        return this;
+    }
+
+    public void setBankAccountNumber(String bankAccountNumber) {
+        this.bankAccountNumber = bankAccountNumber;
+    }
+
+    public String getBankAccountName() {
+        return bankAccountName;
+    }
+
+    public Donation bankAccountName(String bankAccountName) {
+        this.bankAccountName = bankAccountName;
+        return this;
+    }
+
+    public void setBankAccountName(String bankAccountName) {
+        this.bankAccountName = bankAccountName;
+    }
+
+    public String getBankName() {
+        return bankName;
+    }
+
+    public Donation bankName(String bankName) {
+        this.bankName = bankName;
+        return this;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
+
     public String getLastUpdatedBy() {
         return lastUpdatedBy;
     }
@@ -188,19 +240,6 @@ public class Donation implements Serializable {
         this.status = status;
     }
 
-    public Organizer getOrganizer() {
-        return organizer;
-    }
-
-    public Donation organizer(Organizer organizer) {
-        this.organizer = organizer;
-        return this;
-    }
-
-    public void setOrganizer(Organizer organizer) {
-        this.organizer = organizer;
-    }
-
     public Set<Transaction> getTransactions() {
         return transactions;
     }
@@ -224,6 +263,19 @@ public class Donation implements Serializable {
 
     public void setTransactions(Set<Transaction> transactions) {
         this.transactions = transactions;
+    }
+
+    public Organizer getOrganizer() {
+        return organizer;
+    }
+
+    public Donation organizer(Organizer organizer) {
+        this.organizer = organizer;
+        return this;
+    }
+
+    public void setOrganizer(Organizer organizer) {
+        this.organizer = organizer;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -252,6 +304,9 @@ public class Donation implements Serializable {
             ", url='" + getUrl() + "'" +
             ", imageUrl='" + getImageUrl() + "'" +
             ", paymentUrl='" + getPaymentUrl() + "'" +
+            ", bankAccountNumber='" + getBankAccountNumber() + "'" +
+            ", bankAccountName='" + getBankAccountName() + "'" +
+            ", bankName='" + getBankName() + "'" +
             ", lastUpdatedBy='" + getLastUpdatedBy() + "'" +
             ", lastUpdatedAt='" + getLastUpdatedAt() + "'" +
             ", status='" + getStatus() + "'" +

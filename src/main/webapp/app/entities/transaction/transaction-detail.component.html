@@ -46,12 +46,6 @@
                         <a [routerLink]="['/donation', transaction.donation?.id, 'view']">{{ transaction.donation?.id }}</a>
                     </div>
                 </dd>
-                <dt><span jhiTranslate="donationApp.transaction.donation">Donation</span></dt>
-                <dd>
-                    <div *ngIf="transaction.donation">
-                        <a [routerLink]="['/donation', transaction.donation?.id, 'view']">{{ transaction.donation?.id }}</a>
-                    </div>
-                </dd>
             </dl>
 
             <button type="submit"

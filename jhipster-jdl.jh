@@ -6,8 +6,8 @@ entity Organizer {
 	name String maxlength(100) required unique
     url String maxlength(100)
     email String maxlength(100) required
-    bankAccountName String maxlength(15)
-    bankAccountNumber String maxlength(100)
+    bankAccountNumber String maxlength(15)
+    bankAccountName String maxlength(100)
     bankName String maxlength(100)
     mdr Float max(100)
     sharing Float max(100)
@@ -26,6 +26,9 @@ entity Donation {
     url String maxlength(100)
     imageUrl String maxlength(100)
     paymentUrl String maxlength(100) required unique
+    bankAccountNumber String maxlength(15)
+    bankAccountName String maxlength(100)
+    bankName String maxlength(100)
     lastUpdatedBy String maxlength(100) required
     lastUpdatedAt Instant required
     status IsActiveStatus required

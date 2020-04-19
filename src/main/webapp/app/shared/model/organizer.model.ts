@@ -7,8 +7,8 @@ export interface IOrganizer {
   name?: string;
   url?: string;
   email?: string;
-  bankAccountName?: string;
   bankAccountNumber?: string;
+  bankAccountName?: string;
   bankName?: string;
   mdr?: number;
   sharing?: number;
@@ -24,8 +24,8 @@ export class Organizer implements IOrganizer {
     public name?: string,
     public url?: string,
     public email?: string,
-    public bankAccountName?: string,
     public bankAccountNumber?: string,
+    public bankAccountName?: string,
     public bankName?: string,
     public mdr?: number,
     public sharing?: number,

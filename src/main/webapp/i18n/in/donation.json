@@ -21,10 +21,12 @@
       "url": "Url",
       "imageUrl": "Image Url",
       "paymentUrl": "Payment Url",
+      "bankAccountNumber": "Bank Account Number",
+      "bankAccountName": "Bank Account Name",
+      "bankName": "Bank Name",
       "lastUpdatedBy": "Last Updated By",
       "lastUpdatedAt": "Last Updated At",
       "status": "Status",
-      "organizer": "Organizer",
       "transaction": "Transaction",
       "organizer": "Organizer"
     }

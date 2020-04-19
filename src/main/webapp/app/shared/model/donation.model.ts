@@ -1,6 +1,6 @@
 import { Moment } from 'moment';
-import { IOrganizer } from 'app/shared/model/organizer.model';
 import { ITransaction } from 'app/shared/model/transaction.model';
+import { IOrganizer } from 'app/shared/model/organizer.model';
 import { IsActiveStatus } from 'app/shared/model/enumerations/is-active-status.model';
 
 export interface IDonation {
@@ -10,11 +10,14 @@ export interface IDonation {
   url?: string;
   imageUrl?: string;
   paymentUrl?: string;
+  bankAccountNumber?: string;
+  bankAccountName?: string;
+  bankName?: string;
   lastUpdatedBy?: string;
   lastUpdatedAt?: Moment;
   status?: IsActiveStatus;
-  organizer?: IOrganizer;
   transactions?: ITransaction[];
+  organizer?: IOrganizer;
 }
 
 export class Donation implements IDonation {
@@ -25,10 +28,13 @@ export class Donation implements IDonation {
     public url?: string,
     public imageUrl?: string,
     public paymentUrl?: string,
+    public bankAccountNumber?: string,
+    public bankAccountName?: string,
+    public bankName?: string,
     public lastUpdatedBy?: string,
     public lastUpdatedAt?: Moment,
     public status?: IsActiveStatus,
-    public organizer?: IOrganizer,
-    public transactions?: ITransaction[]
+    public transactions?: ITransaction[],
+    public organizer?: IOrganizer
   ) {}
 }

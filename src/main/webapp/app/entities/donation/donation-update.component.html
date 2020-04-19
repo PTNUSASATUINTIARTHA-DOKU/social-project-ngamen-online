@@ -80,6 +80,42 @@
                 </div>
 
                 <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="donationApp.donation.bankAccountNumber" for="field_bankAccountNumber">Bank Account Number</label>
+                    <input type="text" class="form-control" name="bankAccountNumber" id="field_bankAccountNumber"
+                           formControlName="bankAccountNumber"/>
+                    <div *ngIf="editForm.get('bankAccountNumber')!.invalid && (editForm.get('bankAccountNumber')!.dirty || editForm.get('bankAccountNumber')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('bankAccountNumber')?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 15 }">
+                        This field cannot be longer than 15 characters.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="donationApp.donation.bankAccountName" for="field_bankAccountName">Bank Account Name</label>
+                    <input type="text" class="form-control" name="bankAccountName" id="field_bankAccountName"
+                           formControlName="bankAccountName"/>
+                    <div *ngIf="editForm.get('bankAccountName')!.invalid && (editForm.get('bankAccountName')!.dirty || editForm.get('bankAccountName')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('bankAccountName')?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 100 }">
+                        This field cannot be longer than 100 characters.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="donationApp.donation.bankName" for="field_bankName">Bank Name</label>
+                    <input type="text" class="form-control" name="bankName" id="field_bankName"
+                           formControlName="bankName"/>
+                    <div *ngIf="editForm.get('bankName')!.invalid && (editForm.get('bankName')!.dirty || editForm.get('bankName')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('bankName')?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 100 }">
+                        This field cannot be longer than 100 characters.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label class="form-control-label" jhiTranslate="donationApp.donation.lastUpdatedBy" for="field_lastUpdatedBy">Last Updated By</label>
                     <input type="text" class="form-control" name="lastUpdatedBy" id="field_lastUpdatedBy"
                            formControlName="lastUpdatedBy"/>
@@ -125,14 +161,6 @@
                         This field is required.
                         </small>
                     </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="donationApp.donation.organizer" for="field_organizer">Organizer</label>
-                    <select class="form-control" id="field_organizer" name="organizer" formControlName="organizer">
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="organizerOption.id === editForm.get('organizer')!.value?.id ? editForm.get('organizer')!.value : organizerOption" *ngFor="let organizerOption of organizers; trackBy: trackById">{{ organizerOption.id }}</option>
-                    </select>
                 </div>
 
                 <div class="form-group">
