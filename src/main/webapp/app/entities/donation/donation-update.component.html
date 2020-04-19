@@ -14,7 +14,7 @@
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="donationApp.donation.name" for="field_name">Name</label>
                     <input type="text" class="form-control" name="name" id="field_name"
-                           formControlName="name"/>
+                           formControlName="name" (ngModelChange)="generateSlug()"/>
                     <div *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)">
                         <small class="form-text text-danger"
                                *ngIf="editForm.get('name')?.errors?.required" jhiTranslate="entity.validation.required">
@@ -66,7 +66,7 @@
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="donationApp.donation.paymentSlug" for="field_paymentSlug">Payment Slug</label>
                     <input type="text" class="form-control" name="paymentSlug" id="field_paymentSlug"
-                           formControlName="paymentSlug"/>
+                           formControlName="paymentSlug" disabled/>
                     <div *ngIf="editForm.get('paymentSlug')!.invalid && (editForm.get('paymentSlug')!.dirty || editForm.get('paymentSlug')!.touched)">
                         <small class="form-text text-danger"
                                *ngIf="editForm.get('paymentSlug')?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 100 }">

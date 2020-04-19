@@ -113,4 +113,14 @@ export class DonationUpdateComponent implements OnInit {
   trackById(index: number, item: IOrganizer): any {
     return item.id;
   }
+
+  generateSlug(): void {
+    this.editForm.patchValue({
+      paymentSlug: this.editForm
+        .get(['name'])!
+        .value.replace(/\W+/g, '-')
+        .replace(/-$/, '')
+        .toLowerCase()
+    });
+  }
 }
