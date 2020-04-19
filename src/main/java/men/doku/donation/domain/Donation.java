@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -14,6 +13,7 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
+import men.doku.donation.config.Constants;
 import men.doku.donation.domain.enumeration.IsActiveStatus;
 
 /**
@@ -41,12 +41,12 @@ public class Donation implements Serializable {
     @Column(name = "description", length = 2000)
     private String description;
 
-    @URL
+    @Pattern(regexp = Constants.URL_REGEX)
     @Size(max = 100)
     @Column(name = "url", length = 100)
     private String url;
 
-    @URL
+    @Pattern(regexp = Constants.URL_REGEX)
     @Size(max = 100)
     @Column(name = "image_url", length = 100)
     private String imageUrl;
