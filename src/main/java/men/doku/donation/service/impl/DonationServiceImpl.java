@@ -73,7 +73,7 @@ public class DonationServiceImpl implements DonationService {
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete Donation : {}", id);
+        log.info("Request to delete Donation : {}", findOne(id).toString());
         donationRepository.deleteById(id);
     }
 }

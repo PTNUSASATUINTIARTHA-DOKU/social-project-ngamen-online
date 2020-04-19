@@ -73,7 +73,6 @@ public class TransactionServiceImpl implements TransactionService {
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete Transaction : {}", id);
-        transactionRepository.deleteById(id);
+        log.warn("Request to delete Transaction Forbidden", id);
     }
 }

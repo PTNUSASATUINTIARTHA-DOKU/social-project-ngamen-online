@@ -78,7 +78,7 @@ public class OrganizerServiceImpl implements OrganizerService {
      */
     @Override
     public void delete(Long id) {
-        log.debug("Request to delete Organizer : {}", id);
+        log.info("Request to delete Organizer : {}", findOne(id).toString());
         organizerRepository.deleteById(id);
     }
 }
