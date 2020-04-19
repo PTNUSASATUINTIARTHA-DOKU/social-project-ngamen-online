@@ -46,7 +46,7 @@
                 </dd>
                 <dt><span jhiTranslate="donationApp.donation.lastUpdatedAt">Last Updated At</span></dt>
                 <dd>
-                    <span>{{ donation.lastUpdatedAt }}</span>
+                    <span>{{ donation.lastUpdatedAt  | date:'medium' }}</span>
                 </dd>
                 <dt><span jhiTranslate="donationApp.donation.status">Status</span></dt>
                 <dd>
@@ -55,7 +55,7 @@
                 <dt><span jhiTranslate="donationApp.donation.organizer">Organizer</span></dt>
                 <dd>
                     <div *ngIf="donation.organizer">
-                        <a [routerLink]="['/organizer', donation.organizer?.id, 'view']">{{ donation.organizer?.id }}</a>
+                        <a [routerLink]="['/organizer', donation.organizer?.id, 'view']">{{ donation.organizer?.name }}</a>
                     </div>
                 </dd>
             </dl>

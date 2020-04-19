@@ -24,10 +24,10 @@
                 <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="reset.bind(this)">
                     <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="name"><span jhiTranslate="donationApp.donation.name">Name</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="paymentSlug"><span jhiTranslate="donationApp.donation.paymentSlug">Payment Link</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="description"><span jhiTranslate="donationApp.donation.description">Description</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="url"><span jhiTranslate="donationApp.donation.url">Url</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="imageUrl"><span jhiTranslate="donationApp.donation.imageUrl">Image Url</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="paymentSlug"><span jhiTranslate="donationApp.donation.paymentSlug">Payment Slug</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="bankAccountNumber"><span jhiTranslate="donationApp.donation.bankAccountNumber">Bank Account Number</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="bankAccountName"><span jhiTranslate="donationApp.donation.bankAccountName">Bank Account Name</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="bankName"><span jhiTranslate="donationApp.donation.bankName">Bank Name</span> <fa-icon icon="sort"></fa-icon></th>
@@ -42,10 +42,10 @@
                 <tr *ngFor="let donation of donations ;trackBy: trackId">
                     <td><a [routerLink]="['/donation', donation.id, 'view']">{{ donation.id }}</a></td>
                     <td>{{ donation.name }}</td>
+                    <td>{{ donation.paymentSlug }}</td>
                     <td>{{ donation.description }}</td>
                     <td>{{ donation.url }}</td>
                     <td>{{ donation.imageUrl }}</td>
-                    <td>{{ donation.paymentSlug }}</td>
                     <td>{{ donation.bankAccountNumber }}</td>
                     <td>{{ donation.bankAccountName }}</td>
                     <td>{{ donation.bankName }}</td>

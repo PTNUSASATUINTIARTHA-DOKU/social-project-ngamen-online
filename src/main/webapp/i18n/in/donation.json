@@ -20,7 +20,7 @@
       "description": "Deskripsi",
       "url": "Content URL",
       "imageUrl": "Image URL",
-      "paymentSlug": "Payment Slug",
+      "paymentSlug": "Payment Link",
       "bankAccountNumber": "Nomor rekening Bank",
       "bankAccountName": "Nama rekening Bank",
       "bankName": "Nama Bank",

@@ -4,11 +4,12 @@ import { Subscription } from 'rxjs';
 import { JhiEventManager, JhiParseLinks } from 'ng-jhipster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { IDonation } from 'app/shared/model/donation.model';
+import { IDonation, Donation } from 'app/shared/model/donation.model';
 
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { DonationService } from './donation.service';
 import { DonationDeleteDialogComponent } from './donation-delete-dialog.component';
+import { PAYMENT_URL_PREFIX } from 'app/shared/constants/path.constants';
 
 @Component({
   selector: 'jhi-donation',
@@ -98,6 +99,7 @@ export class DonationComponent implements OnInit, OnDestroy {
     this.links = this.parseLinks.parse(headersLink ? headersLink : '');
     if (data) {
       for (let i = 0; i < data.length; i++) {
+        (data[i] as Donation).paymentSlug = PAYMENT_URL_PREFIX + (data[i] as Donation).paymentSlug;
         this.donations.push(data[i]);
       }
     }

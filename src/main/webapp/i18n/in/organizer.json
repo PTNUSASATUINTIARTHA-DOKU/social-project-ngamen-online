@@ -24,8 +24,8 @@
       "bankName": "Nama Bank",
       "mdr": "MDR Pembayaran (%)",
       "sharing": "Pembagian Amal (%)",
-      "lastUpdatedBy": "Last Updated By",
-      "lastUpdatedAt": "Last Updated At",
+      "lastUpdatedBy": "Diubah oleh",
+      "lastUpdatedAt": "Pengubahan terakhir",
       "status": "Status",
       "donation": "Donasi"
     }
