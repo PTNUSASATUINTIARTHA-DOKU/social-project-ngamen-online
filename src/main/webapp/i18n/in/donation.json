@@ -2,33 +2,33 @@
   "donationApp": {
     "donation": {
       "home": {
-        "title": "Donations",
-        "createLabel": "Buat Donation baru",
-        "createOrEditLabel": "Buat atau edit Donation",
-        "notFound": "No Donations found"
+        "title": "Donasi",
+        "createLabel": "Buat Donasi baru",
+        "createOrEditLabel": "Buat atau edit Donasi",
+        "notFound": "Tidak ada Donasi yang ditemukan"
       },
-      "created": "Donation dengan id {{ param }} telah dibuat",
-      "updated": "Donation dengan id {{ param }} telah diperbaharui",
-      "deleted": "Donation dengan id {{ param }} telah dihapus",
+      "created": "Donasi dengan id {{ param }} telah dibuat",
+      "updated": "Donasi dengan id {{ param }} telah diperbaharui",
+      "deleted": "Donasi dengan id {{ param }} telah dihapus",
       "delete": {
-        "question": "Apakah anda yakin ingin menghapus Donation {{ id }}?"
+        "question": "Apakah anda yakin ingin menghapus Donasi {{ id }}?"
       },
       "detail": {
-        "title": "Donation"
+        "title": "Donasi"
       },
-      "name": "Name",
-      "description": "Description",
-      "url": "Url",
-      "imageUrl": "Image Url",
+      "name": "Nama",
+      "description": "Deskripsi",
+      "url": "Content URL",
+      "imageUrl": "Image URL",
       "paymentSlug": "Payment Slug",
-      "bankAccountNumber": "Bank Account Number",
-      "bankAccountName": "Bank Account Name",
-      "bankName": "Bank Name",
-      "lastUpdatedBy": "Last Updated By",
-      "lastUpdatedAt": "Last Updated At",
+      "bankAccountNumber": "Nomor rekening Bank",
+      "bankAccountName": "Nama rekening Bank",
+      "bankName": "Nama Bank",
+      "lastUpdatedBy": "Diubah oleh",
+      "lastUpdatedAt": "Pengubahan terakhir",
       "status": "Status",
       "transaction": "Transaction",
-      "organizer": "Organizer"
+      "organizer": "Yayasan"
     }
   }
 }
