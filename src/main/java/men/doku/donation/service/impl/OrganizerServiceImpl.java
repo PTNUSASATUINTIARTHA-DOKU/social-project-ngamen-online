@@ -3,6 +3,8 @@ package men.doku.donation.service.impl;
 import men.doku.donation.service.OrganizerService;
 import men.doku.donation.domain.Organizer;
 import men.doku.donation.repository.OrganizerRepository;
+import men.doku.donation.security.SecurityUtils;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
 import java.util.Optional;
 
 /**
@@ -36,6 +39,8 @@ public class OrganizerServiceImpl implements OrganizerService {
      */
     @Override
     public Organizer save(Organizer organizer) {
+        organizer.setLastUpdatedAt(Instant.now());
+        organizer.setLastUpdatedBy(SecurityUtils.getCurrentUserLogin().get());
         log.debug("Request to save Organizer : {}", organizer);
         return organizerRepository.save(organizer);
     }

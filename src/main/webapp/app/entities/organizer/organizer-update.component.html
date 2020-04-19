@@ -124,25 +124,6 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="donationApp.organizer.lastUpdatedBy" for="field_lastUpdatedBy">Last Updated By</label>
-                    <input type="text" class="form-control" name="lastUpdatedBy" id="field_lastUpdatedBy"
-                           formControlName="lastUpdatedBy"/>
-                    <div *ngIf="editForm.get('lastUpdatedBy')!.invalid && (editForm.get('lastUpdatedBy')!.dirty || editForm.get('lastUpdatedBy')!.touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="editForm.get('lastUpdatedBy')?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 100 }">
-                        This field cannot be longer than 100 characters.
-                        </small>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="donationApp.organizer.lastUpdatedAt" for="field_lastUpdatedAt">Last Updated At</label>
-                    <div class="d-flex">
-                        <input id="field_lastUpdatedAt" type="datetime-local" class="form-control" name="lastUpdatedAt" formControlName="lastUpdatedAt" placeholder="YYYY-MM-DD HH:mm"/>
-                    </div>
-                </div>
-
-                <div class="form-group">
                     <label class="form-control-label" jhiTranslate="donationApp.organizer.status" for="field_status">Status</label>
                     <select class="form-control" name="status" formControlName="status" id="field_status">
                         <option value="ACTIVE">{{ 'donationApp.IsActiveStatus.ACTIVE' | translate }}</option>

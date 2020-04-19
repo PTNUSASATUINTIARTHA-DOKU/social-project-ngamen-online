@@ -4,8 +4,6 @@ import { HttpResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import * as moment from 'moment';
-import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 
 import { IOrganizer, Organizer } from 'app/shared/model/organizer.model';
 import { OrganizerService } from './organizer.service';
@@ -28,8 +26,6 @@ export class OrganizerUpdateComponent implements OnInit {
     bankName: [null, [Validators.maxLength(100)]],
     mdr: [null, [Validators.max(100)]],
     sharing: [null, [Validators.max(100)]],
-    lastUpdatedBy: [null, [Validators.maxLength(100)]],
-    lastUpdatedAt: [],
     status: []
   });
 
@@ -37,11 +33,6 @@ export class OrganizerUpdateComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ organizer }) => {
-      if (!organizer.id) {
-        const today = moment().startOf('day');
-        organizer.lastUpdatedAt = today;
-      }
-
       this.updateForm(organizer);
     });
   }
@@ -57,8 +48,6 @@ export class OrganizerUpdateComponent implements OnInit {
       bankName: organizer.bankName,
       mdr: organizer.mdr,
       sharing: organizer.sharing,
-      lastUpdatedBy: organizer.lastUpdatedBy,
-      lastUpdatedAt: organizer.lastUpdatedAt ? organizer.lastUpdatedAt.format(DATE_TIME_FORMAT) : null,
       status: organizer.status
     });
   }
@@ -89,10 +78,6 @@ export class OrganizerUpdateComponent implements OnInit {
       bankName: this.editForm.get(['bankName'])!.value,
       mdr: this.editForm.get(['mdr'])!.value,
       sharing: this.editForm.get(['sharing'])!.value,
-      lastUpdatedBy: this.editForm.get(['lastUpdatedBy'])!.value,
-      lastUpdatedAt: this.editForm.get(['lastUpdatedAt'])!.value
-        ? moment(this.editForm.get(['lastUpdatedAt'])!.value, DATE_TIME_FORMAT)
-        : undefined,
       status: this.editForm.get(['status'])!.value
     };
   }
