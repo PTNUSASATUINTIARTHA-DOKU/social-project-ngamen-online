@@ -6,6 +6,7 @@ import { DonationSharedModule } from 'app/shared/shared.module';
 import { DonationCoreModule } from 'app/core/core.module';
 import { DonationAppRoutingModule } from './app-routing.module';
 import { DonationHomeModule } from './home/home.module';
+import { DonationPaymentModule } from './payment/payment.module';
 import { DonationEntityModule } from './entities/entity.module';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import { MainComponent } from './layouts/main/main.component';
@@ -21,6 +22,7 @@ import { ErrorComponent } from './layouts/error/error.component';
     DonationSharedModule,
     DonationCoreModule,
     DonationHomeModule,
+    DonationPaymentModule,
     // jhipster-needle-angular-add-module JHipster will add new module here
     DonationEntityModule,
     DonationAppRoutingModule
