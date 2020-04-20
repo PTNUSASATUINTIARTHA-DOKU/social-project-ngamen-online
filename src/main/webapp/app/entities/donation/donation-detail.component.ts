@@ -15,8 +15,8 @@ export class DonationDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ donation }) => {
+      donation.paymentSlug = PAYMENT_URL_PREFIX + donation?.paymentSlug;
       this.donation = donation;
-      this.donation?.paymentSlug = PAYMENT_URL_PREFIX + donation?.paymentSlug;
     });
   }
 
