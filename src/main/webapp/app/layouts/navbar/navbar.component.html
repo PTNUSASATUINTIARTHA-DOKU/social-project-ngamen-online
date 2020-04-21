@@ -1,4 +1,4 @@
-<nav *ngIf="path!=='/payment'" class="navbar navbar-dark navbar-expand-md bg-dark">
+<nav *ngIf="path.indexOf('/payment') === -1 && path!=='/error' && path !== '/404' && path !== '/accessdenied'" class="navbar navbar-dark navbar-expand-md bg-dark">
     <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
         <span class="logo-img"></span>
         <span jhiTranslate="global.title" class="navbar-title">Donation</span> <span class="navbar-version">{{ version }}</span>

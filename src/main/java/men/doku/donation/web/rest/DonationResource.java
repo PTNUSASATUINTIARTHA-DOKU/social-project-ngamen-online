@@ -90,9 +90,9 @@ public class DonationResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of donations in body.
      */
     @GetMapping("/donations")
-    public ResponseEntity<List<Donation>> getAllDonations(Pageable pageable) {
+    public ResponseEntity<List<Donation>> getAllDonations(Donation donation, Pageable pageable) {
         log.debug("REST request to get a page of Donations");
-        Page<Donation> page = donationService.findAll(pageable);
+        Page<Donation> page = donationService.findAll(donation, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }

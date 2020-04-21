@@ -6,7 +6,7 @@ import { PAYMENT_ROUTE } from './payment.route';
 import { PaymentComponent } from './payment.component';
 
 @NgModule({
-  imports: [DonationSharedModule, RouterModule.forChild([PAYMENT_ROUTE])],
+  imports: [DonationSharedModule, RouterModule.forChild(PAYMENT_ROUTE)],
   declarations: [PaymentComponent]
 })
 export class DonationPaymentModule {}

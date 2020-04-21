@@ -24,9 +24,10 @@ public interface DonationService {
      * Get all the donations.
      *
      * @param pageable the pagination information.
+     * @param donation the donation information
      * @return the list of entities.
      */
-    Page<Donation> findAll(Pageable pageable);
+    public Page<Donation> findAll(Donation donation, Pageable pageable);
 
     /**
      * Get the "id" donation.
@@ -42,4 +43,12 @@ public interface DonationService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    /**
+     * Get one donation by slug.
+     *
+     * @param id the id of the entity.
+     * @return the entity.
+     */
+    Optional<Donation> findOneByPaymentSlug(String paymentSlug);
 }
