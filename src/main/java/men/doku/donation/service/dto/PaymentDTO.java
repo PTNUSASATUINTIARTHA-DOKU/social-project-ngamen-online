@@ -1,38 +1,30 @@
 package men.doku.donation.service.dto;
 
 import javax.transaction.Transaction;
-
 import men.doku.donation.domain.Donation;
 
 public class PaymentDTO {
 
-    private String slug;
-    private Donation donation;
+    private DonationDTO donation;
     private Transaction transaction;
 
     public PaymentDTO() {
     }
-    
-    /** 
-     * @return String
-     */
-    public String getSlug() {
-        return slug;
+        
+    public PaymentDTO(Donation donation) {
+        OrganizerDTO organizer = new OrganizerDTO(donation.getOrganizer().getId(), 
+                donation.getOrganizer().getName(), donation.getOrganizer().getUrl(), 
+                donation.getOrganizer().getEmail());
+        DonationDTO donationDto = new DonationDTO(donation.getId(), donation.getName(), 
+                donation.getDescription(), donation.getUrl(), donation.getImageUrl(), 
+                donation.getPaymentSlug(), organizer);
+        this.donation = donationDto;
     }
 
-    
-    /** 
-     * @param slug
-     */
-    public void setSlug(String slug) {
-        this.slug = slug;
-    }
-
-    
     /** 
      * @return Donation
      */
-    public Donation getDonation() {
+    public DonationDTO getDonation() {
         return donation;
     }
 
@@ -40,7 +32,7 @@ public class PaymentDTO {
     /** 
      * @param donation
      */
-    public void setDonation(Donation donation) {
+    public void setDonation(DonationDTO donation) {
         this.donation = donation;
     }
 

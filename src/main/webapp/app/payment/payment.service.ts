@@ -1,12 +1,10 @@
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SERVER_API_URL } from 'app/app.constants';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { IPaymentDTO } from 'app/shared/model/dto/payment-dto.model';
 import { Observable } from 'rxjs';
-import { IDonation } from 'app/shared/model/donation.model';
-import { map } from 'rxjs/operators';
-import * as moment from 'moment';
 
-type EntityResponseType = HttpResponse<IDonation>;
+type EntityResponseType = HttpResponse<IPaymentDTO>;
 
 @Injectable({ providedIn: 'root' })
 export class PaymentService {
@@ -15,15 +13,6 @@ export class PaymentService {
   constructor(protected http: HttpClient) {}
 
   find(slug: string): Observable<EntityResponseType> {
-    return this.http
-      .get<IDonation>(`${this.resourceUrl}/${slug}`, { observe: 'response' })
-      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
-  }
-
-  protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
-    if (res.body) {
-      res.body.lastUpdatedAt = res.body.lastUpdatedAt ? moment(res.body.lastUpdatedAt) : undefined;
-    }
-    return res;
+    return this.http.get<IPaymentDTO>(`${this.resourceUrl}/${slug}`, { observe: 'response' });
   }
 }

@@ -1,23 +1,23 @@
 import { HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, Router, Routes } from '@angular/router';
-import { Donation, IDonation } from 'app/shared/model/donation.model';
+import { IPaymentDTO, PaymentDTO } from 'app/shared/model/dto/payment-dto.model';
 import { EMPTY, Observable, of } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
 import { PaymentComponent } from './payment.component';
 import { PaymentService } from './payment.service';
 
 @Injectable({ providedIn: 'root' })
-export class PaymentResolver implements Resolve<IDonation> {
+export class PaymentResolver implements Resolve<IPaymentDTO> {
   constructor(private paymentService: PaymentService, private router: Router) {}
 
-  resolve(route: ActivatedRouteSnapshot): Observable<IDonation> {
+  resolve(route: ActivatedRouteSnapshot): Observable<IPaymentDTO> {
     const slug = route.paramMap.get('slug');
     if (slug) {
       return this.paymentService.find(slug).pipe(
-        flatMap((donation: HttpResponse<Donation>) => {
-          if (donation.body) {
-            return of(donation.body);
+        flatMap((payment: HttpResponse<PaymentDTO>) => {
+          if (payment.body) {
+            return of(payment.body);
           } else {
             this.router.navigate(['404']);
             return EMPTY;
@@ -25,7 +25,7 @@ export class PaymentResolver implements Resolve<IDonation> {
         })
       );
     }
-    return of(new Donation());
+    return of(new PaymentDTO());
   }
 }
 
@@ -42,7 +42,7 @@ export const PAYMENT_ROUTE: Routes = [
     path: 'payment/:slug',
     component: PaymentComponent,
     resolve: {
-      donation: PaymentResolver
+      payment: PaymentResolver
     },
     data: {
       authorities: [],

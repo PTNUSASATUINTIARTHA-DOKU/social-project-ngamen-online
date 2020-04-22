@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { DonationService } from 'app/entities/donation/donation.service';
-import { IDonation } from 'app/shared/model/donation.model';
 import { ActivatedRoute } from '@angular/router';
+import { DonationService } from 'app/entities/donation/donation.service';
+import { IPaymentDTO } from 'app/shared/model/dto/payment-dto.model';
 
 @Component({
   selector: 'jhi-main',
@@ -9,17 +9,17 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['payment.scss']
 })
 export class PaymentComponent implements OnInit, OnDestroy {
-  donation: IDonation;
+  payment: IPaymentDTO;
   slug: string;
 
   constructor(protected service: DonationService, protected route: ActivatedRoute) {
     this.slug = '';
-    this.donation = {};
+    this.payment = {};
   }
 
   ngOnInit(): void {
-    // to access resolved item = this.route.snapshot.data.donation check using console.log(this.route); with comment eslint-disable-next-line no-console
-    this.donation = this.route.snapshot.data.donation;
+    // to access resolved item = this.route.snapshot.data.payment check using console.log(this.route); with comment eslint-disable-next-line no-console
+    this.payment = this.route.snapshot.data.payment;
     this.slug = this.route.snapshot.params.slug;
   }
 
