@@ -1,11 +1,11 @@
-id;invoice_number;session_id;basket;ovo_id_masked;device_information;last_updated_by;last_updated_at;status
-1;Kentucky;Ergonomic Concrete Soap;Chips COM;Response B2B US;Buckinghamshire orchestrate grow;Kids;2020-04-18T10:05:57;PROCESS
-2;Strategist Innovative Fresh;mission-critical;holistic;Automotive;payment connecting;Executive back up Cambridgeshire;2020-04-18T22:39:57;FAILED
-3;scalable high-level;Industrial;digital cross-platform end-to-end;optimize;Awesome Berkshire Pizza;Facilitator Regional Northern Mariana Islands;2020-04-18T17:21:26;PROCESS
-4;clear-thinking enable transmit;Bacon optical;olive IB;Alabama;port models Dynamic;5th generation Maryland Personal Loan Account;2020-04-18T10:41:04;FAILED
-5;Berkshire hard drive;SSL Avon mesh;Group JBOD Gardens;Planner magenta;intangible applications;Lek Developer silver;2020-04-18T11:03:57;FAILED
-6;Berkshire;Dynamic calculating deposit;Ameliorated;Belgium Towels ;Pakistan SCSI;mint green Health;2020-04-19T00:12:14;SUCCESS
-7;synergies Operations;Borders;synergies Forward;Pitcairn Island;Pound Sterling New Mexico copy;Berkshire Pants program;2020-04-18T23:17:35;SUCCESS
-8;parsing object-oriented Coves;Tuna overriding;Malagasy Ariary Gloves;Morocco B2C Con;value-added AI Peso Uruguayo Uruguay Peso en Unidades Indexadas;parse initiatives Concrete;2020-04-18T14:41:57;PROCESS
-9;Global;neural end-to-end;Planner Borders experiences;Personal Loan A;back-end;monitoring override mobile;2020-04-18T18:10:36;INITIATE
-10;Assistant;Rustic;Soft copy;database;generate;Oregon Home Car;2020-04-19T02:47:58;SUCCESS
+id;invoice_number;session_id;basket;ovo_id_masked;device_information;name;mobile;email;amount;payment_channel;last_updated_by;last_updated_at;status
+1;Kentucky;Ergonomic Concrete Soap;Chips COM;Response B2B US;Buckinghamshire orchestrate grow;Kids;disintermediate;Zelma38@hotmail.com;21907;OVO;Operations;2020-04-18T13:43:09;INITIATE
+2;Sleek Fresh Ball interface mul;withdrawal navigating scalable;Course;Assistant;grey Gourde US Dollar 4th generation;Licensed Awesome;Bedfordshire pr;Ron_Treutel@hotmail.com;69435;OVO;Shirt;2020-04-19T01:18:04;SUCCESS
+3;CFA Franc BEAC;plum Clothing port;capacitor invoice;Awesome Cotton ;connect Corporate JSON;Montana models South Carolina;Networked Tools;Haley.Thompson27@hotmail.com;41352;OVO;SMTP Industrial Danish Krone;2020-04-18T04:53:59;INITIATE
+4;iterate Dynamic;calculate Intelligent Concrete Chair Global;Towels;sky blue;CFA Franc BEAC ADP;Chair;mint green card;Florencio95@yahoo.com;56674;OVO;Automotive digital;2020-04-18T16:20:11;PROCESS
+5;Berkshire Pants program;solid state;USB Delaware;Assistant Funct;Coves Central African Republic invoice;visualize;Gloves connecti;Evalyn_Gulgowski87@yahoo.com;41237;OVO;application Administrator Computer;2020-04-18T22:54:01;INITIATE
+6;Haiti neural end-to-end;Planner Borders experiences;Personal Loan Account;back-end;monitoring override mobile;Mississippi Delaware;Wooden;Quinn14@hotmail.com;43678;OVO;database;2020-04-18T23:51:02;INITIATE
+7;Sleek;1080p;bus Arkansas feed;synthesize Gold;transform back-end International;productize Austria;array Beauty ma;Nathaniel.Jacobi@hotmail.com;10131;OVO;responsive Money Market Account Expanded;2020-04-19T02:34:18;SUCCESS
+8;AGP;Shore;B2C;Legacy;3rd generation compress e-markets;Kansas blue Minnesota;Handmade Consul;Wilhelmine_Mosciski82@yahoo.com;91995;OVO;Latvian Lats;2020-04-19T04:14:06;FAILED
+9;Berkshire Personal Loan Accoun;transmit;Developer;Small Wooden Ta;Points value-added;Sudan;Industrial Lice;Jaida_Kunze@yahoo.com;37297;OVO;AI eco-centric Gorgeous;2020-04-18T14:51:23;PROCESS
+10;revolutionary;Kids Refined Frozen Chair Bedfordshire;user-centric Ergonomic hardware;models Licensed;Salad;exploit transition;yellow customer;Clyde_Durgan62@gmail.com;66190;OVO;Granite Lempira;2020-04-18T09:16:05;PROCESS

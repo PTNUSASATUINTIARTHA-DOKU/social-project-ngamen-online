@@ -9,7 +9,10 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
+import java.util.Objects;
 import java.time.Instant;
+
+import men.doku.donation.domain.enumeration.PaymentChannel;
 
 import men.doku.donation.domain.enumeration.TransactionStatus;
 
@@ -49,6 +52,26 @@ public class Transaction implements Serializable {
     @Size(max = 1000)
     @Column(name = "device_information", length = 1000)
     private String deviceInformation;
+
+    @Size(max = 30)
+    @Column(name = "name", length = 30)
+    private String name;
+
+    @Size(max = 15)
+    @Column(name = "mobile", length = 15)
+    private String mobile;
+
+    @Size(max = 100)
+    @Column(name = "email", length = 100)
+    private String email;
+
+    @Min(value = 10000L)
+    @Column(name = "amount")
+    private Long amount;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "payment_channel")
+    private PaymentChannel paymentChannel;
 
     @Size(max = 100)
     @Column(name = "last_updated_by", length = 100)
@@ -139,6 +162,71 @@ public class Transaction implements Serializable {
         this.deviceInformation = deviceInformation;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public Transaction name(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public Transaction mobile(String mobile) {
+        this.mobile = mobile;
+        return this;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public Transaction email(String email) {
+        this.email = email;
+        return this;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Long getAmount() {
+        return amount;
+    }
+
+    public Transaction amount(Long amount) {
+        this.amount = amount;
+        return this;
+    }
+
+    public void setAmount(Long amount) {
+        this.amount = amount;
+    }
+
+    public PaymentChannel getPaymentChannel() {
+        return paymentChannel;
+    }
+
+    public Transaction paymentChannel(PaymentChannel paymentChannel) {
+        this.paymentChannel = paymentChannel;
+        return this;
+    }
+
+    public void setPaymentChannel(PaymentChannel paymentChannel) {
+        this.paymentChannel = paymentChannel;
+    }
+
     public String getLastUpdatedBy() {
         return lastUpdatedBy;
     }
@@ -217,6 +305,11 @@ public class Transaction implements Serializable {
             ", basket='" + getBasket() + "'" +
             ", ovoIdMasked='" + getOvoIdMasked() + "'" +
             ", deviceInformation='" + getDeviceInformation() + "'" +
+            ", name='" + getName() + "'" +
+            ", mobile='" + getMobile() + "'" +
+            ", email='" + getEmail() + "'" +
+            ", amount=" + getAmount() +
+            ", paymentChannel='" + getPaymentChannel() + "'" +
             ", lastUpdatedBy='" + getLastUpdatedBy() + "'" +
             ", lastUpdatedAt='" + getLastUpdatedAt() + "'" +
             ", status='" + getStatus() + "'" +

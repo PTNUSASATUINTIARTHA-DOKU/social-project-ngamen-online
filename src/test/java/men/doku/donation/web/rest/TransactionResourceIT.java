@@ -24,6 +24,7 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import men.doku.donation.domain.enumeration.PaymentChannel;
 import men.doku.donation.domain.enumeration.TransactionStatus;
 /**
  * Integration tests for the {@link TransactionResource} REST controller.
@@ -48,6 +49,21 @@ public class TransactionResourceIT {
 
     private static final String DEFAULT_DEVICE_INFORMATION = "AAAAAAAAAA";
     private static final String UPDATED_DEVICE_INFORMATION = "BBBBBBBBBB";
+
+    private static final String DEFAULT_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_NAME = "BBBBBBBBBB";
+
+    private static final String DEFAULT_MOBILE = "AAAAAAAAAA";
+    private static final String UPDATED_MOBILE = "BBBBBBBBBB";
+
+    private static final String DEFAULT_EMAIL = "AAAAAAAAAA";
+    private static final String UPDATED_EMAIL = "BBBBBBBBBB";
+
+    private static final Long DEFAULT_AMOUNT = 10000L;
+    private static final Long UPDATED_AMOUNT = 10001L;
+
+    private static final PaymentChannel DEFAULT_PAYMENT_CHANNEL = PaymentChannel.OVO;
+    private static final PaymentChannel UPDATED_PAYMENT_CHANNEL = PaymentChannel.OVO;
 
     private static final String DEFAULT_LAST_UPDATED_BY = "AAAAAAAAAA";
     private static final String UPDATED_LAST_UPDATED_BY = "BBBBBBBBBB";
@@ -85,6 +101,11 @@ public class TransactionResourceIT {
             .basket(DEFAULT_BASKET)
             .ovoIdMasked(DEFAULT_OVO_ID_MASKED)
             .deviceInformation(DEFAULT_DEVICE_INFORMATION)
+            .name(DEFAULT_NAME)
+            .mobile(DEFAULT_MOBILE)
+            .email(DEFAULT_EMAIL)
+            .amount(DEFAULT_AMOUNT)
+            .paymentChannel(DEFAULT_PAYMENT_CHANNEL)
             .lastUpdatedBy(DEFAULT_LAST_UPDATED_BY)
             .lastUpdatedAt(DEFAULT_LAST_UPDATED_AT)
             .status(DEFAULT_STATUS);
@@ -103,6 +124,11 @@ public class TransactionResourceIT {
             .basket(UPDATED_BASKET)
             .ovoIdMasked(UPDATED_OVO_ID_MASKED)
             .deviceInformation(UPDATED_DEVICE_INFORMATION)
+            .name(UPDATED_NAME)
+            .mobile(UPDATED_MOBILE)
+            .email(UPDATED_EMAIL)
+            .amount(UPDATED_AMOUNT)
+            .paymentChannel(UPDATED_PAYMENT_CHANNEL)
             .lastUpdatedBy(UPDATED_LAST_UPDATED_BY)
             .lastUpdatedAt(UPDATED_LAST_UPDATED_AT)
             .status(UPDATED_STATUS);
@@ -134,6 +160,11 @@ public class TransactionResourceIT {
         assertThat(testTransaction.getBasket()).isEqualTo(DEFAULT_BASKET);
         assertThat(testTransaction.getOvoIdMasked()).isEqualTo(DEFAULT_OVO_ID_MASKED);
         assertThat(testTransaction.getDeviceInformation()).isEqualTo(DEFAULT_DEVICE_INFORMATION);
+        assertThat(testTransaction.getName()).isEqualTo(DEFAULT_NAME);
+        assertThat(testTransaction.getMobile()).isEqualTo(DEFAULT_MOBILE);
+        assertThat(testTransaction.getEmail()).isEqualTo(DEFAULT_EMAIL);
+        assertThat(testTransaction.getAmount()).isEqualTo(DEFAULT_AMOUNT);
+        assertThat(testTransaction.getPaymentChannel()).isEqualTo(DEFAULT_PAYMENT_CHANNEL);
         assertThat(testTransaction.getLastUpdatedBy()).isEqualTo(DEFAULT_LAST_UPDATED_BY);
         assertThat(testTransaction.getLastUpdatedAt()).isEqualTo(DEFAULT_LAST_UPDATED_AT);
         assertThat(testTransaction.getStatus()).isEqualTo(DEFAULT_STATUS);
@@ -193,6 +224,11 @@ public class TransactionResourceIT {
             .andExpect(jsonPath("$.[*].basket").value(hasItem(DEFAULT_BASKET)))
             .andExpect(jsonPath("$.[*].ovoIdMasked").value(hasItem(DEFAULT_OVO_ID_MASKED)))
             .andExpect(jsonPath("$.[*].deviceInformation").value(hasItem(DEFAULT_DEVICE_INFORMATION)))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+            .andExpect(jsonPath("$.[*].mobile").value(hasItem(DEFAULT_MOBILE)))
+            .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL)))
+            .andExpect(jsonPath("$.[*].amount").value(hasItem(DEFAULT_AMOUNT.intValue())))
+            .andExpect(jsonPath("$.[*].paymentChannel").value(hasItem(DEFAULT_PAYMENT_CHANNEL.toString())))
             .andExpect(jsonPath("$.[*].lastUpdatedBy").value(hasItem(DEFAULT_LAST_UPDATED_BY)))
             .andExpect(jsonPath("$.[*].lastUpdatedAt").value(hasItem(DEFAULT_LAST_UPDATED_AT.toString())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
@@ -214,6 +250,11 @@ public class TransactionResourceIT {
             .andExpect(jsonPath("$.basket").value(DEFAULT_BASKET))
             .andExpect(jsonPath("$.ovoIdMasked").value(DEFAULT_OVO_ID_MASKED))
             .andExpect(jsonPath("$.deviceInformation").value(DEFAULT_DEVICE_INFORMATION))
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
+            .andExpect(jsonPath("$.mobile").value(DEFAULT_MOBILE))
+            .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL))
+            .andExpect(jsonPath("$.amount").value(DEFAULT_AMOUNT.intValue()))
+            .andExpect(jsonPath("$.paymentChannel").value(DEFAULT_PAYMENT_CHANNEL.toString()))
             .andExpect(jsonPath("$.lastUpdatedBy").value(DEFAULT_LAST_UPDATED_BY))
             .andExpect(jsonPath("$.lastUpdatedAt").value(DEFAULT_LAST_UPDATED_AT.toString()))
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
@@ -245,6 +286,11 @@ public class TransactionResourceIT {
             .basket(UPDATED_BASKET)
             .ovoIdMasked(UPDATED_OVO_ID_MASKED)
             .deviceInformation(UPDATED_DEVICE_INFORMATION)
+            .name(UPDATED_NAME)
+            .mobile(UPDATED_MOBILE)
+            .email(UPDATED_EMAIL)
+            .amount(UPDATED_AMOUNT)
+            .paymentChannel(UPDATED_PAYMENT_CHANNEL)
             .lastUpdatedBy(UPDATED_LAST_UPDATED_BY)
             .lastUpdatedAt(UPDATED_LAST_UPDATED_AT)
             .status(UPDATED_STATUS);
@@ -263,6 +309,11 @@ public class TransactionResourceIT {
         assertThat(testTransaction.getBasket()).isEqualTo(UPDATED_BASKET);
         assertThat(testTransaction.getOvoIdMasked()).isEqualTo(UPDATED_OVO_ID_MASKED);
         assertThat(testTransaction.getDeviceInformation()).isEqualTo(UPDATED_DEVICE_INFORMATION);
+        assertThat(testTransaction.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testTransaction.getMobile()).isEqualTo(UPDATED_MOBILE);
+        assertThat(testTransaction.getEmail()).isEqualTo(UPDATED_EMAIL);
+        assertThat(testTransaction.getAmount()).isEqualTo(UPDATED_AMOUNT);
+        assertThat(testTransaction.getPaymentChannel()).isEqualTo(UPDATED_PAYMENT_CHANNEL);
         assertThat(testTransaction.getLastUpdatedBy()).isEqualTo(UPDATED_LAST_UPDATED_BY);
         assertThat(testTransaction.getLastUpdatedAt()).isEqualTo(UPDATED_LAST_UPDATED_AT);
         assertThat(testTransaction.getStatus()).isEqualTo(UPDATED_STATUS);

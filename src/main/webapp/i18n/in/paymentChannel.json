@@ -1,0 +1,8 @@
+{
+  "donationApp": {
+    "PaymentChannel": {
+      "null": "",
+      "OVO": "OVO"
+    }
+  }
+}

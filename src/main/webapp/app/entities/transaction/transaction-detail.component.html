@@ -28,6 +28,26 @@
                 <dd>
                     <span>{{ transaction.deviceInformation }}</span>
                 </dd>
+                <dt><span jhiTranslate="donationApp.transaction.name">Name</span></dt>
+                <dd>
+                    <span>{{ transaction.name }}</span>
+                </dd>
+                <dt><span jhiTranslate="donationApp.transaction.mobile">Mobile</span></dt>
+                <dd>
+                    <span>{{ transaction.mobile }}</span>
+                </dd>
+                <dt><span jhiTranslate="donationApp.transaction.email">Email</span></dt>
+                <dd>
+                    <span>{{ transaction.email }}</span>
+                </dd>
+                <dt><span jhiTranslate="donationApp.transaction.amount">Amount</span></dt>
+                <dd>
+                    <span>{{ transaction.amount }}</span>
+                </dd>
+                <dt><span jhiTranslate="donationApp.transaction.paymentChannel">Payment Channel</span></dt>
+                <dd>
+                    <span jhiTranslate="{{ 'donationApp.PaymentChannel.' + transaction.paymentChannel }}">{{ transaction.paymentChannel }}</span>
+                </dd>
                 <dt><span jhiTranslate="donationApp.transaction.lastUpdatedBy">Last Updated By</span></dt>
                 <dd>
                     <span>{{ transaction.lastUpdatedBy }}</span>

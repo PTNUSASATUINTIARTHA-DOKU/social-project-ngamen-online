@@ -4,6 +4,7 @@ import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { TransactionService } from 'app/entities/transaction/transaction.service';
 import { ITransaction, Transaction } from 'app/shared/model/transaction.model';
+import { PaymentChannel } from 'app/shared/model/enumerations/payment-channel.model';
 import { TransactionStatus } from 'app/shared/model/enumerations/transaction-status.model';
 
 describe('Service Tests', () => {
@@ -32,6 +33,11 @@ describe('Service Tests', () => {
         'AAAAAAA',
         'AAAAAAA',
         'AAAAAAA',
+        'AAAAAAA',
+        'AAAAAAA',
+        'AAAAAAA',
+        0,
+        PaymentChannel.OVO,
         'AAAAAAA',
         currentDate,
         TransactionStatus.INITIATE
@@ -85,6 +91,11 @@ describe('Service Tests', () => {
             basket: 'BBBBBB',
             ovoIdMasked: 'BBBBBB',
             deviceInformation: 'BBBBBB',
+            name: 'BBBBBB',
+            mobile: 'BBBBBB',
+            email: 'BBBBBB',
+            amount: 1,
+            paymentChannel: 'BBBBBB',
             lastUpdatedBy: 'BBBBBB',
             lastUpdatedAt: currentDate.format(DATE_TIME_FORMAT),
             status: 'BBBBBB'
@@ -114,6 +125,11 @@ describe('Service Tests', () => {
             basket: 'BBBBBB',
             ovoIdMasked: 'BBBBBB',
             deviceInformation: 'BBBBBB',
+            name: 'BBBBBB',
+            mobile: 'BBBBBB',
+            email: 'BBBBBB',
+            amount: 1,
+            paymentChannel: 'BBBBBB',
             lastUpdatedBy: 'BBBBBB',
             lastUpdatedAt: currentDate.format(DATE_TIME_FORMAT),
             status: 'BBBBBB'

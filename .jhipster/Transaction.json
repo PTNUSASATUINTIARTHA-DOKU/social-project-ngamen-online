@@ -44,6 +44,43 @@
             "fieldValidateRulesMaxlength": "1000"
         },
         {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": "30"
+        },
+        {
+            "fieldName": "mobile",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": "15"
+        },
+        {
+            "fieldName": "email",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": "100"
+        },
+        {
+            "fieldName": "amount",
+            "fieldType": "Long",
+            "fieldValidateRules": [
+                "min"
+            ],
+            "fieldValidateRulesMin": "10000"
+        },
+        {
+            "fieldName": "paymentChannel",
+            "fieldType": "PaymentChannel",
+            "fieldValues": "OVO"
+        },
+        {
             "fieldName": "lastUpdatedBy",
             "fieldType": "String",
             "fieldValidateRules": [

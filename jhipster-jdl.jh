@@ -44,6 +44,11 @@ entity Transaction {
     basket String maxlength(1024)
     ovoIdMasked String maxlength(15)
     deviceInformation String maxlength(1000)
+  	name String maxlength(30)
+    mobile String maxlength(15)
+    email String maxlength(100)
+    amount Long min(10000)
+    paymentChannel PaymentChannel
     lastUpdatedBy String maxlength(100)
     lastUpdatedAt Instant
     status TransactionStatus
@@ -55,6 +60,10 @@ enum IsActiveStatus {
 
 enum TransactionStatus {
 	INITIATE, PROCESS, SUCCESS, FAILED 
+}
+
+enum PaymentChannel {
+	OVO
 }
 
 relationship OneToMany {

@@ -1,5 +1,6 @@
 A. Everytime update database structure:
-  1. Delete changelog file at resources/config/liquibase/changelog/ except file 00000000000000_initial_schema.xml 
+  1. Delete changelog file at resources/config/liquibase/changelog/ except file 00000000000000_initial_schema.xml
+     Step A.1. can be skipped 
   2. Delete current database H2 file at target/h2db/db
   3. jhipster import-jdl jhipster-jdl.jh
   4. ./mvnw liquibase:clearCheckSums
