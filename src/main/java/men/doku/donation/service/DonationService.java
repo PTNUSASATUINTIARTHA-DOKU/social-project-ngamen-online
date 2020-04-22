@@ -47,7 +47,7 @@ public interface DonationService {
     /**
      * Get one donation by slug.
      *
-     * @param id the id of the entity.
+     * @param String the paymentSlug of the entity.
      * @return the entity.
      */
     Optional<Donation> findOneByPaymentSlug(String paymentSlug);
