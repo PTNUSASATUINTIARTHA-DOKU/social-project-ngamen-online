@@ -94,6 +94,6 @@ public class DonationServiceImpl implements DonationService {
         log.debug("Request to find one Donation by Payment Slug : {}", paymentSlug);
         Donation donation = new Donation();
         donation.setPaymentSlug(paymentSlug);
-        return donationRepository.findOne(Example.of(new Donation()));
+        return donationRepository.findOne(Example.of(donation));
     }
 }

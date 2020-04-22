@@ -9,6 +9,7 @@ import { IDonation, Donation } from 'app/shared/model/donation.model';
 import { DonationService } from './donation.service';
 import { IOrganizer } from 'app/shared/model/organizer.model';
 import { OrganizerService } from 'app/entities/organizer/organizer.service';
+import { PATTERN_URL } from 'app/shared/constants/pattern.constants';
 
 @Component({
   selector: 'jhi-donation-update',
@@ -22,8 +23,8 @@ export class DonationUpdateComponent implements OnInit {
     id: [],
     name: [null, [Validators.required, Validators.maxLength(100)]],
     description: [null, [Validators.maxLength(2000)]],
-    url: [null, [Validators.maxLength(100)]],
-    imageUrl: [null, [Validators.maxLength(100)]],
+    url: [null, [Validators.maxLength(100), Validators.pattern(PATTERN_URL)]],
+    imageUrl: [null, [Validators.maxLength(100), Validators.pattern(PATTERN_URL)]],
     paymentSlug: [null, [Validators.maxLength(100)]],
     bankAccountNumber: [null, [Validators.maxLength(15)]],
     bankAccountName: [null, [Validators.maxLength(100)]],
