@@ -1,5 +1,31 @@
 {
   "payment": {
-    "title": "Halaman pembayaran"
+    "title": "Halaman pembayaran",
+    "subtitle": "Didukung oleh",
+    "error": {
+      "url": "Halaman pembayaran tidak ditemukan",
+      "min_amount": "Minimum donasi sebesar Rp. 10.000"
+    },
+    "section": {
+      "info": {
+        "title": "Informasi",
+        "donation": "Tujuan Donasi",
+        "organizer": "Pengurus"
+      },
+      "form": {
+        "title": "Formulir",
+        "donor": "Nama Donatur",
+        "donor_anon": "Anonim",
+        "amount": "Jumlah Donasi",
+        "method": "Metode Pembayaran",
+        "phone": "No. Handphone OVO",
+        "info": {
+          "line1": "Pembayaran dengan OVO Pay hanya berlaku untuk OVO user. Pastikan akun OVO mu aktif.",
+          "line2": "Kamu bisa download aplikasi OVO di Apple App Store atau Google Play Store.",
+          "line3": "Klik tombol \"Selesaikan Pembayaran\" setelah itu lanjutkan konfirmasi pembayaran di aplikasi OVO mu."
+        },
+        "button": "Selesaikan pembayaran"
+      }
+    }
   }
 }

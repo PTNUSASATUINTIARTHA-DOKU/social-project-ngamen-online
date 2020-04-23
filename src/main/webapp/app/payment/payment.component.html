@@ -1,1 +1,116 @@
-Hello World + {{ this.slug }}
+<div>
+    <div class="row justify-content-center">
+        <div class="col-8">
+            <form name="paymentForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="paymentForm">
+                <h1 id="jhi-payment-heading" jhiTranslate="payment.title">Payment Page</h1>
+
+                <div>
+                    <jhi-alert-error></jhi-alert-error>
+
+                    <div>
+                        <h4 jhiTranslate="payment.subtitle">powered by DOKU</h4>
+                    </div>
+                    <div>
+                        <h2 jhiTranslate="payment.section.info.title">Information</h2>
+                    </div>
+                    <div style="float: left">
+                        <h4 jhiTranslate="payment.section.info.donation">Donation</h4>
+                    </div>
+                    <div style="float:right">
+                        <h4>{{this.payment?.donation?.name}}</h4>
+                    </div>
+                    <div style="clear: both"></div>
+                    <div style="float:left">
+                        <h4 jhiTranslate="payment.section.info.organizer">Organizer</h4>
+                    </div>
+                    <div style="float:right">
+                        <h4>{{this.payment?.donation?.organizer?.name}}</h4>
+                    </div>
+                    <div style="clear: both"></div>
+                    <div>
+                        <h2 jhiTranslate="payment.section.form.title">Form</h2>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-control-label" jhiTranslate="payment.section.form.donor"
+                            for="field_donor">Donor Name</label>
+                        <input type="text" class="form-control" name="donor" id="field_donor" formControlName="donor" />
+                        <input type="checkbox" class="form-control" name="donor_anon" id="field_donor_anon"
+                            formControlName="donorAnon" (change)="anon()"/>
+                        <label type="text" class="form-control-label" jhiTranslate="payment.section.form.donor_anon"
+                            for="field_donor_anon">Anonymous</label>
+                        <div
+                            *ngIf="paymentForm.get('donor')!.invalid && (paymentForm.get('donor')!.dirty || paymentForm.get('donor')!.touched)">
+                            <small class="form-text text-danger" *ngIf="paymentForm.get('donor')?.errors?.maxlength"
+                                jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 30 }">
+                                This field cannot be longer than 30 characters.
+                            </small>
+                            <small class="form-text text-danger" *ngIf="paymentForm.get('donor')?.errors?.required"
+                                jhiTranslate="entity.validation.required">
+                                This field is required.
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-control-label" jhiTranslate="payment.section.form.amount"
+                            for="field_amount">Amount</label>
+                        <input type="number" class="form-control" name="amount" id="field_amount"
+                            formControlName="amount" />
+                        <div
+                            *ngIf="paymentForm.get('amount')!.invalid && (paymentForm.get('amount')!.dirty || paymentForm.get('amount')!.touched)">
+                            <small class="form-text text-danger" *ngIf="paymentForm.get('amount')?.errors?.min"
+                                jhiTranslate="payment.error.min_amount">
+                                Minimum donation is Rp. 10.000,-.
+                            </small>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 jhiTranslate="payment.section.form.method">Payment Method</h4>
+                    </div>
+                    <div>
+                        <h4>{{this.method}}</h4>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-control-label" jhiTranslate="payment.section.form.phone"
+                            for="field_phone">OVO Phone Number</label>
+                        <input type="text" class="form-control" name="phone" id="field_phone" formControlName="phone"/>
+                        <div
+                            *ngIf="paymentForm.get('phone')!.invalid && (paymentForm.get('phone')!.dirty || paymentForm.get('phone')!.touched)">
+                            <small class="form-text text-danger" *ngIf="paymentForm.get('phone')?.errors?.maxlength"
+                                jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 13 }">
+                                This field cannot be longer than 13 characters.
+                            </small>
+                            <small class="form-text text-danger" *ngIf="paymentForm.get('phone')?.errors?.minlength"
+                                jhiTranslate="entity.validation.minlength" [translateValues]="{ min: 10 }">
+                                This field cannot be shorter than 10 characters.
+                        </div>
+                    </div>
+
+                    <ol>
+                        <li>
+                            <h4 jhiTranslate="payment.section.form.info.line1">Payment using OVO Pay only applied for
+                                OVO User. Please make sure your OVO is active</h4>
+                        </li>
+                        <li>
+                            <h4 jhiTranslate="payment.section.form.info.line2">You can download OVO apps in Apple App
+                                Store or Google Play Store</h4>
+                        </li>
+                        <li>
+                            <h4 jhiTranslate="payment.section.form.info.line1">Click button "Pay" after that continue to
+                                confirm payment in your OVO app</h4>
+                        </li>
+                    </ol>
+
+                    <div>
+                        <button type="submit" id="save-payment" [disabled]="paymentForm.invalid || isSaving"
+                            class="btn btn-primary">
+                            <fa-icon icon="save"></fa-icon>&nbsp;<span
+                                jhiTranslate="payment.section.form.button">Pay</span>
+                        </button>
+                    </div>
+            </form>
+        </div>
+    </div>
+</div>

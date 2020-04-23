@@ -2,7 +2,7 @@ import { ITransaction, Transaction } from 'app/shared/model/transaction.model';
 import { IDonationDTO, DonationDTO } from 'app/shared/model/dto/donation-dto.model';
 
 export interface IPaymentDTO {
-  donationDTO?: IDonationDTO;
+  donation?: IDonationDTO;
   transaction?: ITransaction;
 }
 
