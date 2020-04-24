@@ -8,6 +8,8 @@ import { Transaction } from 'app/shared/model/transaction.model';
 import { Observable, timer } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { PaymentService } from './payment.service';
+import { v4 as uuid } from 'uuid';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'jhi-main',
@@ -20,7 +22,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
   method: PaymentChannel;
   isSaving = false;
   counter$: Observable<number> = new Observable<number>();
-  count = 30;
+  count = 0;
   transaction: Transaction;
 
   paymentForm = this.fb.group({
@@ -34,7 +36,8 @@ export class PaymentComponent implements OnInit, OnDestroy {
     protected service: DonationService,
     protected paymentService: PaymentService,
     protected route: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private device: DeviceDetectorService
   ) {
     this.slug = '';
     this.payment = {};
@@ -64,27 +67,27 @@ export class PaymentComponent implements OnInit, OnDestroy {
 
   save(): void {
     this.isSaving = true;
-    const paymentDTO = this.createPayment();
+    this.count = 30;
     this.counter$ = timer(0, 1000).pipe(
       take(this.count),
       map(() => --this.count)
     );
-    setTimeout(() => {
-      this.paymentService.initPayment(paymentDTO).subscribe(
-        () => this.onSaveSuccess(),
-        () => this.onSaveError()
-      );
-    }, 30000);
+    const paymentDTO = this.createPayment();
+    this.paymentService.initPayment(paymentDTO).subscribe(
+      () => this.onSaveSuccess(),
+      () => this.onSaveError()
+    );
   }
 
   private createPayment(): IPaymentDTO {
-    this.transaction = new Transaction(
+    const uuids = uuid();
+    this.payment.transaction = new Transaction(
       undefined,
+      uuids,
+      uuids,
+      this.generateBasket(),
       undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
+      this.generateDeviceId(),
       this.paymentForm.get('donor')?.value,
       this.paymentForm.get('phone')?.value,
       undefined,
@@ -96,6 +99,15 @@ export class PaymentComponent implements OnInit, OnDestroy {
       undefined
     );
     return this.payment;
+  }
+
+  private generateBasket(): string {
+    const amt = this.paymentForm.get('amount')?.value;
+    return this.payment.donation?.name + ' by ' + this.payment.donation?.organizer?.name + ', ' + amt + ', 1, ' + amt;
+  }
+
+  private generateDeviceId(): string {
+    return JSON.stringify(this.device.getDeviceInfo());
   }
 
   private onSaveSuccess(): void {

@@ -10,6 +10,23 @@ public class DonationDTO {
     private String paymentSlug;
     private OrganizerDTO organizer;
 
+    /**
+     * Constructor 
+     */
+    public DonationDTO() { 
+    }
+
+    /**
+     * Constructor with 7 params
+     * 
+     * @param id
+     * @param name
+     * @param description
+     * @param url
+     * @param imageUrl
+     * @param paymentSlug
+     * @param organizer
+     */
     public DonationDTO(Long id, String name, String description, String url, String imageUrl, String paymentSlug, OrganizerDTO organizer) {
         this.id = id;
         this.name = name;

@@ -2,6 +2,8 @@ package men.doku.donation.web.rest;
 
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,7 +11,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -52,4 +57,18 @@ public class PaymentResource {
         return ResponseEntity.ok().body(
             donation.map(don -> new PaymentDTO(don)).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)));
     }
+
+    /**
+     * Initiate Payment
+     * 
+     * @param paymentDTO object PaymentDTO contains DonationDTO and Transaction
+     * @return
+     */
+    @PostMapping("/payments")
+    public ResponseEntity<PaymentDTO> initiatePayment(@Valid @RequestBody PaymentDTO paymentDTO) {
+        log.debug("REST request to initiate Payment : {}", paymentDTO);
+        PaymentDTO payment = new PaymentDTO(paymentDTO.getDonation(), transactionService.payment(paymentDTO));
+        return ResponseEntity.ok().body(payment);
+    }
+
 }

@@ -9,7 +9,6 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
-import java.util.Objects;
 import java.time.Instant;
 
 import men.doku.donation.domain.enumeration.PaymentChannel;
@@ -33,8 +32,8 @@ public class Transaction implements Serializable {
     private Long id;
 
     @NotNull
-    @Size(max = 30)
-    @Column(name = "invoice_number", length = 30, nullable = false, unique = true)
+    @Size(max = 64)
+    @Column(name = "invoice_number", length = 64, nullable = false, unique = true)
     private String invoiceNumber;
 
     @Size(max = 128)
