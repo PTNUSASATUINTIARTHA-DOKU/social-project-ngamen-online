@@ -26,6 +26,15 @@
         },
         "button": "Selesaikan pembayaran"
       }
+    },
+    "loading": {
+      "greeting": "Halo, ",
+      "counting": "kami masih menunggu penyelesaian pembayaran di aplikasi OVO mu dalam 30 detik",
+      "steps": "Lakukan 4 langkah mudah berikut:",
+      "step1": "Buka aplikasi OVO mu kemudian klik tombol Lonceng di kanan atas.",
+      "step2": "Pilih metode pembayaran yang tersedia.",
+      "step3": "Klik tombol Bayar.",
+      "step4": "Masukan PIN atau pindai sidik jari untuk otorisasi pembayaran."
     }
   }
 }

@@ -1,3 +1,28 @@
+<div class="loading" [hidden]="!isSaving">
+    <div class="spinner-wrapper">
+      <span class="spinner-text">
+        <h1 jhiTranslate="payment.loading.greeting">Hello, </h1> {{ this.paymentForm.get('donor')?.value }}
+        <h4 jhiTranslate="payment.loading.counting">We still waiting for your payment on your OVO app in 30 seconds. </h4> 
+        <h1>{{ this.counter$ | async }}</h1>
+        <h4 jhiTranslate="payment.loading.steps">Do these 4 easy steps:</h4>
+        <ol>
+            <li>
+                <h4 jhiTranslate="payment.loading.step1">Log in into your OVO app and then click bell sign on top-right corner.</h4>
+            </li>
+            <li>
+                <h4 jhiTranslate="payment.loading.step2">Choose available payment method.</h4>
+            </li>
+            <li>
+                <h4 jhiTranslate="payment.loading.step3">Click button Pay.</h4>
+            </li>
+            <li>
+                <h4 jhiTranslate="payment.loading.step4">Input your PIN or scan your fingeprint to authorize payment.</h4>
+            </li>
+        </ol>
+      </span>
+      <span class="spinner"></span>
+    </div>
+  </div>
 <div>
     <div class="row justify-content-center">
         <div class="col-8">
