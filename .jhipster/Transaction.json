@@ -9,7 +9,7 @@
                 "required",
                 "unique"
             ],
-            "fieldValidateRulesMaxlength": "30"
+            "fieldValidateRulesMaxlength": "64"
         },
         {
             "fieldName": "sessionId",

@@ -39,7 +39,7 @@ entity Donation {
  * @author RT.
  */
 entity Transaction {
-	invoiceNumber String maxlength(30) required unique
+	invoiceNumber String maxlength(64) required unique
     sessionId String maxlength(128)
     basket String maxlength(1024)
     ovoIdMasked String maxlength(15)

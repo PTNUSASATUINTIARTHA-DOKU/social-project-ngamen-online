@@ -9,7 +9,6 @@ import { ITransaction } from 'app/shared/model/transaction.model';
 
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { TransactionService } from './transaction.service';
-import { TransactionDeleteDialogComponent } from './transaction-delete-dialog.component';
 
 @Component({
   selector: 'jhi-transaction',
@@ -72,11 +71,6 @@ export class TransactionComponent implements OnInit, OnDestroy {
 
   registerChangeInTransactions(): void {
     this.eventSubscriber = this.eventManager.subscribe('transactionListModification', () => this.loadPage());
-  }
-
-  delete(transaction: ITransaction): void {
-    const modalRef = this.modalService.open(TransactionDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
-    modalRef.componentInstance.transaction = transaction;
   }
 
   sort(): string[] {
