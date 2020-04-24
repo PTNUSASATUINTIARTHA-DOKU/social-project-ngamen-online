@@ -1,7 +1,8 @@
 {
   "payment": {
-    "title": "Halaman pembayaran",
-    "subtitle": "Didukung oleh",
+    "title": "Selesaikan Donasi Anda",
+    "description": "Donasi Anda akan disalurkan kepada",
+    "powered": "Didukung oleh",
     "error": {
       "url": "Halaman pembayaran tidak ditemukan",
       "min_amount": "Minimum donasi sebesar Rp. 10.000"
@@ -13,18 +14,25 @@
         "organizer": "Pengurus"
       },
       "form": {
-        "title": "Formulir",
+        "title": "Informasi Donasi",
         "donor": "Nama Donatur",
-        "donor_anon": "Anonim",
+        "donor_anon": "Saya ingin donasi secara anonim",
         "amount": "Jumlah Donasi",
         "method": "Metode Pembayaran",
         "phone": "No. Handphone OVO",
+        "tnc": "Syarat dan Ketentuan:",
         "info": {
           "line1": "Pembayaran dengan OVO Pay hanya berlaku untuk OVO user. Pastikan akun OVO mu aktif.",
           "line2": "Kamu bisa download aplikasi OVO di Apple App Store atau Google Play Store.",
-          "line3": "Klik tombol \"Selesaikan Pembayaran\" setelah itu lanjutkan konfirmasi pembayaran di aplikasi OVO mu."
+          "line3": "Klik tombol \"Donasi Sekarang\" setelah itu lanjutkan konfirmasi pembayaran di aplikasi OVO mu."
         },
-        "button": "Selesaikan pembayaran"
+        "button": "Donasi Sekarang",
+        "validation": {
+          "required": "Masukkan nama Anda. Untuk donasi anomim, centang \"Saya ingin donasi secara anonim\" di atas",
+          "maxlength": "Silakan singkat nama Anda karena maksimal adalah 30 karakter",
+          "phonemaxlength": "Nomor telepon Anda lebih dari 13 karakter",
+          "phoneminlength": "Nomor telepon Anda kurang dari 10 karakter"
+        }
       }
     }
   }
