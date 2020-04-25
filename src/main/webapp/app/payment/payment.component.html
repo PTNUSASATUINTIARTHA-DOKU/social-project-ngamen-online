@@ -17,7 +17,7 @@
                 <div class="text-gray-900 font-bold text-xl">{{this.payment?.donation?.name}}</div>
             </div>
             <div class="flex items-center">
-                <img class="w-10 h-10 rounded-full mr-4" src="//logo.clearbit.com/clearbit.com"
+                <img class="w-10 h-10 rounded-full mr-4" src="https://logo.clearbit.com/clearbit.com"
                     alt="Logo of the Organization">
                 <div class="text-sm">
                     <p class="text-gray-600 text-xs" jhiTranslate="payment.section.info.organizer">Organizer</p>
@@ -41,8 +41,9 @@
                     Name
                 </label>
                 <input
-                    class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200 leading-tight focus:outline-none focus:shadow-outline h-10 disabled:bg-gray-300"
-                    name="donor" id="field_donor" formControlName="donor" type="text" placeholder="Anton Budiman" />
+                    class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200
+                    disabled:bg-gray-400 disabled:cursor-not-allowed leading-tight focus:outline-none focus:shadow-outline h-10"
+                    name="donor" id="field_donor" formControlName="donor" type="text" placeholder="Anton Budiman"/>
             </div>
 
             <div class="mb-4 mt-1">
@@ -99,6 +100,7 @@
                             leading-normal shadow-sm hover:shadow-md">
                         <!-- if active then border-green-200 -->
                         <img class="h-10" src="../../content/images/payment/payment-methods/ovo.png" alt="Pay with OVO">
+                        <span class="hidden">{{this.method}}</span>
                     </div>
                 </div>
 
@@ -116,19 +118,19 @@
                         <span
                             class="flex items-center bg-gray-200 rounded rounded-r-none px-3 font-semibold text-sm text-gray-700"><img
                                 src="https://upload.wikimedia.org/wikipedia/commons/9/9f/Flag_of_Indonesia.svg" alt=""
-                                class="w-4 mr-1">62</span>
+                                class="w-4"></span>
                     </div>
                     <input type="number"
                         class="flex-shrink flex-grow flex-auto leading-normal w-px flex-1 text-sm bg-gray-200 py-2 px-3 rounded rounded-l-none space-y-0 relative focus:outline-none focus:shadow-outline h-10"
-                        placeholder="81212121212">
+                        placeholder="81212121212" name="phone" id="field_phone" formControlName="phone">
                 </div>
                 <div
                     *ngIf="paymentForm.get('phone')!.invalid && (paymentForm.get('phone')!.dirty || paymentForm.get('phone')!.touched)">
-                    <small class="form-text text-danger" *ngIf="paymentForm.get('phone')?.errors?.maxlength"
+                    <small class="text-xs text-red-500" *ngIf="paymentForm.get('phone')?.errors?.maxlength"
                         jhiTranslate="payment.section.form.validation.phonemaxlength" [translateValues]="{ max: 13 }">
                         Your phone number length is 13 characters
                     </small>
-                    <small class="form-text text-danger" *ngIf="paymentForm.get('phone')?.errors?.minlength"
+                    <small class="text-xs text-red-500" *ngIf="paymentForm.get('phone')?.errors?.minlength"
                         jhiTranslate="payment.section.form.validation.phoneminlength" [translateValues]="{ min: 10 }">
                         Your phone number length is less than 10 characters
                 </div>
@@ -152,7 +154,8 @@
 
             <div class="flex w-full mt-6">
                 <button type="submit" id="save-payment" [disabled]="paymentForm.invalid || isSaving"
-                    class="w-full bg-gray-800 hover:bg-gray-900 text-white text-sm py-2 px-4 font-semibold rounded focus:outline-none focus:shadow-outline h-10 disabled:bg-gray-200"
+                    class="w-full bg-gray-800 hover:bg-gray-900 disabled:bg-gray-400 disabled:cursor-not-allowed
+                    text-white text-sm py-2 px-4 font-semibold rounded focus:outline-none focus:shadow-outline h-10"
                     jhiTranslate="payment.section.form.button">
                     Donate
                 </button>
