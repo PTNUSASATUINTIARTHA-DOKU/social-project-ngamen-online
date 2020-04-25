@@ -130,4 +130,5 @@ jhipster:
 # https://www.jhipster.tech/common-application-properties/
 # ===================================================================
 
-# application:
+application:
+  mib-url: https://pay.doku.com/MIB/ServiceRequestPayment
