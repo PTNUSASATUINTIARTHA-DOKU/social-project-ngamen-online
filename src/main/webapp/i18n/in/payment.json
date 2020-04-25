@@ -35,6 +35,9 @@
       "step2": "Pilih metode pembayaran yang tersedia.",
       "step3": "Klik tombol Bayar.",
       "step4": "Masukan PIN atau pindai sidik jari untuk otorisasi pembayaran."
+    },
+    "result": {
+      "title": "Halaman hasil pembayaran"
     }
   }
 }

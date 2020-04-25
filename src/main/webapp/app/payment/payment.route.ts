@@ -5,6 +5,7 @@ import { IPaymentDTO, PaymentDTO } from 'app/shared/model/dto/payment-dto.model'
 import { EMPTY, Observable, of } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
 import { PaymentComponent } from './payment.component';
+import { PaymentResultComponent } from './payment.result.component';
 import { PaymentService } from './payment.service';
 
 @Injectable({ providedIn: 'root' })
@@ -25,19 +26,33 @@ export class PaymentResolver implements Resolve<IPaymentDTO> {
         })
       );
     }
-    return of(new PaymentDTO());
+    return EMPTY;
+  }
+}
+
+@Injectable({ providedIn: 'root' })
+export class PaymentResultResolver implements Resolve<IPaymentDTO> {
+  result: PaymentDTO;
+  constructor(private paymentService: PaymentService, private router: Router) {
+    this.result = {};
+  }
+
+  resolve(route: ActivatedRouteSnapshot): Observable<IPaymentDTO> {
+    const slug = route.paramMap.get('slug');
+    if (slug) {
+      this.paymentService.sharedResult.subscribe(result => (this.result = result));
+      if (this.result.donation !== void 0 && this.result.transaction !== void 0) {
+        return of(this.result);
+      } else {
+        this.router.navigate(['404']);
+        return EMPTY;
+      }
+    }
+    return EMPTY;
   }
 }
 
 export const PAYMENT_ROUTE: Routes = [
-  {
-    path: 'payment',
-    component: PaymentComponent,
-    data: {
-      authorities: [],
-      pageTitle: 'payment.title'
-    }
-  },
   {
     path: 'payment/:slug',
     component: PaymentComponent,
@@ -45,8 +60,25 @@ export const PAYMENT_ROUTE: Routes = [
       payment: PaymentResolver
     },
     data: {
-      authorities: [],
       pageTitle: 'payment.title'
     }
+  },
+  {
+    path: 'payment/:slug/result',
+    component: PaymentResultComponent,
+    resolve: {
+      payment: PaymentResultResolver
+    },
+    data: {
+      pageTitle: 'payment.result.title'
+    }
+  },
+  {
+    path: 'payment',
+    redirectTo: '404'
+  },
+  {
+    path: 'payment/**',
+    redirectTo: '404'
   }
 ];

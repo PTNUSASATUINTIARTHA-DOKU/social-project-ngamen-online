@@ -1,22 +1,22 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DonationService } from 'app/entities/donation/donation.service';
-import { IPaymentDTO } from 'app/shared/model/dto/payment-dto.model';
+import { IPaymentDTO, PaymentDTO } from 'app/shared/model/dto/payment-dto.model';
 import { PaymentChannel } from 'app/shared/model/enumerations/payment-channel.model';
 import { Transaction } from 'app/shared/model/transaction.model';
+import { DeviceDetectorService } from 'ngx-device-detector';
 import { Observable, timer } from 'rxjs';
 import { map, take } from 'rxjs/operators';
-import { PaymentService } from './payment.service';
 import { v4 as uuid } from 'uuid';
-import { DeviceDetectorService } from 'ngx-device-detector';
+import { PaymentService } from './payment.service';
 
 @Component({
   selector: 'jhi-main',
   templateUrl: './payment.component.html',
   styleUrls: ['payment.scss']
 })
-export class PaymentComponent implements OnInit, OnDestroy {
+export class PaymentComponent implements OnInit {
   payment: IPaymentDTO;
   slug: string;
   method: PaymentChannel;
@@ -37,7 +37,8 @@ export class PaymentComponent implements OnInit, OnDestroy {
     protected paymentService: PaymentService,
     protected route: ActivatedRoute,
     private fb: FormBuilder,
-    private device: DeviceDetectorService
+    private device: DeviceDetectorService,
+    private router: Router
   ) {
     this.slug = '';
     this.payment = {};
@@ -63,8 +64,6 @@ export class PaymentComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy(): void {}
-
   save(): void {
     this.isSaving = true;
     this.count = 30;
@@ -74,7 +73,10 @@ export class PaymentComponent implements OnInit, OnDestroy {
     );
     const paymentDTO = this.createPayment();
     this.paymentService.initPayment(paymentDTO).subscribe(
-      () => this.onSaveSuccess(),
+      result => {
+        if (result.body) this.onSaveSuccess(result.body);
+        else this.onSaveError();
+      },
       () => this.onSaveError()
     );
   }
@@ -110,13 +112,13 @@ export class PaymentComponent implements OnInit, OnDestroy {
     return JSON.stringify(this.device.getDeviceInfo());
   }
 
-  private onSaveSuccess(): void {
+  private onSaveSuccess(response: PaymentDTO): void {
     this.isSaving = false;
-    // go to result page
+    this.paymentService.paymentResult(response);
+    this.router.navigate(['result'], { relativeTo: this.route });
   }
 
   private onSaveError(): void {
     this.isSaving = false;
-    // show donation page + error message
   }
 }

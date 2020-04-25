@@ -100,8 +100,7 @@ public class TransactionServiceImpl implements TransactionService {
         transaction.setOvoIdMasked("ovoIdMasked");
         TransactionStatus status = TransactionStatus.SUCCESS;
         transaction.setStatus(status);
-        transactionRepository.save(transaction);
-        return transaction;
+        return save(transaction);
     }
 
 }
