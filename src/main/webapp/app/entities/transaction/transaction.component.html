@@ -26,6 +26,14 @@
                     <th scope="col"  jhiSortBy="email"><span jhiTranslate="donationApp.transaction.email">Email</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="amount"><span jhiTranslate="donationApp.transaction.amount">Amount</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="paymentChannel"><span jhiTranslate="donationApp.transaction.paymentChannel">Payment Channel</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="mallId"><span jhiTranslate="donationApp.transaction.mallId">Mall Id</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="trxCode"><span jhiTranslate="donationApp.transaction.trxCode">Trx Code</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="paymentDate"><span jhiTranslate="donationApp.transaction.paymentDate">Payment Date</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="responseCode"><span jhiTranslate="donationApp.transaction.responseCode">Response Code</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="message"><span jhiTranslate="donationApp.transaction.message">Message</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="paymentSystrace"><span jhiTranslate="donationApp.transaction.paymentSystrace">Payment Systrace</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="approvalCode"><span jhiTranslate="donationApp.transaction.approvalCode">Approval Code</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="paymentHostRefNumber"><span jhiTranslate="donationApp.transaction.paymentHostRefNumber">Payment Host Ref Number</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="lastUpdatedBy"><span jhiTranslate="donationApp.transaction.lastUpdatedBy">Last Updated By</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="lastUpdatedAt"><span jhiTranslate="donationApp.transaction.lastUpdatedAt">Last Updated At</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="status"><span jhiTranslate="donationApp.transaction.status">Status</span> <fa-icon icon="sort"></fa-icon></th>
@@ -46,6 +54,14 @@
                     <td>{{ transaction.email }}</td>
                     <td>{{ transaction.amount }}</td>
                     <td jhiTranslate="{{ 'donationApp.PaymentChannel.' + transaction.paymentChannel }}">{{ transaction.paymentChannel }}</td>
+                    <td>{{ transaction.mallId }}</td>
+                    <td>{{ transaction.trxCode }}</td>
+                    <td>{{ transaction.paymentDate | date:'medium' }}</td>
+                    <td>{{ transaction.responseCode }}</td>
+                    <td>{{ transaction.message }}</td>
+                    <td>{{ transaction.paymentSystrace }}</td>
+                    <td>{{ transaction.approvalCode }}</td>
+                    <td>{{ transaction.paymentHostRefNumber }}</td>
                     <td>{{ transaction.lastUpdatedBy }}</td>
                     <td>{{ transaction.lastUpdatedAt | date:'medium' }}</td>
                     <td jhiTranslate="{{ 'donationApp.TransactionStatus.' + transaction.status }}">{{ transaction.status }}</td>

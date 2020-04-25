@@ -15,6 +15,14 @@ export interface ITransaction {
   email?: string;
   amount?: number;
   paymentChannel?: PaymentChannel;
+  mallId?: number;
+  trxCode?: string;
+  paymentDate?: Moment;
+  responseCode?: string;
+  message?: string;
+  paymentSystrace?: string;
+  approvalCode?: string;
+  paymentHostRefNumber?: string;
   lastUpdatedBy?: string;
   lastUpdatedAt?: Moment;
   status?: TransactionStatus;
@@ -34,6 +42,14 @@ export class Transaction implements ITransaction {
     public email?: string,
     public amount?: number,
     public paymentChannel?: PaymentChannel,
+    public mallId?: number,
+    public trxCode?: string,
+    public paymentDate?: Moment,
+    public responseCode?: string,
+    public message?: string,
+    public paymentSystrace?: string,
+    public approvalCode?: string,
+    public paymentHostRefNumber?: string,
     public lastUpdatedBy?: string,
     public lastUpdatedAt?: Moment,
     public status?: TransactionStatus,

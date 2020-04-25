@@ -37,6 +37,10 @@ describe('Service Tests', () => {
         0,
         'AAAAAAA',
         currentDate,
+        0,
+        'AAAAAAA',
+        0,
+        0,
         IsActiveStatus.ACTIVE
       );
     });
@@ -93,6 +97,10 @@ describe('Service Tests', () => {
             sharing: 1,
             lastUpdatedBy: 'BBBBBB',
             lastUpdatedAt: currentDate.format(DATE_TIME_FORMAT),
+            mallId: 1,
+            sharedKey: 'BBBBBB',
+            serviceId: 1,
+            acquirerId: 1,
             status: 'BBBBBB'
           },
           elemDefault
@@ -125,6 +133,10 @@ describe('Service Tests', () => {
             sharing: 1,
             lastUpdatedBy: 'BBBBBB',
             lastUpdatedAt: currentDate.format(DATE_TIME_FORMAT),
+            mallId: 1,
+            sharedKey: 'BBBBBB',
+            serviceId: 1,
+            acquirerId: 1,
             status: 'BBBBBB'
           },
           elemDefault

@@ -81,6 +81,38 @@
             "fieldValues": "OVO"
         },
         {
+            "fieldName": "mallId",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "trxCode",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "paymentDate",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "responseCode",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "message",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "paymentSystrace",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "approvalCode",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "paymentHostRefNumber",
+            "fieldType": "String"
+        },
+        {
             "fieldName": "lastUpdatedBy",
             "fieldType": "String",
             "fieldValidateRules": [

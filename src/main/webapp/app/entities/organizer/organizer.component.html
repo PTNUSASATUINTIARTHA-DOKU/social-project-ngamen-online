@@ -33,6 +33,10 @@
                     <th scope="col"  jhiSortBy="sharing"><span jhiTranslate="donationApp.organizer.sharing">Sharing</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="lastUpdatedBy"><span jhiTranslate="donationApp.organizer.lastUpdatedBy">Last Updated By</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="lastUpdatedAt"><span jhiTranslate="donationApp.organizer.lastUpdatedAt">Last Updated At</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="mallId"><span jhiTranslate="donationApp.organizer.mallId">Mall Id</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="sharedKey"><span jhiTranslate="donationApp.organizer.sharedKey">Shared Key</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="serviceId"><span jhiTranslate="donationApp.organizer.serviceId">Service Id</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="acquirerId"><span jhiTranslate="donationApp.organizer.acquirerId">Acquirer Id</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="status"><span jhiTranslate="donationApp.organizer.status">Status</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
                 </tr>
@@ -50,6 +54,10 @@
                     <td>{{ organizer.sharing }}</td>
                     <td>{{ organizer.lastUpdatedBy }}</td>
                     <td>{{ organizer.lastUpdatedAt | date:'medium' }}</td>
+                    <td>{{ organizer.mallId }}</td>
+                    <td>{{ organizer.sharedKey }}</td>
+                    <td>{{ organizer.serviceId }}</td>
+                    <td>{{ organizer.acquirerId }}</td>
                     <td jhiTranslate="{{ 'donationApp.IsActiveStatus.' + organizer.status }}">{{ organizer.status }}</td>
                     <td class="text-right">
                         <div class="btn-group">

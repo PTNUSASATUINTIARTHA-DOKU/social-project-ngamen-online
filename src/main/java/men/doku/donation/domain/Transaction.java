@@ -72,6 +72,30 @@ public class Transaction implements Serializable {
     @Column(name = "payment_channel")
     private PaymentChannel paymentChannel;
 
+    @Column(name = "mall_id")
+    private Integer mallId;
+
+    @Column(name = "trx_code")
+    private String trxCode;
+
+    @Column(name = "payment_date")
+    private Instant paymentDate;
+
+    @Column(name = "response_code")
+    private String responseCode;
+
+    @Column(name = "message")
+    private String message;
+
+    @Column(name = "payment_systrace")
+    private String paymentSystrace;
+
+    @Column(name = "approval_code")
+    private String approvalCode;
+
+    @Column(name = "payment_host_ref_number")
+    private String paymentHostRefNumber;
+
     @Size(max = 100)
     @Column(name = "last_updated_by", length = 100)
     private String lastUpdatedBy;
@@ -226,6 +250,110 @@ public class Transaction implements Serializable {
         this.paymentChannel = paymentChannel;
     }
 
+    public Integer getMallId() {
+        return mallId;
+    }
+
+    public Transaction mallId(Integer mallId) {
+        this.mallId = mallId;
+        return this;
+    }
+
+    public void setMallId(Integer mallId) {
+        this.mallId = mallId;
+    }
+
+    public String getTrxCode() {
+        return trxCode;
+    }
+
+    public Transaction trxCode(String trxCode) {
+        this.trxCode = trxCode;
+        return this;
+    }
+
+    public void setTrxCode(String trxCode) {
+        this.trxCode = trxCode;
+    }
+
+    public Instant getPaymentDate() {
+        return paymentDate;
+    }
+
+    public Transaction paymentDate(Instant paymentDate) {
+        this.paymentDate = paymentDate;
+        return this;
+    }
+
+    public void setPaymentDate(Instant paymentDate) {
+        this.paymentDate = paymentDate;
+    }
+
+    public String getResponseCode() {
+        return responseCode;
+    }
+
+    public Transaction responseCode(String responseCode) {
+        this.responseCode = responseCode;
+        return this;
+    }
+
+    public void setResponseCode(String responseCode) {
+        this.responseCode = responseCode;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public Transaction message(String message) {
+        this.message = message;
+        return this;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getPaymentSystrace() {
+        return paymentSystrace;
+    }
+
+    public Transaction paymentSystrace(String paymentSystrace) {
+        this.paymentSystrace = paymentSystrace;
+        return this;
+    }
+
+    public void setPaymentSystrace(String paymentSystrace) {
+        this.paymentSystrace = paymentSystrace;
+    }
+
+    public String getApprovalCode() {
+        return approvalCode;
+    }
+
+    public Transaction approvalCode(String approvalCode) {
+        this.approvalCode = approvalCode;
+        return this;
+    }
+
+    public void setApprovalCode(String approvalCode) {
+        this.approvalCode = approvalCode;
+    }
+
+    public String getPaymentHostRefNumber() {
+        return paymentHostRefNumber;
+    }
+
+    public Transaction paymentHostRefNumber(String paymentHostRefNumber) {
+        this.paymentHostRefNumber = paymentHostRefNumber;
+        return this;
+    }
+
+    public void setPaymentHostRefNumber(String paymentHostRefNumber) {
+        this.paymentHostRefNumber = paymentHostRefNumber;
+    }
+
     public String getLastUpdatedBy() {
         return lastUpdatedBy;
     }
@@ -309,6 +437,14 @@ public class Transaction implements Serializable {
             ", email='" + getEmail() + "'" +
             ", amount=" + getAmount() +
             ", paymentChannel='" + getPaymentChannel() + "'" +
+            ", mallId=" + getMallId() +
+            ", trxCode='" + getTrxCode() + "'" +
+            ", paymentDate='" + getPaymentDate() + "'" +
+            ", responseCode='" + getResponseCode() + "'" +
+            ", message='" + getMessage() + "'" +
+            ", paymentSystrace='" + getPaymentSystrace() + "'" +
+            ", approvalCode='" + getApprovalCode() + "'" +
+            ", paymentHostRefNumber='" + getPaymentHostRefNumber() + "'" +
             ", lastUpdatedBy='" + getLastUpdatedBy() + "'" +
             ", lastUpdatedAt='" + getLastUpdatedAt() + "'" +
             ", status='" + getStatus() + "'" +

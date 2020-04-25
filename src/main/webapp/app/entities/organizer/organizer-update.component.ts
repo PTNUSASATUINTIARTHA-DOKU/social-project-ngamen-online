@@ -26,6 +26,10 @@ export class OrganizerUpdateComponent implements OnInit {
     bankName: [null, [Validators.maxLength(100)]],
     mdr: [null, [Validators.max(100)]],
     sharing: [null, [Validators.max(100)]],
+    mallId: [],
+    sharedKey: [],
+    serviceId: [],
+    acquirerId: [],
     status: []
   });
 
@@ -48,6 +52,10 @@ export class OrganizerUpdateComponent implements OnInit {
       bankName: organizer.bankName,
       mdr: organizer.mdr,
       sharing: organizer.sharing,
+      mallId: organizer.mallId,
+      sharedKey: organizer.sharedKey,
+      serviceId: organizer.serviceId,
+      acquirerId: organizer.acquirerId,
       status: organizer.status
     });
   }
@@ -78,6 +86,10 @@ export class OrganizerUpdateComponent implements OnInit {
       bankName: this.editForm.get(['bankName'])!.value,
       mdr: this.editForm.get(['mdr'])!.value,
       sharing: this.editForm.get(['sharing'])!.value,
+      mallId: this.editForm.get(['mallId'])!.value,
+      sharedKey: this.editForm.get(['sharedKey'])!.value,
+      serviceId: this.editForm.get(['serviceId'])!.value,
+      acquirerId: this.editForm.get(['acquirerId'])!.value,
       status: this.editForm.get(['status'])!.value
     };
   }

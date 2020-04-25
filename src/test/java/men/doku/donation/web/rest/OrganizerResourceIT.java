@@ -64,6 +64,18 @@ public class OrganizerResourceIT {
     private static final Instant DEFAULT_LAST_UPDATED_AT = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_LAST_UPDATED_AT = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
+    private static final Integer DEFAULT_MALL_ID = 1;
+    private static final Integer UPDATED_MALL_ID = 2;
+
+    private static final String DEFAULT_SHARED_KEY = "AAAAAAAAAA";
+    private static final String UPDATED_SHARED_KEY = "BBBBBBBBBB";
+
+    private static final Integer DEFAULT_SERVICE_ID = 1;
+    private static final Integer UPDATED_SERVICE_ID = 2;
+
+    private static final Integer DEFAULT_ACQUIRER_ID = 1;
+    private static final Integer UPDATED_ACQUIRER_ID = 2;
+
     private static final IsActiveStatus DEFAULT_STATUS = IsActiveStatus.ACTIVE;
     private static final IsActiveStatus UPDATED_STATUS = IsActiveStatus.DISABLED;
 
@@ -99,6 +111,10 @@ public class OrganizerResourceIT {
             .sharing(DEFAULT_SHARING)
             .lastUpdatedBy(DEFAULT_LAST_UPDATED_BY)
             .lastUpdatedAt(DEFAULT_LAST_UPDATED_AT)
+            .mallId(DEFAULT_MALL_ID)
+            .sharedKey(DEFAULT_SHARED_KEY)
+            .serviceId(DEFAULT_SERVICE_ID)
+            .acquirerId(DEFAULT_ACQUIRER_ID)
             .status(DEFAULT_STATUS);
         return organizer;
     }
@@ -120,6 +136,10 @@ public class OrganizerResourceIT {
             .sharing(UPDATED_SHARING)
             .lastUpdatedBy(UPDATED_LAST_UPDATED_BY)
             .lastUpdatedAt(UPDATED_LAST_UPDATED_AT)
+            .mallId(UPDATED_MALL_ID)
+            .sharedKey(UPDATED_SHARED_KEY)
+            .serviceId(UPDATED_SERVICE_ID)
+            .acquirerId(UPDATED_ACQUIRER_ID)
             .status(UPDATED_STATUS);
         return organizer;
     }
@@ -154,6 +174,10 @@ public class OrganizerResourceIT {
         assertThat(testOrganizer.getSharing()).isEqualTo(DEFAULT_SHARING);
         assertThat(testOrganizer.getLastUpdatedBy()).isEqualTo(DEFAULT_LAST_UPDATED_BY);
         assertThat(testOrganizer.getLastUpdatedAt()).isEqualTo(DEFAULT_LAST_UPDATED_AT);
+        assertThat(testOrganizer.getMallId()).isEqualTo(DEFAULT_MALL_ID);
+        assertThat(testOrganizer.getSharedKey()).isEqualTo(DEFAULT_SHARED_KEY);
+        assertThat(testOrganizer.getServiceId()).isEqualTo(DEFAULT_SERVICE_ID);
+        assertThat(testOrganizer.getAcquirerId()).isEqualTo(DEFAULT_ACQUIRER_ID);
         assertThat(testOrganizer.getStatus()).isEqualTo(DEFAULT_STATUS);
     }
 
@@ -234,6 +258,10 @@ public class OrganizerResourceIT {
             .andExpect(jsonPath("$.[*].sharing").value(hasItem(DEFAULT_SHARING.doubleValue())))
             .andExpect(jsonPath("$.[*].lastUpdatedBy").value(hasItem(DEFAULT_LAST_UPDATED_BY)))
             .andExpect(jsonPath("$.[*].lastUpdatedAt").value(hasItem(DEFAULT_LAST_UPDATED_AT.toString())))
+            .andExpect(jsonPath("$.[*].mallId").value(hasItem(DEFAULT_MALL_ID)))
+            .andExpect(jsonPath("$.[*].sharedKey").value(hasItem(DEFAULT_SHARED_KEY)))
+            .andExpect(jsonPath("$.[*].serviceId").value(hasItem(DEFAULT_SERVICE_ID)))
+            .andExpect(jsonPath("$.[*].acquirerId").value(hasItem(DEFAULT_ACQUIRER_ID)))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
     }
     
@@ -258,6 +286,10 @@ public class OrganizerResourceIT {
             .andExpect(jsonPath("$.sharing").value(DEFAULT_SHARING.doubleValue()))
             .andExpect(jsonPath("$.lastUpdatedBy").value(DEFAULT_LAST_UPDATED_BY))
             .andExpect(jsonPath("$.lastUpdatedAt").value(DEFAULT_LAST_UPDATED_AT.toString()))
+            .andExpect(jsonPath("$.mallId").value(DEFAULT_MALL_ID))
+            .andExpect(jsonPath("$.sharedKey").value(DEFAULT_SHARED_KEY))
+            .andExpect(jsonPath("$.serviceId").value(DEFAULT_SERVICE_ID))
+            .andExpect(jsonPath("$.acquirerId").value(DEFAULT_ACQUIRER_ID))
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
     }
 
@@ -292,6 +324,10 @@ public class OrganizerResourceIT {
             .sharing(UPDATED_SHARING)
             .lastUpdatedBy(UPDATED_LAST_UPDATED_BY)
             .lastUpdatedAt(UPDATED_LAST_UPDATED_AT)
+            .mallId(UPDATED_MALL_ID)
+            .sharedKey(UPDATED_SHARED_KEY)
+            .serviceId(UPDATED_SERVICE_ID)
+            .acquirerId(UPDATED_ACQUIRER_ID)
             .status(UPDATED_STATUS);
 
         restOrganizerMockMvc.perform(put("/api/organizers")
@@ -313,6 +349,10 @@ public class OrganizerResourceIT {
         assertThat(testOrganizer.getSharing()).isEqualTo(UPDATED_SHARING);
         assertThat(testOrganizer.getLastUpdatedBy()).isEqualTo(UPDATED_LAST_UPDATED_BY);
         assertThat(testOrganizer.getLastUpdatedAt()).isEqualTo(UPDATED_LAST_UPDATED_AT);
+        assertThat(testOrganizer.getMallId()).isEqualTo(UPDATED_MALL_ID);
+        assertThat(testOrganizer.getSharedKey()).isEqualTo(UPDATED_SHARED_KEY);
+        assertThat(testOrganizer.getServiceId()).isEqualTo(UPDATED_SERVICE_ID);
+        assertThat(testOrganizer.getAcquirerId()).isEqualTo(UPDATED_ACQUIRER_ID);
         assertThat(testOrganizer.getStatus()).isEqualTo(UPDATED_STATUS);
     }
 

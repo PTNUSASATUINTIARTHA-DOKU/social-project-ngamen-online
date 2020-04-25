@@ -13,6 +13,10 @@ entity Organizer {
     sharing Float max(100)
     lastUpdatedBy String maxlength(100)
     lastUpdatedAt Instant
+    mallId Integer
+    sharedKey String
+    serviceId Integer
+    acquirerId Integer
     status IsActiveStatus
 }
 
@@ -49,6 +53,14 @@ entity Transaction {
     email String maxlength(100)
     amount Long min(10000)
     paymentChannel PaymentChannel
+    mallId Integer,
+    trxCode String,
+    paymentDate Instant,
+    responseCode String,
+    message String, 
+    paymentSystrace String,
+    approvalCode String,
+    paymentHostRefNumber String,
     lastUpdatedBy String maxlength(100)
     lastUpdatedAt Instant
     status TransactionStatus

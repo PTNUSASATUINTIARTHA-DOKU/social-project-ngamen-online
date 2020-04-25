@@ -14,6 +14,10 @@ export interface IOrganizer {
   sharing?: number;
   lastUpdatedBy?: string;
   lastUpdatedAt?: Moment;
+  mallId?: number;
+  sharedKey?: string;
+  serviceId?: number;
+  acquirerId?: number;
   status?: IsActiveStatus;
   donations?: IDonation[];
 }
@@ -31,6 +35,10 @@ export class Organizer implements IOrganizer {
     public sharing?: number,
     public lastUpdatedBy?: string,
     public lastUpdatedAt?: Moment,
+    public mallId?: number,
+    public sharedKey?: string,
+    public serviceId?: number,
+    public acquirerId?: number,
     public status?: IsActiveStatus,
     public donations?: IDonation[]
   ) {}

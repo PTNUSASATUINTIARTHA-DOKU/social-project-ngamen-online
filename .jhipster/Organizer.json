@@ -81,6 +81,22 @@
             "fieldType": "Instant"
         },
         {
+            "fieldName": "mallId",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "sharedKey",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "serviceId",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "acquirerId",
+            "fieldType": "Integer"
+        },
+        {
             "fieldName": "status",
             "fieldType": "IsActiveStatus",
             "fieldValues": "ACTIVE,DISABLED"

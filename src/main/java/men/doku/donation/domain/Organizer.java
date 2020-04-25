@@ -74,6 +74,18 @@ public class Organizer implements Serializable {
     @Column(name = "last_updated_at")
     private Instant lastUpdatedAt;
 
+    @Column(name = "mall_id")
+    private Integer mallId;
+
+    @Column(name = "shared_key")
+    private String sharedKey;
+
+    @Column(name = "service_id")
+    private Integer serviceId;
+
+    @Column(name = "acquirer_id")
+    private Integer acquirerId;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private IsActiveStatus status;
@@ -221,6 +233,58 @@ public class Organizer implements Serializable {
         this.lastUpdatedAt = lastUpdatedAt;
     }
 
+    public Integer getMallId() {
+        return mallId;
+    }
+
+    public Organizer mallId(Integer mallId) {
+        this.mallId = mallId;
+        return this;
+    }
+
+    public void setMallId(Integer mallId) {
+        this.mallId = mallId;
+    }
+
+    public String getSharedKey() {
+        return sharedKey;
+    }
+
+    public Organizer sharedKey(String sharedKey) {
+        this.sharedKey = sharedKey;
+        return this;
+    }
+
+    public void setSharedKey(String sharedKey) {
+        this.sharedKey = sharedKey;
+    }
+
+    public Integer getServiceId() {
+        return serviceId;
+    }
+
+    public Organizer serviceId(Integer serviceId) {
+        this.serviceId = serviceId;
+        return this;
+    }
+
+    public void setServiceId(Integer serviceId) {
+        this.serviceId = serviceId;
+    }
+
+    public Integer getAcquirerId() {
+        return acquirerId;
+    }
+
+    public Organizer acquirerId(Integer acquirerId) {
+        this.acquirerId = acquirerId;
+        return this;
+    }
+
+    public void setAcquirerId(Integer acquirerId) {
+        this.acquirerId = acquirerId;
+    }
+
     public IsActiveStatus getStatus() {
         return status;
     }
@@ -290,6 +354,10 @@ public class Organizer implements Serializable {
             ", sharing=" + getSharing() +
             ", lastUpdatedBy='" + getLastUpdatedBy() + "'" +
             ", lastUpdatedAt='" + getLastUpdatedAt() + "'" +
+            ", mallId=" + getMallId() +
+            ", sharedKey='" + getSharedKey() + "'" +
+            ", serviceId=" + getServiceId() +
+            ", acquirerId=" + getAcquirerId() +
             ", status='" + getStatus() + "'" +
             "}";
     }

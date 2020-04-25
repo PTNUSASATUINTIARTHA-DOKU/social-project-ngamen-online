@@ -65,6 +65,30 @@ public class TransactionResourceIT {
     private static final PaymentChannel DEFAULT_PAYMENT_CHANNEL = PaymentChannel.OVO;
     private static final PaymentChannel UPDATED_PAYMENT_CHANNEL = PaymentChannel.OVO;
 
+    private static final Integer DEFAULT_MALL_ID = 1;
+    private static final Integer UPDATED_MALL_ID = 2;
+
+    private static final String DEFAULT_TRX_CODE = "AAAAAAAAAA";
+    private static final String UPDATED_TRX_CODE = "BBBBBBBBBB";
+
+    private static final Instant DEFAULT_PAYMENT_DATE = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_PAYMENT_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+
+    private static final String DEFAULT_RESPONSE_CODE = "AAAAAAAAAA";
+    private static final String UPDATED_RESPONSE_CODE = "BBBBBBBBBB";
+
+    private static final String DEFAULT_MESSAGE = "AAAAAAAAAA";
+    private static final String UPDATED_MESSAGE = "BBBBBBBBBB";
+
+    private static final String DEFAULT_PAYMENT_SYSTRACE = "AAAAAAAAAA";
+    private static final String UPDATED_PAYMENT_SYSTRACE = "BBBBBBBBBB";
+
+    private static final String DEFAULT_APPROVAL_CODE = "AAAAAAAAAA";
+    private static final String UPDATED_APPROVAL_CODE = "BBBBBBBBBB";
+
+    private static final String DEFAULT_PAYMENT_HOST_REF_NUMBER = "AAAAAAAAAA";
+    private static final String UPDATED_PAYMENT_HOST_REF_NUMBER = "BBBBBBBBBB";
+
     private static final String DEFAULT_LAST_UPDATED_BY = "AAAAAAAAAA";
     private static final String UPDATED_LAST_UPDATED_BY = "BBBBBBBBBB";
 
@@ -106,6 +130,14 @@ public class TransactionResourceIT {
             .email(DEFAULT_EMAIL)
             .amount(DEFAULT_AMOUNT)
             .paymentChannel(DEFAULT_PAYMENT_CHANNEL)
+            .mallId(DEFAULT_MALL_ID)
+            .trxCode(DEFAULT_TRX_CODE)
+            .paymentDate(DEFAULT_PAYMENT_DATE)
+            .responseCode(DEFAULT_RESPONSE_CODE)
+            .message(DEFAULT_MESSAGE)
+            .paymentSystrace(DEFAULT_PAYMENT_SYSTRACE)
+            .approvalCode(DEFAULT_APPROVAL_CODE)
+            .paymentHostRefNumber(DEFAULT_PAYMENT_HOST_REF_NUMBER)
             .lastUpdatedBy(DEFAULT_LAST_UPDATED_BY)
             .lastUpdatedAt(DEFAULT_LAST_UPDATED_AT)
             .status(DEFAULT_STATUS);
@@ -129,6 +161,14 @@ public class TransactionResourceIT {
             .email(UPDATED_EMAIL)
             .amount(UPDATED_AMOUNT)
             .paymentChannel(UPDATED_PAYMENT_CHANNEL)
+            .mallId(UPDATED_MALL_ID)
+            .trxCode(UPDATED_TRX_CODE)
+            .paymentDate(UPDATED_PAYMENT_DATE)
+            .responseCode(UPDATED_RESPONSE_CODE)
+            .message(UPDATED_MESSAGE)
+            .paymentSystrace(UPDATED_PAYMENT_SYSTRACE)
+            .approvalCode(UPDATED_APPROVAL_CODE)
+            .paymentHostRefNumber(UPDATED_PAYMENT_HOST_REF_NUMBER)
             .lastUpdatedBy(UPDATED_LAST_UPDATED_BY)
             .lastUpdatedAt(UPDATED_LAST_UPDATED_AT)
             .status(UPDATED_STATUS);
@@ -165,6 +205,14 @@ public class TransactionResourceIT {
         assertThat(testTransaction.getEmail()).isEqualTo(DEFAULT_EMAIL);
         assertThat(testTransaction.getAmount()).isEqualTo(DEFAULT_AMOUNT);
         assertThat(testTransaction.getPaymentChannel()).isEqualTo(DEFAULT_PAYMENT_CHANNEL);
+        assertThat(testTransaction.getMallId()).isEqualTo(DEFAULT_MALL_ID);
+        assertThat(testTransaction.getTrxCode()).isEqualTo(DEFAULT_TRX_CODE);
+        assertThat(testTransaction.getPaymentDate()).isEqualTo(DEFAULT_PAYMENT_DATE);
+        assertThat(testTransaction.getResponseCode()).isEqualTo(DEFAULT_RESPONSE_CODE);
+        assertThat(testTransaction.getMessage()).isEqualTo(DEFAULT_MESSAGE);
+        assertThat(testTransaction.getPaymentSystrace()).isEqualTo(DEFAULT_PAYMENT_SYSTRACE);
+        assertThat(testTransaction.getApprovalCode()).isEqualTo(DEFAULT_APPROVAL_CODE);
+        assertThat(testTransaction.getPaymentHostRefNumber()).isEqualTo(DEFAULT_PAYMENT_HOST_REF_NUMBER);
         assertThat(testTransaction.getLastUpdatedBy()).isEqualTo(DEFAULT_LAST_UPDATED_BY);
         assertThat(testTransaction.getLastUpdatedAt()).isEqualTo(DEFAULT_LAST_UPDATED_AT);
         assertThat(testTransaction.getStatus()).isEqualTo(DEFAULT_STATUS);
@@ -229,6 +277,14 @@ public class TransactionResourceIT {
             .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL)))
             .andExpect(jsonPath("$.[*].amount").value(hasItem(DEFAULT_AMOUNT.intValue())))
             .andExpect(jsonPath("$.[*].paymentChannel").value(hasItem(DEFAULT_PAYMENT_CHANNEL.toString())))
+            .andExpect(jsonPath("$.[*].mallId").value(hasItem(DEFAULT_MALL_ID)))
+            .andExpect(jsonPath("$.[*].trxCode").value(hasItem(DEFAULT_TRX_CODE)))
+            .andExpect(jsonPath("$.[*].paymentDate").value(hasItem(DEFAULT_PAYMENT_DATE.toString())))
+            .andExpect(jsonPath("$.[*].responseCode").value(hasItem(DEFAULT_RESPONSE_CODE)))
+            .andExpect(jsonPath("$.[*].message").value(hasItem(DEFAULT_MESSAGE)))
+            .andExpect(jsonPath("$.[*].paymentSystrace").value(hasItem(DEFAULT_PAYMENT_SYSTRACE)))
+            .andExpect(jsonPath("$.[*].approvalCode").value(hasItem(DEFAULT_APPROVAL_CODE)))
+            .andExpect(jsonPath("$.[*].paymentHostRefNumber").value(hasItem(DEFAULT_PAYMENT_HOST_REF_NUMBER)))
             .andExpect(jsonPath("$.[*].lastUpdatedBy").value(hasItem(DEFAULT_LAST_UPDATED_BY)))
             .andExpect(jsonPath("$.[*].lastUpdatedAt").value(hasItem(DEFAULT_LAST_UPDATED_AT.toString())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
@@ -255,6 +311,14 @@ public class TransactionResourceIT {
             .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL))
             .andExpect(jsonPath("$.amount").value(DEFAULT_AMOUNT.intValue()))
             .andExpect(jsonPath("$.paymentChannel").value(DEFAULT_PAYMENT_CHANNEL.toString()))
+            .andExpect(jsonPath("$.mallId").value(DEFAULT_MALL_ID))
+            .andExpect(jsonPath("$.trxCode").value(DEFAULT_TRX_CODE))
+            .andExpect(jsonPath("$.paymentDate").value(DEFAULT_PAYMENT_DATE.toString()))
+            .andExpect(jsonPath("$.responseCode").value(DEFAULT_RESPONSE_CODE))
+            .andExpect(jsonPath("$.message").value(DEFAULT_MESSAGE))
+            .andExpect(jsonPath("$.paymentSystrace").value(DEFAULT_PAYMENT_SYSTRACE))
+            .andExpect(jsonPath("$.approvalCode").value(DEFAULT_APPROVAL_CODE))
+            .andExpect(jsonPath("$.paymentHostRefNumber").value(DEFAULT_PAYMENT_HOST_REF_NUMBER))
             .andExpect(jsonPath("$.lastUpdatedBy").value(DEFAULT_LAST_UPDATED_BY))
             .andExpect(jsonPath("$.lastUpdatedAt").value(DEFAULT_LAST_UPDATED_AT.toString()))
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
@@ -291,6 +355,14 @@ public class TransactionResourceIT {
             .email(UPDATED_EMAIL)
             .amount(UPDATED_AMOUNT)
             .paymentChannel(UPDATED_PAYMENT_CHANNEL)
+            .mallId(UPDATED_MALL_ID)
+            .trxCode(UPDATED_TRX_CODE)
+            .paymentDate(UPDATED_PAYMENT_DATE)
+            .responseCode(UPDATED_RESPONSE_CODE)
+            .message(UPDATED_MESSAGE)
+            .paymentSystrace(UPDATED_PAYMENT_SYSTRACE)
+            .approvalCode(UPDATED_APPROVAL_CODE)
+            .paymentHostRefNumber(UPDATED_PAYMENT_HOST_REF_NUMBER)
             .lastUpdatedBy(UPDATED_LAST_UPDATED_BY)
             .lastUpdatedAt(UPDATED_LAST_UPDATED_AT)
             .status(UPDATED_STATUS);
@@ -314,6 +386,14 @@ public class TransactionResourceIT {
         assertThat(testTransaction.getEmail()).isEqualTo(UPDATED_EMAIL);
         assertThat(testTransaction.getAmount()).isEqualTo(UPDATED_AMOUNT);
         assertThat(testTransaction.getPaymentChannel()).isEqualTo(UPDATED_PAYMENT_CHANNEL);
+        assertThat(testTransaction.getMallId()).isEqualTo(UPDATED_MALL_ID);
+        assertThat(testTransaction.getTrxCode()).isEqualTo(UPDATED_TRX_CODE);
+        assertThat(testTransaction.getPaymentDate()).isEqualTo(UPDATED_PAYMENT_DATE);
+        assertThat(testTransaction.getResponseCode()).isEqualTo(UPDATED_RESPONSE_CODE);
+        assertThat(testTransaction.getMessage()).isEqualTo(UPDATED_MESSAGE);
+        assertThat(testTransaction.getPaymentSystrace()).isEqualTo(UPDATED_PAYMENT_SYSTRACE);
+        assertThat(testTransaction.getApprovalCode()).isEqualTo(UPDATED_APPROVAL_CODE);
+        assertThat(testTransaction.getPaymentHostRefNumber()).isEqualTo(UPDATED_PAYMENT_HOST_REF_NUMBER);
         assertThat(testTransaction.getLastUpdatedBy()).isEqualTo(UPDATED_LAST_UPDATED_BY);
         assertThat(testTransaction.getLastUpdatedAt()).isEqualTo(UPDATED_LAST_UPDATED_AT);
         assertThat(testTransaction.getStatus()).isEqualTo(UPDATED_STATUS);
