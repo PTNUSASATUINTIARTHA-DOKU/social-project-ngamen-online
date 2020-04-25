@@ -10,4 +10,14 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  */
 @ConfigurationProperties(prefix = "application", ignoreUnknownFields = false)
 public class ApplicationProperties {
+
+    private String mibUrl = new String();
+
+    public String getMibUrl() {
+        return mibUrl;
+    }
+
+    public void setMibUrl(String mibUrl) {
+        this.mibUrl = mibUrl;
+    }
 }
