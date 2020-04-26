@@ -18,6 +18,8 @@ module.exports = {
     '.html',
     '.js'
   ],
-  extractors: [],
+  extractors: [
+    content => content.match(/[\w-/.:]+(?<!:)/g) || []
+  ],
   content: []
 }

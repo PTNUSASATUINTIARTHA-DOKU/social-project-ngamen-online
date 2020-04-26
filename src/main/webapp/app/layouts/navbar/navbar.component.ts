@@ -18,7 +18,11 @@ import { Location } from '@angular/common';
 })
 export class NavbarComponent implements OnInit {
   inProduction?: boolean;
-  isNavbarCollapsed = true;
+  isNavbarCollapsed = false;
+  isDropdown1Collapsed = false;
+  isDropdown2Collapsed = false;
+  isDropdown3Collapsed = false;
+  isDropdown4Collapsed = false;
   languages = LANGUAGES;
   swaggerEnabled?: boolean;
   version: string;
@@ -54,6 +58,22 @@ export class NavbarComponent implements OnInit {
     this.isNavbarCollapsed = true;
   }
 
+  collapseDropdown1(): void {
+    this.isDropdown1Collapsed = true;
+  }
+
+  collapseDropdown2(): void {
+    this.isDropdown1Collapsed = true;
+  }
+
+  collapseDropdown3(): void {
+    this.isDropdown3Collapsed = true;
+  }
+
+  collapseDropdown4(): void {
+    this.isDropdown4Collapsed = true;
+  }
+
   isAuthenticated(): boolean {
     return this.accountService.isAuthenticated();
   }
@@ -70,6 +90,22 @@ export class NavbarComponent implements OnInit {
 
   toggleNavbar(): void {
     this.isNavbarCollapsed = !this.isNavbarCollapsed;
+  }
+
+  toggleDropdown1(): void {
+    this.isDropdown1Collapsed = !this.isDropdown1Collapsed;
+  }
+
+  toggleDropdown2(): void {
+    this.isDropdown2Collapsed = !this.isDropdown2Collapsed;
+  }
+
+  toggleDropdown3(): void {
+    this.isDropdown3Collapsed = !this.isDropdown3Collapsed;
+  }
+
+  toggleDropdown4(): void {
+    this.isDropdown4Collapsed = !this.isDropdown4Collapsed;
   }
 
   getImageUrl(): string {
