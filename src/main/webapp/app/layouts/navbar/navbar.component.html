@@ -1,4 +1,4 @@
-<div *ngIf="path.indexOf('/payment') === -1 && path!=='/error' && path !== '/404' && path !== '/accessdenied'">
+<div *ngIf="path.indexOf('/payment') === -1 && path!=='/error' && path !== '/404' && path !== '/accessdenied'" class="mb-5">
     <nav class="bg-gray-800" [ngSwitch]="isAuthenticated()">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
@@ -287,13 +287,4 @@
             </div>
         </div>
     </nav>
-
-    <!-- Breadcrumb -->
-    <header class="bg-white shadow">
-        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-            <h1 class="text-3xl font-bold leading-tight text-gray-900">
-                Dashboard
-            </h1>
-        </div>
-    </header>
 </div>
