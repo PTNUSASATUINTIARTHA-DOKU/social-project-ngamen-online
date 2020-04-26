@@ -1,9 +1,7 @@
 package men.doku.donation.service.impl;
 
-import men.doku.donation.service.DonationService;
-import men.doku.donation.domain.Donation;
-import men.doku.donation.repository.DonationRepository;
-import men.doku.donation.security.SecurityUtils;
+import java.time.Instant;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,8 +11,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Instant;
-import java.util.Optional;
+import men.doku.donation.domain.Donation;
+import men.doku.donation.repository.DonationRepository;
+import men.doku.donation.security.SecurityUtils;
+import men.doku.donation.service.DonationService;
 
 /**
  * Service Implementation for managing {@link Donation}.
@@ -73,6 +73,18 @@ public class DonationServiceImpl implements DonationService {
     }
 
     /**
+     * Get one donation by Example.
+     *
+     * @param Example<S> the example of the entity.
+     * @return the entity.
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<Donation> findOne(Example<Donation> donation) {
+        return donationRepository.findOne(donation);
+    }
+
+    /**
      * Delete the donation by id.
      *
      * @param id the id of the entity.
@@ -81,19 +93,5 @@ public class DonationServiceImpl implements DonationService {
     public void delete(Long id) {
         log.info("Request to delete Donation : {}", findOne(id).toString());
         donationRepository.deleteById(id);
-    }
-
-    /**
-     * Get one donation by slug.
-     *
-     * @param id the id of the entity.
-     * @return the entity.
-     */
-    @Transactional(readOnly = true)
-    public Optional<Donation> findOneByPaymentSlug(String paymentSlug) {
-        log.debug("Request to find one Donation by Payment Slug : {}", paymentSlug);
-        Donation donation = new Donation();
-        donation.setPaymentSlug(paymentSlug);
-        return donationRepository.findOne(Example.of(donation));
     }
 }

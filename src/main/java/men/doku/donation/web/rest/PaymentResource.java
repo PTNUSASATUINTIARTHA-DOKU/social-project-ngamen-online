@@ -8,21 +8,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import io.github.jhipster.web.util.ResponseUtil;
-import io.micrometer.core.ipc.http.HttpSender.Response;
 import men.doku.donation.domain.Donation;
-import men.doku.donation.service.DonationService;
-import men.doku.donation.service.TransactionService;
+import men.doku.donation.service.PaymentService;
+import men.doku.donation.service.dto.MibRequestDTO;
+import men.doku.donation.service.dto.MibResponseDTO;
 import men.doku.donation.service.dto.PaymentDTO;
 
 @RestController
@@ -31,17 +30,13 @@ public class PaymentResource {
 
     private final Logger log = LoggerFactory.getLogger(DonationResource.class);
 
-    private static final String ENTITY_NAME = "payment";
-
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
     
-    private final DonationService donationService;
-    private final TransactionService transactionService;
+    private final PaymentService paymentService;
 
-    public PaymentResource(DonationService donationService, TransactionService transactionService) {
-        this.donationService = donationService;
-        this.transactionService = transactionService;
+    public PaymentResource(PaymentService paymentService) {
+        this.paymentService = paymentService;
     }
 
     /**
@@ -53,7 +48,7 @@ public class PaymentResource {
     @GetMapping("/payments/{slug}")
     public ResponseEntity<PaymentDTO> getDonationByPaymentSlug(@PathVariable String slug) {
         log.debug("REST request to get Donation by Payment Slug : {}", slug);
-        Optional<Donation> donation = donationService.findOneByPaymentSlug(slug);
+        Optional<Donation> donation = paymentService.findOneByPaymentSlug(slug);
         return ResponseEntity.ok().body(
             donation.map(don -> new PaymentDTO(don)).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)));
     }
@@ -67,8 +62,28 @@ public class PaymentResource {
     @PostMapping("/payments")
     public ResponseEntity<PaymentDTO> initiatePayment(@Valid @RequestBody PaymentDTO paymentDTO) {
         log.debug("REST request to initiate Payment : {}", paymentDTO);
-        PaymentDTO payment = new PaymentDTO(paymentDTO.getDonation(), transactionService.payment(paymentDTO));
+        PaymentDTO payment = new PaymentDTO(paymentDTO.getDonation(), paymentService.payment(paymentDTO));
         return ResponseEntity.ok().body(payment);
     }
 
+    /**
+     * Simulator MIB
+     * 
+     * Tester simulator
+     * curl -X POST -d "MALLID=1&SERVICEID=1&ACQUIRERID=1&INVOICENUMBER=20200426204800&
+     *      CURRENCY=IDR&AMOUNT=10000&SESSIONID=abcdefghijklmnopqrstuvwxyz&AUTH1=0819688869&
+     *      BASKET=donasi,10000,1,10000&WORDS=1234567890123456" 
+     *      http://localhost:8080/api/payments/simulator 
+     * 
+     * @param mibRequestDTO object mibRequestDTO like request to MIB using x-www-form-url-encoded
+     * @return
+     */
+    @PostMapping(
+        path = "/payments/simulator",
+        consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
+        produces = MediaType.APPLICATION_XML_VALUE)
+    public ResponseEntity<MibResponseDTO> simulatorMib(@Valid MibRequestDTO mibRequestDTO) {
+        log.debug("URL ENCODED request to simulator MIB : {}", mibRequestDTO);
+        return ResponseEntity.ok().body(paymentService.simulatorMib(mibRequestDTO));
+    }
 }

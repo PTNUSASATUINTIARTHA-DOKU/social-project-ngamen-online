@@ -1,11 +1,12 @@
 package men.doku.donation.service;
 
-import men.doku.donation.domain.Donation;
+import java.util.Optional;
 
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.Optional;
+import men.doku.donation.domain.Donation;
 
 /**
  * Service Interface for managing {@link Donation}.
@@ -38,17 +39,18 @@ public interface DonationService {
     Optional<Donation> findOne(Long id);
 
     /**
+     * Get one donation by Example.
+     *
+     * @param Example<S> the example of the entity.
+     * @return the entity.
+     */
+    Optional<Donation> findOne(Example<Donation> donation);
+
+    /**
      * Delete the "id" donation.
      *
      * @param id the id of the entity.
      */
     void delete(Long id);
 
-    /**
-     * Get one donation by slug.
-     *
-     * @param String the paymentSlug of the entity.
-     * @return the entity.
-     */
-    Optional<Donation> findOneByPaymentSlug(String paymentSlug);
 }

@@ -1,12 +1,11 @@
 package men.doku.donation.service;
 
-import men.doku.donation.domain.Transaction;
-import men.doku.donation.service.dto.PaymentDTO;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.Optional;
+import men.doku.donation.domain.Transaction;
 
 /**
  * Service Interface for managing {@link Transaction}.
@@ -44,11 +43,4 @@ public interface TransactionService {
      */
     void delete(Long id);
 
-    /**
-     * Initiate transaction
-     * 
-     * @param payment the payment DTO
-     * @return Transaction the transaction entity
-     */
-    Transaction payment(PaymentDTO payment);
 }
