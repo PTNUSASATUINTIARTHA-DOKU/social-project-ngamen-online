@@ -92,4 +92,10 @@ public class DonationDTO {
     public void setOrganizer(OrganizerDTO organizer) {
         this.organizer = organizer;
     }
+
+    @Override
+    public String toString() {
+        return "DonationDTO [description=" + description + ", id=" + id + ", imageUrl=" + imageUrl + ", name=" + name
+                + ", organizer=" + organizer + ", paymentSlug=" + paymentSlug + ", url=" + url + "]";
+    }
 }

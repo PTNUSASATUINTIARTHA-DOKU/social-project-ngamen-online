@@ -1,78 +1,57 @@
 package men.doku.donation.service.dto;
 
-import javax.validation.constraints.NotNull;
-
 public class MibRequestDTO {
 
-    @NotNull
-    private Integer MALLID;
-
-    @NotNull
-    private Integer SERVICEID;
-
-    @NotNull
-    private Integer ACQUIRERID;
-
-    @NotNull
+    private String MALLID;
+    private String SERVICEID;
+    private String ACQUIRERID;
     private String INVOICENUMBER;
-
-    @NotNull
     private String CURRENCY;
-
-    @NotNull
-    private Long AMOUNT;
-
-    @NotNull
+    private String AMOUNT;
     private String SESSIONID;
-
-    @NotNull
     private String AUTH1;
-
-    @NotNull
     private String BASKET;
-
-    @NotNull
     private String WORDS;
 
     public MibRequestDTO() {
     }
 
-    public MibRequestDTO(Integer mALLID, Integer sERVICEID, Integer aCQUIRERID, String iNVOICENUMBER, String cURRENCY,
-            Long aMOUNT, String sESSIONID, String aUTH1, String bASKET, String wORDS) {
-        MALLID = mALLID;
-        SERVICEID = sERVICEID;
-        ACQUIRERID = aCQUIRERID;
-        INVOICENUMBER = iNVOICENUMBER;
-        CURRENCY = cURRENCY;
-        AMOUNT = aMOUNT;
-        SESSIONID = sESSIONID;
-        AUTH1 = aUTH1;
-        BASKET = bASKET;
-        WORDS = wORDS;
+    public MibRequestDTO(String mALLID, String sERVICEID, String aCQUIRERID, String iNVOICENUMBER, String cURRENCY,
+    String aMOUNT, String sESSIONID, String aUTH1, String bASKET, String wORDS) {
+        this.MALLID = mALLID;
+        this.SERVICEID = sERVICEID;
+        this.ACQUIRERID = aCQUIRERID;
+        this.INVOICENUMBER = iNVOICENUMBER;
+        this.CURRENCY = cURRENCY;
+        this.AMOUNT = aMOUNT;
+        this.SESSIONID = sESSIONID;
+        this.AUTH1 = aUTH1;
+        this.BASKET = bASKET;
+        this.WORDS = wORDS;
     }
 
-    public Integer getMALLID() {
+    public String getMALLID() {
         return MALLID;
     }
 
-    public void setMALLID(Integer mALLID) {
-        MALLID = mALLID;
+    public void setMALLID(String mALLID) {
+        this.MALLID = mALLID;
     }
 
-    public Integer getSERVICEID() {
+    public String getSERVICEID() {
         return SERVICEID;
     }
 
-    public void setSERVICEID(Integer sERVICEID) {
-        SERVICEID = sERVICEID;
+    public void setSERVICEID(String sERVICEID) {
+        this.SERVICEID = sERVICEID;
     }
 
-    public Integer getACQUIRERID() {
+    public String getACQUIRERID() {
         return ACQUIRERID;
     }
 
-    public void setACQUIRERID(Integer aCQUIRERID) {
-        ACQUIRERID = aCQUIRERID;
+    public void setACQUIRERID(String aCQUIRERID) {
+        this.ACQUIRERID = aCQUIRERID;
     }
 
     public String getINVOICENUMBER() {
@@ -80,7 +59,7 @@ public class MibRequestDTO {
     }
 
     public void setINVOICENUMBER(String iNVOICENUMBER) {
-        INVOICENUMBER = iNVOICENUMBER;
+        this.INVOICENUMBER = iNVOICENUMBER;
     }
 
     public String getCURRENCY() {
@@ -88,15 +67,15 @@ public class MibRequestDTO {
     }
 
     public void setCURRENCY(String cURRENCY) {
-        CURRENCY = cURRENCY;
+        this.CURRENCY = cURRENCY;
     }
 
-    public Long getAMOUNT() {
+    public String getAMOUNT() {
         return AMOUNT;
     }
 
-    public void setAMOUNT(Long aMOUNT) {
-        AMOUNT = aMOUNT;
+    public void setAMOUNT(String aMOUNT) {
+        this.AMOUNT = aMOUNT;
     }
 
     public String getSESSIONID() {
@@ -104,7 +83,7 @@ public class MibRequestDTO {
     }
 
     public void setSESSIONID(String sESSIONID) {
-        SESSIONID = sESSIONID;
+        this.SESSIONID = sESSIONID;
     }
 
     public String getAUTH1() {
@@ -112,7 +91,7 @@ public class MibRequestDTO {
     }
 
     public void setAUTH1(String aUTH1) {
-        AUTH1 = aUTH1;
+        this.AUTH1 = aUTH1;
     }
 
     public String getBASKET() {
@@ -120,7 +99,7 @@ public class MibRequestDTO {
     }
 
     public void setBASKET(String bASKET) {
-        BASKET = bASKET;
+        this.BASKET = bASKET;
     }
 
     public String getWORDS() {
@@ -128,6 +107,13 @@ public class MibRequestDTO {
     }
 
     public void setWORDS(String wORDS) {
-        WORDS = wORDS;
+        this.WORDS = wORDS;
+    }
+
+    @Override
+    public String toString() {
+        return "MibRequestDTO [ACQUIRERID=" + ACQUIRERID + ", AMOUNT=" + AMOUNT + ", AUTH1=" + AUTH1 + ", BASKET="
+                + BASKET + ", CURRENCY=" + CURRENCY + ", INVOICENUMBER=" + INVOICENUMBER + ", MALLID=" + MALLID
+                + ", SERVICEID=" + SERVICEID + ", SESSIONID=" + SESSIONID + ", WORDS=" + WORDS + "]";
     }
 }

@@ -70,4 +70,9 @@ public class PaymentDTO {
     public void setTransaction(Transaction transaction) {
         this.transaction = transaction;
     }
+
+    @Override
+    public String toString() {
+        return "PaymentDTO [donation=" + donation + ", transaction=" + transaction + "]";
+    }
 }

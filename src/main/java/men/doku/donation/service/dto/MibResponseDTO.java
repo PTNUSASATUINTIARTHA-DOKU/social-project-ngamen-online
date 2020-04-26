@@ -20,9 +20,31 @@ public class MibResponseDTO {
     private String approvalCode;
     private String paymentHostRefNumber;
 
+    /**
+     * Constructor
+     */
     public MibResponseDTO() {
     }
 
+    /**
+     * 
+     * Constructor with all attribute
+     * 
+     * @param mallId merchant identifier
+     * @param trxCode MIB system identifier
+     * @param auth1 masked OVO ID 
+     * @param invoiceNumber Merchant transaction identifier
+     * @param amount payment amount
+     * @param currency IDR
+     * @param sessionId for merchant use
+     * @param paymentDate payment date
+     * @param result SUCCESS / FAILED
+     * @param responseCode response code for payment result
+     * @param message response message for payment result
+     * @param paymentSysTrace MIB System identifier that being sent to OVO
+     * @param approvalCode payment success identifier from OVO
+     * @param paymentHostRefNumber payment identifier from OVO
+     */
     public MibResponseDTO(Integer mallId, String trxCode, String auth1, String invoiceNumber, Long amount,
             String currency, String sessionId, Long paymentDate, String result, String responseCode, String message,
             String paymentSysTrace, String approvalCode, String paymentHostRefNumber) {
@@ -152,5 +174,14 @@ public class MibResponseDTO {
 
     public void setPaymentHostRefNumber(String paymentHostRefNumber) {
         this.paymentHostRefNumber = paymentHostRefNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "MibResponseDTO [amount=" + amount + ", approvalCode=" + approvalCode + ", auth1=" + auth1
+                + ", currency=" + currency + ", invoiceNumber=" + invoiceNumber + ", mallId=" + mallId + ", message="
+                + message + ", paymentDate=" + paymentDate + ", paymentHostRefNumber=" + paymentHostRefNumber
+                + ", paymentSysTrace=" + paymentSysTrace + ", responseCode=" + responseCode + ", result=" + result
+                + ", sessionId=" + sessionId + ", trxCode=" + trxCode + "]";
     }
 }

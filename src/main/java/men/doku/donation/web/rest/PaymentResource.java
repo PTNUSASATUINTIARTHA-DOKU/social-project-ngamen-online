@@ -75,6 +75,12 @@ public class PaymentResource {
      *      BASKET=donasi,10000,1,10000&WORDS=1234567890123456" 
      *      http://localhost:8080/api/payments/simulator 
      * 
+     * Scenario 0 no parameter sent, unexpected error
+     * Scenario 1 Failed amount > 10000000
+     * Scenario 2 Timeout OVO ID = 080000000000
+     * Scenario 3 not getting response after 30s 
+     * Other than this, success.
+     * 
      * @param mibRequestDTO object mibRequestDTO like request to MIB using x-www-form-url-encoded
      * @return
      */

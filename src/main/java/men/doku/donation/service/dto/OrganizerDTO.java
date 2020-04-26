@@ -48,4 +48,9 @@ public class OrganizerDTO {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    @Override
+    public String toString() {
+        return "OrganizerDTO [email=" + email + ", id=" + id + ", name=" + name + ", url=" + url + "]";
+    }
 }
