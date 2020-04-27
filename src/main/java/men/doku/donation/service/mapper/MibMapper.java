@@ -6,6 +6,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
@@ -83,9 +85,9 @@ public class MibMapper {
     public Transaction mibResponseToTransaction(MibResponseDTO mibResponseDTO, Transaction transaction) {
         transaction.setMallId(mibResponseDTO.getMallId());
         transaction.setTrxCode(mibResponseDTO.getTrxCode());
-        LocalDate date = LocalDate.parse(String.valueOf(mibResponseDTO.getPaymentDate()),
+        LocalDateTime dateTime = LocalDateTime.parse(String.valueOf(mibResponseDTO.getPaymentDate()),
                 DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
-        Instant instant = date.atStartOfDay(ZoneId.of("Asia/Jakarta")).toInstant();
+        Instant instant = dateTime.atZone(ZoneId.of("Asia/Jakarta")).toInstant();
         transaction.setPaymentDate(instant);
         transaction.setResponseCode(mibResponseDTO.getResponseCode());
         transaction.setMessage(mibResponseDTO.getMessage());
