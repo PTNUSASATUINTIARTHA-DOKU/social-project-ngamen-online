@@ -2,42 +2,42 @@
   "donationApp": {
     "transaction": {
       "home": {
-        "title": "Transactions",
-        "createLabel": "Buat Transaction baru",
-        "createOrEditLabel": "Buat atau edit Transaction",
-        "notFound": "No Transactions found"
+        "title": "Transaksi",
+        "createLabel": "Buat Transaksi baru",
+        "createOrEditLabel": "Buat atau edit Transaksi",
+        "notFound": "Transaksi tidak ditemukan"
       },
-      "created": "Transaction dengan id {{ param }} telah dibuat",
-      "updated": "Transaction dengan id {{ param }} telah diperbaharui",
-      "deleted": "Transaction dengan id {{ param }} telah dihapus",
+      "created": "Transaksi dengan id {{ param }} telah dibuat",
+      "updated": "Transaksi dengan id {{ param }} telah diperbaharui",
+      "deleted": "Transaksi dengan id {{ param }} telah dihapus",
       "delete": {
-        "question": "Apakah anda yakin ingin menghapus Transaction {{ id }}?"
+        "question": "Apakah anda yakin ingin menghapus Transaksi {{ id }}?"
       },
       "detail": {
-        "title": "Transaction"
+        "title": "Transaksi"
       },
-      "invoiceNumber": "Invoice Number",
-      "sessionId": "Session Id",
-      "basket": "Basket",
-      "ovoIdMasked": "Ovo Id Masked",
-      "deviceInformation": "Device Information",
-      "name": "Name",
-      "mobile": "Mobile",
+      "invoiceNumber": "No. Invoice",
+      "sessionId": "Session ID",
+      "basket": "Keranjang",
+      "ovoIdMasked": "No. Handphone OVO",
+      "deviceInformation": "Informasi Perangkat",
+      "name": "Nama",
+      "mobile": "No. Handphone",
       "email": "Email",
-      "amount": "Amount",
-      "paymentChannel": "Payment Channel",
-      "mallId": "Mall Id",
+      "amount": "Jumlah Donasi",
+      "paymentChannel": "Metode Pembayaran",
+      "mallId": "Mall ID",
       "trxCode": "Trx Code",
-      "paymentDate": "Payment Date",
+      "paymentDate": "Tanggal Pembayaran",
       "responseCode": "Response Code",
-      "message": "Message",
+      "message": "Informasi Pembayaran",
       "paymentSystrace": "Payment Systrace",
       "approvalCode": "Approval Code",
       "paymentHostRefNumber": "Payment Host Ref Number",
-      "lastUpdatedBy": "Last Updated By",
-      "lastUpdatedAt": "Last Updated At",
+      "lastUpdatedBy": "Diubah oleh",
+      "lastUpdatedAt": "Pengubahan terakhir",
       "status": "Status",
-      "donation": "Donation",
+      "donation": "Donasi",
       "organizer": "Yayasan"
     }
   }
