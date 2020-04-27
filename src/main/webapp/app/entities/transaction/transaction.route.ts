@@ -43,7 +43,7 @@ export const transactionRoute: Routes = [
     },
     data: {
       authorities: [Authority.USER],
-      defaultSort: 'id,asc',
+      defaultSort: 'id,desc',
       pageTitle: 'donationApp.transaction.home.title'
     },
     canActivate: [UserRouteAccessService]
