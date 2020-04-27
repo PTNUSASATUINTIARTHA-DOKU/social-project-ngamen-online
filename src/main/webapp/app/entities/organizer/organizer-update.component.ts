@@ -38,6 +38,7 @@ export class OrganizerUpdateComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ organizer }) => {
       this.updateForm(organizer);
+      if (!this.editForm.get('url')?.value) this.editForm.patchValue({ url: 'http' });
     });
   }
 
