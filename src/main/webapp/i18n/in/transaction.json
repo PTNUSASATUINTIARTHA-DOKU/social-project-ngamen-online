@@ -37,7 +37,8 @@
       "lastUpdatedBy": "Last Updated By",
       "lastUpdatedAt": "Last Updated At",
       "status": "Status",
-      "donation": "Donation"
+      "donation": "Donation",
+      "organizer": "Yayasan"
     }
   }
 }
