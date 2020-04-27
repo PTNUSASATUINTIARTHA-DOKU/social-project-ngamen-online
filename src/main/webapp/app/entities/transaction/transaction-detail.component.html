@@ -56,7 +56,7 @@
                 <dd>
                     <span>{{ transaction.trxCode }}</span>
                 </dd>
-                <dt><span jhiTranslate="donationApp.transaction.paymentDate">Payment Date</span></dt>
+                <dt><span jhiTranslate="donationApp.transaction.paymentDate | date:'medium' ">Payment Date</span></dt>
                 <dd>
                     <span>{{ transaction.paymentDate }}</span>
                 </dd>
@@ -80,11 +80,11 @@
                 <dd>
                     <span>{{ transaction.paymentHostRefNumber }}</span>
                 </dd>
-                <dt><span jhiTranslate="donationApp.transaction.lastUpdatedBy">Last Updated By</span></dt>
+                <dt><span jhiTranslate="donationApp.transaction.lastUpdatedBy | date:'medium' ">Last Updated By</span></dt>
                 <dd>
                     <span>{{ transaction.lastUpdatedBy }}</span>
                 </dd>
-                <dt><span jhiTranslate="donationApp.transaction.lastUpdatedAt">Last Updated At</span></dt>
+                <dt><span jhiTranslate="donationApp.transaction.lastUpdatedAt | date:'medium' ">Last Updated At</span></dt>
                 <dd>
                     <span>{{ transaction.lastUpdatedAt }}</span>
                 </dd>

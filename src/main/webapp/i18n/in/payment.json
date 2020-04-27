@@ -37,7 +37,23 @@
       "step4": "Masukan PIN atau pindai sidik jari untuk otorisasi pembayaran."
     },
     "result": {
-      "title": "Halaman hasil pembayaran"
+      "title": "Halaman hasil pembayaran",
+      "status": "Donasi Anda ",
+      "success": "Terima kasih",
+      "failed": "Silakan coba kembali ",
+      "retry": "klik disini",
+      "website": "Untuk melihat artis lain, silakan kunjungi ",
+      "info": "Informasi",
+      "donation": "Didonasikan kepada",
+      "organizer": "Diselenggarakan oleh",
+      "amount": "Jumlah Donasi",
+      "method": "Metode Pembayaran",
+      "date": "Tanggal Pembayaran",
+      "mobile": "No. Handphone OVO",
+      "invoice": "No. Invoice",
+      "approval": "Approval Code",
+      "response": "Response Code",
+      "message": "Informasi Pembayaran"
     }
   }
 }
