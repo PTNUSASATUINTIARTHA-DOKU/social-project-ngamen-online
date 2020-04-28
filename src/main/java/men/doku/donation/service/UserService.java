@@ -296,6 +296,14 @@ public class UserService {
         return authorityRepository.findAll().stream().map(Authority::getName).collect(Collectors.toList());
     }
 
+    public Boolean isAdmin() {
+        User currentUser = getUserWithAuthorities().get();
+        Authority currentAuthority = currentUser.getAuthorities().stream()
+            .filter(authority -> authority.getName().equalsIgnoreCase("ROLE_ADMIN"))
+            .findFirst().orElse(null);
+        return (currentAuthority != null);
+    }
+
 
     private void clearUserCaches(User user) {
         Objects.requireNonNull(cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE)).evict(user.getLogin());

@@ -1,7 +1,9 @@
 package men.doku.donation.service.impl;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,10 +12,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import men.doku.donation.domain.Donation;
 import men.doku.donation.domain.Transaction;
 import men.doku.donation.repository.TransactionRepository;
 import men.doku.donation.security.SecurityUtils;
+import men.doku.donation.service.DonationService;
 import men.doku.donation.service.TransactionService;
+import men.doku.donation.service.UserService;
 
 /**
  * Service Implementation for managing {@link Transaction}.
@@ -25,9 +30,16 @@ public class TransactionServiceImpl implements TransactionService {
     private final Logger log = LoggerFactory.getLogger(TransactionServiceImpl.class);
 
     private final TransactionRepository transactionRepository;
+    private final DonationService donationService;
+    private final UserService userService;
 
-    public TransactionServiceImpl(TransactionRepository transactionRepository) {
+    public TransactionServiceImpl(
+        TransactionRepository transactionRepository,
+        DonationService donationService, 
+        UserService userService) {
         this.transactionRepository = transactionRepository;
+        this.donationService = donationService;
+        this.userService = userService;
     }
 
     /**
@@ -53,8 +65,13 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     @Transactional(readOnly = true)
     public Page<Transaction> findAll(Pageable pageable) {
-        log.debug("Request to get all Transactions");
-        return transactionRepository.findAll(pageable);
+        log.debug("Request by {} to get all Transactions", SecurityUtils.getCurrentUserLogin().get());
+        if(!userService.isAdmin()) {
+            List<Long> donationIds = donationService.findAll(new Donation(), pageable).get().map(Donation::getId).collect(Collectors.toList());
+            return transactionRepository.findByDonationIdsAndLastUpdatedBy(donationIds, SecurityUtils.getCurrentUserLogin().get(), pageable);
+        } else {
+            return transactionRepository.findAll(pageable);
+        }
     }
 
     /**
@@ -66,8 +83,10 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     @Transactional(readOnly = true)
     public Optional<Transaction> findOne(Long id) {
-        log.debug("Request to get Transaction : {}", id);
-        return transactionRepository.findById(id);
+        final String currentUser = SecurityUtils.getCurrentUserLogin().get();
+        log.debug("Request by {} to get Transaction : {}", currentUser, id);
+        if(userService.isAdmin()) return transactionRepository.findById(id);
+        return transactionRepository.findByIdAndLastUpdatedBy(id, currentUser);
     }
 
     /**
@@ -77,7 +96,7 @@ public class TransactionServiceImpl implements TransactionService {
      */
     @Override
     public void delete(Long id) {
-        log.warn("Request to delete Transaction Forbidden", id);
+        log.warn("Request by {} to delete Transaction {} Forbidden", SecurityUtils.getCurrentUserLogin().get(), id);
     }
     
 }

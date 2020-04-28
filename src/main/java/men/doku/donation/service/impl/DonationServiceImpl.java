@@ -15,6 +15,8 @@ import men.doku.donation.domain.Donation;
 import men.doku.donation.repository.DonationRepository;
 import men.doku.donation.security.SecurityUtils;
 import men.doku.donation.service.DonationService;
+import men.doku.donation.service.UserService;
+import men.doku.donation.web.rest.errors.NoAuthorityException;
 
 /**
  * Service Implementation for managing {@link Donation}.
@@ -26,9 +28,13 @@ public class DonationServiceImpl implements DonationService {
     private final Logger log = LoggerFactory.getLogger(DonationServiceImpl.class);
 
     private final DonationRepository donationRepository;
+    private final UserService userService;
 
-    public DonationServiceImpl(DonationRepository donationRepository) {
-        this.donationRepository = donationRepository;
+    public DonationServiceImpl(
+        DonationRepository donationRepository,
+        UserService userService) {
+            this.donationRepository = donationRepository;
+            this.userService = userService;
     }
 
     /**
@@ -39,10 +45,14 @@ public class DonationServiceImpl implements DonationService {
      */
     @Override
     public Donation save(Donation donation) {
-        donation.setLastUpdatedAt(Instant.now());
-        donation.setLastUpdatedBy(SecurityUtils.getCurrentUserLogin().get());
-        log.debug("Request to save Donation : {}", donation);
-        return donationRepository.save(donation);
+        final String currentUser = SecurityUtils.getCurrentUserLogin().get();
+        log.debug("Request by {} to save Donation : {}", currentUser, donation);
+        if (userService.isAdmin() || donation.getLastUpdatedBy() == currentUser) {
+            donation.setLastUpdatedAt(Instant.now());
+            donation.setLastUpdatedBy(currentUser);
+            return donationRepository.save(donation);    
+        } 
+        throw new NoAuthorityException("Donation", "save");
     }
 
     /**
@@ -55,7 +65,8 @@ public class DonationServiceImpl implements DonationService {
     @Override
     @Transactional(readOnly = true)
     public Page<Donation> findAll(Donation donation, Pageable pageable) {
-        log.debug("Request to get all Donations");
+        log.debug("Request by {} to get all Donations", SecurityUtils.getCurrentUserLogin().get());
+        if(!userService.isAdmin()) donation.setLastUpdatedBy(SecurityUtils.getCurrentUserLogin().get());
         return donationRepository.findAll(Example.of(donation), pageable);
     }
 
@@ -68,8 +79,10 @@ public class DonationServiceImpl implements DonationService {
     @Override
     @Transactional(readOnly = true)
     public Optional<Donation> findOne(Long id) {
-        log.debug("Request to get Donation : {}", id);
-        return donationRepository.findById(id);
+        final String currentUser = SecurityUtils.getCurrentUserLogin().get();
+        log.debug("Request by {} to get Donation : {}", currentUser, id);
+        if(userService.isAdmin()) return donationRepository.findById(id);
+        return donationRepository.findByIdAndLastUpdatedBy(id, currentUser);
     }
 
     /**
@@ -81,6 +94,10 @@ public class DonationServiceImpl implements DonationService {
     @Override
     @Transactional(readOnly = true)
     public Optional<Donation> findOne(Example<Donation> donation) {
+        final String currentUser = SecurityUtils.getCurrentUserLogin().get();
+        log.debug("Request by {} to get Donation : {}", currentUser, donation);
+        if(userService.isAdmin()) return donationRepository.findOne(donation);
+        donation.getProbe().setLastUpdatedBy(currentUser);
         return donationRepository.findOne(donation);
     }
 
@@ -91,7 +108,12 @@ public class DonationServiceImpl implements DonationService {
      */
     @Override
     public void delete(Long id) {
-        log.info("Request to delete Donation : {}", findOne(id).toString());
-        donationRepository.deleteById(id);
+        Donation donation = findOne(id).get();
+        log.info("Request by {} to delete Donation : {}", 
+            SecurityUtils.getCurrentUserLogin().get(), donation);
+        if (userService.isAdmin() || donation.getLastUpdatedBy() == SecurityUtils.getCurrentUserLogin().get()) {
+            donationRepository.deleteById(id);
+        } 
+        throw new NoAuthorityException("Donation", "delete");
     }
 }
