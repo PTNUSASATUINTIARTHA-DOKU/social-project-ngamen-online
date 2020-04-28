@@ -39,7 +39,7 @@ export const organizerRoute: Routes = [
     path: '',
     component: OrganizerComponent,
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'donationApp.organizer.home.title'
     },
     canActivate: [UserRouteAccessService]
@@ -51,7 +51,7 @@ export const organizerRoute: Routes = [
       organizer: OrganizerResolve
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'donationApp.organizer.home.title'
     },
     canActivate: [UserRouteAccessService]
@@ -63,7 +63,7 @@ export const organizerRoute: Routes = [
       organizer: OrganizerResolve
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'donationApp.organizer.home.title'
     },
     canActivate: [UserRouteAccessService]
@@ -75,7 +75,7 @@ export const organizerRoute: Routes = [
       organizer: OrganizerResolve
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'donationApp.organizer.home.title'
     },
     canActivate: [UserRouteAccessService]
