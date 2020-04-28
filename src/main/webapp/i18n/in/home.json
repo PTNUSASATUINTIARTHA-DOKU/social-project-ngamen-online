@@ -1,9 +1,21 @@
 {
   "home": {
+    "menu": {
+      "list": "Daftar Karya Seni",
+      "about": "Tentang Kami",
+      "contact": "Hubungi Kami"
+    },
+    "heading": {
+      "main": "Apresiasi Karya Seni",
+      "mainaccent": "di Sekitarmu",
+      "description": "Semua karya seni patut diapresiasi. Mari bersama menikmati seni entah itu seni pertunjukan, seni instalasi, dan berbagai jenis seni lainnya.",
+      "showart": "Lihat karya seni",
+      "presentart": "Tunjukan karyamu"
+    },
     "title": "Selamat Datang, Java Hipster!",
     "subtitle": "Ini adalah halaman utama anda",
     "logged": {
-      "message": "Anda masuk sebagai \"{{username}}\"."
+      "message": "Halo, \"{{username}}\""
     },
     "question": "Jika anda punya pertanyaan tentang JHipster:",
     "link": {

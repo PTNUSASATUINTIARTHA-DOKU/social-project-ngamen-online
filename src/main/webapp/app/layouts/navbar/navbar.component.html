@@ -1,4 +1,4 @@
-<div *ngIf="path.indexOf('/payment') === -1 && path!=='/error' && path !== '/404' && path !== '/accessdenied'" class="mb-5">
+<div *ngIf="path.indexOf('/payment') === -1 && path!=='/error' && path !== '/404' && path !== '/accessdenied' && path !== ''" class="mb-5">
     <nav class="bg-gray-800" [ngSwitch]="isAuthenticated()">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
@@ -11,7 +11,7 @@
                     <div class="hidden md:block">
                         <div class="ml-10 flex items-baseline">
                             <div>
-                                <a href="#" jhiTranslate="global.menu.home" routerLink="/" routerLinkActive="text-white bg-gray-900" [routerLinkActiveOptions]="{ exact: true }" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 focus:outline-none focus:text-white focus:bg-gray-700">Dashboard</a>
+                                <a href="#" jhiTranslate="global.menu.home" routerLink="/" routerLinkActive="text-white bg-gray-900" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 focus:outline-none focus:text-white focus:bg-gray-700">Dashboard</a>
                             </div>
 
                             <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
