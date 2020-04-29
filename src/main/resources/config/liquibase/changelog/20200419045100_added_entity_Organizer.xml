@@ -67,6 +67,17 @@
 
     <changeSet id="20200419045100-1-relations" author="jhipster">
 
+        <createTable tableName="organizer_user">
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="organizer_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="organizer_id, user_id" tableName="organizer_user"/>
+        
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
 

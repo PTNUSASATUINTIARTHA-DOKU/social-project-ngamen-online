@@ -29,6 +29,13 @@ public interface OrganizerService {
     Page<Organizer> findAll(Pageable pageable);
 
     /**
+     * Get all the organizers with eager load of many-to-many relationships.
+     *
+     * @return the list of entities.
+     */
+    Page<Organizer> findAllWithEagerRelationships(Pageable pageable);
+
+    /**
      * Get the "id" organizer.
      *
      * @param id the id of the entity.

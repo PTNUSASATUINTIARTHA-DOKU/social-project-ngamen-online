@@ -7,9 +7,14 @@ import men.doku.donation.service.OrganizerService;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -17,10 +22,12 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -29,7 +36,7 @@ import men.doku.donation.domain.enumeration.IsActiveStatus;
  * Integration tests for the {@link OrganizerResource} REST controller.
  */
 @SpringBootTest(classes = DonationApp.class)
-
+@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 public class OrganizerResourceIT {
@@ -81,6 +88,12 @@ public class OrganizerResourceIT {
 
     @Autowired
     private OrganizerRepository organizerRepository;
+
+    @Mock
+    private OrganizerRepository organizerRepositoryMock;
+
+    @Mock
+    private OrganizerService organizerServiceMock;
 
     @Autowired
     private OrganizerService organizerService;
@@ -265,6 +278,26 @@ public class OrganizerResourceIT {
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
     }
     
+    @SuppressWarnings({"unchecked"})
+    public void getAllOrganizersWithEagerRelationshipsIsEnabled() throws Exception {
+        when(organizerServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restOrganizerMockMvc.perform(get("/api/organizers?eagerload=true"))
+            .andExpect(status().isOk());
+
+        verify(organizerServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({"unchecked"})
+    public void getAllOrganizersWithEagerRelationshipsIsNotEnabled() throws Exception {
+        when(organizerServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restOrganizerMockMvc.perform(get("/api/organizers?eagerload=true"))
+            .andExpect(status().isOk());
+
+        verify(organizerServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
     @Test
     @Transactional
     public void getOrganizer() throws Exception {

@@ -31,7 +31,8 @@
       "serviceId": "Service Id",
       "acquirerId": "Acquirer Id",
       "status": "Status",
-      "donation": "Donasi"
+      "donation": "Donasi",
+      "user": "User"
     }
   }
 }

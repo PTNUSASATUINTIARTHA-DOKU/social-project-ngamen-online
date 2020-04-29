@@ -1,6 +1,7 @@
 package men.doku.donation.service.impl;
 
 import men.doku.donation.service.OrganizerService;
+import men.doku.donation.service.UserService;
 import men.doku.donation.domain.Organizer;
 import men.doku.donation.repository.OrganizerRepository;
 import men.doku.donation.security.SecurityUtils;
@@ -26,9 +27,11 @@ public class OrganizerServiceImpl implements OrganizerService {
     private final Logger log = LoggerFactory.getLogger(OrganizerServiceImpl.class);
 
     private final OrganizerRepository organizerRepository;
+    private final UserService userService;
 
-    public OrganizerServiceImpl(OrganizerRepository organizerRepository) {
+    public OrganizerServiceImpl(OrganizerRepository organizerRepository, UserService userService) {
         this.organizerRepository = organizerRepository;
+        this.userService = userService;
     }
 
     /**
@@ -41,6 +44,7 @@ public class OrganizerServiceImpl implements OrganizerService {
     public Organizer save(Organizer organizer) {
         organizer.setLastUpdatedAt(Instant.now());
         organizer.setLastUpdatedBy(SecurityUtils.getCurrentUserLogin().get());
+        organizer.getUsers().add(userService.getUserWithAuthorities().get());
         log.debug("Request to save Organizer : {}", organizer);
         return organizerRepository.save(organizer);
     }
@@ -59,6 +63,15 @@ public class OrganizerServiceImpl implements OrganizerService {
     }
 
     /**
+     * Get all the organizers with eager load of many-to-many relationships.
+     *
+     * @return the list of entities.
+     */
+    public Page<Organizer> findAllWithEagerRelationships(Pageable pageable) {
+        return organizerRepository.findAllWithEagerRelationships(pageable);
+    }
+
+    /**
      * Get one organizer by id.
      *
      * @param id the id of the entity.
@@ -68,7 +81,7 @@ public class OrganizerServiceImpl implements OrganizerService {
     @Transactional(readOnly = true)
     public Optional<Organizer> findOne(Long id) {
         log.debug("Request to get Organizer : {}", id);
-        return organizerRepository.findById(id);
+        return organizerRepository.findOneWithEagerRelationships(id);
     }
 
     /**
@@ -78,7 +91,7 @@ public class OrganizerServiceImpl implements OrganizerService {
      */
     @Override
     public void delete(Long id) {
-        log.info("Request to delete Organizer : {}", findOne(id).toString());
+        log.info("Request by {} to delete Organizer : {}", SecurityUtils.getCurrentUserLogin().get(), findOne(id).toString());
         organizerRepository.deleteById(id);
     }
 }

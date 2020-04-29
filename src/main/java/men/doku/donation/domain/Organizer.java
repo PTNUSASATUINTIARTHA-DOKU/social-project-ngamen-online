@@ -94,6 +94,13 @@ public class Organizer implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Donation> donations = new HashSet<>();
 
+    @ManyToMany
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JoinTable(name = "organizer_user",
+               joinColumns = @JoinColumn(name = "organizer_id", referencedColumnName = "id"),
+               inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
+    private Set<User> users = new HashSet<>();
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -321,6 +328,29 @@ public class Organizer implements Serializable {
 
     public void setDonations(Set<Donation> donations) {
         this.donations = donations;
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public Organizer users(Set<User> users) {
+        this.users = users;
+        return this;
+    }
+
+    public Organizer addUser(User user) {
+        this.users.add(user);
+        return this;
+    }
+
+    public Organizer removeUser(User user) {
+        this.users.remove(user);
+        return this;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

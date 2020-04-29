@@ -47,6 +47,7 @@ public class CacheConfiguration {
             createCache(cm, men.doku.donation.domain.Donation.class.getName());
             createCache(cm, men.doku.donation.domain.Donation.class.getName() + ".transactions");
             createCache(cm, men.doku.donation.domain.Transaction.class.getName());
+            createCache(cm, men.doku.donation.domain.Organizer.class.getName() + ".users");
             // jhipster-needle-ehcache-add-entry
         };
     }

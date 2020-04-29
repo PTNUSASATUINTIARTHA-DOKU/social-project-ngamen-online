@@ -1,5 +1,6 @@
 import { Moment } from 'moment';
 import { IDonation } from 'app/shared/model/donation.model';
+import { IUser } from 'app/core/user/user.model';
 import { IsActiveStatus } from 'app/shared/model/enumerations/is-active-status.model';
 
 export interface IOrganizer {
@@ -20,6 +21,7 @@ export interface IOrganizer {
   acquirerId?: number;
   status?: IsActiveStatus;
   donations?: IDonation[];
+  users?: IUser[];
 }
 
 export class Organizer implements IOrganizer {
@@ -40,6 +42,7 @@ export class Organizer implements IOrganizer {
     public serviceId?: number,
     public acquirerId?: number,
     public status?: IsActiveStatus,
-    public donations?: IDonation[]
+    public donations?: IDonation[],
+    public users?: IUser[]
   ) {}
 }

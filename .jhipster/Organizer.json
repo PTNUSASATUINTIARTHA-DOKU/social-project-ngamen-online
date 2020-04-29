@@ -108,6 +108,14 @@
             "otherEntityName": "donation",
             "otherEntityRelationshipName": "organizer",
             "relationshipName": "donation"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityName": "user",
+            "otherEntityRelationshipName": "organiser",
+            "relationshipName": "user",
+            "otherEntityField": "id",
+            "ownerSide": true
         }
     ],
     "changelogDate": "20200419045100",

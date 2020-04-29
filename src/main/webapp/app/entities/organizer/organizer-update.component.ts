@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-
+import { IUser } from 'app/core/user/user.model';
+import { UserService } from 'app/core/user/user.service';
+import { PATTERN_EMAIL, PATTERN_URL } from 'app/shared/constants/pattern.constants';
 import { IOrganizer, Organizer } from 'app/shared/model/organizer.model';
+import { Observable } from 'rxjs';
 import { OrganizerService } from './organizer.service';
-import { PATTERN_URL, PATTERN_EMAIL } from 'app/shared/constants/pattern.constants';
 
 @Component({
   selector: 'jhi-organizer-update',
@@ -15,6 +16,7 @@ import { PATTERN_URL, PATTERN_EMAIL } from 'app/shared/constants/pattern.constan
 })
 export class OrganizerUpdateComponent implements OnInit {
   isSaving = false;
+  users: IUser[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -30,15 +32,23 @@ export class OrganizerUpdateComponent implements OnInit {
     sharedKey: [],
     serviceId: [],
     acquirerId: [],
-    status: []
+    status: [],
+    users: []
   });
 
-  constructor(protected organizerService: OrganizerService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
+  constructor(
+    protected organizerService: OrganizerService,
+    protected userService: UserService,
+    protected activatedRoute: ActivatedRoute,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ organizer }) => {
       this.updateForm(organizer);
       if (!this.editForm.get('url')?.value) this.editForm.patchValue({ url: 'http' });
+
+      this.userService.query().subscribe((res: HttpResponse<IUser[]>) => (this.users = res.body || []));
     });
   }
 
@@ -57,7 +67,8 @@ export class OrganizerUpdateComponent implements OnInit {
       sharedKey: organizer.sharedKey,
       serviceId: organizer.serviceId,
       acquirerId: organizer.acquirerId,
-      status: organizer.status
+      status: organizer.status,
+      users: organizer.users
     });
   }
 
@@ -91,7 +102,8 @@ export class OrganizerUpdateComponent implements OnInit {
       sharedKey: this.editForm.get(['sharedKey'])!.value,
       serviceId: this.editForm.get(['serviceId'])!.value,
       acquirerId: this.editForm.get(['acquirerId'])!.value,
-      status: this.editForm.get(['status'])!.value
+      status: this.editForm.get(['status'])!.value,
+      users: this.editForm.get(['users'])!.value
     };
   }
 
@@ -109,5 +121,20 @@ export class OrganizerUpdateComponent implements OnInit {
 
   protected onSaveError(): void {
     this.isSaving = false;
+  }
+
+  trackById(index: number, item: IUser): any {
+    return item.id;
+  }
+
+  getSelected(selectedVals: IUser[], option: IUser): IUser {
+    if (selectedVals) {
+      for (let i = 0; i < selectedVals.length; i++) {
+        if (option.id === selectedVals[i].id) {
+          return selectedVals[i];
+        }
+      }
+    }
+    return option;
   }
 }

@@ -68,6 +68,12 @@
                 <dd>
                     <span jhiTranslate="{{ 'donationApp.IsActiveStatus.' + organizer.status }}">{{ organizer.status }}</span>
                 </dd>
+                <dt><span jhiTranslate="donationApp.organizer.user">User</span></dt>
+                <dd>
+                    <span *ngFor="let user of organizer.users; let last = last">
+                        {{ user.login }}{{ last ? '' : ', ' }}
+                    </span>
+                </dd>
             </dl>
 
             <button type="submit"
