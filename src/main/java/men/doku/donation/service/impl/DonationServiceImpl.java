@@ -11,11 +11,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import men.doku.donation.config.Constants;
 import men.doku.donation.domain.Donation;
 import men.doku.donation.repository.DonationRepository;
 import men.doku.donation.security.SecurityUtils;
 import men.doku.donation.service.DonationService;
-import men.doku.donation.service.UserService;
 import men.doku.donation.web.rest.errors.NoAuthorityException;
 
 /**
@@ -28,13 +28,9 @@ public class DonationServiceImpl implements DonationService {
     private final Logger log = LoggerFactory.getLogger(DonationServiceImpl.class);
 
     private final DonationRepository donationRepository;
-    private final UserService userService;
 
-    public DonationServiceImpl(
-        DonationRepository donationRepository,
-        UserService userService) {
-            this.donationRepository = donationRepository;
-            this.userService = userService;
+    public DonationServiceImpl(DonationRepository donationRepository) {
+        this.donationRepository = donationRepository;
     }
 
     /**
@@ -47,7 +43,7 @@ public class DonationServiceImpl implements DonationService {
     public Donation save(Donation donation) {
         final String currentUser = SecurityUtils.getCurrentUserLogin().get();
         log.debug("Request by {} to save Donation : {}", currentUser, donation);
-        if (userService.isAdmin() || donation.getLastUpdatedBy() == currentUser) {
+        if (SecurityUtils.isCurrentUserInRole(Constants.ADMIN) || donation.getLastUpdatedBy() == currentUser) {
             donation.setLastUpdatedAt(Instant.now());
             donation.setLastUpdatedBy(currentUser);
             return donationRepository.save(donation);    
@@ -66,7 +62,7 @@ public class DonationServiceImpl implements DonationService {
     @Transactional(readOnly = true)
     public Page<Donation> findAll(Donation donation, Pageable pageable) {
         log.debug("Request by {} to get all Donations", SecurityUtils.getCurrentUserLogin().get());
-        if(!userService.isAdmin()) donation.setLastUpdatedBy(SecurityUtils.getCurrentUserLogin().get());
+        if(!SecurityUtils.isCurrentUserInRole(Constants.ADMIN)) donation.setLastUpdatedBy(SecurityUtils.getCurrentUserLogin().get());
         return donationRepository.findAll(Example.of(donation), pageable);
     }
 
@@ -81,7 +77,7 @@ public class DonationServiceImpl implements DonationService {
     public Optional<Donation> findOne(Long id) {
         final String currentUser = SecurityUtils.getCurrentUserLogin().get();
         log.debug("Request by {} to get Donation : {}", currentUser, id);
-        if(userService.isAdmin()) return donationRepository.findById(id);
+        if(SecurityUtils.isCurrentUserInRole(Constants.ADMIN)) return donationRepository.findById(id);
         return donationRepository.findByIdAndLastUpdatedBy(id, currentUser);
     }
 
@@ -96,7 +92,7 @@ public class DonationServiceImpl implements DonationService {
     public Optional<Donation> findOne(Example<Donation> donation) {
         final String currentUser = SecurityUtils.getCurrentUserLogin().get();
         log.debug("Request by {} to get Donation : {}", currentUser, donation);
-        if(userService.isAdmin()) return donationRepository.findOne(donation);
+        if(SecurityUtils.isCurrentUserInRole(Constants.ADMIN)) return donationRepository.findOne(donation);
         donation.getProbe().setLastUpdatedBy(currentUser);
         return donationRepository.findOne(donation);
     }
@@ -111,7 +107,7 @@ public class DonationServiceImpl implements DonationService {
         Donation donation = findOne(id).get();
         log.info("Request by {} to delete Donation : {}", 
             SecurityUtils.getCurrentUserLogin().get(), donation);
-        if (userService.isAdmin() || donation.getLastUpdatedBy() == SecurityUtils.getCurrentUserLogin().get()) {
+        if (SecurityUtils.isCurrentUserInRole(Constants.ADMIN) || donation.getLastUpdatedBy() == SecurityUtils.getCurrentUserLogin().get()) {
             donationRepository.deleteById(id);
         } 
         throw new NoAuthorityException("Donation", "delete");

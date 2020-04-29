@@ -12,13 +12,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import men.doku.donation.config.Constants;
 import men.doku.donation.domain.Donation;
 import men.doku.donation.domain.Transaction;
 import men.doku.donation.repository.TransactionRepository;
 import men.doku.donation.security.SecurityUtils;
 import men.doku.donation.service.DonationService;
 import men.doku.donation.service.TransactionService;
-import men.doku.donation.service.UserService;
 
 /**
  * Service Implementation for managing {@link Transaction}.
@@ -31,15 +31,12 @@ public class TransactionServiceImpl implements TransactionService {
 
     private final TransactionRepository transactionRepository;
     private final DonationService donationService;
-    private final UserService userService;
 
     public TransactionServiceImpl(
         TransactionRepository transactionRepository,
-        DonationService donationService, 
-        UserService userService) {
+        DonationService donationService) {
         this.transactionRepository = transactionRepository;
         this.donationService = donationService;
-        this.userService = userService;
     }
 
     /**
@@ -66,7 +63,7 @@ public class TransactionServiceImpl implements TransactionService {
     @Transactional(readOnly = true)
     public Page<Transaction> findAll(Pageable pageable) {
         log.debug("Request by {} to get all Transactions", SecurityUtils.getCurrentUserLogin().get());
-        if(!userService.isAdmin()) {
+        if(!SecurityUtils.isCurrentUserInRole(Constants.ADMIN)) {
             List<Long> donationIds = donationService.findAll(new Donation(), pageable).get().map(Donation::getId).collect(Collectors.toList());
             return transactionRepository.findByDonationIdsAndLastUpdatedBy(donationIds, SecurityUtils.getCurrentUserLogin().get(), pageable);
         } else {
@@ -85,7 +82,7 @@ public class TransactionServiceImpl implements TransactionService {
     public Optional<Transaction> findOne(Long id) {
         final String currentUser = SecurityUtils.getCurrentUserLogin().get();
         log.debug("Request by {} to get Transaction : {}", currentUser, id);
-        if(userService.isAdmin()) return transactionRepository.findById(id);
+        if(SecurityUtils.isCurrentUserInRole(Constants.ADMIN)) return transactionRepository.findById(id);
         return transactionRepository.findByIdAndLastUpdatedBy(id, currentUser);
     }
 

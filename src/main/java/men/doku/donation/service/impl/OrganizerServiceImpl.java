@@ -1,21 +1,24 @@
 package men.doku.donation.service.impl;
 
-import men.doku.donation.service.OrganizerService;
-import men.doku.donation.service.UserService;
-import men.doku.donation.domain.Organizer;
-import men.doku.donation.repository.OrganizerRepository;
-import men.doku.donation.security.SecurityUtils;
+import java.time.Instant;
+import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Instant;
-import java.util.Optional;
+import men.doku.donation.config.Constants;
+import men.doku.donation.domain.Organizer;
+import men.doku.donation.repository.OrganizerRepository;
+import men.doku.donation.security.SecurityUtils;
+import men.doku.donation.service.OrganizerService;
+import men.doku.donation.service.UserService;
+import men.doku.donation.web.rest.errors.NoAuthorityException;
 
 /**
  * Service Implementation for managing {@link Organizer}.
@@ -42,10 +45,17 @@ public class OrganizerServiceImpl implements OrganizerService {
      */
     @Override
     public Organizer save(Organizer organizer) {
+        log.debug("Request by {} to save Organizer : {}", SecurityUtils.getCurrentUserLogin().get(), organizer);
+        if (!SecurityUtils.isCurrentUserInRole(Constants.ADMIN)) {
+            if (organizer.getId() != null) {
+                organizer.setUsers(findOne(organizer.getId()).get().getUsers());;
+            } else {
+                organizer.getUsers().clear();
+            }
+        }
+        organizer.getUsers().add(userService.getUserWithAuthorities().get());
         organizer.setLastUpdatedAt(Instant.now());
         organizer.setLastUpdatedBy(SecurityUtils.getCurrentUserLogin().get());
-        organizer.getUsers().add(userService.getUserWithAuthorities().get());
-        log.debug("Request to save Organizer : {}", organizer);
         return organizerRepository.save(organizer);
     }
 
@@ -59,7 +69,12 @@ public class OrganizerServiceImpl implements OrganizerService {
     @Transactional(readOnly = true)
     public Page<Organizer> findAll(Pageable pageable) {
         log.debug("Request to get all Organizers");
-        return organizerRepository.findAll(pageable);
+        if (SecurityUtils.isCurrentUserInRole(Constants.ADMIN)) {
+            return organizerRepository.findAll(pageable);
+        } else {
+            List<Long> organizerIds = organizerRepository.findAllIdsOwnedWithEagerRealtionships(SecurityUtils.getCurrentUserLogin().get());
+            return organizerRepository.findAllOwned(organizerIds, pageable);
+        }
     }
 
     /**
@@ -68,7 +83,14 @@ public class OrganizerServiceImpl implements OrganizerService {
      * @return the list of entities.
      */
     public Page<Organizer> findAllWithEagerRelationships(Pageable pageable) {
-        return organizerRepository.findAllWithEagerRelationships(pageable);
+        log.debug("Request to get all Organizers");
+        if (SecurityUtils.isCurrentUserInRole(Constants.ADMIN)) {
+            return organizerRepository.findAllWithEagerRelationships(pageable);
+        } else {
+            List<Long> organizerIds = organizerRepository.findAllIdsOwnedWithEagerRealtionships(SecurityUtils.getCurrentUserLogin().get());
+            List<Organizer> organizers = organizerRepository.findAllOwnedWithEagerRelationships(organizerIds);
+            return new PageImpl<>(organizers, pageable, organizerIds.size());
+        }
     }
 
     /**
@@ -81,7 +103,18 @@ public class OrganizerServiceImpl implements OrganizerService {
     @Transactional(readOnly = true)
     public Optional<Organizer> findOne(Long id) {
         log.debug("Request to get Organizer : {}", id);
-        return organizerRepository.findOneWithEagerRelationships(id);
+        Optional<Organizer> result = organizerRepository.findOneWithEagerRelationships(id);
+        log.debug("Users : [{}] ", result.get().getUsers());
+        log.debug("Current User: {}", SecurityUtils.getCurrentUserLogin().get());
+        log.debug("User filtered: {}", result.get().getUsers().stream().filter(
+            user -> (user.getLogin().equalsIgnoreCase(SecurityUtils.getCurrentUserLogin().get()))).findFirst());
+        if (!SecurityUtils.isCurrentUserInRole(Constants.ADMIN) && 
+            !result.get().getUsers().stream().filter(
+                user -> user.getLogin().equalsIgnoreCase(SecurityUtils.getCurrentUserLogin().get()))
+            .findFirst().isPresent()) {
+                throw new NoAuthorityException("Organizer", "findOne");
+        } 
+        return result;
     }
 
     /**

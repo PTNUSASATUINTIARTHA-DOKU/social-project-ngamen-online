@@ -15,6 +15,7 @@ public final class Constants {
     public static final String ANONYMOUS_USER = "anonymoususer";
 
     public static final String DEFAULT_CURRENCY = "IDR";
+    public static final String ADMIN = "ROLE_ADMIN";
 
     private Constants() {
     }
