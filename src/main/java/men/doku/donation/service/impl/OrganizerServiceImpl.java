@@ -45,7 +45,8 @@ public class OrganizerServiceImpl implements OrganizerService {
      */
     @Override
     public Organizer save(Organizer organizer) {
-        log.debug("Request by {} to save Organizer : {}", SecurityUtils.getCurrentUserLogin().get(), organizer);
+        final String login = SecurityUtils.getCurrentUserLogin().get();
+        log.debug("Request by {} to save Organizer : {}", login, organizer);
         if (!SecurityUtils.isCurrentUserInRole(Constants.ADMIN)) {
             if (organizer.getId() != null) {
                 organizer.setUsers(findOne(organizer.getId()).get().getUsers());;
@@ -55,7 +56,7 @@ public class OrganizerServiceImpl implements OrganizerService {
         }
         organizer.getUsers().add(userService.getUserWithAuthorities().get());
         organizer.setLastUpdatedAt(Instant.now());
-        organizer.setLastUpdatedBy(SecurityUtils.getCurrentUserLogin().get());
+        organizer.setLastUpdatedBy(login);
         return organizerRepository.save(organizer);
     }
 
@@ -68,11 +69,12 @@ public class OrganizerServiceImpl implements OrganizerService {
     @Override
     @Transactional(readOnly = true)
     public Page<Organizer> findAll(Pageable pageable) {
-        log.debug("Request to get all Organizers");
+        final String login = SecurityUtils.getCurrentUserLogin().get();
+        log.debug("Request by {} to get all Organizers", login);
         if (SecurityUtils.isCurrentUserInRole(Constants.ADMIN)) {
             return organizerRepository.findAll(pageable);
         } else {
-            List<Long> organizerIds = organizerRepository.findAllIdsOwnedWithEagerRealtionships(SecurityUtils.getCurrentUserLogin().get());
+            List<Long> organizerIds = organizerRepository.findAllIdsOwnedWithEagerRealtionships(login);
             return organizerRepository.findAllOwned(organizerIds, pageable);
         }
     }
@@ -82,15 +84,30 @@ public class OrganizerServiceImpl implements OrganizerService {
      *
      * @return the list of entities.
      */
+    @Override
+    @Transactional(readOnly = true)
     public Page<Organizer> findAllWithEagerRelationships(Pageable pageable) {
-        log.debug("Request to get all Organizers");
+        final String login = SecurityUtils.getCurrentUserLogin().get();
+        log.debug("Request by {} to get all Organizers", login);
         if (SecurityUtils.isCurrentUserInRole(Constants.ADMIN)) {
             return organizerRepository.findAllWithEagerRelationships(pageable);
         } else {
-            List<Long> organizerIds = organizerRepository.findAllIdsOwnedWithEagerRealtionships(SecurityUtils.getCurrentUserLogin().get());
+            List<Long> organizerIds = organizerRepository.findAllIdsOwnedWithEagerRealtionships(login);
             List<Organizer> organizers = organizerRepository.findAllOwnedWithEagerRelationships(organizerIds);
-            return new PageImpl<>(organizers, pageable, organizerIds.size());
+            return new PageImpl<>(organizers, pageable, organizers.size());
         }
+    }
+
+    /**
+     * Get all id of organizer owned by user login
+     * 
+     * @param login
+     * @return
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<Long> findAllIdsOwnedWithEagerRealtionships(String login) {
+        return organizerRepository.findAllIdsOwnedWithEagerRealtionships(login);
     }
 
     /**
@@ -102,19 +119,9 @@ public class OrganizerServiceImpl implements OrganizerService {
     @Override
     @Transactional(readOnly = true)
     public Optional<Organizer> findOne(Long id) {
-        log.debug("Request to get Organizer : {}", id);
-        Optional<Organizer> result = organizerRepository.findOneWithEagerRelationships(id);
-        log.debug("Users : [{}] ", result.get().getUsers());
-        log.debug("Current User: {}", SecurityUtils.getCurrentUserLogin().get());
-        log.debug("User filtered: {}", result.get().getUsers().stream().filter(
-            user -> (user.getLogin().equalsIgnoreCase(SecurityUtils.getCurrentUserLogin().get()))).findFirst());
-        if (!SecurityUtils.isCurrentUserInRole(Constants.ADMIN) && 
-            !result.get().getUsers().stream().filter(
-                user -> user.getLogin().equalsIgnoreCase(SecurityUtils.getCurrentUserLogin().get()))
-            .findFirst().isPresent()) {
-                throw new NoAuthorityException("Organizer", "findOne");
-        } 
-        return result;
+        final String login = SecurityUtils.getCurrentUserLogin().get();
+        log.debug("Request by {} to get Organizer : {}", login, id);
+        return organizerRepository.findOneWithEagerRelationships(id);
     }
 
     /**

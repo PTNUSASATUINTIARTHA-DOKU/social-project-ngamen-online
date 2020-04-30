@@ -1,6 +1,7 @@
 package men.doku.donation.web.rest;
 
 import men.doku.donation.domain.Donation;
+import men.doku.donation.security.AuthoritiesConstants;
 import men.doku.donation.service.DonationService;
 import men.doku.donation.web.rest.errors.BadRequestAlertException;
 
@@ -15,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -90,9 +92,9 @@ public class DonationResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of donations in body.
      */
     @GetMapping("/donations")
-    public ResponseEntity<List<Donation>> getAllDonations(Donation donation, Pageable pageable) {
+    public ResponseEntity<List<Donation>> getAllDonations(Pageable pageable) {
         log.debug("REST request to get a page of Donations");
-        Page<Donation> page = donationService.findAll(donation, pageable);
+        Page<Donation> page = donationService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
@@ -117,6 +119,7 @@ public class DonationResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/donations/{id}")
+    @PreAuthorize("hasAuthority(\""+ AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<Void> deleteDonation(@PathVariable Long id) {
         log.debug("REST request to delete Donation : {}", id);
         donationService.delete(id);

@@ -28,11 +28,6 @@
                     <th scope="col"  jhiSortBy="description"><span jhiTranslate="donationApp.donation.description">Description</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="url"><span jhiTranslate="donationApp.donation.url">Url</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="imageUrl"><span jhiTranslate="donationApp.donation.imageUrl">Image Url</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="bankAccountNumber"><span jhiTranslate="donationApp.donation.bankAccountNumber">Bank Account Number</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="bankAccountName"><span jhiTranslate="donationApp.donation.bankAccountName">Bank Account Name</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="bankName"><span jhiTranslate="donationApp.donation.bankName">Bank Name</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="lastUpdatedBy"><span jhiTranslate="donationApp.donation.lastUpdatedBy">Last Updated By</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="lastUpdatedAt"><span jhiTranslate="donationApp.donation.lastUpdatedAt">Last Updated At</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="status"><span jhiTranslate="donationApp.donation.status">Status</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="organizer.id"><span jhiTranslate="donationApp.donation.organizer">Organizer</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
@@ -46,11 +41,6 @@
                     <td>{{ donation.description }}</td>
                     <td>{{ donation.url }}</td>
                     <td>{{ donation.imageUrl }}</td>
-                    <td>{{ donation.bankAccountNumber }}</td>
-                    <td>{{ donation.bankAccountName }}</td>
-                    <td>{{ donation.bankName }}</td>
-                    <td>{{ donation.lastUpdatedBy }}</td>
-                    <td>{{ donation.lastUpdatedAt | date:'medium' }}</td>
                     <td jhiTranslate="{{ 'donationApp.IsActiveStatus.' + donation.status }}">{{ donation.status }}</td>
                     <td>
                         <div *ngIf="donation.organizer">
@@ -73,7 +63,7 @@
                                 <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                             </button>
 
-                            <button type="submit" (click)="delete(donation)"
+                            <button *jhiHasAnyAuthority="'ROLE_ADMIN'" type="submit" (click)="delete(donation)"
                                     class="btn btn-danger btn-sm">
                                 <fa-icon icon="times"></fa-icon>
                                 <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>

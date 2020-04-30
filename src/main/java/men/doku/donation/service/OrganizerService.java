@@ -5,6 +5,7 @@ import men.doku.donation.domain.Organizer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -34,6 +35,14 @@ public interface OrganizerService {
      * @return the list of entities.
      */
     Page<Organizer> findAllWithEagerRelationships(Pageable pageable);
+
+    /**
+     * Get all id of organizer owned by user login
+     * 
+     * @param login
+     * @return
+     */
+    public List<Long> findAllIdsOwnedWithEagerRealtionships(String login);
 
     /**
      * Get the "id" organizer.

@@ -109,6 +109,7 @@ public class Transaction implements Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties("transactions")
+    @NotNull
     private Donation donation;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

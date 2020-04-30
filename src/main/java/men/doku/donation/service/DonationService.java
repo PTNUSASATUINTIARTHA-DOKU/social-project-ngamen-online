@@ -25,10 +25,9 @@ public interface DonationService {
      * Get all the donations.
      *
      * @param pageable the pagination information.
-     * @param donation the donation information
      * @return the list of entities.
      */
-    public Page<Donation> findAll(Donation donation, Pageable pageable);
+    public Page<Donation> findAll(Pageable pageable);
 
     /**
      * Get the "id" donation.
