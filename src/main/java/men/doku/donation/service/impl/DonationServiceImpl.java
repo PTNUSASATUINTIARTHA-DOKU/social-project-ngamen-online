@@ -86,8 +86,7 @@ public class DonationServiceImpl implements DonationService {
     @Override
     @Transactional(readOnly = true)
     public Optional<Donation> findOne(Long id) {
-        final String currentUser = SecurityUtils.getCurrentUserLogin().get();
-        log.debug("Request by {} to get Donation : {}", currentUser, id);
+        log.debug("Request by {} to get Donation : {}", SecurityUtils.getCurrentUserLogin().get(), id);
         return donationRepository.findById(id);
     }
 

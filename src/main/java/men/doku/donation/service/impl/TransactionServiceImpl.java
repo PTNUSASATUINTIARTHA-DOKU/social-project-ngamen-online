@@ -3,7 +3,6 @@ package men.doku.donation.service.impl;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,11 +12,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import men.doku.donation.config.Constants;
-import men.doku.donation.domain.Donation;
 import men.doku.donation.domain.Transaction;
 import men.doku.donation.repository.TransactionRepository;
 import men.doku.donation.security.SecurityUtils;
-import men.doku.donation.service.DonationService;
+import men.doku.donation.service.OrganizerService;
 import men.doku.donation.service.TransactionService;
 
 /**
@@ -30,13 +28,13 @@ public class TransactionServiceImpl implements TransactionService {
     private final Logger log = LoggerFactory.getLogger(TransactionServiceImpl.class);
 
     private final TransactionRepository transactionRepository;
-    private final DonationService donationService;
+    private final OrganizerService organizerService;
 
     public TransactionServiceImpl(
         TransactionRepository transactionRepository,
-        DonationService donationService) {
+        OrganizerService organizerService) {
         this.transactionRepository = transactionRepository;
-        this.donationService = donationService;
+        this.organizerService = organizerService;
     }
 
     /**
@@ -47,7 +45,7 @@ public class TransactionServiceImpl implements TransactionService {
      */
     @Override
     public Transaction save(Transaction transaction) {
-        log.debug("Request to save Transaction : {}", transaction);
+        log.debug("Request by {} to save Transaction : {}", SecurityUtils.getCurrentUserLogin().get(), transaction);
         transaction.setLastUpdatedAt(Instant.now());
         transaction.setLastUpdatedBy(SecurityUtils.getCurrentUserLogin().map(usr -> usr).orElse("SYSTEM"));
         return transactionRepository.save(transaction);
@@ -62,12 +60,13 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     @Transactional(readOnly = true)
     public Page<Transaction> findAll(Pageable pageable) {
-        log.debug("Request by {} to get all Transactions", SecurityUtils.getCurrentUserLogin().get());
-        if(!SecurityUtils.isCurrentUserInRole(Constants.ADMIN)) {
-            List<Long> donationIds = donationService.findAll(new Donation(), pageable).get().map(Donation::getId).collect(Collectors.toList());
-            return transactionRepository.findByDonationIdsAndLastUpdatedBy(donationIds, SecurityUtils.getCurrentUserLogin().get(), pageable);
-        } else {
+        final String login = SecurityUtils.getCurrentUserLogin().get();
+        log.debug("Request by {} to get all Transactions", login);
+        if(SecurityUtils.isCurrentUserInRole(Constants.ADMIN)) {
             return transactionRepository.findAll(pageable);
+        } else {
+            List<Long> organizerIds = organizerService.findAllIdsOwnedWithEagerRealtionships(login);
+            return transactionRepository.findAllByOrganizerIds(organizerIds, pageable);
         }
     }
 
@@ -80,10 +79,8 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     @Transactional(readOnly = true)
     public Optional<Transaction> findOne(Long id) {
-        final String currentUser = SecurityUtils.getCurrentUserLogin().get();
-        log.debug("Request by {} to get Transaction : {}", currentUser, id);
-        if(SecurityUtils.isCurrentUserInRole(Constants.ADMIN)) return transactionRepository.findById(id);
-        return transactionRepository.findByIdAndLastUpdatedBy(id, currentUser);
+        log.debug("Request by {} to get Transaction : {}", SecurityUtils.getCurrentUserLogin().get(), id);
+        return transactionRepository.findById(id);
     }
 
     /**

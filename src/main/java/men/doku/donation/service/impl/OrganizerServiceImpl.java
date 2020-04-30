@@ -18,7 +18,6 @@ import men.doku.donation.repository.OrganizerRepository;
 import men.doku.donation.security.SecurityUtils;
 import men.doku.donation.service.OrganizerService;
 import men.doku.donation.service.UserService;
-import men.doku.donation.web.rest.errors.NoAuthorityException;
 
 /**
  * Service Implementation for managing {@link Organizer}.
