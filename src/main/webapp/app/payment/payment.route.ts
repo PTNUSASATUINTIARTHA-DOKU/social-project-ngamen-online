@@ -55,7 +55,11 @@ export class PaymentResultResolver implements Resolve<ITransaction> {
         }),
         catchError(() => {
           this.paymentService.sharedResult.subscribe(result => (this.result = result));
-          return of(this.result);
+          if (this.result.id !== void 0) return of(this.result);
+          else {
+            this.router.navigate(['404']);
+            return EMPTY;
+          }
         })
       );
     } else {

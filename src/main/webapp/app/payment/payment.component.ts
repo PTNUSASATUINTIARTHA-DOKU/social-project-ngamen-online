@@ -124,7 +124,7 @@ export class PaymentComponent implements OnInit {
       undefined,
       moment(new Date()),
       'RTO',
-      'Failed to communicate with Server, try checking Payment Result later by refreshing Result Page',
+      'Failed to communicate with Server',
       undefined,
       undefined,
       undefined,
