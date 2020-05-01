@@ -78,7 +78,7 @@ public class PaymentServiceImpl implements PaymentService {
         // Scenario not getting response after 70s
         if (mibRequestDTO.getAUTH1().equals("081111111111")) {
             try {
-                Thread.sleep(40000);
+                Thread.sleep(70000);
             } catch (InterruptedException e) {
                 log.error("Payment Simulator sleep interrupted", e);
             }

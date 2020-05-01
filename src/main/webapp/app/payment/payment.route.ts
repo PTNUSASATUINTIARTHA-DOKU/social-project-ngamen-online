@@ -4,7 +4,7 @@ import { ActivatedRouteSnapshot, Resolve, Router, Routes } from '@angular/router
 import { Donation } from 'app/shared/model/donation.model';
 import { ITransaction, Transaction } from 'app/shared/model/transaction.model';
 import { EMPTY, Observable, of } from 'rxjs';
-import { flatMap } from 'rxjs/operators';
+import { catchError, flatMap } from 'rxjs/operators';
 import { PaymentComponent } from './payment.component';
 import { PaymentResultComponent } from './payment.result.component';
 import { PaymentService } from './payment.service';
@@ -21,38 +21,47 @@ export class PaymentDonationResolver implements Resolve<Donation> {
           if (donation.body) {
             return of(donation.body);
           } else {
-            this.router.navigate(['404']);
             return EMPTY;
           }
         })
       );
     }
+    this.router.navigate(['404']);
     return EMPTY;
   }
 }
 
 @Injectable({ providedIn: 'root' })
 export class PaymentResultResolver implements Resolve<ITransaction> {
-  result: ITransaction;
+  // subject: Subject<ITransaction>;
+  result: Transaction;
   constructor(private paymentService: PaymentService, private router: Router) {
+    // this.subject = new Subject<ITransaction>();
     this.result = {};
   }
 
   resolve(route: ActivatedRouteSnapshot): Observable<ITransaction> {
     const invoice = route.paramMap.get('invoice');
     if (invoice) {
+      // eslint-disable-next-line no-console
+      console.log(this.paymentService);
       return this.paymentService.findInvoice(invoice).pipe(
         flatMap((transaction: HttpResponse<Transaction>) => {
           if (transaction.body) {
             return of(transaction.body);
           } else {
-            this.router.navigate(['404']);
             return EMPTY;
           }
+        }),
+        catchError(() => {
+          this.paymentService.sharedResult.subscribe(result => (this.result = result));
+          return of(this.result);
         })
       );
+    } else {
+      this.router.navigate(['404']);
+      return EMPTY;
     }
-    return EMPTY;
   }
 }
 

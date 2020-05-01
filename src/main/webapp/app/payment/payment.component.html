@@ -1,7 +1,8 @@
-<div class="loading" [hidden]="!isSaving">
-    <div class="spinner-wrapper" [hidden]="isCounting">
+<div class="loading" *ngIf="isSaving">
+    <div class="spinner-wrapper" *ngIf="!isCounting&&!isChecking">
         <span class="spinner-text">
-            <h1 jhiTranslate="payment.loading.greeting">Hello, </h1> {{ this.paymentForm.get('donor')?.value }} <br />
+            <h1 jhiTranslate="payment.loading.greeting">Hello, </h1> {{ this.paymentForm.get('donor')?.value }} 
+            <br />
             <h1 jhiTranslate="payment.loading.confirm1">Please that you already have your mobile phone with you and your OVO app already open, </h1>
             <br /> 
             <h1 jhiTranslate="payment.loading.confirm2">since after you click OK button below, you will only have 30 seconds to complete the payment.</h1>
@@ -9,7 +10,7 @@
         </span>
         <span class="spinner"></span>
     </div>
-    <div class="spinner-wrapper" [hidden]="!isCounting">
+    <div class="spinner-wrapper" *ngIf="isCounting&&!isChecking">
         <span class="spinner-text">
             <h1 jhiTranslate="payment.loading.greeting">Hello, </h1> {{ this.paymentForm.get('donor')?.value }}
             <h4 jhiTranslate="payment.loading.counting">We still waiting for your payment on your OVO app in 30 seconds.
@@ -32,6 +33,16 @@
                         payment.</h4>
                 </li>
             </ol>
+        </span>
+        <span class="spinner"></span>
+    </div>
+    <div class="spinner-wrapper" *ngIf="!isCounting&&isChecking">
+        <span class="spinner-text">
+            <h1 jhiTranslate="payment.loading.greeting">Hello, </h1> {{ this.paymentForm.get('donor')?.value }} 
+            <br />
+            <h1 jhiTranslate="payment.loading.checking">Please wait, we are still checking your payment result.</h1>
+            <br /> 
+            <h1>{{ this.counter$ | async }}</h1>
         </span>
         <span class="spinner"></span>
     </div>

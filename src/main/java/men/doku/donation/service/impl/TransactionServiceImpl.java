@@ -18,8 +18,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import men.doku.donation.config.ApplicationProperties;
@@ -51,6 +53,7 @@ public class TransactionServiceImpl implements TransactionService {
     private final MibMapper mibMapper;
     private final ApplicationProperties applicationProperties;
     private final RestTemplate restTemplate;
+    private final TransactionProcessing transactionProcessing;
 
     public TransactionServiceImpl(
         TransactionRepository transactionRepository,
@@ -58,7 +61,8 @@ public class TransactionServiceImpl implements TransactionService {
         DonationService donationService,
         MibMapper mibMapper,
         ApplicationProperties applicationProperties,
-        RestTemplateBuilder restTemplateBuilder
+        RestTemplateBuilder restTemplateBuilder,
+        TransactionProcessing transactionProcessing
         ) {
         this.transactionRepository = transactionRepository;
         this.organizerService = organizerService;
@@ -67,8 +71,9 @@ public class TransactionServiceImpl implements TransactionService {
         this.applicationProperties = applicationProperties;
         this.restTemplate = restTemplateBuilder
             .setConnectTimeout(Duration.ofSeconds(30))
-            .setReadTimeout(Duration.ofSeconds(75)) 
+            .setReadTimeout(Duration.ofSeconds(65)) 
             .build();
+        this.transactionProcessing = transactionProcessing;
     }
 
     /**
@@ -127,6 +132,7 @@ public class TransactionServiceImpl implements TransactionService {
     @Transactional(readOnly = true)
     public Optional<Transaction> findOne(Example<Transaction> transaction) {
         log.debug("Request by {} to get Transaction : {}", SecurityUtils.getCurrentUserLogin().get(), transaction);
+        // add method here, to do check status to MIB if Transaction Status still PROCESS and paymentdate already more than 65s than 
         return transactionRepository.findOne(transaction);
     }
 
@@ -139,6 +145,7 @@ public class TransactionServiceImpl implements TransactionService {
     public void delete(Long id) {
         log.warn("Request by {} to delete Transaction {} Forbidden", SecurityUtils.getCurrentUserLogin().get(), id);
     }
+
  
     /**
      * Initiate transaction
@@ -149,12 +156,14 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public Transaction pay(Transaction transaction) {
         log.debug("Request to initiatePayment : {}", transaction);
+        transaction = this.transactionProcessing.saveProcessing(transaction);
         MibResponseDTO mibResponseDTO = new MibResponseDTO();
         Optional<Donation> don = donationService.findOne(transaction.getDonation().getId());
         if (!don.isPresent()) {
-            mibResponseDTO.setResult(TransactionStatus.FAILED.toString());
-            mibResponseDTO.setResponseCode("DNF");
-            mibResponseDTO.setMessage("Donation Not Found");
+            transaction.setStatus(TransactionStatus.FAILED);
+            transaction.setResponseCode("DNF");
+            transaction.setMessage("Donation Not Found");
+            return save(transaction);
         } else {
             transaction.setDonation(don.get());
             MibRequestDTO mibRequestDTO = mibMapper.toMibRequestDTO(transaction, don.get().getOrganizer());
@@ -164,17 +173,45 @@ public class TransactionServiceImpl implements TransactionService {
             headers.setAccept(Collections.singletonList(MediaType.APPLICATION_XML));
             HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(
                     mibMapper.mibRequestToMultiValueMap(mibRequestDTO), headers);
-            ResponseEntity<MibResponseDTO> response = this.restTemplate.postForEntity(url, entity,
-                    MibResponseDTO.class);
+            ResponseEntity<MibResponseDTO> response =  new ResponseEntity<>(HttpStatus.PRECONDITION_FAILED);
+            try {
+                response = this.restTemplate.postForEntity(url, entity, MibResponseDTO.class);
+            } catch (RestClientException rce) {
+                log.error("RestClientException {}", rce.getMessage());
+            }
             if (response.getStatusCode() == HttpStatus.OK) {
                 mibResponseDTO = response.getBody();
+                return save(mibMapper.mibResponseToTransaction(mibResponseDTO, transaction));
             } else {
-                mibResponseDTO = mibMapper.mibRequestToMibResponse(mibRequestDTO);
-                mibResponseDTO.setResult(TransactionStatus.FAILED.toString());
-                mibResponseDTO.setResponseCode(String.valueOf(response.getStatusCode().value()));
-                mibResponseDTO.setMessage("HTTP Status Code not 200 from Server MIB");
+                // try check status 
+                transaction = findOne(transaction.getId()).get();
+                // if check status already implemented inside findOne, there will be no need to manual update below:
+                transaction.setStatus(TransactionStatus.FAILED);
+                transaction.setResponseCode(String.valueOf(response.getStatusCode().value()));
+                transaction.setMessage("Payment not completed.");
+                return save(transaction);
             }
         }
-        return save(mibMapper.mibResponseToTransaction(mibResponseDTO, transaction));
     }    
+}
+
+@Service
+@Transactional
+class TransactionProcessing {
+
+    private final TransactionRepository transactionRepository;
+
+    TransactionProcessing(TransactionRepository transactionRepository) {
+        this.transactionRepository = transactionRepository;
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public Transaction saveProcessing(Transaction transaction) {
+        transaction.setStatus(TransactionStatus.PROCESS);
+        transaction.setResponseCode("PRS");
+        transaction.setMessage("Still processing, try checking Payment Result later by refreshing Result Page");
+        transaction.setLastUpdatedAt(Instant.now());
+        transaction.setLastUpdatedBy(SecurityUtils.getCurrentUserLogin().map(usr -> usr).orElse("SYSTEM"));
+        return transactionRepository.save(transaction);
+    }
 }

@@ -11,6 +11,7 @@ import { v4 as uuid } from 'uuid';
 import { PaymentService } from './payment.service';
 import { Donation } from 'app/shared/model/donation.model';
 import { TransactionStatus } from 'app/shared/model/enumerations/transaction-status.model';
+import * as moment from 'moment';
 
 @Component({
   selector: 'jhi-main',
@@ -22,6 +23,7 @@ export class PaymentComponent implements OnInit {
   method: PaymentChannel;
   isSaving = false;
   isCounting = false;
+  isChecking = false;
   counter$: Observable<number> = new Observable<number>();
   count = 0;
   donation: Donation;
@@ -68,23 +70,40 @@ export class PaymentComponent implements OnInit {
 
   confirm(): void {
     this.isCounting = true;
-    this.count = 30;
-    this.counter$ = timer(0, 1000).pipe(
-      take(this.count),
-      map(() => --this.count)
-    );
     const transaction = this.createPayment();
-    this.paymentService.initPayment(transaction).subscribe(
+    const sub = this.paymentService.initPayment(transaction).subscribe(
       result => {
         if (result.body) this.onSaveSuccess(result.body);
-        else this.onSaveError();
+        else this.onSaveError(transaction);
       },
-      () => this.onSaveError()
+      () => this.onSaveError(transaction)
+    );
+    this.count = 30;
+    this.counter$ = timer(0, 1000).pipe(
+      take(40),
+      map(() => {
+        --this.count;
+        if (this.count === 0) {
+          this.isCounting = false;
+          if (!this.isChecking) {
+            this.count = 40;
+            this.isChecking = true;
+          } else {
+            this.isChecking = false;
+            this.isSaving = false;
+            sub.unsubscribe();
+            this.onSaveError(transaction);
+          }
+        }
+        return this.count;
+      })
     );
   }
 
   save(): void {
     this.isSaving = true;
+    this.isChecking = false;
+    this.isCounting = false;
   }
 
   private createPayment(): ITransaction {
@@ -103,9 +122,9 @@ export class PaymentComponent implements OnInit {
       this.method,
       undefined,
       undefined,
-      undefined,
-      undefined,
-      undefined,
+      moment(new Date()),
+      'RTO',
+      'Failed to communicate with Server, try checking Payment Result later by refreshing Result Page',
       undefined,
       undefined,
       undefined,
@@ -131,7 +150,9 @@ export class PaymentComponent implements OnInit {
     this.router.navigate(['../' + transaction.invoiceNumber + '/result'], { relativeTo: this.route });
   }
 
-  private onSaveError(): void {
+  private onSaveError(transaction: ITransaction): void {
     this.isSaving = false;
+    this.paymentService.paymentResult(transaction);
+    this.router.navigate(['../' + transaction.invoiceNumber + '/result'], { relativeTo: this.route });
   }
 }

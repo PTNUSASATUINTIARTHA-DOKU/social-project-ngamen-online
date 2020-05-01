@@ -3,11 +3,13 @@ import { Injectable } from '@angular/core';
 import { SERVER_API_URL } from 'app/app.constants';
 import { IDonation } from 'app/shared/model/donation.model';
 import { ITransaction, Transaction } from 'app/shared/model/transaction.model';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class PaymentService {
   public resourceUrl = SERVER_API_URL + 'api/payments';
+  private result = new BehaviorSubject(new Transaction());
+  sharedResult = this.result.asObservable();
 
   constructor(protected http: HttpClient) {}
 
@@ -21,5 +23,9 @@ export class PaymentService {
 
   initPayment(transaction: Transaction): Observable<HttpResponse<ITransaction>> {
     return this.http.post<ITransaction>(`${this.resourceUrl}`, transaction, { observe: 'response' });
+  }
+
+  paymentResult(transaction: Transaction): void {
+    this.result.next(transaction);
   }
 }
