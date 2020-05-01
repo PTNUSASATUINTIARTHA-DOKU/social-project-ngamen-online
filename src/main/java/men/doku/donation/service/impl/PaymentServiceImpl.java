@@ -60,17 +60,25 @@ public class PaymentServiceImpl implements PaymentService {
             approvalCode = "";
         } else
         // Scenario Timeout OVO ID = 080000000000
-        if (mibRequestDTO.getAUTH1() == "080000000000") {
+        if (mibRequestDTO.getAUTH1().equals("080000000000")) {
             result = "FAILED";
             responseCode = "TO";
             message = "Request TimeOut";
             approvalCode = "";
             paymentHostRefNumber = "";
         } else 
-        // Scenario not getting response after 30s        
-        if (mibRequestDTO.getAUTH1() == "089999999999") {
+        // Scenario not getting response after 40s        
+        if (mibRequestDTO.getAUTH1().equals("089999999999")) {
             try {
-                Thread.sleep(30000);
+                Thread.sleep(40000);
+            } catch (InterruptedException e) {
+                log.error("Payment Simulator sleep interrupted", e);
+            }
+        } else 
+        // Scenario not getting response after 70s
+        if (mibRequestDTO.getAUTH1().equals("081111111111")) {
+            try {
+                Thread.sleep(40000);
             } catch (InterruptedException e) {
                 log.error("Payment Simulator sleep interrupted", e);
             }
