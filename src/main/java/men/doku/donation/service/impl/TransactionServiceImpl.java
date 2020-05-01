@@ -1,5 +1,6 @@
 package men.doku.donation.service.impl;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.util.Collections;
 import java.util.List;
@@ -64,7 +65,10 @@ public class TransactionServiceImpl implements TransactionService {
         this.donationService = donationService;
         this.mibMapper = mibMapper;
         this.applicationProperties = applicationProperties;
-        this.restTemplate = restTemplateBuilder.build();
+        this.restTemplate = restTemplateBuilder
+            .setConnectTimeout(Duration.ofSeconds(30))
+            .setReadTimeout(Duration.ofSeconds(75)) 
+            .build();
     }
 
     /**
