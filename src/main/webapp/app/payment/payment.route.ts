@@ -2,7 +2,7 @@ import { HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, Router, Routes } from '@angular/router';
 import { Donation } from 'app/shared/model/donation.model';
-import { ITransaction } from 'app/shared/model/transaction.model';
+import { ITransaction, Transaction } from 'app/shared/model/transaction.model';
 import { EMPTY, Observable, of } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
 import { PaymentComponent } from './payment.component';
@@ -16,7 +16,7 @@ export class PaymentDonationResolver implements Resolve<Donation> {
   resolve(route: ActivatedRouteSnapshot): Observable<Donation> {
     const slug = route.paramMap.get('slug');
     if (slug) {
-      return this.paymentService.find(slug).pipe(
+      return this.paymentService.findSlug(slug).pipe(
         flatMap((donation: HttpResponse<Donation>) => {
           if (donation.body) {
             return of(donation.body);
@@ -39,15 +39,18 @@ export class PaymentResultResolver implements Resolve<ITransaction> {
   }
 
   resolve(route: ActivatedRouteSnapshot): Observable<ITransaction> {
-    const slug = route.paramMap.get('slug');
-    if (slug) {
-      this.paymentService.sharedResult.subscribe(result => (this.result = result));
-      if (this.result.id !== void 0) {
-        return of(this.result);
-      } else {
-        this.router.navigate(['404']);
-        return EMPTY;
-      }
+    const invoice = route.paramMap.get('invoice');
+    if (invoice) {
+      return this.paymentService.findInvoice(invoice).pipe(
+        flatMap((transaction: HttpResponse<Transaction>) => {
+          if (transaction.body) {
+            return of(transaction.body);
+          } else {
+            this.router.navigate(['404']);
+            return EMPTY;
+          }
+        })
+      );
     }
     return EMPTY;
   }
@@ -65,7 +68,7 @@ export const PAYMENT_ROUTE: Routes = [
     }
   },
   {
-    path: 'payment/:slug/result',
+    path: 'payment/:invoice/result',
     component: PaymentResultComponent,
     resolve: {
       transaction: PaymentResultResolver

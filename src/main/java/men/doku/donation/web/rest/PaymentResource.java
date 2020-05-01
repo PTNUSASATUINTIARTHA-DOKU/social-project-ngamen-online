@@ -47,12 +47,12 @@ public class PaymentResource {
     }
 
     /**
-     * {@code GET  /payments/:slug} : get the "slug" payment.
+     * {@code GET  /payments/:slug/slug} : get the "slug" payment.
      *
-     * @param slug the slug of the payment to retrieve.
+     * @param slug the slug of the donation to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the donation, or with status {@code 404 (Not Found)}.
      */
-    @GetMapping("/payments/{slug}")
+    @GetMapping("/payments/{slug}/slug")
     public ResponseEntity<Donation> getDonationByPaymentSlug(@PathVariable String slug) {
         log.debug("REST request to get Donation by Payment Slug : {}", slug);
         Donation exampleDonation = new Donation();
@@ -60,6 +60,22 @@ public class PaymentResource {
         Optional<Donation> donation = donationService.findOne(Example.of(exampleDonation));
         return ResponseUtil.wrapOrNotFound(donation);
     }
+
+    /**
+     * {@code GET  /payments/:invoice/invoice} : get the "slug" payment.
+     *
+     * @param invoice the invoice of the transaction to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the donation, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("/payments/{invoice}/invoice")
+    public ResponseEntity<Transaction> getTransactionByInvoiceNumber(@PathVariable String invoice) {
+        log.debug("REST request to get Transaction by Invoice Number : {}", invoice);
+        Transaction exampleTransaction = new Transaction();
+        exampleTransaction.setInvoiceNumber(invoice);
+        Optional<Transaction> transaction = transactionService.findOne(Example.of(exampleTransaction));
+        return ResponseUtil.wrapOrNotFound(transaction);
+    }
+
 
     /**
      * Initiate Payment

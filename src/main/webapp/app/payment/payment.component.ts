@@ -126,10 +126,9 @@ export class PaymentComponent implements OnInit {
     return JSON.stringify(this.device.getDeviceInfo());
   }
 
-  private onSaveSuccess(response: ITransaction): void {
+  private onSaveSuccess(transaction: ITransaction): void {
     this.isSaving = false;
-    this.paymentService.paymentResult(response);
-    this.router.navigate(['result'], { relativeTo: this.route });
+    this.router.navigate(['../' + transaction.invoiceNumber + '/result'], { relativeTo: this.route });
   }
 
   private onSaveError(): void {

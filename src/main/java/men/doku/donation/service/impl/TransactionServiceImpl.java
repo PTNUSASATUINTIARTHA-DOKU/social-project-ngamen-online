@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpEntity;
@@ -110,6 +111,19 @@ public class TransactionServiceImpl implements TransactionService {
     public Optional<Transaction> findOne(Long id) {
         log.debug("Request by {} to get Transaction : {}", SecurityUtils.getCurrentUserLogin().get(), id);
         return transactionRepository.findById(id);
+    }
+
+    /**
+     * Get one transaction by Example.
+     *
+     * @param Example<S> the example of the entity.
+     * @return the entity.
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<Transaction> findOne(Example<Transaction> transaction) {
+        log.debug("Request by {} to get Transaction : {}", SecurityUtils.getCurrentUserLogin().get(), transaction);
+        return transactionRepository.findOne(transaction);
     }
 
     /**
