@@ -114,6 +114,9 @@ spring:
   output:
     ansi:
       console-available: true
+  jackson:
+    mapper:
+      default-view-inclusion: true
 
 server:
   servlet:

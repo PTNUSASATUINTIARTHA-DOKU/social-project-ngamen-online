@@ -7,6 +7,8 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
@@ -14,6 +16,7 @@ import java.util.Set;
 
 import men.doku.donation.config.Constants;
 import men.doku.donation.domain.enumeration.IsActiveStatus;
+import men.doku.donation.security.AuthoritiesConstants;
 
 /**
  * Organizer entity.\n@author RT.
@@ -29,65 +32,81 @@ public class Organizer implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
+    @JsonView(AuthoritiesConstants.Anonymous.class)
     private Long id;
 
     @NotNull
     @Size(max = 100)
     @Column(name = "name", length = 100, nullable = false, unique = true)
+    @JsonView(AuthoritiesConstants.Anonymous.class)
     private String name;
 
     @Pattern(regexp = Constants.URL_REGEX)
     @Size(max = 100)
     @Column(name = "url", length = 100)
+    @JsonView(AuthoritiesConstants.Anonymous.class)
     private String url;
 
     @Pattern(regexp = Constants.EMAIL_REGEX)
     @NotNull
     @Size(max = 100)
     @Column(name = "email", length = 100, nullable = false)
+    @JsonView(AuthoritiesConstants.Anonymous.class)
     private String email;
 
     @Size(max = 15)
     @Column(name = "bank_account_number", length = 15)
+    @JsonView(AuthoritiesConstants.User.class)
     private String bankAccountNumber;
 
     @Size(max = 100)
     @Column(name = "bank_account_name", length = 100)
+    @JsonView(AuthoritiesConstants.User.class)
     private String bankAccountName;
 
     @Size(max = 100)
     @Column(name = "bank_name", length = 100)
+    @JsonView(AuthoritiesConstants.User.class)
     private String bankName;
 
     @DecimalMax(value = "100")
     @Column(name = "mdr")
+    @JsonView(AuthoritiesConstants.User.class)
     private Float mdr;
 
     @DecimalMax(value = "100")
     @Column(name = "sharing")
+    @JsonView(AuthoritiesConstants.User.class)
     private Float sharing;
 
     @Size(max = 100)
     @Column(name = "last_updated_by", length = 100)
+    @JsonView(AuthoritiesConstants.User.class)
     private String lastUpdatedBy;
 
     @Column(name = "last_updated_at")
+    @JsonView(AuthoritiesConstants.User.class)
     private Instant lastUpdatedAt;
 
     @Column(name = "mall_id")
+    @JsonView(AuthoritiesConstants.User.class)
     private Integer mallId;
 
     @Column(name = "shared_key")
+    @JsonView(AuthoritiesConstants.User.class)
     private String sharedKey;
 
     @Column(name = "service_id")
+    @JsonView(AuthoritiesConstants.User.class)
     private Integer serviceId;
 
     @Column(name = "acquirer_id")
+    @JsonView(AuthoritiesConstants.User.class)
     private Integer acquirerId;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
+    @JsonView(AuthoritiesConstants.Anonymous.class)
     private IsActiveStatus status;
 
     @OneToMany(mappedBy = "organizer")

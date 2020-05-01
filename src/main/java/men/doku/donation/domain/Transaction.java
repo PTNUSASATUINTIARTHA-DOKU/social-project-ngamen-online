@@ -1,6 +1,8 @@
 package men.doku.donation.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonView;
+
 import io.swagger.annotations.ApiModel;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -14,6 +16,7 @@ import java.time.Instant;
 import men.doku.donation.domain.enumeration.PaymentChannel;
 
 import men.doku.donation.domain.enumeration.TransactionStatus;
+import men.doku.donation.security.AuthoritiesConstants;
 
 /**
  * Transaction entity.\n@author RT.
@@ -29,82 +32,104 @@ public class Transaction implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
+    @JsonView(AuthoritiesConstants.Anonymous.class)
     private Long id;
 
     @NotNull
     @Size(max = 64)
     @Column(name = "invoice_number", length = 64, nullable = false, unique = true)
+    @JsonView(AuthoritiesConstants.Anonymous.class)
     private String invoiceNumber;
 
     @Size(max = 128)
     @Column(name = "session_id", length = 128)
+    @JsonView(AuthoritiesConstants.Anonymous.class)
     private String sessionId;
 
     @Size(max = 1024)
     @Column(name = "basket", length = 1024)
+    @JsonView(AuthoritiesConstants.Anonymous.class)
     private String basket;
 
     @Size(max = 15)
     @Column(name = "ovo_id_masked", length = 15)
+    @JsonView(AuthoritiesConstants.User.class)
     private String ovoIdMasked;
 
     @Size(max = 1000)
     @Column(name = "device_information", length = 1000)
+    @JsonView(AuthoritiesConstants.User.class)
     private String deviceInformation;
 
     @Size(max = 30)
     @Column(name = "name", length = 30)
+    @JsonView(AuthoritiesConstants.Anonymous.class)
     private String name;
 
     @Size(max = 15)
     @Column(name = "mobile", length = 15)
+    @JsonView(AuthoritiesConstants.Anonymous.class)
     private String mobile;
 
     @Size(max = 100)
     @Column(name = "email", length = 100)
+    @JsonView(AuthoritiesConstants.Anonymous.class)
     private String email;
 
     @Min(value = 10000L)
     @Column(name = "amount")
+    @JsonView(AuthoritiesConstants.Anonymous.class)
     private Long amount;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "payment_channel")
+    @JsonView(AuthoritiesConstants.Anonymous.class)
     private PaymentChannel paymentChannel;
 
     @Column(name = "mall_id")
+    @JsonView(AuthoritiesConstants.User.class)
     private Integer mallId;
 
     @Column(name = "trx_code")
+    @JsonView(AuthoritiesConstants.User.class)
     private String trxCode;
 
     @Column(name = "payment_date")
+    @JsonView(AuthoritiesConstants.User.class)
     private Instant paymentDate;
 
     @Column(name = "response_code")
+    @JsonView(AuthoritiesConstants.Anonymous.class)
     private String responseCode;
 
     @Column(name = "message")
+    @JsonView(AuthoritiesConstants.Anonymous.class)
     private String message;
 
     @Column(name = "payment_systrace")
+    @JsonView(AuthoritiesConstants.User.class)
     private String paymentSystrace;
 
     @Column(name = "approval_code")
+    @JsonView(AuthoritiesConstants.Anonymous.class)
     private String approvalCode;
 
     @Column(name = "payment_host_ref_number")
+    @JsonView(AuthoritiesConstants.User.class)
     private String paymentHostRefNumber;
 
     @Size(max = 100)
     @Column(name = "last_updated_by", length = 100)
+    @JsonView(AuthoritiesConstants.User.class)
     private String lastUpdatedBy;
 
     @Column(name = "last_updated_at")
+    @JsonView(AuthoritiesConstants.User.class)
     private Instant lastUpdatedAt;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
+    @JsonView(AuthoritiesConstants.Anonymous.class)
     private TransactionStatus status;
 
     @ManyToOne

@@ -1,6 +1,8 @@
 package men.doku.donation.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonView;
+
 import io.swagger.annotations.ApiModel;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -15,6 +17,7 @@ import java.util.Set;
 
 import men.doku.donation.config.Constants;
 import men.doku.donation.domain.enumeration.IsActiveStatus;
+import men.doku.donation.security.AuthoritiesConstants;
 
 /**
  * Donation entity.\n@author RT.
@@ -30,52 +33,64 @@ public class Donation implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
+    @JsonView(AuthoritiesConstants.Anonymous.class)
     private Long id;
 
     @NotNull
     @Size(max = 100)
     @Column(name = "name", length = 100, nullable = false, unique = true)
+    @JsonView(AuthoritiesConstants.Anonymous.class)
     private String name;
 
     @Size(max = 2000)
     @Column(name = "description", length = 2000)
+    @JsonView(AuthoritiesConstants.Anonymous.class)
     private String description;
 
     @Pattern(regexp = Constants.URL_REGEX)
     @Size(max = 100)
     @Column(name = "url", length = 100)
+    @JsonView(AuthoritiesConstants.Anonymous.class)
     private String url;
 
     @Pattern(regexp = Constants.URL_REGEX)
     @Size(max = 100)
     @Column(name = "image_url", length = 100)
+    @JsonView(AuthoritiesConstants.Anonymous.class)
     private String imageUrl;
 
     @Size(max = 100)
     @Column(name = "payment_slug", length = 100)
+    @JsonView(AuthoritiesConstants.Anonymous.class)
     private String paymentSlug;
 
     @Size(max = 15)
     @Column(name = "bank_account_number", length = 15)
+    @JsonView(AuthoritiesConstants.User.class)
     private String bankAccountNumber;
 
     @Size(max = 100)
     @Column(name = "bank_account_name", length = 100)
+    @JsonView(AuthoritiesConstants.User.class)
     private String bankAccountName;
 
     @Size(max = 100)
     @Column(name = "bank_name", length = 100)
+    @JsonView(AuthoritiesConstants.User.class)
     private String bankName;
 
     @Size(max = 100)
     @Column(name = "last_updated_by", length = 100)
+    @JsonView(AuthoritiesConstants.User.class)
     private String lastUpdatedBy;
 
     @Column(name = "last_updated_at")
+    @JsonView(AuthoritiesConstants.User.class)
     private Instant lastUpdatedAt;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
+    @JsonView(AuthoritiesConstants.Anonymous.class)
     private IsActiveStatus status;
 
     @OneToMany(mappedBy = "donation")
