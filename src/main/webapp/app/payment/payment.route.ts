@@ -42,7 +42,7 @@ export class PaymentResultResolver implements Resolve<ITransaction> {
     const slug = route.paramMap.get('slug');
     if (slug) {
       this.paymentService.sharedResult.subscribe(result => (this.result = result));
-      if (this.result !== void 0) {
+      if (this.result.id !== void 0) {
         return of(this.result);
       } else {
         this.router.navigate(['404']);

@@ -1,28 +1,41 @@
 <div class="loading" [hidden]="!isSaving">
-    <div class="spinner-wrapper">
-      <span class="spinner-text">
-        <h1 jhiTranslate="payment.loading.greeting">Hello, </h1> {{ this.paymentForm.get('donor')?.value }}
-        <h4 jhiTranslate="payment.loading.counting">We still waiting for your payment on your OVO app in 30 seconds. </h4> 
-        <h1>{{ this.counter$ | async }}</h1>
-        <h4 jhiTranslate="payment.loading.steps">Do these 4 easy steps:</h4>
-        <ol>
-            <li>
-                <h4 jhiTranslate="payment.loading.step1">Log in into your OVO app and then click bell sign on top-right corner.</h4>
-            </li>
-            <li>
-                <h4 jhiTranslate="payment.loading.step2">Choose available payment method.</h4>
-            </li>
-            <li>
-                <h4 jhiTranslate="payment.loading.step3">Click button Pay.</h4>
-            </li>
-            <li>
-                <h4 jhiTranslate="payment.loading.step4">Input your PIN or scan your fingeprint to authorize payment.</h4>
-            </li>
-        </ol>
-      </span>
-      <span class="spinner"></span>
+    <div class="spinner-wrapper" [hidden]="isCounting">
+        <span class="spinner-text">
+            <h1 jhiTranslate="payment.loading.greeting">Hello, </h1> {{ this.paymentForm.get('donor')?.value }} <br />
+            <h1 jhiTranslate="payment.loading.confirm1">Please that you already have your mobile phone with you and your OVO app already open, </h1>
+            <br /> 
+            <h1 jhiTranslate="payment.loading.confirm2">since after you click OK button below, you will only have 30 seconds to complete the payment.</h1>
+            <button (click)='confirm()'>OK</button> 
+        </span>
+        <span class="spinner"></span>
     </div>
-  </div>
+    <div class="spinner-wrapper" [hidden]="!isCounting">
+        <span class="spinner-text">
+            <h1 jhiTranslate="payment.loading.greeting">Hello, </h1> {{ this.paymentForm.get('donor')?.value }}
+            <h4 jhiTranslate="payment.loading.counting">We still waiting for your payment on your OVO app in 30 seconds.
+            </h4>
+            <h1>{{ this.counter$ | async }}</h1>
+            <h4 jhiTranslate="payment.loading.steps">Do these 4 easy steps:</h4>
+            <ol>
+                <li>
+                    <h4 jhiTranslate="payment.loading.step1">Log in into your OVO app and then click bell sign on
+                        top-right corner.</h4>
+                </li>
+                <li>
+                    <h4 jhiTranslate="payment.loading.step2">Choose available payment method.</h4>
+                </li>
+                <li>
+                    <h4 jhiTranslate="payment.loading.step3">Click button Pay.</h4>
+                </li>
+                <li>
+                    <h4 jhiTranslate="payment.loading.step4">Input your PIN or scan your fingeprint to authorize
+                        payment.</h4>
+                </li>
+            </ol>
+        </span>
+        <span class="spinner"></span>
+    </div>
+</div>
 <div>
     <div class="row justify-content-center">
         <div class="col-8">
@@ -61,7 +74,7 @@
                             for="field_donor">Donor Name</label>
                         <input type="text" class="form-control" name="donor" id="field_donor" formControlName="donor" />
                         <input type="checkbox" class="form-control" name="donor_anon" id="field_donor_anon"
-                            formControlName="donorAnon" (change)="anon()"/>
+                            formControlName="donorAnon" (change)="anon()" />
                         <label type="text" class="form-control-label" jhiTranslate="payment.section.form.donor_anon"
                             for="field_donor_anon">Anonymous</label>
                         <div
@@ -101,7 +114,7 @@
                     <div class="form-group">
                         <label class="form-control-label" jhiTranslate="payment.section.form.phone"
                             for="field_phone">OVO Phone Number</label>
-                        <input type="text" class="form-control" name="phone" id="field_phone" formControlName="phone"/>
+                        <input type="text" class="form-control" name="phone" id="field_phone" formControlName="phone" />
                         <div
                             *ngIf="paymentForm.get('phone')!.invalid && (paymentForm.get('phone')!.dirty || paymentForm.get('phone')!.touched)">
                             <small class="form-text text-danger" *ngIf="paymentForm.get('phone')?.errors?.maxlength"

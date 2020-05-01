@@ -21,6 +21,7 @@ export class PaymentComponent implements OnInit {
   slug: string;
   method: PaymentChannel;
   isSaving = false;
+  isCounting = false;
   counter$: Observable<number> = new Observable<number>();
   count = 0;
   donation: Donation;
@@ -65,8 +66,8 @@ export class PaymentComponent implements OnInit {
     }
   }
 
-  save(): void {
-    this.isSaving = true;
+  confirm(): void {
+    this.isCounting = true;
     this.count = 30;
     this.counter$ = timer(0, 1000).pipe(
       take(this.count),
@@ -80,6 +81,10 @@ export class PaymentComponent implements OnInit {
       },
       () => this.onSaveError()
     );
+  }
+
+  save(): void {
+    this.isSaving = true;
   }
 
   private createPayment(): ITransaction {
