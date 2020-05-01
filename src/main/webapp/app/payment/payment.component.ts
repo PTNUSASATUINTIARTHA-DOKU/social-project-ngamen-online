@@ -2,14 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DonationService } from 'app/entities/donation/donation.service';
-import { IPaymentDTO, PaymentDTO } from 'app/shared/model/dto/payment-dto.model';
 import { PaymentChannel } from 'app/shared/model/enumerations/payment-channel.model';
-import { Transaction } from 'app/shared/model/transaction.model';
+import { Transaction, ITransaction } from 'app/shared/model/transaction.model';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { Observable, timer } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { v4 as uuid } from 'uuid';
 import { PaymentService } from './payment.service';
+import { Donation } from 'app/shared/model/donation.model';
+import { TransactionStatus } from 'app/shared/model/enumerations/transaction-status.model';
 
 @Component({
   selector: 'jhi-main',
@@ -17,12 +18,12 @@ import { PaymentService } from './payment.service';
   styleUrls: ['payment.scss']
 })
 export class PaymentComponent implements OnInit {
-  payment: IPaymentDTO;
   slug: string;
   method: PaymentChannel;
   isSaving = false;
   counter$: Observable<number> = new Observable<number>();
   count = 0;
+  donation: Donation;
   transaction: Transaction;
 
   paymentForm = this.fb.group({
@@ -41,14 +42,14 @@ export class PaymentComponent implements OnInit {
     private router: Router
   ) {
     this.slug = '';
-    this.payment = {};
+    this.donation = {};
     this.transaction = {};
     this.method = PaymentChannel.OVO;
   }
 
   ngOnInit(): void {
     // to access resolved item = this.route.snapshot.data.payment check using console.log(this.route); with comment eslint-disable-next-line no-console
-    this.payment = this.route.snapshot.data.payment;
+    this.donation = this.route.snapshot.data.donation;
     this.slug = this.route.snapshot.params.slug;
     this.paymentForm.patchValue({ phone: '08' });
   }
@@ -71,8 +72,8 @@ export class PaymentComponent implements OnInit {
       take(this.count),
       map(() => --this.count)
     );
-    const paymentDTO = this.createPayment();
-    this.paymentService.initPayment(paymentDTO).subscribe(
+    const transaction = this.createPayment();
+    this.paymentService.initPayment(transaction).subscribe(
       result => {
         if (result.body) this.onSaveSuccess(result.body);
         else this.onSaveError();
@@ -81,9 +82,9 @@ export class PaymentComponent implements OnInit {
     );
   }
 
-  private createPayment(): IPaymentDTO {
+  private createPayment(): ITransaction {
     const uuids = uuid();
-    this.payment.transaction = new Transaction(
+    this.transaction = new Transaction(
       undefined,
       uuids,
       uuids,
@@ -98,21 +99,29 @@ export class PaymentComponent implements OnInit {
       undefined,
       undefined,
       undefined,
-      undefined
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      TransactionStatus.FAILED,
+      this.donation
     );
-    return this.payment;
+    return this.transaction;
   }
 
   private generateBasket(): string {
     const amt = this.paymentForm.get('amount')?.value;
-    return this.payment.donation?.name + ' by ' + this.payment.donation?.organizer?.name + ', ' + amt + ', 1, ' + amt;
+    return this.donation?.name + ' by ' + this.donation?.organizer?.name + ', ' + amt + ', 1, ' + amt;
   }
 
   private generateDeviceId(): string {
     return JSON.stringify(this.device.getDeviceInfo());
   }
 
-  private onSaveSuccess(response: PaymentDTO): void {
+  private onSaveSuccess(response: ITransaction): void {
     this.isSaving = false;
     this.paymentService.paymentResult(response);
     this.router.navigate(['result'], { relativeTo: this.route });

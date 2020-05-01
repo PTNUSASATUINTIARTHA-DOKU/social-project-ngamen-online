@@ -43,4 +43,12 @@ public interface TransactionService {
      */
     void delete(Long id);
 
+    /**
+     * Initiate transaction
+     * 
+     * @param transaction the transaction entity
+     * @return Transaction the transaction entity
+     */
+    Transaction pay(Transaction transaction);
+
 }

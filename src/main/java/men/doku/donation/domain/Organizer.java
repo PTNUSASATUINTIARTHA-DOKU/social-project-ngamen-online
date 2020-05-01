@@ -118,6 +118,7 @@ public class Organizer implements Serializable {
     @JoinTable(name = "organizer_user",
                joinColumns = @JoinColumn(name = "organizer_id", referencedColumnName = "id"),
                inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
+    @JsonView(AuthoritiesConstants.User.class)
     private Set<User> users = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

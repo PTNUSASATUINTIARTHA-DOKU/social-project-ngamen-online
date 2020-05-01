@@ -7,7 +7,7 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
+import org.springframework.data.domain.Example;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,13 +16,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
+import io.github.jhipster.web.util.HeaderUtil;
+import io.github.jhipster.web.util.ResponseUtil;
 import men.doku.donation.domain.Donation;
+import men.doku.donation.domain.Transaction;
+import men.doku.donation.service.DonationService;
 import men.doku.donation.service.PaymentService;
+import men.doku.donation.service.TransactionService;
 import men.doku.donation.service.dto.MibRequestDTO;
 import men.doku.donation.service.dto.MibResponseDTO;
-import men.doku.donation.service.dto.PaymentDTO;
 
 @RestController
 @RequestMapping("/api")
@@ -34,9 +37,13 @@ public class PaymentResource {
     private String applicationName;
     
     private final PaymentService paymentService;
+    private final DonationService donationService;
+    private final TransactionService transactionService;
 
-    public PaymentResource(PaymentService paymentService) {
+    public PaymentResource(PaymentService paymentService, DonationService donationService, TransactionService transactionService) {
         this.paymentService = paymentService;
+        this.donationService = donationService;
+        this.transactionService = transactionService;
     }
 
     /**
@@ -46,11 +53,12 @@ public class PaymentResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the donation, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/payments/{slug}")
-    public ResponseEntity<PaymentDTO> getDonationByPaymentSlug(@PathVariable String slug) {
+    public ResponseEntity<Donation> getDonationByPaymentSlug(@PathVariable String slug) {
         log.debug("REST request to get Donation by Payment Slug : {}", slug);
-        Optional<Donation> donation = paymentService.findOneByPaymentSlug(slug);
-        return ResponseEntity.ok().body(
-            donation.map(don -> new PaymentDTO(don)).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)));
+        Donation exampleDonation = new Donation();
+        exampleDonation.setPaymentSlug(slug);
+        Optional<Donation> donation = donationService.findOne(Example.of(exampleDonation));
+        return ResponseUtil.wrapOrNotFound(donation);
     }
 
     /**
@@ -60,10 +68,12 @@ public class PaymentResource {
      * @return
      */
     @PostMapping("/payments")
-    public ResponseEntity<PaymentDTO> initiatePayment(@Valid @RequestBody PaymentDTO paymentDTO) {
-        log.debug("REST request to initiate Payment : {}", paymentDTO);
-        PaymentDTO payment = new PaymentDTO(paymentDTO.getDonation(), paymentService.payment(paymentDTO));
-        return ResponseEntity.ok().body(payment);
+    public ResponseEntity<Transaction> initiatePayment(@Valid @RequestBody Transaction transaction) {
+        log.debug("REST request to initiate Payment : {}", transaction);
+        Transaction result = transactionService.pay(transaction);
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, "Transaction", transaction.getId().toString()))
+            .body(result);
     }
 
     /**

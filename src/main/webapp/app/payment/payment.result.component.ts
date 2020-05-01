@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PaymentDTO } from 'app/shared/model/dto/payment-dto.model';
 import { PAYMENT_URL_PREFIX } from 'app/shared/constants/path.constants';
+import { ITransaction } from 'app/shared/model/transaction.model';
 
 @Component({
   selector: 'jhi-main',
@@ -9,17 +9,17 @@ import { PAYMENT_URL_PREFIX } from 'app/shared/constants/path.constants';
   styleUrls: ['payment.scss']
 })
 export class PaymentResultComponent implements OnInit {
-  payment: PaymentDTO;
+  transaction: ITransaction;
   isSuccess = false;
   paymentUrl = '';
 
   constructor(protected route: ActivatedRoute) {
-    this.payment = {};
+    this.transaction = {};
   }
 
   ngOnInit(): void {
-    this.payment = this.route.snapshot.data.payment;
-    this.paymentUrl = PAYMENT_URL_PREFIX + this.payment.transaction?.donation?.paymentSlug;
-    this.isSuccess = this.payment.transaction?.status === 'SUCCESS';
+    this.transaction = this.route.snapshot.data.transaction;
+    this.paymentUrl = PAYMENT_URL_PREFIX + this.transaction?.donation?.paymentSlug;
+    this.isSuccess = this.transaction?.status === 'SUCCESS';
   }
 }

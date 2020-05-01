@@ -5,9 +5,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
@@ -22,22 +20,21 @@ import men.doku.donation.domain.Transaction;
 import men.doku.donation.domain.enumeration.TransactionStatus;
 import men.doku.donation.service.dto.MibRequestDTO;
 import men.doku.donation.service.dto.MibResponseDTO;
-import men.doku.donation.service.dto.PaymentDTO;
 
 @Service
 public class MibMapper {
 
-    public MibRequestDTO toMibRequestDTO(PaymentDTO payment, Organizer organizer) {
+    public MibRequestDTO toMibRequestDTO(Transaction transaction, Organizer organizer) {
         MibRequestDTO mibRequestDTO = new MibRequestDTO();
         mibRequestDTO.setMALLID(String.valueOf(organizer.getMallId()));
         mibRequestDTO.setSERVICEID(String.valueOf(organizer.getServiceId()));
         mibRequestDTO.setACQUIRERID(String.valueOf(organizer.getAcquirerId()));
-        mibRequestDTO.setINVOICENUMBER(payment.getTransaction().getInvoiceNumber());
+        mibRequestDTO.setINVOICENUMBER(transaction.getInvoiceNumber());
         mibRequestDTO.setCURRENCY(Constants.DEFAULT_CURRENCY);
-        mibRequestDTO.setAMOUNT(String.valueOf(payment.getTransaction().getAmount()));
-        mibRequestDTO.setSESSIONID(payment.getTransaction().getSessionId());
-        mibRequestDTO.setAUTH1(payment.getTransaction().getMobile());
-        mibRequestDTO.setBASKET(payment.getTransaction().getBasket());
+        mibRequestDTO.setAMOUNT(String.valueOf(transaction.getAmount()));
+        mibRequestDTO.setSESSIONID(transaction.getSessionId());
+        mibRequestDTO.setAUTH1(transaction.getMobile());
+        mibRequestDTO.setBASKET(transaction.getBasket());
         String raw = mibRequestDTO.getAMOUNT() + mibRequestDTO.getMALLID()
                  + mibRequestDTO.getINVOICENUMBER() + organizer.getSharedKey() + mibRequestDTO.getCURRENCY();
         MessageDigest md = null;

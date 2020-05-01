@@ -53,7 +53,7 @@ public class Transaction implements Serializable {
 
     @Size(max = 15)
     @Column(name = "ovo_id_masked", length = 15)
-    @JsonView(AuthoritiesConstants.User.class)
+    @JsonView(AuthoritiesConstants.Anonymous.class)
     private String ovoIdMasked;
 
     @Size(max = 1000)
@@ -95,7 +95,7 @@ public class Transaction implements Serializable {
     private String trxCode;
 
     @Column(name = "payment_date")
-    @JsonView(AuthoritiesConstants.User.class)
+    @JsonView(AuthoritiesConstants.Anonymous.class)
     private Instant paymentDate;
 
     @Column(name = "response_code")
