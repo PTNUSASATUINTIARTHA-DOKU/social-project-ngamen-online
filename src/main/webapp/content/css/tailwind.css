@@ -1,0 +1,11 @@
+@tailwind base;
+
+@tailwind components;
+
+/* Custom Components */
+.ng-invalid:not(form).ng-touched:not(form) {
+  @apply border;
+  @apply border-red-400;
+}
+
+@tailwind utilities;
