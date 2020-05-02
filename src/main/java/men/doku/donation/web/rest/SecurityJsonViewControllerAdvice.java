@@ -39,13 +39,16 @@ public class SecurityJsonViewControllerAdvice extends AbstractMappingJacksonResp
               .map(AuthoritiesConstants.Role::valueOf)
               .map(AuthoritiesConstants.MAPPING::get)
               .collect(Collectors.toList());
-            if (jsonViews.size() == 1) {
-               bodyContainer.setSerializationView(jsonViews.get(0));
-                return;
+            if (jsonViews.contains(AuthoritiesConstants.Admin.class)) {
+              bodyContainer.setSerializationView(AuthoritiesConstants.Admin.class);
+              return;
+            } else if (jsonViews.contains(AuthoritiesConstants.User.class)) {
+              bodyContainer.setSerializationView(AuthoritiesConstants.User.class);
+              return;
+            } else {
+              bodyContainer.setSerializationView(AuthoritiesConstants.Anonymous.class);
+              return;
             }
-            throw new IllegalArgumentException("Ambiguous @JsonView declaration for roles "
-              + authorities.stream()
-              .map(GrantedAuthority::getAuthority).collect(Collectors.joining(",")));
         }
-    }    
+    }
 }
