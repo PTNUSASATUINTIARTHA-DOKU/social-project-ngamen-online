@@ -6,7 +6,10 @@ This application was generated using JHipster 6.8.0, you can find documentation 
 
 Before you can build this project, you must install and configure the following dependencies on your machine:
 
-1. [Node.js][]: We use Node to run a development web server and build the project.
+1. Java Development Kit: We use OpenJDK build 11.0.7+10.
+   This can also run with OpenJDK build 1.8.0.252, but not fully tested yet.
+
+2. [Node.js][]: We use Node to run a development web server and build the project.
    Depending on your system, you can install Node either from source or as a pre-packaged bundle.
 
 After installing Node, you should be able to run the following command to install development tools.
@@ -27,6 +30,36 @@ specifying a newer version in [package.json](package.json). You can also run `np
 Add the `help` flag on any command to see how you can use it. For example, `npm help update`.
 
 The `npm run` command will list all of the scripts available to run for this project.
+
+If you want to update database structure, please do these steps:
+
+1. Delete current database H2 file at /target/h2db since the new changes will not change existing database structure.
+
+Alternatively you can update your H2 database from H2 console at URL path: h2-console/login.jsp
+
+For case where database structure changes that being done externally with everything else already resolved, you might only need to run Step 1. 
+
+2. Run command to load file exported from JDL Studio
+
+    jhipster import-jdl jhipster-jdl.jh
+
+Alternatively you can just update entities json in /.jhipster/
+
+3. Try to resolve auto generated changes by using GIT versioning
+
+4. Clear checksum to avoid error because changed checksum
+
+    ./mvnw liquibase:clearCheckSums
+    
+5. Generate new changelog file to maintain your changes history
+
+    ./mvnw liquibase:diff
+    
+If you want to remove changes history, you can delete all files inside resources/config/liquibase/changelog/ except file 00000000000000_initial_schema.xml
+
+6. Run command to try the changes
+
+    ./mvnw
 
 ### PWA Support
 
