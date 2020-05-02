@@ -1,290 +1,358 @@
-<div *ngIf="path.indexOf('/payment') === -1 && path!=='/error' && path !== '/404' && path !== '/accessdenied' && path !== ''" class="mb-5">
-    <nav class="bg-gray-800" [ngSwitch]="isAuthenticated()">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex items-center">
-                    <div class="flex-shrink-0">
-                        <a routerLink="/">
-                            <span class="h-8 w-8 logo-img"></span>
-                        </a>
-                    </div>
-                    <div class="hidden md:block">
-                        <div class="ml-10 flex items-baseline">
-                            <div>
-                                <a href="#" jhiTranslate="global.menu.home" routerLink="/" routerLinkActive="text-white bg-gray-900" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 focus:outline-none focus:text-white focus:bg-gray-700">Dashboard</a>
+<div [ngSwitch]="isAuthenticated()">
+    <div *ngSwitchCase="true">
+        <div *ngIf="path.indexOf('/payment') === -1 && path!=='/error' && path !== '/404' && path !== '/accessdenied'" class="mb-5">
+            <nav class="bg-gray-800 z-20">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex items-center justify-between h-16">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <a routerLink="/">
+                                    <span class="h-8 w-8 logo-img"></span>
+                                </a>
                             </div>
+                            <div class="hidden md:block">
+                                <div class="ml-10 flex items-baseline">
+                                    <div>
+                                        <a href="#" jhiTranslate="global.menu.home" routerLink="/"
+                                            routerLinkActive="text-white bg-gray-900"
+                                            class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 focus:outline-none focus:text-white focus:bg-gray-700">Dashboard</a>
+                                    </div>
 
-                            <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
-                            <div *ngSwitchCase="true" display="dynamic">
-                                <div class="cursor-pointer">
-                                    <a jhiTranslate="global.menu.entities.main" routerLinkActive="text-white bg-gray-900"
-                                        [routerLinkActiveOptions]="{ exact: true }"
-                                        class="ml-4 px-3 py-2 rounded-md text-sm font-medium text-gray-300
+                                    <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
+                                    <div *ngSwitchCase="true" display="dynamic">
+                                        <div class="cursor-pointer">
+                                            <a jhiTranslate="global.menu.entities.main"
+                                                routerLinkActive="text-white bg-gray-900"
+                                                [routerLinkActiveOptions]="{ exact: true }" class="ml-4 px-3 py-2 rounded-md text-sm font-medium text-gray-300
                                         hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white
                                         focus:bg-gray-700" aria-label="Entities menu" aria-haspopup="true"
-                                        (click)="toggleDropdown1()">
-                                        Entities
-                                    </a>
-                                </div>
-                                
-                                <div [ngClass]="isDropdown1Collapsed ? '' : 'hidden'" class="origin-top-right absolute mt-2 w-48 rounded-md shadow-lg">
-                                    <div class="py-1 rounded-md bg-white shadow-xs" aria-labelledby="entity-menu">
-                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" jhiTranslate="global.menu.entities.organizer" routerLink="organizer" routerLinkActive="bg-gray-100" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar();toggleDropdown1()">Organizer</a>
-                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" jhiTranslate="global.menu.entities.donation" routerLink="donation" routerLinkActive="bg-gray-100" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar();toggleDropdown1()">Donation</a>
-                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" jhiTranslate="global.menu.entities.transaction" routerLink="transaction" routerLinkActive="bg-gray-100" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar();toggleDropdown1()">Sign out</a>
-                                        <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Admin menu-->
-                            <div *jhiHasAnyAuthority="'ROLE_ADMIN'" display="dynamic">
-                                <div class="cursor-pointer">
-                                    <a jhiTranslate="global.menu.admin.main" routerLinkActive="text-white bg-gray-900" [routerLinkActiveOptions]="{ exact: true }" class="ml-4 px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700" aria-label="Admin menu" aria-haspopup="true"
-                                        (click)="toggleDropdown2()">
-                                        Administration
-                                    </a>
-                                </div>
-
-                                <div [ngClass]="isDropdown2Collapsed ? '' : 'hidden'"
-                                    class="origin-top-right absolute mt-2 w-48 rounded-md shadow-lg">
-                                    <div class="py-1 rounded-md bg-white shadow-xs" aria-labelledby="admin-menu">
-                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                            jhiTranslate="global.menu.admin.userManagement"
-                                            routerLink="admin/user-management" routerLinkActive="bg-gray-100"
-                                            (click)="collapseNavbar();toggleDropdown2()">User Management</a>
-                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                            jhiTranslate="global.menu.admin.metrics" routerLink="admin/metrics"
-                                            routerLinkActive="bg-gray-100" [routerLinkActiveOptions]="{ exact: true }"
-                                            (click)="collapseNavbar();toggleDropdown2()">Metrics</a>
-                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                            jhiTranslate="global.menu.admin.health" routerLink="admin/health"
-                                            routerLinkActive="bg-gray-100" [routerLinkActiveOptions]="{ exact: true }"
-                                            (click)="collapseNavbar();toggleDropdown2()">Health</a>
-                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                            jhiTranslate="global.menu.admin.configuration" routerLink="admin/configuration"
-                                            routerLinkActive="bg-gray-100" [routerLinkActiveOptions]="{ exact: true }"
-                                            (click)="collapseNavbar();toggleDropdown2()">Configuration</a>
-                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                            jhiTranslate="global.menu.admin.audits"
-                                            routerLink="admin/audits" routerLinkActive="bg-gray-100"
-                                            [routerLinkActiveOptions]="{ exact: true }"
-                                            (click)="collapseNavbar();toggleDropdown2()">Audits</a>
-                                        <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                            jhiTranslate="global.menu.admin.logs"
-                                            routerLink="admin/logs" routerLinkActive="bg-gray-100"
-                                            [routerLinkActiveOptions]="{ exact: true }"
-                                            (click)="collapseNavbar();toggleDropdown2()">Logs</a>
-                                        <a  *ngIf="swaggerEnabled" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                            jhiTranslate="global.menu.admin.apidocs" routerLink="admin/docs"
-                                            routerLinkActive="bg-gray-100" [routerLinkActiveOptions]="{ exact: true }"
-                                            (click)="collapseNavbar();toggleDropdown2()">API</a>
-                                        <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->
-                                        <a *ngIf="!inProduction" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                            jhiTranslate="global.menu.admin.database" href='./h2-console' target="_tab"
-                                            (click)="collapseNavbar();toggleDropdown2()">Database</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Language menu -->
-                            <div *ngIf="languages && languages.length > 1" display="dynamic">
-                                <div class="cursor-pointer">
-                                    <a jhiTranslate="global.menu.language" routerLinkActive="text-white bg-gray-900"
-                                        [routerLinkActiveOptions]="{ exact: true }"
-                                        class="ml-4 px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
-                                        aria-label="Admin menu" aria-haspopup="true" (click)="toggleDropdown3()">
-                                        Language
-                                    </a>
-                                </div>
-
-                                <div [ngClass]="isDropdown3Collapsed ? '' : 'hidden'"
-                                    class="origin-top-right absolute mt-2 w-48 rounded-md shadow-lg">
-                                    <div class="py-1 rounded-md bg-white shadow-xs" aria-labelledby="admin-menu">
-                                        <div *ngFor="let language of languages">
-                                            <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                                [jhiActiveMenu]="language" href="javascript:void(0);"
-                                                (click)="changeLanguage(language);collapseNavbar();toggleDropdown3()">{{ language | findLanguageFromKey }}
+                                                (click)="toggleDropdown1()">
+                                                Entities
                                             </a>
+                                        </div>
+
+                                        <div [ngClass]="isDropdown1Collapsed ? '' : 'hidden'"
+                                            class="origin-top-right absolute mt-2 w-48 rounded-md shadow-lg z-20">
+                                            <div class="py-1 rounded-md bg-white shadow-xs"
+                                                aria-labelledby="entity-menu">
+                                                <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                    jhiTranslate="global.menu.entities.organizer" routerLink="organizer"
+                                                    routerLinkActive="bg-gray-100"
+                                                    [routerLinkActiveOptions]="{ exact: true }"
+                                                    (click)="collapseNavbar();toggleDropdown1()">Organizer</a>
+                                                <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                    jhiTranslate="global.menu.entities.donation" routerLink="donation"
+                                                    routerLinkActive="bg-gray-100"
+                                                    [routerLinkActiveOptions]="{ exact: true }"
+                                                    (click)="collapseNavbar();toggleDropdown1()">Donation</a>
+                                                <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                    jhiTranslate="global.menu.entities.transaction"
+                                                    routerLink="transaction" routerLinkActive="bg-gray-100"
+                                                    [routerLinkActiveOptions]="{ exact: true }"
+                                                    (click)="collapseNavbar();toggleDropdown1()">Transaction</a>
+                                                <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Admin menu-->
+                                    <div *jhiHasAnyAuthority="'ROLE_ADMIN'" display="dynamic">
+                                        <div class="cursor-pointer">
+                                            <a jhiTranslate="global.menu.admin.main"
+                                                routerLinkActive="text-white bg-gray-900"
+                                                [routerLinkActiveOptions]="{ exact: true }"
+                                                class="ml-4 px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
+                                                aria-label="Admin menu" aria-haspopup="true"
+                                                (click)="toggleDropdown2()">
+                                                Administration
+                                            </a>
+                                        </div>
+
+                                        <div [ngClass]="isDropdown2Collapsed ? '' : 'hidden'"
+                                            class="origin-top-right absolute mt-2 w-48 rounded-md shadow-lg z-20">
+                                            <div class="py-1 rounded-md bg-white shadow-xs"
+                                                aria-labelledby="admin-menu">
+                                                <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                    jhiTranslate="global.menu.admin.userManagement"
+                                                    routerLink="admin/user-management" routerLinkActive="bg-gray-100"
+                                                    (click)="collapseNavbar();toggleDropdown2()">User Management</a>
+                                                <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                    jhiTranslate="global.menu.admin.metrics" routerLink="admin/metrics"
+                                                    routerLinkActive="bg-gray-100"
+                                                    [routerLinkActiveOptions]="{ exact: true }"
+                                                    (click)="collapseNavbar();toggleDropdown2()">Metrics</a>
+                                                <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                    jhiTranslate="global.menu.admin.health" routerLink="admin/health"
+                                                    routerLinkActive="bg-gray-100"
+                                                    [routerLinkActiveOptions]="{ exact: true }"
+                                                    (click)="collapseNavbar();toggleDropdown2()">Health</a>
+                                                <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                    jhiTranslate="global.menu.admin.configuration"
+                                                    routerLink="admin/configuration" routerLinkActive="bg-gray-100"
+                                                    [routerLinkActiveOptions]="{ exact: true }"
+                                                    (click)="collapseNavbar();toggleDropdown2()">Configuration</a>
+                                                <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                    jhiTranslate="global.menu.admin.audits" routerLink="admin/audits"
+                                                    routerLinkActive="bg-gray-100"
+                                                    [routerLinkActiveOptions]="{ exact: true }"
+                                                    (click)="collapseNavbar();toggleDropdown2()">Audits</a>
+                                                <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                    jhiTranslate="global.menu.admin.logs" routerLink="admin/logs"
+                                                    routerLinkActive="bg-gray-100"
+                                                    [routerLinkActiveOptions]="{ exact: true }"
+                                                    (click)="collapseNavbar();toggleDropdown2()">Logs</a>
+                                                <a *ngIf="swaggerEnabled"
+                                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                    jhiTranslate="global.menu.admin.apidocs" routerLink="admin/docs"
+                                                    routerLinkActive="bg-gray-100"
+                                                    [routerLinkActiveOptions]="{ exact: true }"
+                                                    (click)="collapseNavbar();toggleDropdown2()">API</a>
+                                                <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->
+                                                <a *ngIf="!inProduction"
+                                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                    jhiTranslate="global.menu.admin.database" href='./h2-console'
+                                                    target="_tab"
+                                                    (click)="collapseNavbar();toggleDropdown2()">Database</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Language menu -->
+                                    <div *ngIf="languages && languages.length > 1" display="dynamic">
+                                        <div class="cursor-pointer">
+                                            <a jhiTranslate="global.menu.language"
+                                                routerLinkActive="text-white bg-gray-900"
+                                                [routerLinkActiveOptions]="{ exact: true }"
+                                                class="ml-4 px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
+                                                aria-label="Admin menu" aria-haspopup="true"
+                                                (click)="toggleDropdown3()">
+                                                Language
+                                            </a>
+                                        </div>
+
+                                        <div [ngClass]="isDropdown3Collapsed ? '' : 'hidden'"
+                                            class="origin-top-right absolute mt-2 w-48 rounded-md shadow-lg z-20">
+                                            <div class="py-1 rounded-md bg-white shadow-xs"
+                                                aria-labelledby="admin-menu">
+                                                <div *ngFor="let language of languages">
+                                                    <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                        [jhiActiveMenu]="language" href="javascript:void(0);"
+                                                        (click)="changeLanguage(language);collapseNavbar();toggleDropdown3()">{{ language | findLanguageFromKey }}
+                                                    </a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <!-- Account menu -->
-                <div class="hidden md:block">
-                    <div class="ml-4 flex items-center md:ml-6">
-                        <!-- Profile dropdown -->
-                        <div class="ml-3 relative">
-                            <div class="cursor-pointer">
-                                <a routerLinkActive="text-white bg-gray-900" [routerLinkActiveOptions]="{ exact: true }"
-                                    aria-label="Admin menu" aria-haspopup="true" (click)="toggleDropdown4()">
-                                    <span *ngIf="!getImageUrl()" jhiTranslate="global.menu.account.main"
-                                        class="ml-4 px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700">
-                                        Account
-                                    </span>
-                                    <span *ngIf="getImageUrl()">
-                                        <img [src]="getImageUrl()" alt="Avatar" class="h-8 w-8 rounded-full">
-                                    </span>
-                                </a>
-                            </div>
+                        <!-- Account menu -->
+                        <div class="hidden md:block">
+                            <div class="ml-4 flex items-center md:ml-6">
+                                <!-- Profile dropdown -->
+                                <div class="ml-3 relative">
+                                    <div class="cursor-pointer">
+                                        <a routerLinkActive="text-white bg-gray-900"
+                                            [routerLinkActiveOptions]="{ exact: true }" aria-label="Admin menu"
+                                            aria-haspopup="true" (click)="toggleDropdown4()">
+                                            <span *ngIf="!getImageUrl()" jhiTranslate="global.menu.account.main"
+                                                class="ml-4 px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700">
+                                                Account
+                                            </span>
+                                            <span *ngIf="getImageUrl()">
+                                                <img [src]="getImageUrl()" alt="Avatar" class="h-8 w-8 rounded-full">
+                                            </span>
+                                        </a>
+                                    </div>
 
-                            <div [ngClass]="isDropdown4Collapsed ? '' : 'hidden'"
-                                class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg">
-                                <div class="py-1 rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical"
-                                    aria-labelledby="account-menu">
-                                    <a *ngSwitchCase="true" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                            jhiTranslate="global.menu.account.settings"
-                                            routerLink="account/settings" routerLinkActive="bg-gray-100"
-                                            [routerLinkActiveOptions]="{ exact: true }"
-                                            (click)="collapseNavbar();toggleDropdown4()">Settings</a>
-                                    <a *ngSwitchCase="true"
-                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                        jhiTranslate="global.menu.account.password" routerLink="account/password"
-                                        routerLinkActive="bg-gray-100" [routerLinkActiveOptions]="{ exact: true }"
-                                        (click)="collapseNavbar();toggleDropdown4()">Password</a>
-                                    <a *ngSwitchCase="true"
-                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                        jhiTranslate="global.menu.account.logout" (click)="logout();collapseNavbar();toggleDropdown4()" id="logout">
-                                        Sign
-                                        out</a>
-                                    <a *ngSwitchCase="false"
-                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                        jhiTranslate="global.menu.account.login" (click)="login();collapseNavbar();toggleDropdown4()" id="login">
-                                        Sign in</a>
-                                    <a *ngSwitchCase="false"
-                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                        jhiTranslate="global.menu.account.register" routerLink="account/register"
-                                        routerLinkActive="bg-gray-100" [routerLinkActiveOptions]="{ exact: true }"
-                                        (click)="collapseNavbar();toggleDropdown4()">Register</a>
+                                    <div [ngClass]="isDropdown4Collapsed ? '' : 'hidden'"
+                                        class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg z-20">
+                                        <div class="py-1 rounded-md bg-white shadow-xs" role="menu"
+                                            aria-orientation="vertical" aria-labelledby="account-menu">
+                                            <a *ngSwitchCase="true"
+                                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                jhiTranslate="global.menu.account.settings"
+                                                routerLink="account/settings" routerLinkActive="bg-gray-100"
+                                                [routerLinkActiveOptions]="{ exact: true }"
+                                                (click)="collapseNavbar();toggleDropdown4()">Settings</a>
+                                            <a *ngSwitchCase="true"
+                                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                jhiTranslate="global.menu.account.password"
+                                                routerLink="account/password" routerLinkActive="bg-gray-100"
+                                                [routerLinkActiveOptions]="{ exact: true }"
+                                                (click)="collapseNavbar();toggleDropdown4()">Password</a>
+                                            <a *ngSwitchCase="true"
+                                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                jhiTranslate="global.menu.account.logout"
+                                                (click)="logout();collapseNavbar();toggleDropdown4()" id="logout">
+                                                Sign
+                                                out</a>
+                                            <a *ngSwitchCase="false"
+                                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                jhiTranslate="global.menu.account.login"
+                                                (click)="login();collapseNavbar();toggleDropdown4()" id="login">
+                                                Sign in</a>
+                                            <a *ngSwitchCase="false"
+                                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                jhiTranslate="global.menu.account.register"
+                                                routerLink="account/register" routerLinkActive="bg-gray-100"
+                                                [routerLinkActiveOptions]="{ exact: true }"
+                                                (click)="collapseNavbar();toggleDropdown4()">Register</a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+
+                        <div class="-mr-2 flex md:hidden z-20">
+                            <!-- Mobile menu button -->
+                            <button
+                                class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:bg-gray-700 focus:text-white"
+                                href="javascript:void(0);" data-toggle="collapse" data-target="#navbar_mobile"
+                                aria-controls="navbar_mobile" aria-expanded="false" aria-label="Toggle navigation"
+                                (click)="toggleNavbar()">
+                                <!-- Menu open: "hidden", Menu closed: "block" -->
+                                <svg class="block h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M4 6h16M4 12h16M4 18h16" />
+                                </svg>
+                                <!-- Menu open: "block", Menu closed: "hidden" -->
+                                <svg class="hidden h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
-                <div class="-mr-2 flex md:hidden">
-                    <!-- Mobile menu button -->
-                    <button
-                        class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:bg-gray-700 focus:text-white"
-                         href="javascript:void(0);" data-toggle="collapse" data-target="#navbar_mobile"
-                         aria-controls="navbar_mobile" aria-expanded="false" aria-label="Toggle navigation"
-                         (click)="toggleNavbar()">
-                        <!-- Menu open: "hidden", Menu closed: "block" -->
-                        <svg class="block h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                        <!-- Menu open: "block", Menu closed: "hidden" -->
-                        <svg class="hidden h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
+                <!-- Mobile menu -->
+                <div id="navbar_mobile" [ngClass]="isNavbarCollapsed ? 'block' : 'hidden'" class="md:hidden"
+                    [ngSwitch]="isAuthenticated()">
+                    <div class="px-2 pt-2 pb-3 sm:px-3">
+                        <a href="#" jhiTranslate="global.menu.home" routerLink="/"
+                            routerLinkActive="text-white bg-gray-900" [routerLinkActiveOptions]="{ exact: true }"
+                            class="block px-3 py-2 rounded-md text-sm font-medium text-gray-300 focus:outline-none focus:text-white focus:bg-gray-700"
+                            (click)="collapseNavbar()">Dashboard</a>
+                    </div>
+
+                    <!-- Entities menu -->
+                    <div *ngSwitchCase="true" class="pt-4 pb-3 border-t border-gray-700">
+                        <div class="flex items-center px-5">
+                            <div class="text-base font-medium leading-none text-white"
+                                jhiTranslate="global.menu.entities.main">Entities</div>
+                        </div>
+                        <div class="mt-3 px-2">
+                            <a class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
+                                jhiTranslate="global.menu.entities.organizer" routerLink="organizer"
+                                routerLinkActive="text-white bg-gray-900" [routerLinkActiveOptions]="{ exact: true }"
+                                (click)="toggleNavbar()">Organizer</a>
+                            <a class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
+                                jhiTranslate="global.menu.entities.donation" routerLink="donation"
+                                routerLinkActive="text-white bg-gray-900" [routerLinkActiveOptions]="{ exact: true }"
+                                (click)="toggleNavbar()">Donation</a>
+                            <a class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
+                                jhiTranslate="global.menu.entities.transaction" routerLink="transaction"
+                                routerLinkActive="text-white bg-gray-900" [routerLinkActiveOptions]="{ exact: true }"
+                                (click)="toggleNavbar()">Transaction</a>
+                        </div>
+                    </div>
+
+                    <!-- Admin menu -->
+                    <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="pt-4 pb-3 border-t border-gray-700">
+                        <div class="flex items-center px-5">
+                            <div class="text-base font-medium leading-none text-white"
+                                jhiTranslate="global.menu.admin.main">Administration
+                            </div>
+                        </div>
+                        <div class="mt-3 px-2">
+                            <a class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
+                                jhiTranslate="global.menu.admin.userManagement" routerLink="admin/user-management"
+                                routerLinkActive="text-white bg-gray-900" [routerLinkActiveOptions]="{ exact: true }"
+                                (click)="toggleNavbar()">User Management</a>
+                            <a class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
+                                jhiTranslate="global.menu.admin.metrics" routerLink="admin/metrics"
+                                routerLinkActive="text-white bg-gray-900" [routerLinkActiveOptions]="{ exact: true }"
+                                (click)="toggleNavbar()">Metrics</a>
+                            <a class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
+                                jhiTranslate="global.menu.admin.health" routerLink="admin/health"
+                                routerLinkActive="text-white bg-gray-900" [routerLinkActiveOptions]="{ exact: true }"
+                                (click)="toggleNavbar()">Health</a>
+                            <a class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
+                                jhiTranslate="global.menu.admin.configuration" routerLink="admin/configuration"
+                                routerLinkActive="text-white bg-gray-900" [routerLinkActiveOptions]="{ exact: true }"
+                                (click)="toggleNavbar()">Configuration</a>
+                            <a class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
+                                jhiTranslate="global.menu.admin.audits" routerLink="admin/audits"
+                                routerLinkActive="text-white bg-gray-900" [routerLinkActiveOptions]="{ exact: true }"
+                                (click)="toggleNavbar()">Audits</a>
+                            <a class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
+                                jhiTranslate="global.menu.admin.logs" routerLink="admin/logs"
+                                routerLinkActive="text-white bg-gray-900" [routerLinkActiveOptions]="{ exact: true }"
+                                (click)="collapseNavbar()">Logs</a>
+                            <a *ngIf="swaggerEnabled"
+                                class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
+                                jhiTranslate="global.menu.admin.apidocs" routerLink="admin/docs"
+                                routerLinkActive="text-white bg-gray-900" [routerLinkActiveOptions]="{ exact: true }"
+                                (click)="toggleNavbar()">API</a>
+                            <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->
+                            <a *ngIf="!inProduction"
+                                class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
+                                jhiTranslate="global.menu.admin.database" href='./h2-console' target="_tab"
+                                (click)="toggleNavbar()">Database</a>
+                        </div>
+                    </div>
+
+                    <!-- Account menu -->
+                    <div class="pt-4 pb-3 border-t border-gray-700">
+                        <div class="flex items-center px-5">
+                            <div *ngIf="getImageUrl(); else elseBlock">
+                                <div class="flex-shrink-0">
+                                    <img class="h-10 w-10 rounded-full" [src]="getImageUrl()" alt="Avatar" />
+                                </div>
+                                <div class="ml-3">
+                                    <div class="text-base font-medium leading-none text-white"
+                                        jhiTranslate="global.menu.account.main">Account</div>
+                                </div>
+                            </div>
+
+                            <ng-template #elseBlock>
+                                <div class="text-base font-medium leading-none text-white"
+                                    jhiTranslate="global.menu.account.main">
+                                    Account
+                                </div>
+                            </ng-template>
+                        </div>
+                        <div class="mt-3 px-2">
+                            <a *ngSwitchCase="true"
+                                class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
+                                jhiTranslate="global.menu.account.settings" routerLink="account/settings"
+                                routerLinkActive="text-white bg-gray-900" [routerLinkActiveOptions]="{ exact: true }"
+                                (click)="toggleNavbar()">Settings</a>
+                            <a *ngSwitchCase="true"
+                                class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
+                                jhiTranslate="global.menu.account.password" routerLink="account/password"
+                                routerLinkActive="text-white bg-gray-900" [routerLinkActiveOptions]="{ exact: true }"
+                                (click)="toggleNavbar()">Password</a>
+                            <a *ngSwitchCase="true"
+                                class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
+                                jhiTranslate="global.menu.account.logout" (click)="logout();toggleNavbar();"
+                                id="logout">Sign out</a>
+                            <a *ngSwitchCase="false"
+                                class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
+                                jhiTranslate="global.menu.account.login" (click)="login();toggleNavbar();"
+                                id="login">Sign
+                                in</a>
+                            <a *ngSwitchCase="false"
+                                class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
+                                jhiTranslate="global.menu.account.register" routerLink="account/register"
+                                routerLinkActive="bg-gray-100" [routerLinkActiveOptions]="{ exact: true }"
+                                (click)="toggleNavbar();">Register</a>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </nav>
         </div>
 
-        <!-- Mobile menu -->
-        <div id="navbar_mobile" [ngClass]="isNavbarCollapsed ? 'block' : 'hidden'" class="md:hidden" [ngSwitch]="isAuthenticated()">
-            <div class="px-2 pt-2 pb-3 sm:px-3">
-                <a href="#" jhiTranslate="global.menu.home" routerLink="/" routerLinkActive="text-white bg-gray-900" [routerLinkActiveOptions]="{ exact: true }" class="block px-3 py-2 rounded-md text-sm font-medium text-gray-300 focus:outline-none focus:text-white focus:bg-gray-700" (click)="collapseNavbar()">Dashboard</a>
-            </div>
-            
-            <!-- Entities menu -->
-            <div *ngSwitchCase="true" class="pt-4 pb-3 border-t border-gray-700">
-                <div class="flex items-center px-5">
-                    <div class="text-base font-medium leading-none text-white" jhiTranslate="global.menu.entities.main">Entities</div>
-                </div>
-                <div class="mt-3 px-2">
-                    <a class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700" jhiTranslate="global.menu.entities.organizer" routerLink="organizer" routerLinkActive="text-white bg-gray-900" [routerLinkActiveOptions]="{ exact: true }" (click)="toggleNavbar()">Organizer</a>
-                    <a class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700" jhiTranslate="global.menu.entities.donation" routerLink="donation" routerLinkActive="text-white bg-gray-900" [routerLinkActiveOptions]="{ exact: true }" (click)="toggleNavbar()">Donation</a>
-                    <a class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700" jhiTranslate="global.menu.entities.transaction" routerLink="transaction" routerLinkActive="text-white bg-gray-900" [routerLinkActiveOptions]="{ exact: true }" (click)="toggleNavbar()">Transaction</a>
-                </div>
-            </div>
-
-            <!-- Admin menu -->
-            <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="pt-4 pb-3 border-t border-gray-700">
-                <div class="flex items-center px-5">
-                    <div class="text-base font-medium leading-none text-white" jhiTranslate="global.menu.admin.main">Administration
-                    </div>
-                </div>
-                <div class="mt-3 px-2">
-                    <a class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
-                        jhiTranslate="global.menu.admin.userManagement" routerLink="admin/user-management"
-                        routerLinkActive="text-white bg-gray-900" [routerLinkActiveOptions]="{ exact: true }"
-                        (click)="toggleNavbar()">User Management</a>
-                    <a class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
-                        jhiTranslate="global.menu.admin.metrics" routerLink="admin/metrics"
-                        routerLinkActive="text-white bg-gray-900" [routerLinkActiveOptions]="{ exact: true }"
-                        (click)="toggleNavbar()">Metrics</a>
-                    <a class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
-                        jhiTranslate="global.menu.admin.health" routerLink="admin/health"
-                        routerLinkActive="text-white bg-gray-900" [routerLinkActiveOptions]="{ exact: true }"
-                        (click)="toggleNavbar()">Health</a>
-                    <a class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
-                        jhiTranslate="global.menu.admin.configuration" routerLink="admin/configuration" routerLinkActive="text-white bg-gray-900"
-                        [routerLinkActiveOptions]="{ exact: true }" (click)="toggleNavbar()">Configuration</a>
-                    <a class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
-                        jhiTranslate="global.menu.admin.audits" routerLink="admin/audits"
-                        routerLinkActive="text-white bg-gray-900" [routerLinkActiveOptions]="{ exact: true }"
-                        (click)="toggleNavbar()">Audits</a>
-                    <a class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
-                        jhiTranslate="global.menu.admin.logs" routerLink="admin/logs"
-                        routerLinkActive="text-white bg-gray-900" [routerLinkActiveOptions]="{ exact: true }"
-                        (click)="collapseNavbar()">Logs</a>
-                    <a *ngIf="swaggerEnabled" class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
-                        jhiTranslate="global.menu.admin.apidocs" routerLink="admin/docs" routerLinkActive="text-white bg-gray-900"
-                        [routerLinkActiveOptions]="{ exact: true }" (click)="toggleNavbar()">API</a>
-                    <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->
-                    <a *ngIf="!inProduction" class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
-                        jhiTranslate="global.menu.admin.database" href='./h2-console' target="_tab" (click)="toggleNavbar()">Database</a>
-                </div>
-            </div>
-
-            <!-- Account menu -->
-            <div class="pt-4 pb-3 border-t border-gray-700">
-                <div class="flex items-center px-5">
-                    <div *ngIf="getImageUrl(); else elseBlock">
-                        <div class="flex-shrink-0">
-                            <img class="h-10 w-10 rounded-full"
-                                [src]="getImageUrl()" 
-                                alt="Avatar" />
-                        </div>
-                        <div class="ml-3">
-                            <div class="text-base font-medium leading-none text-white" jhiTranslate="global.menu.account.main">Account</div>
-                        </div>
-                    </div>
-                    
-                    <ng-template #elseBlock>
-                        <div class="text-base font-medium leading-none text-white" jhiTranslate="global.menu.account.main">
-                            Account
-                        </div>
-                    </ng-template>
-                </div>
-                <div class="mt-3 px-2">
-                    <a *ngSwitchCase="true" class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
-                        jhiTranslate="global.menu.account.settings" routerLink="account/settings"
-                        routerLinkActive="text-white bg-gray-900" [routerLinkActiveOptions]="{ exact: true }"
-                        (click)="toggleNavbar()">Settings</a>
-                    <a *ngSwitchCase="true"
-                        class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
-                        jhiTranslate="global.menu.account.password" routerLink="account/password" routerLinkActive="text-white bg-gray-900"
-                        [routerLinkActiveOptions]="{ exact: true }" (click)="toggleNavbar()">Password</a>
-                    <a *ngSwitchCase="true"
-                        class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
-                        jhiTranslate="global.menu.account.logout" (click)="logout();toggleNavbar();" id="logout">Sign out</a>
-                    <a *ngSwitchCase="false"
-                        class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
-                        jhiTranslate="global.menu.account.login" (click)="login();toggleNavbar();" id="login">Sign in</a>
-                    <a *ngSwitchCase="false"
-                        class="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
-                        jhiTranslate="global.menu.account.register" routerLink="account/register" routerLinkActive="bg-gray-100"
-                        [routerLinkActiveOptions]="{ exact: true }" (click)="toggleNavbar();">Register</a>
-                </div>
-            </div>
-        </div>
-    </nav>
+    </div>
 </div>
