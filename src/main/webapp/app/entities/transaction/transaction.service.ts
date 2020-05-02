@@ -50,6 +50,7 @@ export class TransactionService {
 
   protected convertDateFromClient(transaction: ITransaction): ITransaction {
     const copy: ITransaction = Object.assign({}, transaction, {
+      paymentDate: transaction.paymentDate && transaction.paymentDate.isValid() ? transaction.paymentDate.toJSON() : undefined,
       lastUpdatedAt: transaction.lastUpdatedAt && transaction.lastUpdatedAt.isValid() ? transaction.lastUpdatedAt.toJSON() : undefined
     });
     return copy;
@@ -57,6 +58,7 @@ export class TransactionService {
 
   protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
     if (res.body) {
+      res.body.paymentDate = res.body.paymentDate ? moment(res.body.paymentDate) : undefined;
       res.body.lastUpdatedAt = res.body.lastUpdatedAt ? moment(res.body.lastUpdatedAt) : undefined;
     }
     return res;
@@ -65,6 +67,7 @@ export class TransactionService {
   protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
     if (res.body) {
       res.body.forEach((transaction: ITransaction) => {
+        transaction.paymentDate = transaction.paymentDate ? moment(transaction.paymentDate) : undefined;
         transaction.lastUpdatedAt = transaction.lastUpdatedAt ? moment(transaction.lastUpdatedAt) : undefined;
       });
     }

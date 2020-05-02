@@ -17,19 +17,14 @@
                 <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
                     <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="invoiceNumber"><span jhiTranslate="donationApp.transaction.invoiceNumber">Invoice Number</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="sessionId"><span jhiTranslate="donationApp.transaction.sessionId">Session Id</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="basket"><span jhiTranslate="donationApp.transaction.basket">Basket</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="ovoIdMasked"><span jhiTranslate="donationApp.transaction.ovoIdMasked">Ovo Id Masked</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="deviceInformation"><span jhiTranslate="donationApp.transaction.deviceInformation">Device Information</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="name"><span jhiTranslate="donationApp.transaction.name">Name</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="mobile"><span jhiTranslate="donationApp.transaction.mobile">Mobile</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="email"><span jhiTranslate="donationApp.transaction.email">Email</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="amount"><span jhiTranslate="donationApp.transaction.amount">Amount</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="paymentChannel"><span jhiTranslate="donationApp.transaction.paymentChannel">Payment Channel</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="lastUpdatedBy"><span jhiTranslate="donationApp.transaction.lastUpdatedBy">Last Updated By</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="lastUpdatedAt"><span jhiTranslate="donationApp.transaction.lastUpdatedAt">Last Updated At</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="paymentDate"><span jhiTranslate="donationApp.transaction.paymentDate">Payment Date</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="status"><span jhiTranslate="donationApp.transaction.status">Status</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="donation.id"><span jhiTranslate="donationApp.transaction.donation">Donation</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="donation.name"><span jhiTranslate="donationApp.transaction.donation">Donation</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="donation.organizer.name"><span jhiTranslate="donationApp.transaction.organizer">Organizer</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -37,21 +32,20 @@
                 <tr *ngFor="let transaction of transactions ;trackBy: trackId">
                     <td><a [routerLink]="['/transaction', transaction.id, 'view']">{{ transaction.id }}</a></td>
                     <td>{{ transaction.invoiceNumber }}</td>
-                    <td>{{ transaction.sessionId }}</td>
-                    <td>{{ transaction.basket }}</td>
                     <td>{{ transaction.ovoIdMasked }}</td>
-                    <td>{{ transaction.deviceInformation }}</td>
                     <td>{{ transaction.name }}</td>
-                    <td>{{ transaction.mobile }}</td>
-                    <td>{{ transaction.email }}</td>
                     <td>{{ transaction.amount }}</td>
                     <td jhiTranslate="{{ 'donationApp.PaymentChannel.' + transaction.paymentChannel }}">{{ transaction.paymentChannel }}</td>
-                    <td>{{ transaction.lastUpdatedBy }}</td>
-                    <td>{{ transaction.lastUpdatedAt | date:'medium' }}</td>
+                    <td>{{ transaction.paymentDate | date:'medium' }}</td>
                     <td jhiTranslate="{{ 'donationApp.TransactionStatus.' + transaction.status }}">{{ transaction.status }}</td>
                     <td>
                         <div *ngIf="transaction.donation">
-                            <a [routerLink]="['/donation', transaction.donation?.id, 'view']" >{{ transaction.donation?.id }}</a>
+                            <a [routerLink]="['/donation', transaction.donation?.id, 'view']" >{{ transaction.donation?.name }}</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div *ngIf="transaction.donation">
+                            <a [routerLink]="['/organizer', transaction.donation?.organizer?.id, 'view']" >{{ transaction.donation?.organizer?.name }}</a>
                         </div>
                     </td>
                     <td class="text-right">

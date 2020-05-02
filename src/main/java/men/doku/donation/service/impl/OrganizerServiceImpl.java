@@ -1,20 +1,23 @@
 package men.doku.donation.service.impl;
 
-import men.doku.donation.service.OrganizerService;
-import men.doku.donation.domain.Organizer;
-import men.doku.donation.repository.OrganizerRepository;
-import men.doku.donation.security.SecurityUtils;
+import java.time.Instant;
+import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Instant;
-import java.util.Optional;
+import men.doku.donation.config.Constants;
+import men.doku.donation.domain.Organizer;
+import men.doku.donation.repository.OrganizerRepository;
+import men.doku.donation.security.SecurityUtils;
+import men.doku.donation.service.OrganizerService;
+import men.doku.donation.service.UserService;
 
 /**
  * Service Implementation for managing {@link Organizer}.
@@ -26,9 +29,11 @@ public class OrganizerServiceImpl implements OrganizerService {
     private final Logger log = LoggerFactory.getLogger(OrganizerServiceImpl.class);
 
     private final OrganizerRepository organizerRepository;
+    private final UserService userService;
 
-    public OrganizerServiceImpl(OrganizerRepository organizerRepository) {
+    public OrganizerServiceImpl(OrganizerRepository organizerRepository, UserService userService) {
         this.organizerRepository = organizerRepository;
+        this.userService = userService;
     }
 
     /**
@@ -39,9 +44,18 @@ public class OrganizerServiceImpl implements OrganizerService {
      */
     @Override
     public Organizer save(Organizer organizer) {
+        final String login = SecurityUtils.getCurrentUserLogin().get();
+        log.debug("Request by {} to save Organizer : {}", login, organizer);
+        if (!SecurityUtils.isCurrentUserInRole(Constants.ADMIN)) {
+            if (organizer.getId() != null) {
+                organizer.setUsers(findOne(organizer.getId()).get().getUsers());;
+            } else {
+                organizer.getUsers().clear();
+            }
+        }
+        organizer.getUsers().add(userService.getUserWithAuthorities().get());
         organizer.setLastUpdatedAt(Instant.now());
-        organizer.setLastUpdatedBy(SecurityUtils.getCurrentUserLogin().get());
-        log.debug("Request to save Organizer : {}", organizer);
+        organizer.setLastUpdatedBy(login);
         return organizerRepository.save(organizer);
     }
 
@@ -54,8 +68,45 @@ public class OrganizerServiceImpl implements OrganizerService {
     @Override
     @Transactional(readOnly = true)
     public Page<Organizer> findAll(Pageable pageable) {
-        log.debug("Request to get all Organizers");
-        return organizerRepository.findAll(pageable);
+        final String login = SecurityUtils.getCurrentUserLogin().get();
+        log.debug("Request by {} to get all Organizers", login);
+        if (SecurityUtils.isCurrentUserInRole(Constants.ADMIN)) {
+            return organizerRepository.findAll(pageable);
+        } else {
+            List<Long> organizerIds = organizerRepository.findAllIdsOwnedWithEagerRealtionships(login);
+            return organizerRepository.findAllOwned(organizerIds, pageable);
+        }
+    }
+
+    /**
+     * Get all the organizers with eager load of many-to-many relationships.
+     *
+     * @return the list of entities.
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public Page<Organizer> findAllWithEagerRelationships(Pageable pageable) {
+        final String login = SecurityUtils.getCurrentUserLogin().get();
+        log.debug("Request by {} to get all Organizers", login);
+        if (SecurityUtils.isCurrentUserInRole(Constants.ADMIN)) {
+            return organizerRepository.findAllWithEagerRelationships(pageable);
+        } else {
+            List<Long> organizerIds = organizerRepository.findAllIdsOwnedWithEagerRealtionships(login);
+            List<Organizer> organizers = organizerRepository.findAllOwnedWithEagerRelationships(organizerIds);
+            return new PageImpl<>(organizers, pageable, organizers.size());
+        }
+    }
+
+    /**
+     * Get all id of organizer owned by user login
+     * 
+     * @param login
+     * @return
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<Long> findAllIdsOwnedWithEagerRealtionships(String login) {
+        return organizerRepository.findAllIdsOwnedWithEagerRealtionships(login);
     }
 
     /**
@@ -67,8 +118,9 @@ public class OrganizerServiceImpl implements OrganizerService {
     @Override
     @Transactional(readOnly = true)
     public Optional<Organizer> findOne(Long id) {
-        log.debug("Request to get Organizer : {}", id);
-        return organizerRepository.findById(id);
+        final String login = SecurityUtils.getCurrentUserLogin().get();
+        log.debug("Request by {} to get Organizer : {}", login, id);
+        return organizerRepository.findOneWithEagerRelationships(id);
     }
 
     /**
@@ -78,7 +130,7 @@ public class OrganizerServiceImpl implements OrganizerService {
      */
     @Override
     public void delete(Long id) {
-        log.info("Request to delete Organizer : {}", findOne(id).toString());
+        log.info("Request by {} to delete Organizer : {}", SecurityUtils.getCurrentUserLogin().get(), findOne(id).toString());
         organizerRepository.deleteById(id);
     }
 }

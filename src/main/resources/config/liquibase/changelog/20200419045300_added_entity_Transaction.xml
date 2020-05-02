@@ -15,7 +15,7 @@
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="invoice_number" type="varchar(30)">
+            <column name="invoice_number" type="varchar(64)">
                 <constraints nullable="false" unique="true" uniqueConstraintName="ux_transaction_invoice_number" />
             </column>
             <column name="session_id" type="varchar(128)">
@@ -45,6 +45,30 @@
             <column name="payment_channel" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
+            <column name="mall_id" type="integer">
+                <constraints nullable="true" />
+            </column>
+            <column name="trx_code" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="payment_date" type="datetime">
+                <constraints nullable="true" />
+            </column>
+            <column name="response_code" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="message" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="payment_systrace" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="approval_code" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="payment_host_ref_number" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
             <column name="last_updated_by" type="varchar(100)">
                 <constraints nullable="true" />
             </column>
@@ -59,6 +83,7 @@
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
+        <dropDefaultValue tableName="transaction" columnName="payment_date" columnDataType="datetime"/>
         <dropDefaultValue tableName="transaction" columnName="last_updated_at" columnDataType="datetime"/>
     </changeSet>
 
@@ -91,6 +116,14 @@
             <column name="email" type="string"/>
             <column name="amount" type="numeric"/>
             <column name="payment_channel" type="string"/>
+            <column name="mall_id" type="numeric"/>
+            <column name="trx_code" type="string"/>
+            <column name="payment_date" type="datetime"/>
+            <column name="response_code" type="string"/>
+            <column name="message" type="string"/>
+            <column name="payment_systrace" type="string"/>
+            <column name="approval_code" type="string"/>
+            <column name="payment_host_ref_number" type="string"/>
             <column name="last_updated_by" type="string"/>
             <column name="last_updated_at" type="datetime"/>
             <column name="status" type="string"/>

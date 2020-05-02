@@ -122,4 +122,5 @@ jhipster:
 # https://www.jhipster.tech/common-application-properties/
 # ===================================================================
 
-# application:
+application:
+  mib-url: http://localhost:8080/api/payments/simulator

@@ -132,10 +132,41 @@
                 </div>
 
                 <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="donationApp.organizer.mallId" for="field_mallId">Mall Id</label>
+                    <input type="number" class="form-control" name="mallId" id="field_mallId"
+                           formControlName="mallId"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="donationApp.organizer.sharedKey" for="field_sharedKey">Shared Key</label>
+                    <input type="text" class="form-control" name="sharedKey" id="field_sharedKey"
+                           formControlName="sharedKey"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="donationApp.organizer.serviceId" for="field_serviceId">Service Id</label>
+                    <input type="number" class="form-control" name="serviceId" id="field_serviceId"
+                           formControlName="serviceId"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="donationApp.organizer.acquirerId" for="field_acquirerId">Acquirer Id</label>
+                    <input type="number" class="form-control" name="acquirerId" id="field_acquirerId"
+                           formControlName="acquirerId"/>
+                </div>
+
+                <div class="form-group">
                     <label class="form-control-label" jhiTranslate="donationApp.organizer.status" for="field_status">Status</label>
                     <select class="form-control" name="status" formControlName="status" id="field_status">
                         <option value="ACTIVE">{{ 'donationApp.IsActiveStatus.ACTIVE' | translate }}</option>
                         <option value="DISABLED">{{ 'donationApp.IsActiveStatus.DISABLED' | translate }}</option>
+                    </select>
+                </div>
+
+                <div class="form-group" *jhiHasAnyAuthority="'ROLE_ADMIN'">
+                    <label jhiTranslate="donationApp.organizer.user" for="field_users">User</label>
+                    <select class="form-control" id="field_users" multiple name="users" formControlName="users">
+                        <option [ngValue]="getSelected(editForm.get('users')!.value, userOption)" *ngFor="let userOption of users; trackBy: trackById">{{ userOption.login }}</option>
                     </select>
                 </div>
             </div>

@@ -9,7 +9,7 @@
                 "required",
                 "unique"
             ],
-            "fieldValidateRulesMaxlength": "30"
+            "fieldValidateRulesMaxlength": "64"
         },
         {
             "fieldName": "sessionId",
@@ -79,6 +79,38 @@
             "fieldName": "paymentChannel",
             "fieldType": "PaymentChannel",
             "fieldValues": "OVO"
+        },
+        {
+            "fieldName": "mallId",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "trxCode",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "paymentDate",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "responseCode",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "message",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "paymentSystrace",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "approvalCode",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "paymentHostRefNumber",
+            "fieldType": "String"
         },
         {
             "fieldName": "lastUpdatedBy",

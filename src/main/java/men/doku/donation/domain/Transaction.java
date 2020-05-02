@@ -1,6 +1,8 @@
 package men.doku.donation.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonView;
+
 import io.swagger.annotations.ApiModel;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -9,12 +11,12 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
-import java.util.Objects;
 import java.time.Instant;
 
 import men.doku.donation.domain.enumeration.PaymentChannel;
 
 import men.doku.donation.domain.enumeration.TransactionStatus;
+import men.doku.donation.security.AuthoritiesConstants;
 
 /**
  * Transaction entity.\n@author RT.
@@ -30,62 +32,109 @@ public class Transaction implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
+    @JsonView(AuthoritiesConstants.Anonymous.class)
     private Long id;
 
     @NotNull
-    @Size(max = 30)
-    @Column(name = "invoice_number", length = 30, nullable = false, unique = true)
+    @Size(max = 64)
+    @Column(name = "invoice_number", length = 64, nullable = false, unique = true)
+    @JsonView(AuthoritiesConstants.Anonymous.class)
     private String invoiceNumber;
 
     @Size(max = 128)
     @Column(name = "session_id", length = 128)
+    @JsonView(AuthoritiesConstants.Anonymous.class)
     private String sessionId;
 
     @Size(max = 1024)
     @Column(name = "basket", length = 1024)
+    @JsonView(AuthoritiesConstants.Anonymous.class)
     private String basket;
 
     @Size(max = 15)
     @Column(name = "ovo_id_masked", length = 15)
+    @JsonView(AuthoritiesConstants.Anonymous.class)
     private String ovoIdMasked;
 
     @Size(max = 1000)
     @Column(name = "device_information", length = 1000)
+    @JsonView(AuthoritiesConstants.User.class)
     private String deviceInformation;
 
     @Size(max = 30)
     @Column(name = "name", length = 30)
+    @JsonView(AuthoritiesConstants.Anonymous.class)
     private String name;
 
     @Size(max = 15)
     @Column(name = "mobile", length = 15)
+    @JsonView(AuthoritiesConstants.Anonymous.class)
     private String mobile;
 
     @Size(max = 100)
     @Column(name = "email", length = 100)
+    @JsonView(AuthoritiesConstants.Anonymous.class)
     private String email;
 
     @Min(value = 10000L)
     @Column(name = "amount")
+    @JsonView(AuthoritiesConstants.Anonymous.class)
     private Long amount;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "payment_channel")
+    @JsonView(AuthoritiesConstants.Anonymous.class)
     private PaymentChannel paymentChannel;
+
+    @Column(name = "mall_id")
+    @JsonView(AuthoritiesConstants.User.class)
+    private Integer mallId;
+
+    @Column(name = "trx_code")
+    @JsonView(AuthoritiesConstants.User.class)
+    private String trxCode;
+
+    @Column(name = "payment_date")
+    @JsonView(AuthoritiesConstants.Anonymous.class)
+    private Instant paymentDate;
+
+    @Column(name = "response_code")
+    @JsonView(AuthoritiesConstants.Anonymous.class)
+    private String responseCode;
+
+    @Column(name = "message")
+    @JsonView(AuthoritiesConstants.Anonymous.class)
+    private String message;
+
+    @Column(name = "payment_systrace")
+    @JsonView(AuthoritiesConstants.User.class)
+    private String paymentSystrace;
+
+    @Column(name = "approval_code")
+    @JsonView(AuthoritiesConstants.Anonymous.class)
+    private String approvalCode;
+
+    @Column(name = "payment_host_ref_number")
+    @JsonView(AuthoritiesConstants.User.class)
+    private String paymentHostRefNumber;
 
     @Size(max = 100)
     @Column(name = "last_updated_by", length = 100)
+    @JsonView(AuthoritiesConstants.User.class)
     private String lastUpdatedBy;
 
     @Column(name = "last_updated_at")
+    @JsonView(AuthoritiesConstants.User.class)
     private Instant lastUpdatedAt;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
+    @JsonView(AuthoritiesConstants.Anonymous.class)
     private TransactionStatus status;
 
     @ManyToOne
     @JsonIgnoreProperties("transactions")
+    @NotNull
     private Donation donation;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -227,6 +276,110 @@ public class Transaction implements Serializable {
         this.paymentChannel = paymentChannel;
     }
 
+    public Integer getMallId() {
+        return mallId;
+    }
+
+    public Transaction mallId(Integer mallId) {
+        this.mallId = mallId;
+        return this;
+    }
+
+    public void setMallId(Integer mallId) {
+        this.mallId = mallId;
+    }
+
+    public String getTrxCode() {
+        return trxCode;
+    }
+
+    public Transaction trxCode(String trxCode) {
+        this.trxCode = trxCode;
+        return this;
+    }
+
+    public void setTrxCode(String trxCode) {
+        this.trxCode = trxCode;
+    }
+
+    public Instant getPaymentDate() {
+        return paymentDate;
+    }
+
+    public Transaction paymentDate(Instant paymentDate) {
+        this.paymentDate = paymentDate;
+        return this;
+    }
+
+    public void setPaymentDate(Instant paymentDate) {
+        this.paymentDate = paymentDate;
+    }
+
+    public String getResponseCode() {
+        return responseCode;
+    }
+
+    public Transaction responseCode(String responseCode) {
+        this.responseCode = responseCode;
+        return this;
+    }
+
+    public void setResponseCode(String responseCode) {
+        this.responseCode = responseCode;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public Transaction message(String message) {
+        this.message = message;
+        return this;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getPaymentSystrace() {
+        return paymentSystrace;
+    }
+
+    public Transaction paymentSystrace(String paymentSystrace) {
+        this.paymentSystrace = paymentSystrace;
+        return this;
+    }
+
+    public void setPaymentSystrace(String paymentSystrace) {
+        this.paymentSystrace = paymentSystrace;
+    }
+
+    public String getApprovalCode() {
+        return approvalCode;
+    }
+
+    public Transaction approvalCode(String approvalCode) {
+        this.approvalCode = approvalCode;
+        return this;
+    }
+
+    public void setApprovalCode(String approvalCode) {
+        this.approvalCode = approvalCode;
+    }
+
+    public String getPaymentHostRefNumber() {
+        return paymentHostRefNumber;
+    }
+
+    public Transaction paymentHostRefNumber(String paymentHostRefNumber) {
+        this.paymentHostRefNumber = paymentHostRefNumber;
+        return this;
+    }
+
+    public void setPaymentHostRefNumber(String paymentHostRefNumber) {
+        this.paymentHostRefNumber = paymentHostRefNumber;
+    }
+
     public String getLastUpdatedBy() {
         return lastUpdatedBy;
     }
@@ -310,6 +463,14 @@ public class Transaction implements Serializable {
             ", email='" + getEmail() + "'" +
             ", amount=" + getAmount() +
             ", paymentChannel='" + getPaymentChannel() + "'" +
+            ", mallId=" + getMallId() +
+            ", trxCode='" + getTrxCode() + "'" +
+            ", paymentDate='" + getPaymentDate() + "'" +
+            ", responseCode='" + getResponseCode() + "'" +
+            ", message='" + getMessage() + "'" +
+            ", paymentSystrace='" + getPaymentSystrace() + "'" +
+            ", approvalCode='" + getApprovalCode() + "'" +
+            ", paymentHostRefNumber='" + getPaymentHostRefNumber() + "'" +
             ", lastUpdatedBy='" + getLastUpdatedBy() + "'" +
             ", lastUpdatedAt='" + getLastUpdatedAt() + "'" +
             ", status='" + getStatus() + "'" +

@@ -48,13 +48,45 @@
                 <dd>
                     <span jhiTranslate="{{ 'donationApp.PaymentChannel.' + transaction.paymentChannel }}">{{ transaction.paymentChannel }}</span>
                 </dd>
+                <dt><span jhiTranslate="donationApp.transaction.mallId">Mall Id</span></dt>
+                <dd>
+                    <span>{{ transaction.mallId }}</span>
+                </dd>
+                <dt><span jhiTranslate="donationApp.transaction.trxCode">Trx Code</span></dt>
+                <dd>
+                    <span>{{ transaction.trxCode }}</span>
+                </dd>
+                <dt><span jhiTranslate="donationApp.transaction.paymentDate">Payment Date</span></dt>
+                <dd>
+                    <span>{{ transaction.paymentDate | date:'medium' }}</span>
+                </dd>
+                <dt><span jhiTranslate="donationApp.transaction.responseCode">Response Code</span></dt>
+                <dd>
+                    <span>{{ transaction.responseCode }}</span>
+                </dd>
+                <dt><span jhiTranslate="donationApp.transaction.message">Message</span></dt>
+                <dd>
+                    <span>{{ transaction.message }}</span>
+                </dd>
+                <dt><span jhiTranslate="donationApp.transaction.paymentSystrace">Payment Systrace</span></dt>
+                <dd>
+                    <span>{{ transaction.paymentSystrace }}</span>
+                </dd>
+                <dt><span jhiTranslate="donationApp.transaction.approvalCode">Approval Code</span></dt>
+                <dd>
+                    <span>{{ transaction.approvalCode }}</span>
+                </dd>
+                <dt><span jhiTranslate="donationApp.transaction.paymentHostRefNumber">Payment Host Ref Number</span></dt>
+                <dd>
+                    <span>{{ transaction.paymentHostRefNumber }}</span>
+                </dd>
                 <dt><span jhiTranslate="donationApp.transaction.lastUpdatedBy">Last Updated By</span></dt>
                 <dd>
                     <span>{{ transaction.lastUpdatedBy }}</span>
                 </dd>
                 <dt><span jhiTranslate="donationApp.transaction.lastUpdatedAt">Last Updated At</span></dt>
                 <dd>
-                    <span>{{ transaction.lastUpdatedAt }}</span>
+                    <span>{{ transaction.lastUpdatedAt | date:'medium'  }}</span>
                 </dd>
                 <dt><span jhiTranslate="donationApp.transaction.status">Status</span></dt>
                 <dd>
@@ -63,7 +95,13 @@
                 <dt><span jhiTranslate="donationApp.transaction.donation">Donation</span></dt>
                 <dd>
                     <div *ngIf="transaction.donation">
-                        <a [routerLink]="['/donation', transaction.donation?.id, 'view']">{{ transaction.donation?.id }}</a>
+                        <a [routerLink]="['/donation', transaction.donation?.id, 'view']">{{ transaction.donation?.name }}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="donationApp.transaction.donation">Organizer</span></dt>
+                <dd>
+                    <div *ngIf="transaction.donation">
+                        <a [routerLink]="['/organizer', transaction.donation?.organizer?.id, 'view']">{{ transaction.donation?.organizer?.name }}</a>
                     </div>
                 </dd>
             </dl>
@@ -74,11 +112,6 @@
                 <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
             </button>
 
-            <button type="button"
-                    [routerLink]="['/transaction', transaction.id, 'edit']"
-                    class="btn btn-primary">
-                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
-            </button>
         </div>
     </div>
 </div>

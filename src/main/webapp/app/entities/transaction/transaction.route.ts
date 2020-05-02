@@ -11,7 +11,6 @@ import { ITransaction, Transaction } from 'app/shared/model/transaction.model';
 import { TransactionService } from './transaction.service';
 import { TransactionComponent } from './transaction.component';
 import { TransactionDetailComponent } from './transaction-detail.component';
-import { TransactionUpdateComponent } from './transaction-update.component';
 
 @Injectable({ providedIn: 'root' })
 export class TransactionResolve implements Resolve<ITransaction> {
@@ -44,7 +43,7 @@ export const transactionRoute: Routes = [
     },
     data: {
       authorities: [Authority.USER],
-      defaultSort: 'id,asc',
+      defaultSort: 'id,desc',
       pageTitle: 'donationApp.transaction.home.title'
     },
     canActivate: [UserRouteAccessService]
@@ -52,30 +51,6 @@ export const transactionRoute: Routes = [
   {
     path: ':id/view',
     component: TransactionDetailComponent,
-    resolve: {
-      transaction: TransactionResolve
-    },
-    data: {
-      authorities: [Authority.USER],
-      pageTitle: 'donationApp.transaction.home.title'
-    },
-    canActivate: [UserRouteAccessService]
-  },
-  {
-    path: 'new',
-    component: TransactionUpdateComponent,
-    resolve: {
-      transaction: TransactionResolve
-    },
-    data: {
-      authorities: [Authority.USER],
-      pageTitle: 'donationApp.transaction.home.title'
-    },
-    canActivate: [UserRouteAccessService]
-  },
-  {
-    path: ':id/edit',
-    component: TransactionUpdateComponent,
     resolve: {
       transaction: TransactionResolve
     },

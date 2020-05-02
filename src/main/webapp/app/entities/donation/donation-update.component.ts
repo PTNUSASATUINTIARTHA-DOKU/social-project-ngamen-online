@@ -43,7 +43,8 @@ export class DonationUpdateComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ donation }) => {
       this.updateForm(donation);
-
+      if (!this.editForm.get('url')?.value) this.editForm.patchValue({ url: 'http' });
+      if (!this.editForm.get('imageUrl')?.value) this.editForm.patchValue({ imageUrl: 'http' });
       this.organizerService.query().subscribe((res: HttpResponse<IOrganizer[]>) => (this.organizers = res.body || []));
     });
   }

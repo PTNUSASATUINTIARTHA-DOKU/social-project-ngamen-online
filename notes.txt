@@ -5,7 +5,8 @@ A. Everytime update database structure:
   3. jhipster import-jdl jhipster-jdl.jh
   4. ./mvnw liquibase:clearCheckSums
   5. ./mvnw liquibase:diff
-  6. ./mvnw
+  6. Make sure overriden files is not removing previous updates, using git tools.
+  7. ./mvnw
 
 B. Tools to check ESLint
   https://eslint.org/demo

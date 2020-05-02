@@ -1,27 +1,37 @@
 package men.doku.donation.web.rest;
 
-import men.doku.donation.domain.Donation;
-import men.doku.donation.service.DonationService;
-import men.doku.donation.web.rest.errors.BadRequestAlertException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Optional;
 
-import io.github.jhipster.web.util.HeaderUtil;
-import io.github.jhipster.web.util.PaginationUtil;
-import io.github.jhipster.web.util.ResponseUtil;
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Optional;
+import io.github.jhipster.web.util.HeaderUtil;
+import io.github.jhipster.web.util.PaginationUtil;
+import io.github.jhipster.web.util.ResponseUtil;
+import men.doku.donation.domain.Donation;
+import men.doku.donation.security.AuthoritiesConstants;
+import men.doku.donation.service.DonationService;
+import men.doku.donation.web.rest.errors.BadRequestAlertException;
 
 /**
  * REST controller for managing {@link men.doku.donation.domain.Donation}.
@@ -90,9 +100,9 @@ public class DonationResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of donations in body.
      */
     @GetMapping("/donations")
-    public ResponseEntity<List<Donation>> getAllDonations(Donation donation, Pageable pageable) {
+    public ResponseEntity<List<Donation>> getAllDonations(Pageable pageable) {
         log.debug("REST request to get a page of Donations");
-        Page<Donation> page = donationService.findAll(donation, pageable);
+        Page<Donation> page = donationService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
@@ -117,6 +127,7 @@ public class DonationResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/donations/{id}")
+    @PreAuthorize("hasAuthority(\""+ AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<Void> deleteDonation(@PathVariable Long id) {
         log.debug("REST request to delete Donation : {}", id);
         donationService.delete(id);

@@ -7,9 +7,14 @@ import men.doku.donation.service.OrganizerService;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -17,10 +22,12 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -29,7 +36,7 @@ import men.doku.donation.domain.enumeration.IsActiveStatus;
  * Integration tests for the {@link OrganizerResource} REST controller.
  */
 @SpringBootTest(classes = DonationApp.class)
-
+@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 public class OrganizerResourceIT {
@@ -64,11 +71,29 @@ public class OrganizerResourceIT {
     private static final Instant DEFAULT_LAST_UPDATED_AT = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_LAST_UPDATED_AT = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
+    private static final Integer DEFAULT_MALL_ID = 1;
+    private static final Integer UPDATED_MALL_ID = 2;
+
+    private static final String DEFAULT_SHARED_KEY = "AAAAAAAAAA";
+    private static final String UPDATED_SHARED_KEY = "BBBBBBBBBB";
+
+    private static final Integer DEFAULT_SERVICE_ID = 1;
+    private static final Integer UPDATED_SERVICE_ID = 2;
+
+    private static final Integer DEFAULT_ACQUIRER_ID = 1;
+    private static final Integer UPDATED_ACQUIRER_ID = 2;
+
     private static final IsActiveStatus DEFAULT_STATUS = IsActiveStatus.ACTIVE;
     private static final IsActiveStatus UPDATED_STATUS = IsActiveStatus.DISABLED;
 
     @Autowired
     private OrganizerRepository organizerRepository;
+
+    @Mock
+    private OrganizerRepository organizerRepositoryMock;
+
+    @Mock
+    private OrganizerService organizerServiceMock;
 
     @Autowired
     private OrganizerService organizerService;
@@ -99,6 +124,10 @@ public class OrganizerResourceIT {
             .sharing(DEFAULT_SHARING)
             .lastUpdatedBy(DEFAULT_LAST_UPDATED_BY)
             .lastUpdatedAt(DEFAULT_LAST_UPDATED_AT)
+            .mallId(DEFAULT_MALL_ID)
+            .sharedKey(DEFAULT_SHARED_KEY)
+            .serviceId(DEFAULT_SERVICE_ID)
+            .acquirerId(DEFAULT_ACQUIRER_ID)
             .status(DEFAULT_STATUS);
         return organizer;
     }
@@ -120,6 +149,10 @@ public class OrganizerResourceIT {
             .sharing(UPDATED_SHARING)
             .lastUpdatedBy(UPDATED_LAST_UPDATED_BY)
             .lastUpdatedAt(UPDATED_LAST_UPDATED_AT)
+            .mallId(UPDATED_MALL_ID)
+            .sharedKey(UPDATED_SHARED_KEY)
+            .serviceId(UPDATED_SERVICE_ID)
+            .acquirerId(UPDATED_ACQUIRER_ID)
             .status(UPDATED_STATUS);
         return organizer;
     }
@@ -154,6 +187,10 @@ public class OrganizerResourceIT {
         assertThat(testOrganizer.getSharing()).isEqualTo(DEFAULT_SHARING);
         assertThat(testOrganizer.getLastUpdatedBy()).isEqualTo(DEFAULT_LAST_UPDATED_BY);
         assertThat(testOrganizer.getLastUpdatedAt()).isEqualTo(DEFAULT_LAST_UPDATED_AT);
+        assertThat(testOrganizer.getMallId()).isEqualTo(DEFAULT_MALL_ID);
+        assertThat(testOrganizer.getSharedKey()).isEqualTo(DEFAULT_SHARED_KEY);
+        assertThat(testOrganizer.getServiceId()).isEqualTo(DEFAULT_SERVICE_ID);
+        assertThat(testOrganizer.getAcquirerId()).isEqualTo(DEFAULT_ACQUIRER_ID);
         assertThat(testOrganizer.getStatus()).isEqualTo(DEFAULT_STATUS);
     }
 
@@ -234,9 +271,33 @@ public class OrganizerResourceIT {
             .andExpect(jsonPath("$.[*].sharing").value(hasItem(DEFAULT_SHARING.doubleValue())))
             .andExpect(jsonPath("$.[*].lastUpdatedBy").value(hasItem(DEFAULT_LAST_UPDATED_BY)))
             .andExpect(jsonPath("$.[*].lastUpdatedAt").value(hasItem(DEFAULT_LAST_UPDATED_AT.toString())))
+            .andExpect(jsonPath("$.[*].mallId").value(hasItem(DEFAULT_MALL_ID)))
+            .andExpect(jsonPath("$.[*].sharedKey").value(hasItem(DEFAULT_SHARED_KEY)))
+            .andExpect(jsonPath("$.[*].serviceId").value(hasItem(DEFAULT_SERVICE_ID)))
+            .andExpect(jsonPath("$.[*].acquirerId").value(hasItem(DEFAULT_ACQUIRER_ID)))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
     }
     
+    @SuppressWarnings({"unchecked"})
+    public void getAllOrganizersWithEagerRelationshipsIsEnabled() throws Exception {
+        when(organizerServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restOrganizerMockMvc.perform(get("/api/organizers?eagerload=true"))
+            .andExpect(status().isOk());
+
+        verify(organizerServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({"unchecked"})
+    public void getAllOrganizersWithEagerRelationshipsIsNotEnabled() throws Exception {
+        when(organizerServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restOrganizerMockMvc.perform(get("/api/organizers?eagerload=true"))
+            .andExpect(status().isOk());
+
+        verify(organizerServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
     @Test
     @Transactional
     public void getOrganizer() throws Exception {
@@ -258,6 +319,10 @@ public class OrganizerResourceIT {
             .andExpect(jsonPath("$.sharing").value(DEFAULT_SHARING.doubleValue()))
             .andExpect(jsonPath("$.lastUpdatedBy").value(DEFAULT_LAST_UPDATED_BY))
             .andExpect(jsonPath("$.lastUpdatedAt").value(DEFAULT_LAST_UPDATED_AT.toString()))
+            .andExpect(jsonPath("$.mallId").value(DEFAULT_MALL_ID))
+            .andExpect(jsonPath("$.sharedKey").value(DEFAULT_SHARED_KEY))
+            .andExpect(jsonPath("$.serviceId").value(DEFAULT_SERVICE_ID))
+            .andExpect(jsonPath("$.acquirerId").value(DEFAULT_ACQUIRER_ID))
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
     }
 
@@ -292,6 +357,10 @@ public class OrganizerResourceIT {
             .sharing(UPDATED_SHARING)
             .lastUpdatedBy(UPDATED_LAST_UPDATED_BY)
             .lastUpdatedAt(UPDATED_LAST_UPDATED_AT)
+            .mallId(UPDATED_MALL_ID)
+            .sharedKey(UPDATED_SHARED_KEY)
+            .serviceId(UPDATED_SERVICE_ID)
+            .acquirerId(UPDATED_ACQUIRER_ID)
             .status(UPDATED_STATUS);
 
         restOrganizerMockMvc.perform(put("/api/organizers")
@@ -313,6 +382,10 @@ public class OrganizerResourceIT {
         assertThat(testOrganizer.getSharing()).isEqualTo(UPDATED_SHARING);
         assertThat(testOrganizer.getLastUpdatedBy()).isEqualTo(UPDATED_LAST_UPDATED_BY);
         assertThat(testOrganizer.getLastUpdatedAt()).isEqualTo(UPDATED_LAST_UPDATED_AT);
+        assertThat(testOrganizer.getMallId()).isEqualTo(UPDATED_MALL_ID);
+        assertThat(testOrganizer.getSharedKey()).isEqualTo(UPDATED_SHARED_KEY);
+        assertThat(testOrganizer.getServiceId()).isEqualTo(UPDATED_SERVICE_ID);
+        assertThat(testOrganizer.getAcquirerId()).isEqualTo(UPDATED_ACQUIRER_ID);
         assertThat(testOrganizer.getStatus()).isEqualTo(UPDATED_STATUS);
     }
 

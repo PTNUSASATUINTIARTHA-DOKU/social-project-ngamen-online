@@ -1,9 +1,8 @@
 package men.doku.donation.service.impl;
 
-import men.doku.donation.service.DonationService;
-import men.doku.donation.domain.Donation;
-import men.doku.donation.repository.DonationRepository;
-import men.doku.donation.security.SecurityUtils;
+import java.time.Instant;
+import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,8 +12,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Instant;
-import java.util.Optional;
+import men.doku.donation.config.Constants;
+import men.doku.donation.domain.Donation;
+import men.doku.donation.repository.DonationRepository;
+import men.doku.donation.security.SecurityUtils;
+import men.doku.donation.service.DonationService;
+import men.doku.donation.service.OrganizerService;
+import men.doku.donation.web.rest.errors.NoAuthorityException;
 
 /**
  * Service Implementation for managing {@link Donation}.
@@ -26,9 +30,13 @@ public class DonationServiceImpl implements DonationService {
     private final Logger log = LoggerFactory.getLogger(DonationServiceImpl.class);
 
     private final DonationRepository donationRepository;
+    private final OrganizerService organizerService;
 
-    public DonationServiceImpl(DonationRepository donationRepository) {
+    public DonationServiceImpl(
+            DonationRepository donationRepository,
+            OrganizerService organizerService) {
         this.donationRepository = donationRepository;
+        this.organizerService = organizerService;
     }
 
     /**
@@ -39,24 +47,34 @@ public class DonationServiceImpl implements DonationService {
      */
     @Override
     public Donation save(Donation donation) {
+        final String login = SecurityUtils.getCurrentUserLogin().get();
+        log.debug("Request by {} to save Donation : {}", login, donation);
+        if (!SecurityUtils.isCurrentUserInRole(Constants.ADMIN)) {
+            List<Long> organizerIds = organizerService.findAllIdsOwnedWithEagerRealtionships(login);
+            if (donationRepository.checkDonationAuthority(donation.getId(), organizerIds) == 0) throw new NoAuthorityException("Donation", "save");
+        } 
         donation.setLastUpdatedAt(Instant.now());
-        donation.setLastUpdatedBy(SecurityUtils.getCurrentUserLogin().get());
-        log.debug("Request to save Donation : {}", donation);
-        return donationRepository.save(donation);
-    }
+        donation.setLastUpdatedBy(login);
+        return donationRepository.save(donation);    
+}
 
     /**
      * Get all the donations.
      *
-     * @param donation the donation information.
      * @param pageable the pagination information.
      * @return the list of entities.
      */
     @Override
     @Transactional(readOnly = true)
-    public Page<Donation> findAll(Donation donation, Pageable pageable) {
-        log.debug("Request to get all Donations");
-        return donationRepository.findAll(Example.of(donation), pageable);
+    public Page<Donation> findAll(Pageable pageable) {
+        final String login = SecurityUtils.getCurrentUserLogin().get();
+        log.debug("Request by {} to get all Donations", login);
+        if(SecurityUtils.isCurrentUserInRole(Constants.ADMIN)) {
+            return donationRepository.findAll(pageable);
+        } else {
+            List<Long> organizerIds = organizerService.findAllIdsOwnedWithEagerRealtionships(login);
+            return donationRepository.findAllByOrganizerIds(organizerIds, pageable);
+        }
     }
 
     /**
@@ -68,8 +86,22 @@ public class DonationServiceImpl implements DonationService {
     @Override
     @Transactional(readOnly = true)
     public Optional<Donation> findOne(Long id) {
-        log.debug("Request to get Donation : {}", id);
+        log.debug("Request by {} to get Donation : {}", SecurityUtils.getCurrentUserLogin().get(), id);
         return donationRepository.findById(id);
+    }
+
+    /**
+     * Get one donation by Example.
+     *
+     * @param Example<S> the example of the entity.
+     * @return the entity.
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<Donation> findOne(Example<Donation> donation) {
+        final String currentUser = SecurityUtils.getCurrentUserLogin().get();
+        log.debug("Request by {} to get Donation : {}", currentUser, donation);
+        return donationRepository.findOne(donation);
     }
 
     /**
@@ -79,21 +111,8 @@ public class DonationServiceImpl implements DonationService {
      */
     @Override
     public void delete(Long id) {
-        log.info("Request to delete Donation : {}", findOne(id).toString());
+        Donation donation = findOne(id).get();
+        log.info("Request by {} to delete Donation : {}", SecurityUtils.getCurrentUserLogin().get(), donation);
         donationRepository.deleteById(id);
-    }
-
-    /**
-     * Get one donation by slug.
-     *
-     * @param id the id of the entity.
-     * @return the entity.
-     */
-    @Transactional(readOnly = true)
-    public Optional<Donation> findOneByPaymentSlug(String paymentSlug) {
-        log.debug("Request to find one Donation by Payment Slug : {}", paymentSlug);
-        Donation donation = new Donation();
-        donation.setPaymentSlug(paymentSlug);
-        return donationRepository.findOne(Example.of(donation));
     }
 }

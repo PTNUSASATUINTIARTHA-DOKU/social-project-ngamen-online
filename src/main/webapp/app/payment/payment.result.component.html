@@ -1,0 +1,33 @@
+<div>
+    <h2 jhiTranslate="payment.result.status">Your donation was </h2> 
+    <h2>{{ this.transaction?.status }}.</h2> 
+    <h2 jhiTranslate="payment.result.success" *ngIf="this.isSuccess">Thank you.</h2> 
+    <h2 jhiTranslate="payment.result.failed" *ngIf="!this.isSuccess">Please try again </h2> 
+    <a href="{{ this.paymentUrl }}" *ngIf="!this.isSuccess">
+        <h2 jhiTranslate="payment.result.retry">click here</h2>
+    </a>
+    <h4 jhiTranslate="payment.result.website">To see other performers, visit our</h4>
+    <h4><a href="{{ this.transaction?.donation?.organizer?.url }}"> website</a></h4>
+    <h2 jhiTranslate="payment.result.info">Information</h2>
+    <h4 jhiTranslate="payment.result.donation">Donated to</h4>
+    <h4>{{ this.transaction?.donation?.name }}</h4>
+    <h4 jhiTranslate="payment.result.organizer">Organized by</h4>
+    <h4>{{ this.transaction?.donation?.organizer?.name }}</h4>
+    <h4 jhiTranslate="payment.result.amount">Amount</h4>
+    <h4>{{ this.transaction?.amount }}</h4>
+    <h4 jhiTranslate="payment.result.method">Payment Method</h4>
+    <h4>{{ this.transaction?.paymentChannel }}</h4>
+    <h4 jhiTranslate="payment.result.date">Payment Date</h4>
+    <h4>{{ this.transaction?.paymentDate | date:'medium' }}</h4>
+    <h4 jhiTranslate="payment.result.mobile">OVO Phone Number</h4>
+    <h4>{{ this.transaction?.ovoIdMasked }}</h4>
+    <h4 jhiTranslate="payment.result.invoice">Invoice Number</h4>
+    <h4>{{ this.transaction?.invoiceNumber }}</h4>
+    <h4 jhiTranslate="payment.result.approval" *ngIf="this.isSuccess">Approval Code</h4>
+    <h4 *ngIf="this.isSuccess">{{ this.transaction?.approvalCode }}</h4>
+    <h4 jhiTranslate="payment.result.response" *ngIf="!this.isSuccess">Response Code</h4>
+    <h4 *ngIf="!this.isSuccess">{{ this.transaction?.responseCode }}</h4>
+    <h4 jhiTranslate="payment.result.message">Payment message</h4>
+    <h4>{{ this.transaction?.message }}</h4>
+
+</div>

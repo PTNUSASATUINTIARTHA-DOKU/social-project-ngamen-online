@@ -7,6 +7,8 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
@@ -14,6 +16,7 @@ import java.util.Set;
 
 import men.doku.donation.config.Constants;
 import men.doku.donation.domain.enumeration.IsActiveStatus;
+import men.doku.donation.security.AuthoritiesConstants;
 
 /**
  * Organizer entity.\n@author RT.
@@ -29,58 +32,94 @@ public class Organizer implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
+    @JsonView(AuthoritiesConstants.Anonymous.class)
     private Long id;
 
     @NotNull
     @Size(max = 100)
     @Column(name = "name", length = 100, nullable = false, unique = true)
+    @JsonView(AuthoritiesConstants.Anonymous.class)
     private String name;
 
     @Pattern(regexp = Constants.URL_REGEX)
     @Size(max = 100)
     @Column(name = "url", length = 100)
+    @JsonView(AuthoritiesConstants.Anonymous.class)
     private String url;
 
     @Pattern(regexp = Constants.EMAIL_REGEX)
     @NotNull
     @Size(max = 100)
     @Column(name = "email", length = 100, nullable = false)
+    @JsonView(AuthoritiesConstants.Anonymous.class)
     private String email;
 
     @Size(max = 15)
     @Column(name = "bank_account_number", length = 15)
+    @JsonView(AuthoritiesConstants.User.class)
     private String bankAccountNumber;
 
     @Size(max = 100)
     @Column(name = "bank_account_name", length = 100)
+    @JsonView(AuthoritiesConstants.User.class)
     private String bankAccountName;
 
     @Size(max = 100)
     @Column(name = "bank_name", length = 100)
+    @JsonView(AuthoritiesConstants.User.class)
     private String bankName;
 
     @DecimalMax(value = "100")
     @Column(name = "mdr")
+    @JsonView(AuthoritiesConstants.User.class)
     private Float mdr;
 
     @DecimalMax(value = "100")
     @Column(name = "sharing")
+    @JsonView(AuthoritiesConstants.User.class)
     private Float sharing;
 
     @Size(max = 100)
     @Column(name = "last_updated_by", length = 100)
+    @JsonView(AuthoritiesConstants.User.class)
     private String lastUpdatedBy;
 
     @Column(name = "last_updated_at")
+    @JsonView(AuthoritiesConstants.User.class)
     private Instant lastUpdatedAt;
+
+    @Column(name = "mall_id")
+    @JsonView(AuthoritiesConstants.User.class)
+    private Integer mallId;
+
+    @Column(name = "shared_key")
+    @JsonView(AuthoritiesConstants.User.class)
+    private String sharedKey;
+
+    @Column(name = "service_id")
+    @JsonView(AuthoritiesConstants.User.class)
+    private Integer serviceId;
+
+    @Column(name = "acquirer_id")
+    @JsonView(AuthoritiesConstants.User.class)
+    private Integer acquirerId;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
+    @JsonView(AuthoritiesConstants.Anonymous.class)
     private IsActiveStatus status;
 
     @OneToMany(mappedBy = "organizer")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Donation> donations = new HashSet<>();
+
+    @ManyToMany
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JoinTable(name = "organizer_user",
+               joinColumns = @JoinColumn(name = "organizer_id", referencedColumnName = "id"),
+               inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
+    @JsonView(AuthoritiesConstants.User.class)
+    private Set<User> users = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -221,6 +260,58 @@ public class Organizer implements Serializable {
         this.lastUpdatedAt = lastUpdatedAt;
     }
 
+    public Integer getMallId() {
+        return mallId;
+    }
+
+    public Organizer mallId(Integer mallId) {
+        this.mallId = mallId;
+        return this;
+    }
+
+    public void setMallId(Integer mallId) {
+        this.mallId = mallId;
+    }
+
+    public String getSharedKey() {
+        return sharedKey;
+    }
+
+    public Organizer sharedKey(String sharedKey) {
+        this.sharedKey = sharedKey;
+        return this;
+    }
+
+    public void setSharedKey(String sharedKey) {
+        this.sharedKey = sharedKey;
+    }
+
+    public Integer getServiceId() {
+        return serviceId;
+    }
+
+    public Organizer serviceId(Integer serviceId) {
+        this.serviceId = serviceId;
+        return this;
+    }
+
+    public void setServiceId(Integer serviceId) {
+        this.serviceId = serviceId;
+    }
+
+    public Integer getAcquirerId() {
+        return acquirerId;
+    }
+
+    public Organizer acquirerId(Integer acquirerId) {
+        this.acquirerId = acquirerId;
+        return this;
+    }
+
+    public void setAcquirerId(Integer acquirerId) {
+        this.acquirerId = acquirerId;
+    }
+
     public IsActiveStatus getStatus() {
         return status;
     }
@@ -258,6 +349,29 @@ public class Organizer implements Serializable {
     public void setDonations(Set<Donation> donations) {
         this.donations = donations;
     }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public Organizer users(Set<User> users) {
+        this.users = users;
+        return this;
+    }
+
+    public Organizer addUser(User user) {
+        this.users.add(user);
+        return this;
+    }
+
+    public Organizer removeUser(User user) {
+        this.users.remove(user);
+        return this;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -290,6 +404,10 @@ public class Organizer implements Serializable {
             ", sharing=" + getSharing() +
             ", lastUpdatedBy='" + getLastUpdatedBy() + "'" +
             ", lastUpdatedAt='" + getLastUpdatedAt() + "'" +
+            ", mallId=" + getMallId() +
+            ", sharedKey='" + getSharedKey() + "'" +
+            ", serviceId=" + getServiceId() +
+            ", acquirerId=" + getAcquirerId() +
             ", status='" + getStatus() + "'" +
             "}";
     }

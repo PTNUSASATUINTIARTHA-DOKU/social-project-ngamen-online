@@ -26,11 +26,6 @@
                     <th scope="col"  jhiSortBy="name"><span jhiTranslate="donationApp.organizer.name">Name</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="url"><span jhiTranslate="donationApp.organizer.url">Url</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="email"><span jhiTranslate="donationApp.organizer.email">Email</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="bankAccountNumber"><span jhiTranslate="donationApp.organizer.bankAccountNumber">Bank Account Number</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="bankAccountName"><span jhiTranslate="donationApp.organizer.bankAccountName">Bank Account Name</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="bankName"><span jhiTranslate="donationApp.organizer.bankName">Bank Name</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="mdr"><span jhiTranslate="donationApp.organizer.mdr">Mdr</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="sharing"><span jhiTranslate="donationApp.organizer.sharing">Sharing</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="lastUpdatedBy"><span jhiTranslate="donationApp.organizer.lastUpdatedBy">Last Updated By</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="lastUpdatedAt"><span jhiTranslate="donationApp.organizer.lastUpdatedAt">Last Updated At</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="status"><span jhiTranslate="donationApp.organizer.status">Status</span> <fa-icon icon="sort"></fa-icon></th>
@@ -43,11 +38,6 @@
                     <td>{{ organizer.name }}</td>
                     <td>{{ organizer.url }}</td>
                     <td>{{ organizer.email }}</td>
-                    <td>{{ organizer.bankAccountNumber }}</td>
-                    <td>{{ organizer.bankAccountName }}</td>
-                    <td>{{ organizer.bankName }}</td>
-                    <td>{{ organizer.mdr }}</td>
-                    <td>{{ organizer.sharing }}</td>
                     <td>{{ organizer.lastUpdatedBy }}</td>
                     <td>{{ organizer.lastUpdatedAt | date:'medium' }}</td>
                     <td jhiTranslate="{{ 'donationApp.IsActiveStatus.' + organizer.status }}">{{ organizer.status }}</td>
@@ -67,7 +57,7 @@
                                 <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                             </button>
 
-                            <button type="submit" (click)="delete(organizer)"
+                            <button *jhiHasAnyAuthority="'ROLE_ADMIN'" type="submit" (click)="delete(organizer)"
                                     class="btn btn-danger btn-sm">
                                 <fa-icon icon="times"></fa-icon>
                                 <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>

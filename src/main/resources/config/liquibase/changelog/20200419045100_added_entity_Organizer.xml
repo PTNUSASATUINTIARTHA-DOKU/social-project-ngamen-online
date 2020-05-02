@@ -45,6 +45,18 @@
             <column name="last_updated_at" type="datetime">
                 <constraints nullable="true" />
             </column>
+            <column name="mall_id" type="integer">
+                <constraints nullable="true" />
+            </column>
+            <column name="shared_key" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="service_id" type="integer">
+                <constraints nullable="true" />
+            </column>
+            <column name="acquirer_id" type="integer">
+                <constraints nullable="true" />
+            </column>
             <column name="status" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
@@ -55,6 +67,17 @@
 
     <changeSet id="20200419045100-1-relations" author="jhipster">
 
+        <createTable tableName="organizer_user">
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="organizer_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="organizer_id, user_id" tableName="organizer_user"/>
+        
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
 
@@ -82,6 +105,10 @@
             <column name="sharing" type="numeric"/>
             <column name="last_updated_by" type="string"/>
             <column name="last_updated_at" type="datetime"/>
+            <column name="mall_id" type="numeric"/>
+            <column name="shared_key" type="string"/>
+            <column name="service_id" type="numeric"/>
+            <column name="acquirer_id" type="numeric"/>
             <column name="status" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here, do not remove-->
         </loadData>

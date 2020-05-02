@@ -1,11 +1,12 @@
 package men.doku.donation.service;
 
-import men.doku.donation.domain.Transaction;
+import java.util.Optional;
 
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.Optional;
+import men.doku.donation.domain.Transaction;
 
 /**
  * Service Interface for managing {@link Transaction}.
@@ -37,9 +38,26 @@ public interface TransactionService {
     Optional<Transaction> findOne(Long id);
 
     /**
+     * Get one transaction by Example.
+     *
+     * @param Example<S> the example of the entity.
+     * @return the entity.
+     */
+    Optional<Transaction> findOne(Example<Transaction> donation);
+
+    /**
      * Delete the "id" transaction.
      *
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    /**
+     * Initiate transaction
+     * 
+     * @param transaction the transaction entity
+     * @return Transaction the transaction entity
+     */
+    Transaction pay(Transaction transaction);
+
 }

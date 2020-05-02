@@ -2,6 +2,60 @@
     class="container max-w-md mx-auto xl:max-w-3xl h-full flex bg-white rounded-lg shadow-lg overflow-hidden my-6 xl:my-8">
     <div class="w-full p-8">
         <jhi-alert-error></jhi-alert-error>
+<div class="loading" *ngIf="isSaving">
+    <div class="spinner-wrapper" *ngIf="!isCounting&&!isChecking">
+        <span class="spinner-text">
+            <h1 jhiTranslate="payment.loading.greeting">Hello, </h1> {{ this.paymentForm.get('donor')?.value }} 
+            <br />
+            <h1 jhiTranslate="payment.loading.confirm1">Please that you already have your mobile phone with you and your OVO app already open, </h1>
+            <br /> 
+            <h1 jhiTranslate="payment.loading.confirm2">since after you click OK button below, you will only have 30 seconds to complete the payment.</h1>
+            <button (click)='confirm()'>OK</button> 
+        </span>
+        <span class="spinner"></span>
+    </div>
+    <div class="spinner-wrapper" *ngIf="isCounting&&!isChecking">
+        <span class="spinner-text">
+            <h1 jhiTranslate="payment.loading.greeting">Hello, </h1> {{ this.paymentForm.get('donor')?.value }}
+            <h4 jhiTranslate="payment.loading.counting">We still waiting for your payment on your OVO app in 30 seconds.
+            </h4>
+            <h1>{{ this.counter$ | async }}</h1>
+            <h4 jhiTranslate="payment.loading.steps">Do these 4 easy steps:</h4>
+            <ol>
+                <li>
+                    <h4 jhiTranslate="payment.loading.step1">Log in into your OVO app and then click bell sign on
+                        top-right corner.</h4>
+                </li>
+                <li>
+                    <h4 jhiTranslate="payment.loading.step2">Choose available payment method.</h4>
+                </li>
+                <li>
+                    <h4 jhiTranslate="payment.loading.step3">Click button Pay.</h4>
+                </li>
+                <li>
+                    <h4 jhiTranslate="payment.loading.step4">Input your PIN or scan your fingeprint to authorize
+                        payment.</h4>
+                </li>
+            </ol>
+        </span>
+        <span class="spinner"></span>
+    </div>
+    <div class="spinner-wrapper" *ngIf="!isCounting&&isChecking">
+        <span class="spinner-text">
+            <h1 jhiTranslate="payment.loading.greeting">Hello, </h1> {{ this.paymentForm.get('donor')?.value }} 
+            <br />
+            <h1 jhiTranslate="payment.loading.checking">Please wait, we are still checking your payment result.</h1>
+            <br /> 
+            <h1>{{ this.counter$ | async }}</h1>
+        </span>
+        <span class="spinner"></span>
+    </div>
+</div>
+<div>
+    <div class="row justify-content-center">
+        <div class="col-8">
+            <form name="paymentForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="paymentForm">
+                <h1 id="jhi-payment-heading" jhiTranslate="payment.title">Payment Page</h1>
 
         <h1 class="text-2xl font-bold mb-1" jhiTranslate="payment.title">Complete Your Donation</h1>
 
@@ -10,6 +64,50 @@
         <p class="text-gray-800 text-sm mb-2" jhiTranslate="payment.description">
             Your donation will be received by
         </p>
+                    <div>
+                        <h4 jhiTranslate="payment.subtitle">powered by DOKU</h4>
+                    </div>
+                    <div>
+                        <h2 jhiTranslate="payment.section.info.title">Information</h2>
+                    </div>
+                    <div style="float: left">
+                        <h4 jhiTranslate="payment.section.info.donation">Donation</h4>
+                    </div>
+                    <div style="float:right">
+                        <h4>{{this.donation?.name}}</h4>
+                    </div>
+                    <div style="clear: both"></div>
+                    <div style="float:left">
+                        <h4 jhiTranslate="payment.section.info.organizer">Organizer</h4>
+                    </div>
+                    <div style="float:right">
+                        <h4>{{this.donation?.organizer?.name}}</h4>
+                    </div>
+                    <div style="clear: both"></div>
+                    <div>
+                        <h2 jhiTranslate="payment.section.form.title">Form</h2>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-control-label" jhiTranslate="payment.section.form.donor"
+                            for="field_donor">Donor Name</label>
+                        <input type="text" class="form-control" name="donor" id="field_donor" formControlName="donor" />
+                        <input type="checkbox" class="form-control" name="donor_anon" id="field_donor_anon"
+                            formControlName="donorAnon" (change)="anon()" />
+                        <label type="text" class="form-control-label" jhiTranslate="payment.section.form.donor_anon"
+                            for="field_donor_anon">Anonymous</label>
+                        <div
+                            *ngIf="paymentForm.get('donor')!.invalid && (paymentForm.get('donor')!.dirty || paymentForm.get('donor')!.touched)">
+                            <small class="form-text text-danger" *ngIf="paymentForm.get('donor')?.errors?.maxlength"
+                                jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 30 }">
+                                This field cannot be longer than 30 characters.
+                            </small>
+                            <small class="form-text text-danger" *ngIf="paymentForm.get('donor')?.errors?.required"
+                                jhiTranslate="entity.validation.required">
+                                This field is required.
+                            </small>
+                        </div>
+                    </div>
 
         <div
             class="border border-grey-light bg-white rounded p-4 flex flex-col justify-between leading-normal shadow-sm hover:shadow-md">
@@ -101,6 +199,21 @@
                         <!-- if active then border-green-200 -->
                         <img class="h-10" src="../../content/images/payment/payment-methods/ovo.png" alt="Pay with OVO">
                         <span class="hidden">{{this.method}}</span>
+                    <div class="form-group">
+                        <label class="form-control-label" jhiTranslate="payment.section.form.phone"
+                            for="field_phone">OVO Phone Number</label>
+                        <input type="text" class="form-control" name="phone" id="field_phone" formControlName="phone" />
+                        <div
+                            *ngIf="paymentForm.get('phone')!.invalid && (paymentForm.get('phone')!.dirty || paymentForm.get('phone')!.touched)">
+                            <small class="form-text text-danger" *ngIf="paymentForm.get('phone')?.errors?.maxlength"
+                                jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 13 }">
+                                This field cannot be longer than 13 characters.
+                            </small>
+                            <small class="form-text text-danger" *ngIf="paymentForm.get('phone')?.errors?.minlength"
+                                jhiTranslate="entity.validation.minlength" [translateValues]="{ min: 10 }">
+                                This field cannot be shorter than 10 characters.
+                            </small>
+                        </div>
                     </div>
                 </div>
 

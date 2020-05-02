@@ -48,9 +48,31 @@
                 <dd>
                     <span>{{ organizer.lastUpdatedAt | date:'medium' }}</span>
                 </dd>
+                <dt><span jhiTranslate="donationApp.organizer.mallId">Mall Id</span></dt>
+                <dd>
+                    <span>{{ organizer.mallId }}</span>
+                </dd>
+                <dt><span jhiTranslate="donationApp.organizer.sharedKey">Shared Key</span></dt>
+                <dd>
+                    <span>{{ organizer.sharedKey }}</span>
+                </dd>
+                <dt><span jhiTranslate="donationApp.organizer.serviceId">Service Id</span></dt>
+                <dd>
+                    <span>{{ organizer.serviceId }}</span>
+                </dd>
+                <dt><span jhiTranslate="donationApp.organizer.acquirerId">Acquirer Id</span></dt>
+                <dd>
+                    <span>{{ organizer.acquirerId }}</span>
+                </dd>
                 <dt><span jhiTranslate="donationApp.organizer.status">Status</span></dt>
                 <dd>
                     <span jhiTranslate="{{ 'donationApp.IsActiveStatus.' + organizer.status }}">{{ organizer.status }}</span>
+                </dd>
+                <dt><span jhiTranslate="donationApp.organizer.user">User</span></dt>
+                <dd>
+                    <span *ngFor="let user of organizer.users; let last = last">
+                        {{ user.login }}{{ last ? '' : ', ' }}
+                    </span>
                 </dd>
             </dl>
 

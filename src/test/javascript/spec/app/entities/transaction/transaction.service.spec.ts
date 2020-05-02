@@ -38,6 +38,14 @@ describe('Service Tests', () => {
         'AAAAAAA',
         0,
         PaymentChannel.OVO,
+        0,
+        'AAAAAAA',
+        currentDate,
+        'AAAAAAA',
+        'AAAAAAA',
+        'AAAAAAA',
+        'AAAAAAA',
+        'AAAAAAA',
         'AAAAAAA',
         currentDate,
         TransactionStatus.INITIATE
@@ -48,6 +56,7 @@ describe('Service Tests', () => {
       it('should find an element', () => {
         const returnedFromService = Object.assign(
           {
+            paymentDate: currentDate.format(DATE_TIME_FORMAT),
             lastUpdatedAt: currentDate.format(DATE_TIME_FORMAT)
           },
           elemDefault
@@ -64,6 +73,7 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             id: 0,
+            paymentDate: currentDate.format(DATE_TIME_FORMAT),
             lastUpdatedAt: currentDate.format(DATE_TIME_FORMAT)
           },
           elemDefault
@@ -71,6 +81,7 @@ describe('Service Tests', () => {
 
         const expected = Object.assign(
           {
+            paymentDate: currentDate,
             lastUpdatedAt: currentDate
           },
           returnedFromService
@@ -96,6 +107,14 @@ describe('Service Tests', () => {
             email: 'BBBBBB',
             amount: 1,
             paymentChannel: 'BBBBBB',
+            mallId: 1,
+            trxCode: 'BBBBBB',
+            paymentDate: currentDate.format(DATE_TIME_FORMAT),
+            responseCode: 'BBBBBB',
+            message: 'BBBBBB',
+            paymentSystrace: 'BBBBBB',
+            approvalCode: 'BBBBBB',
+            paymentHostRefNumber: 'BBBBBB',
             lastUpdatedBy: 'BBBBBB',
             lastUpdatedAt: currentDate.format(DATE_TIME_FORMAT),
             status: 'BBBBBB'
@@ -105,6 +124,7 @@ describe('Service Tests', () => {
 
         const expected = Object.assign(
           {
+            paymentDate: currentDate,
             lastUpdatedAt: currentDate
           },
           returnedFromService
@@ -130,6 +150,14 @@ describe('Service Tests', () => {
             email: 'BBBBBB',
             amount: 1,
             paymentChannel: 'BBBBBB',
+            mallId: 1,
+            trxCode: 'BBBBBB',
+            paymentDate: currentDate.format(DATE_TIME_FORMAT),
+            responseCode: 'BBBBBB',
+            message: 'BBBBBB',
+            paymentSystrace: 'BBBBBB',
+            approvalCode: 'BBBBBB',
+            paymentHostRefNumber: 'BBBBBB',
             lastUpdatedBy: 'BBBBBB',
             lastUpdatedAt: currentDate.format(DATE_TIME_FORMAT),
             status: 'BBBBBB'
@@ -139,6 +167,7 @@ describe('Service Tests', () => {
 
         const expected = Object.assign(
           {
+            paymentDate: currentDate,
             lastUpdatedAt: currentDate
           },
           returnedFromService
