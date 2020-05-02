@@ -18,7 +18,6 @@ import men.doku.donation.repository.DonationRepository;
 import men.doku.donation.security.SecurityUtils;
 import men.doku.donation.service.DonationService;
 import men.doku.donation.service.OrganizerService;
-import men.doku.donation.web.rest.errors.NoAuthorityException;
 
 /**
  * Service Implementation for managing {@link Donation}.
@@ -49,14 +48,16 @@ public class DonationServiceImpl implements DonationService {
     public Donation save(Donation donation) {
         final String login = SecurityUtils.getCurrentUserLogin().get();
         log.debug("Request by {} to save Donation : {}", login, donation);
-        if (!SecurityUtils.isCurrentUserInRole(Constants.ADMIN)) {
-            List<Long> organizerIds = organizerService.findAllIdsOwnedWithEagerRealtionships(login);
-            if (donationRepository.checkDonationAuthority(donation.getId(), organizerIds) == 0) throw new NoAuthorityException("Donation", "save");
-        } 
         donation.setLastUpdatedAt(Instant.now());
         donation.setLastUpdatedBy(login);
         return donationRepository.save(donation);    
-}
+    }
+
+    @Override
+    public Boolean checkDonationAuthority(Long donationId, String login) {
+        List<Long> organizerIds = organizerService.findAllIdsOwnedWithEagerRealtionships(login);
+        return (donationRepository.checkDonationAuthority(donationId, organizerIds) == 0);
+    }
 
     /**
      * Get all the donations.

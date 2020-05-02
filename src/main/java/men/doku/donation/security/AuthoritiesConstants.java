@@ -18,7 +18,7 @@ public class AuthoritiesConstants {
         ROLE_ANONYMOUS
     }    
 
-    public static final Map<Role, Class> MAPPING = new HashMap<>();
+    public static final Map<Role, Class<?>> MAPPING = new HashMap<>();
 
     static {
         MAPPING.put(Role.ROLE_ADMIN, Admin.class);

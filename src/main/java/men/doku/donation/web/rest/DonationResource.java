@@ -30,8 +30,10 @@ import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import men.doku.donation.domain.Donation;
 import men.doku.donation.security.AuthoritiesConstants;
+import men.doku.donation.security.SecurityUtils;
 import men.doku.donation.service.DonationService;
 import men.doku.donation.web.rest.errors.BadRequestAlertException;
+import men.doku.donation.web.rest.errors.NoAuthorityException;
 
 /**
  * REST controller for managing {@link men.doku.donation.domain.Donation}.
@@ -86,6 +88,9 @@ public class DonationResource {
         log.debug("REST request to update Donation : {}", donation);
         if (donation.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        if (donationService.checkDonationAuthority(donation.getId(), SecurityUtils.getCurrentUserLogin().get())) {
+            throw new NoAuthorityException("Donation", "Edit");
         }
         Donation result = donationService.save(donation);
         return ResponseEntity.ok()

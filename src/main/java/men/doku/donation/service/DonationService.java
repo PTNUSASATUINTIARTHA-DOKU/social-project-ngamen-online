@@ -22,6 +22,15 @@ public interface DonationService {
     Donation save(Donation donation);
 
     /**
+     * Check donation authority when trying to update donation
+     * 
+     * @param donationId
+     * @param login
+     * @return
+     */
+    public Boolean checkDonationAuthority(Long donationId, String login);
+
+    /**
      * Get all the donations.
      *
      * @param pageable the pagination information.

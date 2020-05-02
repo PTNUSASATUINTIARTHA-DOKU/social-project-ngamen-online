@@ -14,7 +14,6 @@ import men.doku.donation.domain.Donation;
 /**
  * Spring Data  repository for the Donation entity.
  */
-@SuppressWarnings("unused")
 @Repository
 public interface DonationRepository extends JpaRepository<Donation, Long> {
 

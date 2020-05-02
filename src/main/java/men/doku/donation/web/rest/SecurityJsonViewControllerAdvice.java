@@ -4,8 +4,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJacksonValue;
@@ -21,8 +19,6 @@ import men.doku.donation.security.AuthoritiesConstants;
 @RestControllerAdvice
 public class SecurityJsonViewControllerAdvice extends AbstractMappingJacksonResponseBodyAdvice {
 
-    private final Logger log = LoggerFactory.getLogger(SecurityJsonViewControllerAdvice.class);
-
     @Override
     protected void beforeBodyWriteInternal(
       MappingJacksonValue bodyContainer,
@@ -34,7 +30,7 @@ public class SecurityJsonViewControllerAdvice extends AbstractMappingJacksonResp
           && SecurityContextHolder.getContext().getAuthentication().getAuthorities() != null) {
             Collection<? extends GrantedAuthority> authorities
               = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-            List<Class> jsonViews = authorities.stream()
+            List<Class<?>> jsonViews = authorities.stream()
               .map(GrantedAuthority::getAuthority)
               .map(AuthoritiesConstants.Role::valueOf)
               .map(AuthoritiesConstants.MAPPING::get)

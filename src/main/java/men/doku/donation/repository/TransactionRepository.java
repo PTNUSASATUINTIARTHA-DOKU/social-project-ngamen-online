@@ -14,7 +14,6 @@ import men.doku.donation.domain.Transaction;
 /**
  * Spring Data  repository for the Transaction entity.
  */
-@SuppressWarnings("unused")
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
 
