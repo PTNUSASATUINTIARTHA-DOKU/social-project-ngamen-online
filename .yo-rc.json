@@ -38,6 +38,15 @@
     "enableTranslation": true,
     "nativeLanguage": "in",
     "languages": ["in"],
-    "blueprints": []
+    "blueprints": [],
+    "aws": {
+      "applicationName": "saweran",
+      "environmentName": "saweran-prod",
+      "bucketName": "saweran-charity",
+      "instanceType": "t2.small",
+      "awsRegion": "ap-southeast-1",
+      "dbName": "donation",
+      "dbInstanceClass": "db.t2.micro"
+    }
   }
 }
