@@ -39,7 +39,8 @@
             "fieldName": "paymentSlug",
             "fieldType": "String",
             "fieldValidateRules": [
-                "maxlength"
+                "maxlength",
+                "unique"
             ],
             "fieldValidateRulesMaxlength": "100"
         },

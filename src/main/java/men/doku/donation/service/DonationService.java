@@ -28,7 +28,7 @@ public interface DonationService {
      * @param login
      * @return
      */
-    public Boolean checkDonationAuthority(Long donationId, String login);
+    Boolean checkDonationAuthority(Long donationId, String login);
 
     /**
      * Get all the donations.
@@ -36,7 +36,7 @@ public interface DonationService {
      * @param pageable the pagination information.
      * @return the list of entities.
      */
-    public Page<Donation> findAll(Pageable pageable);
+    Page<Donation> findAll(Pageable pageable);
 
     /**
      * Get the "id" donation.

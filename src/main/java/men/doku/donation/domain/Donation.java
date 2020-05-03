@@ -60,8 +60,8 @@ public class Donation implements Serializable {
     private String imageUrl;
 
     @Size(max = 100)
-    @Column(name = "payment_slug", length = 100)
     @JsonView(AuthoritiesConstants.Anonymous.class)
+    @Column(name = "payment_slug", length = 100, unique = true)
     private String paymentSlug;
 
     @Size(max = 15)

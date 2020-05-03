@@ -29,7 +29,7 @@ entity Donation {
     description String maxlength(2000)
     url String maxlength(100)
     imageUrl String maxlength(100)
-    paymentSlug String maxlength(100)
+    paymentSlug String maxlength(100) unique
     bankAccountNumber String maxlength(15)
     bankAccountName String maxlength(100)
     bankName String maxlength(100)

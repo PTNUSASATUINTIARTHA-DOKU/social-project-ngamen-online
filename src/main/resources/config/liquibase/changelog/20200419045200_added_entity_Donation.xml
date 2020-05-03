@@ -28,7 +28,7 @@
                 <constraints nullable="true" />
             </column>
             <column name="payment_slug" type="varchar(100)">
-                <constraints nullable="true" />
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_donation_payment_slug" />
             </column>
             <column name="bank_account_number" type="varchar(15)">
                 <constraints nullable="true" />
