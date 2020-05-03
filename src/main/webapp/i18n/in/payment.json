@@ -9,12 +9,12 @@
     },
     "section": {
       "info": {
-        "title": "Informasi",
+        "title": "Informasi Donasi",
         "donation": "Tujuan Donasi",
         "organizer": "Pengurus"
       },
       "form": {
-        "title": "Informasi Donasi",
+        "title": "Isi formulir di bawah ini untuk melakukan Donasi",
         "donor": "Nama Donatur",
         "donor_anon": "Saya ingin donasi secara anonim",
         "amount": "Jumlah Donasi",

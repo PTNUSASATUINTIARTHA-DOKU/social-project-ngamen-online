@@ -60,7 +60,7 @@
             <div class="row justify-content-center">
                 <div class="col-8">
                     <form name="paymentForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="paymentForm">
-                        <h1 class="text-2xl font-bold mb-1" jhiTranslate="payment.title">Complete Your Donation</h1>
+                        <h1 class="text-2xl font-bold mb-1" jhiTranslate="payment.title">Complete your Donation</h1>
 
                         <hr class="border border-gray-100 mb-4">
 
@@ -70,26 +70,29 @@
 
                         <div
                             class="border border-grey-light bg-white rounded p-4 flex flex-col justify-between leading-normal shadow-sm hover:shadow-md">
-                            <div class="mb-6">
+                            <div class="mb-4">
                                 <div class="text-gray-900 font-bold text-xl">{{this.donation?.name}}</div>
                             </div>
                             <div class="flex items-center">
                                 <img class="w-10 h-10 rounded-full mr-4" src="{{this.donation?.imageUrl}}"
                                     alt="Logo of the Organization">
                                 <div class="text-sm">
-                                    <p class="text-gray-600 text-xs" jhiTranslate="payment.section.info.organizer">
-                                        Organizer</p>
-                                    <p class="text-gray-700 leading-none">{{this.donation?.organizer?.name}}</p>
+                                    <p class="text-gray-600 text-xs"> {{this.donation?.description}} </p>
+                                    <p class="text-gray-700 leading-none"><a href="{{this.donation?.url}}" class="text-blue-500 hover:text-blue-800 text-xs">{{this.donation?.url}}</a></p>
                                 </div>
                             </div>
-                        </div>
+                            <div class="text-sm mt-3">
+                                <p class="text-gray-600 text-xs" jhiTranslate="payment.section.info.organizer">
+                                    Organizer</p>
+                                <p class="text-gray-700 leading-none"><a href="{{this.donation?.organizer?.url}}" class="text-blue-500 hover:text-blue-800 text-xs">{{this.donation?.organizer?.name}}</a></p>
+                            </div>
+                    </div>
 
-                        <h1 class="text-lg font-bold mt-6 mb-1" jhiTranslate="payment.section.form.title">Process the
-                            Donation</h1>
+                        <br />
 
-                        <hr class="border border-gray-100 mb-2">
+                        <hr class="border border-gray-100 mb-4">
 
-                        <p class="text-gray-800 text-sm">
+                        <p class="text-gray-800 text-sm mb-2" jhiTranslate="payment.section.form.title">
                             Please input the following form to complete your donation process
                         </p>
 
