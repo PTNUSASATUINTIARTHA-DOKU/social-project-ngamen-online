@@ -1,33 +1,103 @@
+<div class="container max-w-md mx-auto xl:max-w-3xl h-full flex bg-white rounded-lg shadow-lg overflow-hidden my-6 xl:my-8">
+    <div class="w-full p-8">
+        <div class="row justify-content-center">
+            <div class="col-8">
+                <div *ngIf="isSuccess; else elseBlock">
+                    <div class="text-center">
+                        <fa-icon icon="check-circle" size="5x" class="text-green-600"></fa-icon>
+                        <div class="text-gray-900 font-bold text-xl mt-4"><span jhiTranslate="payment.result.status">Your donation was </span><span jhiTranslate="payment.result.success">success</span></div>
+                        <div class="text-gray-600 text-md"><span jhiTranslate="payment.result.successmessage">Thank you for your donation. Interested to see other performers? Click the following button</span></div>
+                        <div class="mt-6">
+                            <a href="{{ this.transaction?.donation?.organizer?.url }}" class="w-full bg-white border border-green-600 hover:bg-green-600 text-green-600 hover:text-white text-sm py-2 px-4 font-semibold rounded focus:outline-none focus:shadow-outline h-10" jhiTranslate="payment.result.website">See other performers</a>
+                        </div>
+                    </div>
+                </div>
+                <ng-template #elseBlock>
+                    <div class="text-center">
+                        <fa-icon icon="times-circle" size="5x" class="text-red-600"></fa-icon>
+                        <div class="text-gray-900 font-bold text-xl mt-4"><span jhiTranslate="payment.result.status">Your donation was </span><span jhiTranslate="payment.result.failed">failed</span></div>
+                        <div class="text-gray-600 text-md"><span jhiTranslate="payment.result.failedmessage">Please try again by clicking the following button</span></div>
+                        <div class="mt-6">
+                            <a href="{{ this.paymentUrl }}" class="w-full bg-white border border-red-600 hover:bg-red-600 text-red-600 hover:text-white text-sm py-2 px-4 font-semibold rounded focus:outline-none focus:shadow-outline h-10" jhiTranslate="payment.result.retry">Retry donation</a>
+                        </div>
+                    </div>
+                </ng-template>
+                <div class="border border-gray-100 bg-white rounded p-4 flex flex-col justify-between leading-normal shadow-sm hover:shadow-md mt-8">
+                    <h2 jhiTranslate="payment.result.info" class="text-gray-700 font-bold tx-lg">Details</h2>
+                    <hr class="my-3">
+                    <div class="flex">
+                        <div class="w-1/2">
+                            <p jhiTranslate="payment.result.donation" class="text-gray-600 text-sm mb-3">
+                               Donated to
+                            </p>
+                            <p jhiTranslate="payment.result.organizer" class="text-gray-600 text-sm mb-3">
+                                Organized by
+                            </p>
+                            <p jhiTranslate="payment.result.amount" class="text-gray-600 text-sm mb-3">
+                                Amount
+                            </p>
+                            <p jhiTranslate="payment.result.method" class="text-gray-600 text-sm mb-3">
+                                Payment Method
+                            </p>
+                            <p jhiTranslate="payment.result.date" class="text-gray-600 text-sm mb-3">
+                                Payment Date
+                            </p>
+                            <p jhiTranslate="payment.result.mobile" class="text-gray-600 text-sm mb-3">
+                                OVO Phone Number
+                            </p>
+                            <p jhiTranslate="payment.result.invoice" class="text-gray-600 text-sm mb-3">
+                                Invoice Number
+                            </p>
+                            <p *ngIf="isSuccess" jhiTranslate="payment.result.approval" class="text-gray-600 text-sm mb-3">
+                                Approval Code
+                            </p>
+                            <p *ngIf="!isSuccess" jhiTranslate="payment.result.response" class="text-gray-600 text-sm mb-3">
+                                Response Code
+                            </p>
+                            <p jhiTranslate="payment.result.message" class="text-gray-600 text-sm mb-3">
+                                Payment Message
+                            </p>
+                        </div>
+                        <div class="w-1/2 text-right">
+                            <p class="text-gray-700 text-sm mb-3">
+                                {{ this.transaction?.donation?.name }}
+                            </p>
+                            <p class="text-gray-700 text-sm mb-3">
+                                {{ this.transaction?.donation?.organizer?.name }}
+                            </p>
+                            <p class="text-gray-700 text-sm mb-3">
+                                {{ this.transaction?.amount  | currency:'IDR':'code' }}
+                            </p>
+                            <p class="text-gray-700 text-sm mb-3">
+                                {{ this.transaction?.paymentChannel }}
+                            </p>
+                            <p class="text-gray-700 text-sm mb-3">
+                                {{ this.transaction?.paymentDate | date:'medium'  }}
+                            </p>
+                            <p class="text-gray-700 text-sm mb-3">
+                                {{ this.transaction?.ovoIdMasked }}
+                            </p>
+                            <p class="text-gray-700 text-sm mb-3">
+                                {{ this.transaction?.invoiceNumber }}
+                            </p>
+                            <p *ngIf="isSuccess" class="text-gray-700 text-sm mb-3">
+                                {{ this.transaction?.approvalCode }}
+                            </p>
+                            <p *ngIf="!isSuccess" class="text-gray-700 text-sm mb-3">
+                                {{ this.transaction?.responseCode }}
+                            </p>
+                            <p class="text-gray-700 text-sm mb-3">
+                                {{ this.transaction?.message }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div>
-    <h2 jhiTranslate="payment.result.status">Your donation was </h2> 
-    <h2>{{ this.transaction?.status }}.</h2> 
-    <h2 jhiTranslate="payment.result.success" *ngIf="this.isSuccess">Thank you.</h2> 
-    <h2 jhiTranslate="payment.result.failed" *ngIf="!this.isSuccess">Please try again </h2> 
-    <a href="{{ this.paymentUrl }}" *ngIf="!this.isSuccess">
-        <h2 jhiTranslate="payment.result.retry">click here</h2>
-    </a>
-    <h4 jhiTranslate="payment.result.website">To see other performers, visit our</h4>
-    <h4><a href="{{ this.transaction?.donation?.organizer?.url }}"> website</a></h4>
-    <h2 jhiTranslate="payment.result.info">Information</h2>
-    <h4 jhiTranslate="payment.result.donation">Donated to</h4>
-    <h4>{{ this.transaction?.donation?.name }}</h4>
-    <h4 jhiTranslate="payment.result.organizer">Organized by</h4>
-    <h4>{{ this.transaction?.donation?.organizer?.name }}</h4>
-    <h4 jhiTranslate="payment.result.amount">Amount</h4>
-    <h4>{{ this.transaction?.amount }}</h4>
-    <h4 jhiTranslate="payment.result.method">Payment Method</h4>
-    <h4>{{ this.transaction?.paymentChannel }}</h4>
-    <h4 jhiTranslate="payment.result.date">Payment Date</h4>
-    <h4>{{ this.transaction?.paymentDate | date:'medium' }}</h4>
-    <h4 jhiTranslate="payment.result.mobile">OVO Phone Number</h4>
-    <h4>{{ this.transaction?.ovoIdMasked }}</h4>
-    <h4 jhiTranslate="payment.result.invoice">Invoice Number</h4>
-    <h4>{{ this.transaction?.invoiceNumber }}</h4>
-    <h4 jhiTranslate="payment.result.approval" *ngIf="this.isSuccess">Approval Code</h4>
-    <h4 *ngIf="this.isSuccess">{{ this.transaction?.approvalCode }}</h4>
-    <h4 jhiTranslate="payment.result.response" *ngIf="!this.isSuccess">Response Code</h4>
-    <h4 *ngIf="!this.isSuccess">{{ this.transaction?.responseCode }}</h4>
-    <h4 jhiTranslate="payment.result.message">Payment message</h4>
-    <h4>{{ this.transaction?.message }}</h4>
+    
 
 </div>
