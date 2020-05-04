@@ -28,64 +28,137 @@
                     <div class="flex">
                         <div class="w-1/2">
                             <p jhiTranslate="payment.result.donation" class="text-gray-600 text-sm mb-3">
-                               Donated to
-                            </p>
-                            <p jhiTranslate="payment.result.organizer" class="text-gray-600 text-sm mb-3">
-                                Organized by
-                            </p>
-                            <p jhiTranslate="payment.result.amount" class="text-gray-600 text-sm mb-3">
-                                Amount
-                            </p>
-                            <p jhiTranslate="payment.result.method" class="text-gray-600 text-sm mb-3">
-                                Payment Method
-                            </p>
-                            <p jhiTranslate="payment.result.date" class="text-gray-600 text-sm mb-3">
-                                Payment Date
-                            </p>
-                            <p *ngIf="isSuccess" jhiTranslate="payment.result.mobile" class="text-gray-600 text-sm mb-3">
-                                OVO Phone Number
-                            </p>
-                            <p jhiTranslate="payment.result.invoice" class="text-gray-600 text-sm mb-3">
-                                Invoice Number
-                            </p>
-                            <p *ngIf="isSuccess" jhiTranslate="payment.result.approval" class="text-gray-600 text-sm mb-3">
-                                Approval Code
-                            </p>
-                            <p *ngIf="!isSuccess" jhiTranslate="payment.result.response" class="text-gray-600 text-sm mb-3">
-                                Response Code
-                            </p>
-                            <p jhiTranslate="payment.result.message" class="text-gray-600 text-sm mb-3">
-                                Payment Message
+                                Donated to
                             </p>
                         </div>
+
                         <div class="w-1/2 text-right">
                             <p class="text-gray-700 text-sm mb-3">
                                 {{ this.transaction?.donation?.name }}
                             </p>
+                        </div>
+                    </div>
+
+                    <div class="flex">
+                        <div class="w-1/2">
+                            <p jhiTranslate="payment.result.organizer" class="text-gray-600 text-sm mb-3">
+                                Organized by
+                            </p>
+                        </div>
+
+                        <div class="w-1/2 text-right">
                             <p class="text-gray-700 text-sm mb-3">
                                 {{ this.transaction?.donation?.organizer?.name }}
                             </p>
+                        </div>
+                    </div>
+
+                    <div class="flex">
+                        <div class="w-1/2">
+                            <p jhiTranslate="payment.result.amount" class="text-gray-600 text-sm mb-3">
+                                Amount
+                            </p>
+                        </div>
+
+                        <div class="w-1/2 text-right">
                             <p class="text-gray-700 text-sm mb-3">
                                 {{ this.transaction?.amount  | currency:'IDR':'code' }}
                             </p>
+                        </div>
+                    </div>
+
+                    <div class="flex">
+                        <div class="w-1/2">
+                            <p jhiTranslate="payment.result.method" class="text-gray-600 text-sm mb-3">
+                                Payment Method
+                            </p>
+                        </div>
+
+                        <div class="w-1/2 text-right">
                             <p class="text-gray-700 text-sm mb-3">
                                 {{ this.transaction?.paymentChannel }}
                             </p>
+                        </div>
+                    </div>
+
+                    <div class="flex">
+                        <div class="w-1/2">
+                            <p jhiTranslate="payment.result.date" class="text-gray-600 text-sm mb-3">
+                                Payment Date
+                            </p>
+                        </div>
+
+                        <div class="w-1/2 text-right">
                             <p class="text-gray-700 text-sm mb-3">
                                 {{ this.transaction?.paymentDate | date:'medium'  }}
                             </p>
-                            <p *ngIf="isSuccess" class="text-gray-700 text-sm mb-3">
+                        </div>
+                    </div>
+
+                    <div *ngIf="isSuccess" class="flex">
+                        <div class="w-1/2">
+                            <p jhiTranslate="payment.result.mobile" class="text-gray-600 text-sm mb-3">
+                                OVO Phone Number
+                            </p>
+                        </div>
+
+                        <div class="w-1/2 text-right">
+                            <p class="text-gray-700 text-sm mb-3">
                                 {{ this.transaction?.ovoIdMasked }}
                             </p>
+                        </div>
+                    </div>
+
+                    <div class="flex">
+                        <div class="w-1/2">
+                            <p jhiTranslate="payment.result.invoice" class="text-gray-600 text-sm mb-3">
+                                Invoice Number
+                            </p>
+                        </div>
+
+                        <div class="w-1/2 text-right">
                             <p class="text-gray-700 text-sm mb-3">
                                 {{ this.transaction?.invoiceNumber }}
                             </p>
-                            <p *ngIf="isSuccess" class="text-gray-700 text-sm mb-3">
+                        </div>
+                    </div>
+
+                    <div *ngIf="isSuccess" class="flex">
+                        <div class="w-1/2">
+                            <p jhiTranslate="payment.result.approval" class="text-gray-600 text-sm mb-3">
+                                Approval Code
+                            </p>
+                        </div>
+
+                        <div class="w-1/2 text-right">
+                            <p class="text-gray-700 text-sm mb-3">
                                 {{ this.transaction?.approvalCode }}
                             </p>
-                            <p *ngIf="!isSuccess" class="text-gray-700 text-sm mb-3">
+                        </div>
+                    </div>
+
+                    <div *ngIf="!isSuccess" class="flex">
+                        <div class="w-1/2">
+                            <p jhiTranslate="payment.result.response" class="text-gray-600 text-sm mb-3">
+                                Response Code
+                            </p>
+                        </div>
+
+                        <div class="w-1/2 text-right">
+                            <p class="text-gray-700 text-sm mb-3">
                                 {{ this.transaction?.responseCode }}
                             </p>
+                        </div>
+                    </div>
+
+                    <div class="flex">
+                        <div class="w-1/2">
+                            <p jhiTranslate="payment.result.message" class="text-gray-600 text-sm mb-3">
+                                Payment Message
+                            </p>
+                        </div>
+
+                        <div class="w-1/2 text-right">
                             <p class="text-gray-700 text-sm mb-3">
                                 {{ this.transaction?.message }}
                             </p>
@@ -97,7 +170,12 @@
     </div>
 </div>
 
-<div>
-    
+ 
+ 
 
-</div>
+
+
+
+
+
+
