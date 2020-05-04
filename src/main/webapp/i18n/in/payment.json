@@ -36,16 +36,18 @@
       }
     },
     "loading": {
-      "greeting": "Halo, ",
+      "greeting": "Halo ",
       "confirm1": "Mohon pastikan handphone kamu sudah berada di dalam jangkauan dan aplikasi OVO mu sudah dibuka",
       "confirm2": "karena setelah mengeklik tombol OK di bawah, kamu hanya akan memiliki waktu 30 detik untuk menyelesaikan pembayaran",
-      "counting": "kami masih menunggu penyelesaian pembayaran di aplikasi OVO mu dalam 30 detik",
+      "counting": "kami masih menunggu penyelesaian pembayaran di aplikasi OVO mu dalam",
+      "countunit": "detik",
       "checking": "Mohon menunggu, kami sedang mengecek status pembayaran kamu.",
+      "redirect": "Anda akan dialihkan dalam",
       "steps": "Lakukan 4 langkah mudah berikut:",
-      "step1": "Buka aplikasi OVO mu kemudian klik tombol Lonceng di kanan atas.",
-      "step2": "Pilih metode pembayaran yang tersedia.",
-      "step3": "Klik tombol Bayar.",
-      "step4": "Masukan PIN atau pindai sidik jari untuk otorisasi pembayaran."
+      "step1": "1. Buka aplikasi OVO mu kemudian klik tombol Lonceng di kanan atas.",
+      "step2": "2. Pilih metode pembayaran yang tersedia.",
+      "step3": "3. Klik tombol Bayar.",
+      "step4": "4. Masukan PIN atau pindai sidik jari untuk otorisasi pembayaran."
     },
     "result": {
       "title": "Halaman hasil pembayaran",

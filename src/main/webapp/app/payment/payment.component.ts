@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, HostListener } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DOCUMENT } from '@angular/common';
 import { DonationService } from 'app/entities/donation/donation.service';
 import { PaymentChannel } from 'app/shared/model/enumerations/payment-channel.model';
 import { Transaction, ITransaction } from 'app/shared/model/transaction.model';
@@ -28,6 +29,7 @@ export class PaymentComponent implements OnInit {
   count = 0;
   donation: Donation;
   transaction: Transaction;
+  windowScrolled: boolean | undefined;
 
   paymentForm = this.fb.group({
     donor: [null, [Validators.required, Validators.maxLength(30)]],
@@ -42,12 +44,29 @@ export class PaymentComponent implements OnInit {
     protected route: ActivatedRoute,
     private fb: FormBuilder,
     private device: DeviceDetectorService,
-    private router: Router
+    private router: Router,
+    @Inject(DOCUMENT) private document: Document
   ) {
     this.slug = '';
     this.donation = {};
     this.transaction = {};
     this.method = PaymentChannel.OVO;
+  }
+
+  @HostListener('window:scroll', [])
+  onWindowScroll(): void {
+    if (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop > 20) {
+      this.windowScrolled = true;
+    } else if ((this.windowScrolled && window.pageYOffset) || document.documentElement.scrollTop || document.body.scrollTop < 10) {
+      this.windowScrolled = false;
+    }
+  }
+
+  scrollToTop(): void {
+    const currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
+    if (currentScroll > 0) {
+      window.scrollTo(0, currentScroll - currentScroll / 0);
+    }
   }
 
   ngOnInit(): void {

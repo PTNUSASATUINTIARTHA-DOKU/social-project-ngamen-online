@@ -23,10 +23,10 @@ Main page styles
 }
 
 .loading {
-  -webkit-animation: fadein 2s;
-  -moz-animation: fadein 2s;
-  -o-animation: fadein 2s;
-  animation: fadein 2s;
+  -webkit-animation: fadein 0.125s;
+  -moz-animation: fadein 0.125s;
+  -o-animation: fadein 0.125s;
+  animation: fadein 0.125s;
 }
 @-moz-keyframes fadein {
   from {
@@ -84,11 +84,11 @@ Main page styles
   font-weight: 700;
 }
 .spinner {
-  margin: 0;
-  display: block;
-  position: absolute;
-  left: 45%;
-  top: 40%;
+  // // margin: 0;
+  // // display: block;
+  // // position: absolute;
+  // left: 45%;
+  // top: 50%;
   border: 25px solid rgba(100, 100, 100, 0.2);
   width: 1px;
   height: 1px;
