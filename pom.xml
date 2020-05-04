@@ -494,6 +494,13 @@
                                     </includes>
                                 </resource>
                             </webResources>
+                            <webResources>
+                                <resource>
+                                    <directory>src/main/ebextensions</directory>
+                                    <targetPath>.ebextensions</targetPath>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </webResources>
                     </configuration>
                 </plugin>
                 <plugin>
