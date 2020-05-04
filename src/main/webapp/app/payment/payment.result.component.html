@@ -42,7 +42,7 @@
                             <p jhiTranslate="payment.result.date" class="text-gray-600 text-sm mb-3">
                                 Payment Date
                             </p>
-                            <p jhiTranslate="payment.result.mobile" class="text-gray-600 text-sm mb-3">
+                            <p *ngIf="isSuccess" jhiTranslate="payment.result.mobile" class="text-gray-600 text-sm mb-3">
                                 OVO Phone Number
                             </p>
                             <p jhiTranslate="payment.result.invoice" class="text-gray-600 text-sm mb-3">
@@ -74,7 +74,7 @@
                             <p class="text-gray-700 text-sm mb-3">
                                 {{ this.transaction?.paymentDate | date:'medium'  }}
                             </p>
-                            <p class="text-gray-700 text-sm mb-3">
+                            <p *ngIf="isSuccess" class="text-gray-700 text-sm mb-3">
                                 {{ this.transaction?.ovoIdMasked }}
                             </p>
                             <p class="text-gray-700 text-sm mb-3">
