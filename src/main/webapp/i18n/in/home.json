@@ -12,7 +12,7 @@
       "showart": "Lihat karya seni",
       "presentart": "Tunjukan karyamu"
     },
-    "title": "Selamat Datang, Java Hipster!",
+    "title": "Platform donasi apresiasi karya seni",
     "subtitle": "Ini adalah halaman utama anda",
     "logged": {
       "message": "Halo, \"{{username}}\""
