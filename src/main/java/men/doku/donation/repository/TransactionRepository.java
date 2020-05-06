@@ -1,5 +1,6 @@
 package men.doku.donation.repository;
 
+import java.time.Instant;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -22,4 +23,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
 
     @Query("select t from Transaction t where t.donation.organizer.id in :organizerIds")
     public Page<Transaction> findAllByOrganizerIds(@Param("organizerIds") List<Long> organizerIds, Pageable pageable);
+
+    @Query("select t from Transaction t where t.paymentDate > :start and t.paymentDate < :end and t.status = 'SUCCESS'")
+    public List<Transaction> findAllSuccessByPaymentDate(@Param("start") Instant start, @Param("end") Instant end);
 }
