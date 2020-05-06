@@ -1,5 +1,7 @@
 package men.doku.donation.service;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Example;
@@ -60,4 +62,12 @@ public interface TransactionService {
      */
     Transaction pay(Transaction transaction);
 
+    /**
+     * 
+     * Find all success transaction for daily report
+     * 
+     * @param date
+     * @return
+     */
+    List<Transaction> findAllSuccessByPaymentDate(LocalDate date);
 }

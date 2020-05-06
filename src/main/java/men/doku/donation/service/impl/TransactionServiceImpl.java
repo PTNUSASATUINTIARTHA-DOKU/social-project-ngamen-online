@@ -2,6 +2,8 @@ package men.doku.donation.service.impl;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -192,7 +194,20 @@ public class TransactionServiceImpl implements TransactionService {
                 return save(transaction);
             }
         }
-    }    
+    } 
+    
+    /**
+     * 
+     * Find all success transaction for daily report
+     * 
+     * @param date
+     * @return
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<Transaction> findAllSuccessByPaymentDate(LocalDate date) {
+        return transactionRepository.findAllSuccessByPaymentDate(date.atStartOfDay(ZoneId.of("Asia/Jakarta")).toInstant(), date.plusDays(1).atStartOfDay(ZoneId.of("Asia/Jakarta")).toInstant());
+    }
 }
 
 @Service
