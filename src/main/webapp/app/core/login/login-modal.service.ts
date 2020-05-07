@@ -14,7 +14,10 @@ export class LoginModalService {
       return;
     }
     this.isOpen = true;
-    const modalRef: NgbModalRef = this.modalService.open(LoginModalComponent);
+    const modalRef: NgbModalRef = this.modalService.open(LoginModalComponent, {
+      windowClass: 'custom-modal',
+      backdropClass: 'fixed top-0 left-0 w-screen h-screen bg-gray-900 opacity-50'
+    });
     modalRef.result.finally(() => (this.isOpen = false));
   }
 }
