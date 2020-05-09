@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 
@@ -6,7 +6,9 @@ import { IOrganizer } from 'app/shared/model/organizer.model';
 import { OrganizerService } from './organizer.service';
 
 @Component({
-  templateUrl: './organizer-delete-dialog.component.html'
+  templateUrl: './organizer-delete-dialog.component.html',
+  styleUrls: ['../../shared/styles/custom-modal.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class OrganizerDeleteDialogComponent {
   organizer?: IOrganizer;
