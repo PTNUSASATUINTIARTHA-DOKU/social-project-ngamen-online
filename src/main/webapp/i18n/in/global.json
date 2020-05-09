@@ -1,9 +1,9 @@
 {
   "global": {
     "title": "Donation",
-    "browsehappy": "Anda menggunakan peramban versi lama. Silakan <a href=\"http://browsehappy.com/?locale=en\">perbaharui peramban anda</a> untuk meningkatkan kenyamanan anda.",
+    "browsehappy": "Kamu menggunakan peramban versi lama. Silakan <a href=\"http://browsehappy.com/?locale=en\">perbaharui peramban kamu</a> untuk meningkatkan kenyamanan kamu.",
     "menu": {
-      "home": "Beranda",
+      "home": "Berkamu",
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Entitas",
@@ -38,26 +38,26 @@
     },
     "form": {
       "username.label": "Username",
-      "username.placeholder": "Username anda",
+      "username.placeholder": "Username kamu",
       "currentpassword.label": "Password sekarang",
       "currentpassword.placeholder": "Password sekarang",
       "newpassword.label": "Password baru",
-      "newpassword.placeholder": "Ketik password baru anda disini",
+      "newpassword.placeholder": "Ketik password baru kamu disini",
       "confirmpassword.label": "Konfirmasi password baru",
-      "confirmpassword.placeholder": "Ketik konfirmasi password baru anda disini",
+      "confirmpassword.placeholder": "Ketik konfirmasi password baru kamu disini",
       "email.label": "Email",
-      "email.placeholder": "Email anda"
+      "email.placeholder": "Email kamu"
     },
     "messages": {
       "info": {
         "authenticated": {
-          "prefix": "Jika anda ingin ",
+          "prefix": "Jika kamu ingin ",
           "link": "masuk",
-          "suffix": ", anda bisa coba menggunakan akun yang sudah ada:<br/>- Administrator (username=\"admin\" and password=\"admin\") <br/>- User (username=\"user\" and password=\"user\")."
+          "suffix": ", kamu bisa coba menggunakan akun yang sudah ada:<br/>- Administrator (username=\"admin\" and password=\"admin\") <br/>- User (username=\"user\" and password=\"user\")."
         },
         "register": {
-          "noaccount": "Anda belum punya akun?",
-          "link": "Buat akun baru anda disini"
+          "noaccount": "Kamu belum punya akun?",
+          "link": "Buat akun baru kamu disini"
         }
       },
       "error": {
@@ -65,21 +65,21 @@
       },
       "validate": {
         "newpassword": {
-          "required": "Password anda diperlukan.",
-          "minlength": "Password anda diperlukan setidaknya minimal 4 karakter.",
-          "maxlength": "Password anda tidak boleh lebih dari 50 karakter.",
+          "required": "Password kamu diperlukan.",
+          "minlength": "Password kamu diperlukan setidaknya minimal 4 karakter.",
+          "maxlength": "Password kamu tidak boleh lebih dari 50 karakter.",
           "strength": "Ukuran keamanan password:"
         },
         "confirmpassword": {
-          "required": "Konfirmasi password anda diperlukan.",
-          "minlength": "Konfirmasi Password anda diperlukan setidaknya minimal 4 karakter.",
-          "maxlength": "Konfirmasi Password anda tidak boleh lebih dari 50 karakter."
+          "required": "Konfirmasi password kamu diperlukan.",
+          "minlength": "Konfirmasi Password kamu diperlukan setidaknya minimal 4 karakter.",
+          "maxlength": "Konfirmasi Password kamu tidak boleh lebih dari 50 karakter."
         },
         "email": {
-          "required": "Email anda diperlukan.",
-          "invalid": "Email anda tidak valid.",
-          "minlength": "Email anda diperlukan setidaknya minimal 5 karakter.",
-          "maxlength": "Email anda tidak boleh lebih dari 50 karakater."
+          "required": "Email kamu diperlukan.",
+          "invalid": "Email kamu tidak valid.",
+          "minlength": "Email kamu diperlukan setidaknya minimal 5 karakter.",
+          "maxlength": "Email kamu tidak boleh lebih dari 50 karakater."
         }
       }
     },
