@@ -81,7 +81,10 @@ export class OrganizerComponent implements OnInit, OnDestroy {
   }
 
   delete(organizer: IOrganizer): void {
-    const modalRef = this.modalService.open(OrganizerDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    const modalRef = this.modalService.open(OrganizerDeleteDialogComponent, {
+      windowClass: 'custom-modal',
+      backdropClass: 'fixed top-0 left-0 w-screen h-screen bg-gray-900 opacity-50'
+    });
     modalRef.componentInstance.organizer = organizer;
   }
 

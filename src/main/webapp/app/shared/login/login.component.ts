@@ -9,7 +9,7 @@ import { LoginService } from 'app/core/login/login.service';
   selector: 'jhi-login-modal',
   templateUrl: './login.component.html',
   encapsulation: ViewEncapsulation.None,
-  styleUrls: ['login.scss']
+  styleUrls: ['../styles/custom-modal.scss']
 })
 export class LoginModalComponent implements AfterViewInit {
   @ViewChild('username', { static: false })
