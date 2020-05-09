@@ -8,6 +8,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -57,24 +60,16 @@ public class TransactionServiceImpl implements TransactionService {
     private final RestTemplate restTemplate;
     private final TransactionProcessing transactionProcessing;
 
-    public TransactionServiceImpl(
-        TransactionRepository transactionRepository,
-        OrganizerService organizerService,
-        DonationService donationService,
-        MibMapper mibMapper,
-        ApplicationProperties applicationProperties,
-        RestTemplateBuilder restTemplateBuilder,
-        TransactionProcessing transactionProcessing
-        ) {
+    public TransactionServiceImpl(TransactionRepository transactionRepository, OrganizerService organizerService,
+            DonationService donationService, MibMapper mibMapper, ApplicationProperties applicationProperties,
+            RestTemplateBuilder restTemplateBuilder, TransactionProcessing transactionProcessing) {
         this.transactionRepository = transactionRepository;
         this.organizerService = organizerService;
         this.donationService = donationService;
         this.mibMapper = mibMapper;
         this.applicationProperties = applicationProperties;
-        this.restTemplate = restTemplateBuilder
-            .setConnectTimeout(Duration.ofSeconds(30))
-            .setReadTimeout(Duration.ofSeconds(65)) 
-            .build();
+        this.restTemplate = restTemplateBuilder.setConnectTimeout(Duration.ofSeconds(30))
+                .setReadTimeout(Duration.ofSeconds(65)).build();
         this.transactionProcessing = transactionProcessing;
     }
 
@@ -103,7 +98,7 @@ public class TransactionServiceImpl implements TransactionService {
     public Page<Transaction> findAll(Pageable pageable) {
         final String login = SecurityUtils.getCurrentUserLogin().get();
         log.debug("Request by {} to get all Transactions", login);
-        if(SecurityUtils.isCurrentUserInRole(Constants.ADMIN)) {
+        if (SecurityUtils.isCurrentUserInRole(Constants.ADMIN)) {
             return transactionRepository.findAll(pageable);
         } else {
             List<Long> organizerIds = organizerService.findAllIdsOwnedWithEagerRealtionships(login);
@@ -134,7 +129,8 @@ public class TransactionServiceImpl implements TransactionService {
     @Transactional(readOnly = true)
     public Optional<Transaction> findOne(Example<Transaction> transaction) {
         log.debug("Request by {} to get Transaction : {}", SecurityUtils.getCurrentUserLogin().get(), transaction);
-        // add method here, to do check status to MIB if Transaction Status still PROCESS and paymentdate already more than 65s than 
+        // add method here, to do check status to MIB if Transaction Status still
+        // PROCESS and paymentdate already more than 65s than
         return transactionRepository.findOne(transaction);
     }
 
@@ -148,7 +144,6 @@ public class TransactionServiceImpl implements TransactionService {
         log.warn("Request by {} to delete Transaction {} Forbidden", SecurityUtils.getCurrentUserLogin().get(), id);
     }
 
- 
     /**
      * Initiate transaction
      * 
@@ -175,15 +170,24 @@ public class TransactionServiceImpl implements TransactionService {
             headers.setAccept(Collections.singletonList(MediaType.APPLICATION_XML));
             HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(
                     mibMapper.mibRequestToMultiValueMap(mibRequestDTO), headers);
-            ResponseEntity<MibResponseDTO> response =  new ResponseEntity<>(HttpStatus.PRECONDITION_FAILED);
+            ResponseEntity<String> response =  new ResponseEntity<>(HttpStatus.PRECONDITION_FAILED);
             try {
-                response = this.restTemplate.postForEntity(url, entity, MibResponseDTO.class);
+                response = this.restTemplate.postForEntity(url, entity, String.class);
             } catch (RestClientException rce) {
                 log.error("RestClientException {}", rce.getMessage());
             }
             if (response.getStatusCode() == HttpStatus.OK) {
-                mibResponseDTO = response.getBody();
-                return save(mibMapper.mibResponseToTransaction(mibResponseDTO, transaction));
+                XmlMapper xmlMapper = new XmlMapper();
+                try {
+                    mibResponseDTO = xmlMapper.readValue(response.getBody(), MibResponseDTO.class);
+                    return save(mibMapper.mibResponseToTransaction(mibResponseDTO, transaction));
+                } catch (JsonProcessingException e) {
+                    log.error("Failed to parse MIB Response into Object {}", e.getMessage());
+                    transaction.setStatus(TransactionStatus.FAILED);
+                    transaction.setResponseCode("MIB");
+                    transaction.setMessage("Failed to parse MIB Response into Object.");
+                    return save(transaction);
+                }
             } else {
                 // try check status 
                 transaction = findOne(transaction.getId()).get();

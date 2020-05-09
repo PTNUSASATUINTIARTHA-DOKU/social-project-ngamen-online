@@ -72,7 +72,7 @@ public class MibMapper {
         mibResponseDTO.setTrxCode(UUID.randomUUID().toString().replaceAll("-", ""));
         mibResponseDTO.setAuth1(mibRequestDTO.getAUTH1());
         mibResponseDTO.setInvoiceNumber(mibRequestDTO.getINVOICENUMBER());
-        mibResponseDTO.setAmount(Long.valueOf(mibRequestDTO.getAMOUNT()));
+        mibResponseDTO.setAmount(mibRequestDTO.getAMOUNT());
         mibResponseDTO.setCurrency(mibRequestDTO.getCURRENCY());
         mibResponseDTO.setSessionId(mibRequestDTO.getSESSIONID());
         mibResponseDTO.setPaymentDate(Long.valueOf(DateTimeFormatter.ofPattern("yyyyMMddHHmmss").withZone(ZoneId.of("UTC+07")).format(Instant.now())));
@@ -88,7 +88,7 @@ public class MibMapper {
         transaction.setPaymentDate(instant);
         transaction.setResponseCode(mibResponseDTO.getResponseCode());
         transaction.setMessage(mibResponseDTO.getMessage());
-        transaction.setPaymentSystrace(mibResponseDTO.getPaymentSysTrace());
+        transaction.setPaymentSystrace(mibResponseDTO.getPaymentSystrace());
         transaction.setApprovalCode(mibResponseDTO.getApprovalCode());
         transaction.setPaymentHostRefNumber(mibResponseDTO.getPaymentHostRefNumber());
         transaction.setStatus(TransactionStatus.valueOf(mibResponseDTO.getResult()));
