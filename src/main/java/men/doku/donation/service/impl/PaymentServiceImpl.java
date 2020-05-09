@@ -88,7 +88,7 @@ public class PaymentServiceImpl implements PaymentService {
         mibResponseDTO.setResult(result);
         mibResponseDTO.setResponseCode(responseCode);
         mibResponseDTO.setMessage(message);
-        mibResponseDTO.setPaymentSysTrace(paymentSystrace);
+        mibResponseDTO.setPaymentSystrace(paymentSystrace);
         mibResponseDTO.setApprovalCode(approvalCode);
         mibResponseDTO.setPaymentHostRefNumber(paymentHostRefNumber);
         return mibResponseDTO;

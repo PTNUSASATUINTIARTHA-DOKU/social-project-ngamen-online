@@ -9,14 +9,14 @@ public class MibResponseDTO {
     private String trxCode;
     private String auth1;
     private String invoiceNumber;
-    private Long amount;
+    private String amount;
     private String currency;
     private String sessionId;
     private Long paymentDate;
     private String result;
     private String responseCode;
     private String message;
-    private String paymentSysTrace;
+    private String paymentSystrace;
     private String approvalCode;
     private String paymentHostRefNumber;
 
@@ -41,13 +41,13 @@ public class MibResponseDTO {
      * @param result SUCCESS / FAILED
      * @param responseCode response code for payment result
      * @param message response message for payment result
-     * @param paymentSysTrace MIB System identifier that being sent to OVO
+     * @param paymentSystrace MIB System identifier that being sent to OVO
      * @param approvalCode payment success identifier from OVO
      * @param paymentHostRefNumber payment identifier from OVO
      */
-    public MibResponseDTO(Integer mallId, String trxCode, String auth1, String invoiceNumber, Long amount,
+    public MibResponseDTO(Integer mallId, String trxCode, String auth1, String invoiceNumber, String amount,
             String currency, String sessionId, Long paymentDate, String result, String responseCode, String message,
-            String paymentSysTrace, String approvalCode, String paymentHostRefNumber) {
+            String paymentSystrace, String approvalCode, String paymentHostRefNumber) {
         this.mallId = mallId;
         this.trxCode = trxCode;
         this.auth1 = auth1;
@@ -59,7 +59,7 @@ public class MibResponseDTO {
         this.result = result;
         this.responseCode = responseCode;
         this.message = message;
-        this.paymentSysTrace = paymentSysTrace;
+        this.paymentSystrace = paymentSystrace;
         this.approvalCode = approvalCode;
         this.paymentHostRefNumber = paymentHostRefNumber;
     }
@@ -96,11 +96,11 @@ public class MibResponseDTO {
         this.invoiceNumber = invoiceNumber;
     }
 
-    public Long getAmount() {
+    public String getAmount() {
         return amount;
     }
 
-    public void setAmount(Long amount) {
+    public void setAmount(String amount) {
         this.amount = amount;
     }
 
@@ -152,12 +152,12 @@ public class MibResponseDTO {
         this.message = message;
     }
 
-    public String getPaymentSysTrace() {
-        return paymentSysTrace;
+    public String getPaymentSystrace() {
+        return paymentSystrace;
     }
 
-    public void setPaymentSysTrace(String paymentSysTrace) {
-        this.paymentSysTrace = paymentSysTrace;
+    public void setPaymentSystrace(String paymentSystrace) {
+        this.paymentSystrace = paymentSystrace;
     }
 
     public String getApprovalCode() {
@@ -181,7 +181,7 @@ public class MibResponseDTO {
         return "MibResponseDTO [amount=" + amount + ", approvalCode=" + approvalCode + ", auth1=" + auth1
                 + ", currency=" + currency + ", invoiceNumber=" + invoiceNumber + ", mallId=" + mallId + ", message="
                 + message + ", paymentDate=" + paymentDate + ", paymentHostRefNumber=" + paymentHostRefNumber
-                + ", paymentSysTrace=" + paymentSysTrace + ", responseCode=" + responseCode + ", result=" + result
+                + ", paymentSysTrace=" + paymentSystrace + ", responseCode=" + responseCode + ", result=" + result
                 + ", sessionId=" + sessionId + ", trxCode=" + trxCode + "]";
     }
 }
