@@ -31,6 +31,10 @@
   },
   "defaultProject": "donation",
   "cli": {
-    "packageManager": "npm"
+    "packageManager": "npm",
+    "analytics": false,
+    "warnings": {
+      "versionMismatch": false
+    }
   }
 }
