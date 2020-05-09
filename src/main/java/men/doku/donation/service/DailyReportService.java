@@ -19,6 +19,7 @@ import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import men.doku.donation.domain.Transaction;
@@ -30,19 +31,28 @@ public class DailyReportService {
     private final Logger log = LoggerFactory.getLogger(DailyReportService.class);
 
     private final TransactionService transactionService;
+    private final MailService mailService;
 
-    public DailyReportService(TransactionService transactionService) {
+    public DailyReportService(TransactionService transactionService, MailService mailService) {
         this.transactionService = transactionService;
+        this.mailService = mailService;
     }
 
+
+    @Scheduled(cron = "0 0 5 * * *")
     public void generate() {
+        log.info("Daily Report Service running");
         Map<String, List<DailyReportSuccessDTO>> data = generateData();
-        List<File> files = new ArrayList<>();
         for (Map.Entry<String, List<DailyReportSuccessDTO>> entry: data.entrySet()) {
-            String[] key = entry.getKey().split("|");
+            log.debug("key {}", entry.getKey());
+            String[] key = entry.getKey().split("\\|");
             String organizerName = key[0].replace(' ', '_');
-            File file = generateFile(organizerName, data.get(entry.getKey()));
-            files.add(file);
+            log.debug("organizerName {}", organizerName);
+            String organizerEmail = key[1];
+            log.debug("organizerEmail {}", organizerEmail);
+            String date = Instant.now().atZone(ZoneId.of("Asia/Jakarta")).toLocalDate().format(DateTimeFormatter.ofPattern("yyyy_MM_dd"));
+            String fileName = generateFile(organizerName, data.get(entry.getKey()));
+            mailService.sendEmailWithAttachment(organizerEmail, "Saweran.charity Daily Report " + date, "Dear all, <br/>Terlampir laporan harian.<br/>Terima kasih.", fileName.substring(8), fileName);
         }
     }
 
@@ -59,7 +69,7 @@ public class DailyReportService {
         return dailyReports;
     }
 
-    public File generateFile(String organizerName, List<DailyReportSuccessDTO> data) {
+    public String generateFile(String organizerName, List<DailyReportSuccessDTO> data) {
         CsvMapper mapper = new CsvMapper();
         mapper.disable(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY);
         CsvSchema schema = mapper.schemaFor(DailyReportSuccessDTO.class);
@@ -67,7 +77,7 @@ public class DailyReportService {
         schema = schema.withHeader();
 
         ObjectWriter writer = mapper.writer(schema);
-        String fileName = "donation_" + organizerName.replace(' ', '_') + "_"  + Instant.now().atZone(ZoneId.of("Asia/Jakarta")).toLocalDate().format(DateTimeFormatter.ofPattern("yyyy_MM_dd")) + ".csv";
+        String fileName = "reports/donation_" + organizerName.replace(' ', '_') + "_"  + Instant.now().atZone(ZoneId.of("Asia/Jakarta")).toLocalDate().format(DateTimeFormatter.ofPattern("yyyy_MM_dd")) + ".csv";
         File file = new File(fileName);
         try {
             writer.writeValue(file, data);
@@ -81,7 +91,7 @@ public class DailyReportService {
             log.error("Failed to write to CSV {} ", e.getMessage());
             e.printStackTrace();
         }    
-        return file;
+        return fileName;
     } 
 
     private DailyReportSuccessDTO fromTransactionToDTO(Transaction transaction) {

@@ -1,13 +1,16 @@
 package men.doku.donation.service;
 
-import men.doku.donation.domain.User;
-
-import io.github.jhipster.config.JHipsterProperties;
-
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
+
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+
+import com.google.api.client.util.Base64;
+import com.google.api.services.gmail.model.Message;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +22,9 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
+
+import io.github.jhipster.config.JHipsterProperties;
+import men.doku.donation.domain.User;
 
 /**
  * Service for sending emails.
@@ -35,20 +41,20 @@ public class MailService {
     private static final String BASE_URL = "baseUrl";
 
     private final JHipsterProperties jHipsterProperties;
-
     private final JavaMailSender javaMailSender;
-
     private final MessageSource messageSource;
-
     private final SpringTemplateEngine templateEngine;
+    private final GmailService gmailService;
 
     public MailService(JHipsterProperties jHipsterProperties, JavaMailSender javaMailSender,
-            MessageSource messageSource, SpringTemplateEngine templateEngine) {
+            MessageSource messageSource, SpringTemplateEngine templateEngine,
+            GmailService gmailService) {
 
         this.jHipsterProperties = jHipsterProperties;
         this.javaMailSender = javaMailSender;
         this.messageSource = messageSource;
         this.templateEngine = templateEngine;
+        this.gmailService = gmailService;
     }
 
     @Async
@@ -102,5 +108,31 @@ public class MailService {
     public void sendPasswordResetMail(User user) {
         log.debug("Sending password reset email to '{}'", user.getEmail());
         sendEmailFromTemplate(user, "mail/passwordResetEmail", "email.reset.title");
+    }
+
+    @Async
+    public MimeMessageHelper sendEmailWithAttachment(String to, String subject, String content, String attachmentName, String attachmentPath) {
+        log.debug("Send email to '{}' with subject '{}'", to, subject);
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        MimeMessageHelper message = null;
+        try {
+            message = new MimeMessageHelper(mimeMessage, true, StandardCharsets.UTF_8.name());
+            message.setTo(to);
+            message.setFrom(jHipsterProperties.getMail().getFrom());
+            message.setSubject(subject);
+            message.setText(content, true);
+            message.addAttachment(attachmentName, new File(attachmentPath));
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            mimeMessage.writeTo(baos);
+            byte[] bytes = baos.toByteArray();
+            String encodedEmail = Base64.encodeBase64URLSafeString(bytes);
+            Message gmailMessage = new Message();
+            gmailMessage.setRaw(encodedEmail);
+            gmailMessage = gmailService.getGmail().users().messages().send("me", gmailMessage).execute();
+            log.debug("Email {} sent to {} with subject {}", gmailMessage.getId(), to, subject);
+        }  catch (IOException | MailException | MessagingException e) {
+            log.warn("Email could not be sent to user '{}'", to, e);
+        }
+        return message;
     }
 }

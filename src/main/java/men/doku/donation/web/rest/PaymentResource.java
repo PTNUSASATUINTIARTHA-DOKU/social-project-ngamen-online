@@ -1,8 +1,10 @@
 package men.doku.donation.web.rest;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -15,6 +17,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Example;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,8 +33,10 @@ import io.github.jhipster.web.util.ResponseUtil;
 import men.doku.donation.domain.Donation;
 import men.doku.donation.domain.Organizer;
 import men.doku.donation.domain.Transaction;
+import men.doku.donation.security.AuthoritiesConstants;
 import men.doku.donation.service.DailyReportService;
 import men.doku.donation.service.DonationService;
+import men.doku.donation.service.MailService;
 import men.doku.donation.service.OrganizerService;
 import men.doku.donation.service.PaymentService;
 import men.doku.donation.service.TransactionService;
@@ -52,15 +58,17 @@ public class PaymentResource {
     private final TransactionService transactionService;
     private final DailyReportService dailyReportService;
     private final OrganizerService organizerService;
+    private final MailService mailService;
 
     public PaymentResource(PaymentService paymentService, DonationService donationService,
             TransactionService transactionService, DailyReportService dailyReportService,
-            OrganizerService organizerService) {
+            OrganizerService organizerService, MailService mailService) {
         this.paymentService = paymentService;
         this.donationService = donationService;
         this.transactionService = transactionService;
         this.dailyReportService = dailyReportService;
         this.organizerService = organizerService;
+        this.mailService = mailService;
     }
 
     /**
@@ -139,6 +147,7 @@ public class PaymentResource {
      *         of Daily Reports in body.
      */
     @GetMapping("/payments/report/data")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<Map<String, List<DailyReportSuccessDTO>>> generateDailyReportData() {
         log.debug("REST request to create daily report");
         Map<String, List<DailyReportSuccessDTO>> report = dailyReportService.generateData();
@@ -153,14 +162,33 @@ public class PaymentResource {
      * @throws IOException
      */
     @GetMapping(value = "/payments/report/file/{organizerId}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public @ResponseBody byte[] generateDailyReportFile(@PathVariable Long organizerId) throws IOException {
         log.debug("REST request to create daily report");
         Organizer organizer = organizerService.findOne(organizerId).get();
         String key = organizer.getName() + "|" + organizer.getEmail();
         Map<String, List<DailyReportSuccessDTO>> data = dailyReportService.generateData();
         List<DailyReportSuccessDTO> report = data.get(key);
-        File file = dailyReportService.generateFile(organizer.getName() , report);    
-        FileInputStream is = new FileInputStream(file);
+        String filename = dailyReportService.generateFile(organizer.getName() , report);    
+        FileInputStream is = new FileInputStream(filename);
         return FileCopyUtils.copyToByteArray(is);
+    }
+
+    /**
+     * {@code GET  /payments/report/data} : get daily report data.
+     *
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list
+     *         of Daily Reports in body.
+     * @throws IOException
+     */
+    @GetMapping(value = "/payments/report/email/{organizerId}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
+    public ResponseEntity<Object> emailDailyReport(@PathVariable Long organizerId) throws IOException {
+        log.debug("REST request to create daily report");
+        Organizer organizer = organizerService.findOne(organizerId).get();
+        String date = Instant.now().atZone(ZoneId.of("Asia/Jakarta")).toLocalDate().format(DateTimeFormatter.ofPattern("yyyy_MM_dd"));
+        String fileName = "reports/donation_" + organizer.getName().replace(' ', '_') + "_"  + date + ".csv";
+        MimeMessageHelper message = mailService.sendEmailWithAttachment(organizer.getEmail(), "Saweran.charity Daily Report " + date, "Dear all, <br/>Terlampir laporan harian.<br/>Terima kasih.", fileName.substring(8), fileName);
+        return ResponseEntity.ok().headers(HeaderUtil.createAlert(applicationName, "Daily Report ", fileName)).body(message);
     }
 }
