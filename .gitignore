@@ -5,6 +5,7 @@
 /target/classes/static/**
 /src/test/javascript/coverage/
 /reports/**
+/logs/**
 
 ######################
 # Node

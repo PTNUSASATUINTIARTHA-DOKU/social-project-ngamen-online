@@ -41,10 +41,19 @@ public class ApplicationProperties {
 
     public static class Gmail {
 
+        private Boolean active = false;
         private String username = new String();
         private String credential = new String();
         private String credentialFolder = new String();
     
+        public Boolean getActive() {
+            return active;
+        }
+
+        public void setActive(Boolean active) {
+            this.active = active;
+        }
+
         public String getUsername() {
             return username;
         }

@@ -7,6 +7,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
 import javax.mail.MessagingException;
+import javax.mail.MethodNotSupportedException;
 import javax.mail.internet.MimeMessage;
 
 import com.google.api.client.util.Base64;
@@ -128,7 +129,8 @@ public class MailService {
             String encodedEmail = Base64.encodeBase64URLSafeString(bytes);
             Message gmailMessage = new Message();
             gmailMessage.setRaw(encodedEmail);
-            gmailMessage = gmailService.getGmail().users().messages().send("me", gmailMessage).execute();
+            if (!gmailService.getGmail().isPresent()) throw new MethodNotSupportedException();
+            gmailMessage = gmailService.getGmail().get().users().messages().send("me", gmailMessage).execute();
             log.debug("Email {} sent to {} with subject {}", gmailMessage.getId(), to, subject);
         }  catch (IOException | MailException | MessagingException e) {
             log.warn("Email could not be sent to user '{}'", to, e);

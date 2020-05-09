@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.security.GeneralSecurityException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 
@@ -47,8 +48,8 @@ public class GmailService {
         this.applicationProperties = applicationProperties;
     }
 
-    public Gmail getGmail() {
-        return gmail;
+    public Optional<Gmail> getGmail() {
+        return Optional.ofNullable(gmail);
     }
 
     /**
@@ -77,10 +78,11 @@ public class GmailService {
 
     @PostConstruct
     public void initiateOAuth() throws IOException, GeneralSecurityException {
-        // Build a new authorized API client service.
-        final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-        gmail = new Gmail.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
-                .setApplicationName(applicationProperties.getName())
-                .build();
+        if (applicationProperties.getGmail().getActive()) {
+            final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+            gmail = new Gmail.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
+                    .setApplicationName(applicationProperties.getName())
+                    .build();    
+        }
     }
 }

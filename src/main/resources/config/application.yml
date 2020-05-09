@@ -171,6 +171,4 @@ jhipster:
 application:
   name: Saweran Charity
   gmail:
-    username: admin@saweran.charity
-    credential-folder: src/main/resources/config/gmail/
-    credential: ../../../../config/gmail/client_secret.json
+    active: false

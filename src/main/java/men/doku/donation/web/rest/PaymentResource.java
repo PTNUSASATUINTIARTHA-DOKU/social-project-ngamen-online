@@ -146,7 +146,7 @@ public class PaymentResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list
      *         of Daily Reports in body.
      */
-    @GetMapping("/payments/report/data")
+    @GetMapping(value ="/payments/report/data", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<Map<String, List<DailyReportSuccessDTO>>> generateDailyReportData() {
         log.debug("REST request to create daily report");
