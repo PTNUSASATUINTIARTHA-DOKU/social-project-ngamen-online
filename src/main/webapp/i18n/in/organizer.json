@@ -27,6 +27,7 @@
       "lastUpdatedBy": "Diubah oleh",
       "lastUpdatedAt": "Pengubahan terakhir",
       "mallId": "Mall ID",
+      "chainMallId": "Chain Mall ID",
       "sharedKey": "Shared Key",
       "serviceId": "Service ID",
       "acquirerId": "Acquirer ID",

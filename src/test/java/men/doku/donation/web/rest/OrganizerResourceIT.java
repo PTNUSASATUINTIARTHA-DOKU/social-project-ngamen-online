@@ -82,6 +82,9 @@ public class OrganizerResourceIT {
     private static final Integer DEFAULT_MALL_ID = 1;
     private static final Integer UPDATED_MALL_ID = 2;
 
+    private static final Integer DEFAULT_CHAIN_MALL_ID = 1;
+    private static final Integer UPDATED_CHAIN_MALL_ID = 2;
+
     private static final String DEFAULT_SHARED_KEY = "AAAAAAAAAA";
     private static final String UPDATED_SHARED_KEY = "BBBBBBBBBB";
 
@@ -133,6 +136,7 @@ public class OrganizerResourceIT {
             .lastUpdatedBy(DEFAULT_LAST_UPDATED_BY)
             .lastUpdatedAt(DEFAULT_LAST_UPDATED_AT)
             .mallId(DEFAULT_MALL_ID)
+            .chainMallId(DEFAULT_CHAIN_MALL_ID)
             .sharedKey(DEFAULT_SHARED_KEY)
             .serviceId(DEFAULT_SERVICE_ID)
             .acquirerId(DEFAULT_ACQUIRER_ID)
@@ -158,6 +162,7 @@ public class OrganizerResourceIT {
             .lastUpdatedBy(UPDATED_LAST_UPDATED_BY)
             .lastUpdatedAt(UPDATED_LAST_UPDATED_AT)
             .mallId(UPDATED_MALL_ID)
+            .chainMallId(UPDATED_CHAIN_MALL_ID)
             .sharedKey(UPDATED_SHARED_KEY)
             .serviceId(UPDATED_SERVICE_ID)
             .acquirerId(UPDATED_ACQUIRER_ID)
@@ -196,6 +201,7 @@ public class OrganizerResourceIT {
         assertThat(testOrganizer.getLastUpdatedBy()).isEqualTo(DEFAULT_LAST_UPDATED_BY);
         assertThat(testOrganizer.getLastUpdatedAt()).isEqualTo(DEFAULT_LAST_UPDATED_AT);
         assertThat(testOrganizer.getMallId()).isEqualTo(DEFAULT_MALL_ID);
+        assertThat(testOrganizer.getChainMallId()).isEqualTo(DEFAULT_CHAIN_MALL_ID);
         assertThat(testOrganizer.getSharedKey()).isEqualTo(DEFAULT_SHARED_KEY);
         assertThat(testOrganizer.getServiceId()).isEqualTo(DEFAULT_SERVICE_ID);
         assertThat(testOrganizer.getAcquirerId()).isEqualTo(DEFAULT_ACQUIRER_ID);
@@ -280,14 +286,16 @@ public class OrganizerResourceIT {
             .andExpect(jsonPath("$.[*].lastUpdatedBy").value(hasItem(DEFAULT_LAST_UPDATED_BY)))
             .andExpect(jsonPath("$.[*].lastUpdatedAt").value(hasItem(DEFAULT_LAST_UPDATED_AT.toString())))
             .andExpect(jsonPath("$.[*].mallId").value(hasItem(DEFAULT_MALL_ID)))
+            .andExpect(jsonPath("$.[*].chainMallId").value(hasItem(DEFAULT_CHAIN_MALL_ID)))
             .andExpect(jsonPath("$.[*].sharedKey").value(hasItem(DEFAULT_SHARED_KEY)))
             .andExpect(jsonPath("$.[*].serviceId").value(hasItem(DEFAULT_SERVICE_ID)))
             .andExpect(jsonPath("$.[*].acquirerId").value(hasItem(DEFAULT_ACQUIRER_ID)))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
     }
     
+    @SuppressWarnings({"unchecked"})
     public void getAllOrganizersWithEagerRelationshipsIsEnabled() throws Exception {
-        when(organizerServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl<>(new ArrayList<>()));
+        when(organizerServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
 
         restOrganizerMockMvc.perform(get("/api/organizers?eagerload=true"))
             .andExpect(status().isOk());
@@ -326,6 +334,7 @@ public class OrganizerResourceIT {
             .andExpect(jsonPath("$.lastUpdatedBy").value(DEFAULT_LAST_UPDATED_BY))
             .andExpect(jsonPath("$.lastUpdatedAt").value(DEFAULT_LAST_UPDATED_AT.toString()))
             .andExpect(jsonPath("$.mallId").value(DEFAULT_MALL_ID))
+            .andExpect(jsonPath("$.chainMallId").value(DEFAULT_CHAIN_MALL_ID))
             .andExpect(jsonPath("$.sharedKey").value(DEFAULT_SHARED_KEY))
             .andExpect(jsonPath("$.serviceId").value(DEFAULT_SERVICE_ID))
             .andExpect(jsonPath("$.acquirerId").value(DEFAULT_ACQUIRER_ID))
@@ -364,6 +373,7 @@ public class OrganizerResourceIT {
             .lastUpdatedBy(UPDATED_LAST_UPDATED_BY)
             .lastUpdatedAt(UPDATED_LAST_UPDATED_AT)
             .mallId(UPDATED_MALL_ID)
+            .chainMallId(UPDATED_CHAIN_MALL_ID)
             .sharedKey(UPDATED_SHARED_KEY)
             .serviceId(UPDATED_SERVICE_ID)
             .acquirerId(UPDATED_ACQUIRER_ID)
@@ -389,6 +399,7 @@ public class OrganizerResourceIT {
         assertThat(testOrganizer.getLastUpdatedBy()).isEqualTo(UPDATED_LAST_UPDATED_BY);
         assertThat(testOrganizer.getLastUpdatedAt()).isEqualTo(UPDATED_LAST_UPDATED_AT);
         assertThat(testOrganizer.getMallId()).isEqualTo(UPDATED_MALL_ID);
+        assertThat(testOrganizer.getChainMallId()).isEqualTo(UPDATED_CHAIN_MALL_ID);
         assertThat(testOrganizer.getSharedKey()).isEqualTo(UPDATED_SHARED_KEY);
         assertThat(testOrganizer.getServiceId()).isEqualTo(UPDATED_SERVICE_ID);
         assertThat(testOrganizer.getAcquirerId()).isEqualTo(UPDATED_ACQUIRER_ID);

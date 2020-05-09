@@ -85,6 +85,10 @@
             "fieldType": "Integer"
         },
         {
+            "fieldName": "chainMallId",
+            "fieldType": "Integer"
+        },
+        {
             "fieldName": "sharedKey",
             "fieldType": "String"
         },

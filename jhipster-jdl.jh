@@ -14,6 +14,7 @@ entity Organizer {
     lastUpdatedBy String maxlength(100)
     lastUpdatedAt Instant
     mallId Integer
+    chainMallId Integer
     sharedKey String
     serviceId Integer
     acquirerId Integer

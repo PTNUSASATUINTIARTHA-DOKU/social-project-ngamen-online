@@ -27,6 +27,7 @@ public class MibMapper {
     public MibRequestDTO toMibRequestDTO(Transaction transaction, Organizer organizer) {
         MibRequestDTO mibRequestDTO = new MibRequestDTO();
         mibRequestDTO.setMALLID(String.valueOf(organizer.getMallId()));
+        mibRequestDTO.setCHAINMALLID(String.valueOf(organizer.getChainMallId()));
         mibRequestDTO.setSERVICEID(String.valueOf(organizer.getServiceId()));
         mibRequestDTO.setACQUIRERID(String.valueOf(organizer.getAcquirerId()));
         mibRequestDTO.setINVOICENUMBER(transaction.getInvoiceNumber());
@@ -54,6 +55,7 @@ public class MibMapper {
     public MultiValueMap<String, String> mibRequestToMultiValueMap(MibRequestDTO mibRequestDTO) {
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("MALLID", mibRequestDTO.getMALLID());
+        body.add("CHAINMALLID", mibRequestDTO.getCHAINMALLID());
         body.add("SERVICEID", mibRequestDTO.getSERVICEID());
         body.add("ACQUIRERID", mibRequestDTO.getACQUIRERID());
         body.add("INVOICENUMBER", mibRequestDTO.getINVOICENUMBER());

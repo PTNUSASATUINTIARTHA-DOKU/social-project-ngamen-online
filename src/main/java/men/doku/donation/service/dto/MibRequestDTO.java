@@ -3,6 +3,7 @@ package men.doku.donation.service.dto;
 public class MibRequestDTO {
 
     private String MALLID;
+    private String CHAINMALLID;
     private String SERVICEID;
     private String ACQUIRERID;
     private String INVOICENUMBER;
@@ -16,9 +17,10 @@ public class MibRequestDTO {
     public MibRequestDTO() {
     }
 
-    public MibRequestDTO(String mALLID, String sERVICEID, String aCQUIRERID, String iNVOICENUMBER, String cURRENCY,
+    public MibRequestDTO(String mALLID, String cHAINMALLID, String sERVICEID, String aCQUIRERID, String iNVOICENUMBER, String cURRENCY,
     String aMOUNT, String sESSIONID, String aUTH1, String bASKET, String wORDS) {
         this.MALLID = mALLID;
+        this.CHAINMALLID = cHAINMALLID;
         this.SERVICEID = sERVICEID;
         this.ACQUIRERID = aCQUIRERID;
         this.INVOICENUMBER = iNVOICENUMBER;
@@ -36,6 +38,14 @@ public class MibRequestDTO {
 
     public void setMALLID(String mALLID) {
         this.MALLID = mALLID;
+    }
+
+    public String getCHAINMALLID() {
+        return CHAINMALLID;
+    }
+
+    public void setCHAINMALLID(String cHAINMALLID) {
+        this.CHAINMALLID = cHAINMALLID;
     }
 
     public String getSERVICEID() {
@@ -113,7 +123,7 @@ public class MibRequestDTO {
     @Override
     public String toString() {
         return "MibRequestDTO [ACQUIRERID=" + ACQUIRERID + ", AMOUNT=" + AMOUNT + ", AUTH1=" + AUTH1 + ", BASKET="
-                + BASKET + ", CURRENCY=" + CURRENCY + ", INVOICENUMBER=" + INVOICENUMBER + ", MALLID=" + MALLID
+                + BASKET + ", CHAINMALLID=" + CHAINMALLID + ", CURRENCY=" + CURRENCY + ", INVOICENUMBER=" + INVOICENUMBER + ", MALLID=" + MALLID
                 + ", SERVICEID=" + SERVICEID + ", SESSIONID=" + SESSIONID + ", WORDS=" + WORDS + "]";
     }
 }

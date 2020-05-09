@@ -6,6 +6,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class MibResponseDTO {
 
     private Integer mallId;
+    private Integer chainMallId;
     private String trxCode;
     private String auth1;
     private String invoiceNumber;
@@ -31,6 +32,7 @@ public class MibResponseDTO {
      * Constructor with all attribute
      * 
      * @param mallId merchant identifier
+     * @param chainMallId merchant chain identifier
      * @param trxCode MIB system identifier
      * @param auth1 masked OVO ID 
      * @param invoiceNumber Merchant transaction identifier
@@ -45,10 +47,11 @@ public class MibResponseDTO {
      * @param approvalCode payment success identifier from OVO
      * @param paymentHostRefNumber payment identifier from OVO
      */
-    public MibResponseDTO(Integer mallId, String trxCode, String auth1, String invoiceNumber, String amount,
+    public MibResponseDTO(Integer mallId, Integer chainMallId, String trxCode, String auth1, String invoiceNumber, String amount,
             String currency, String sessionId, Long paymentDate, String result, String responseCode, String message,
             String paymentSystrace, String approvalCode, String paymentHostRefNumber) {
         this.mallId = mallId;
+        this.chainMallId = chainMallId;
         this.trxCode = trxCode;
         this.auth1 = auth1;
         this.invoiceNumber = invoiceNumber;
@@ -70,6 +73,14 @@ public class MibResponseDTO {
 
     public void setMallId(Integer mallId) {
         this.mallId = mallId;
+    }
+
+    public Integer getChainMallId() {
+        return chainMallId;
+    }
+
+    public void setChainMallId(Integer chainMallId) {
+        this.chainMallId = chainMallId;
     }
 
     public String getTrxCode() {
@@ -178,7 +189,7 @@ public class MibResponseDTO {
 
     @Override
     public String toString() {
-        return "MibResponseDTO [amount=" + amount + ", approvalCode=" + approvalCode + ", auth1=" + auth1
+        return "MibResponseDTO [amount=" + amount + ", approvalCode=" + approvalCode + ", auth1=" + auth1 + ", chainMallId=" + chainMallId
                 + ", currency=" + currency + ", invoiceNumber=" + invoiceNumber + ", mallId=" + mallId + ", message="
                 + message + ", paymentDate=" + paymentDate + ", paymentHostRefNumber=" + paymentHostRefNumber
                 + ", paymentSysTrace=" + paymentSystrace + ", responseCode=" + responseCode + ", result=" + result

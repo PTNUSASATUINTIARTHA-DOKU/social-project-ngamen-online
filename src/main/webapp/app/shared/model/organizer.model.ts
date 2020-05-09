@@ -16,6 +16,7 @@ export interface IOrganizer {
   lastUpdatedBy?: string;
   lastUpdatedAt?: Moment;
   mallId?: number;
+  chainMallId?: number;
   sharedKey?: string;
   serviceId?: number;
   acquirerId?: number;
@@ -38,6 +39,7 @@ export class Organizer implements IOrganizer {
     public lastUpdatedBy?: string,
     public lastUpdatedAt?: Moment,
     public mallId?: number,
+    public chainMallId?: number,
     public sharedKey?: string,
     public serviceId?: number,
     public acquirerId?: number,

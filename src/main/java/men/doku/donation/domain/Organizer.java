@@ -92,6 +92,9 @@ public class Organizer implements Serializable {
     @JsonView(AuthoritiesConstants.User.class)
     private Integer mallId;
 
+    @Column(name = "chain_mall_id")
+    private Integer chainMallId;
+
     @Column(name = "shared_key")
     @JsonView(AuthoritiesConstants.User.class)
     private String sharedKey;
@@ -273,6 +276,19 @@ public class Organizer implements Serializable {
         this.mallId = mallId;
     }
 
+    public Integer getChainMallId() {
+        return chainMallId;
+    }
+
+    public Organizer chainMallId(Integer chainMallId) {
+        this.chainMallId = chainMallId;
+        return this;
+    }
+
+    public void setChainMallId(Integer chainMallId) {
+        this.chainMallId = chainMallId;
+    }
+
     public String getSharedKey() {
         return sharedKey;
     }
@@ -405,6 +421,7 @@ public class Organizer implements Serializable {
             ", lastUpdatedBy='" + getLastUpdatedBy() + "'" +
             ", lastUpdatedAt='" + getLastUpdatedAt() + "'" +
             ", mallId=" + getMallId() +
+            ", chainMallId=" + getChainMallId() +
             ", sharedKey='" + getSharedKey() + "'" +
             ", serviceId=" + getServiceId() +
             ", acquirerId=" + getAcquirerId() +
