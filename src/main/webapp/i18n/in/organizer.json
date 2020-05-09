@@ -26,10 +26,10 @@
       "sharing": "Pembagian Amal (%)",
       "lastUpdatedBy": "Diubah oleh",
       "lastUpdatedAt": "Pengubahan terakhir",
-      "mallId": "Mall Id",
+      "mallId": "Mall ID",
       "sharedKey": "Shared Key",
-      "serviceId": "Service Id",
-      "acquirerId": "Acquirer Id",
+      "serviceId": "Service ID",
+      "acquirerId": "Acquirer ID",
       "status": "Status",
       "donation": "Donasi",
       "user": "User"

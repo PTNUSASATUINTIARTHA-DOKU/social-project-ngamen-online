@@ -1,92 +1,129 @@
-<div class="row justify-content-center">
-    <div class="col-8">
-        <div *ngIf="organizer">
-            <h2><span jhiTranslate="donationApp.organizer.detail.title">Organizer</span> {{ organizer.id }}</h2>
+<div *ngIf="organizer">
+    <div class="container mx-auto bg-white my-6 px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between mb-6">
+            <div>
+                <h1 class="text-2xl font-bold mb-1"><span jhiTranslate="donationApp.organizer.detail.title">Organizer</span> {{ organizer.id }}</h1>
+            </div>
+            
+            <div>
+                <button type="submit" (click)="previousState()"
+                    class="bg-white hover:bg-red-500 disabled:border-red-200 disabled:text-red-200 border border-red-500 disabled:cursor-not-allowed text-red-500 hover:text-white text-sm py-2 px-4 font-semibold rounded focus:outline-none focus:shadow-outline h-10">
+                    <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+                </button>
 
-            <hr>
+                <button type="button" [routerLink]="['/organizer', organizer.id, 'edit']"
+                    class="bg-red-600 hover:bg-red-500 disabled:bg-red-200 disabled:cursor-not-allowed text-white text-sm py-2 px-4 font-semibold rounded focus:outline-none focus:shadow-outline h-10">
+                    <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+                </button>
+            </div>
+        </div>
 
-            <jhi-alert-error></jhi-alert-error>
-
-            <dl class="row-md jh-entity-details">
-                <dt><span jhiTranslate="donationApp.organizer.name">Name</span></dt>
-                <dd>
+        <div class="flex bg-white rounded-lg shadow-lg">
+            <div class="p-6 lg:px-8">
+                <div class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.organizer.name">Name</span>: 
                     <span>{{ organizer.name }}</span>
-                </dd>
-                <dt><span jhiTranslate="donationApp.organizer.url">Url</span></dt>
-                <dd>
+                </div>
+
+                <div class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.organizer.url">Url</span>:
                     <span>{{ organizer.url }}</span>
-                </dd>
-                <dt><span jhiTranslate="donationApp.organizer.email">Email</span></dt>
-                <dd>
+                </div>
+
+                <div class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.organizer.email">Email</span>:
                     <span>{{ organizer.email }}</span>
-                </dd>
-                <dt><span jhiTranslate="donationApp.organizer.bankAccountNumber">Bank Account Number</span></dt>
-                <dd>
+                </div>
+
+                <div class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.organizer.email">Email</span>:
+                    <span>{{ organizer.email }}</span>
+                </div>
+
+                <hr class="mb-2">
+
+                <div class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.organizer.bankAccountNumber">Bank Account Number</span>:
                     <span>{{ organizer.bankAccountNumber }}</span>
-                </dd>
-                <dt><span jhiTranslate="donationApp.organizer.bankAccountName">Bank Account Name</span></dt>
-                <dd>
+                </div>
+
+                <div class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.organizer.bankAccountName">Bank Account Name</span>:
                     <span>{{ organizer.bankAccountName }}</span>
-                </dd>
-                <dt><span jhiTranslate="donationApp.organizer.bankName">Bank Name</span></dt>
-                <dd>
+                </div>
+
+                <div class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.organizer.bankName">Bank Name</span>:
                     <span>{{ organizer.bankName }}</span>
-                </dd>
-                <dt><span jhiTranslate="donationApp.organizer.mdr">Mdr</span></dt>
-                <dd>
+                </div>
+
+                <hr class="mb-2">
+
+                <div class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.organizer.mdr">MDR</span>:
                     <span>{{ organizer.mdr }}</span>
-                </dd>
-                <dt><span jhiTranslate="donationApp.organizer.sharing">Sharing</span></dt>
-                <dd>
+                </div>
+
+                <div class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.organizer.sharing">Sharing</span>:
                     <span>{{ organizer.sharing }}</span>
-                </dd>
-                <dt><span jhiTranslate="donationApp.organizer.lastUpdatedBy">Last Updated By</span></dt>
-                <dd>
+                </div>
+
+                <hr class="mb-2">
+
+                <div class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.organizer.lastUpdatedBy">Last Updated By</span>:
                     <span>{{ organizer.lastUpdatedBy }}</span>
-                </dd>
-                <dt><span jhiTranslate="donationApp.organizer.lastUpdatedAt">Last Updated At</span></dt>
-                <dd>
+                </div>
+
+                <div class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.organizer.lastUpdatedAt">Last Updated At</span>:
                     <span>{{ organizer.lastUpdatedAt | date:'medium' }}</span>
-                </dd>
-                <dt><span jhiTranslate="donationApp.organizer.mallId">Mall Id</span></dt>
-                <dd>
+                </div>
+
+                <hr class="mb-2">
+
+                <div class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.organizer.mallId">Mall ID</span>:
                     <span>{{ organizer.mallId }}</span>
-                </dd>
-                <dt><span jhiTranslate="donationApp.organizer.sharedKey">Shared Key</span></dt>
-                <dd>
+                </div>
+
+                <div class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.organizer.sharedKey">Shared Key</span>:
                     <span>{{ organizer.sharedKey }}</span>
-                </dd>
-                <dt><span jhiTranslate="donationApp.organizer.serviceId">Service Id</span></dt>
-                <dd>
+                </div>
+
+                <div class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.organizer.serviceId">Service ID</span>:
                     <span>{{ organizer.serviceId }}</span>
-                </dd>
-                <dt><span jhiTranslate="donationApp.organizer.acquirerId">Acquirer Id</span></dt>
-                <dd>
+                </div>
+
+                <div class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.organizer.acquirerId">Acquirer ID</span>:
                     <span>{{ organizer.acquirerId }}</span>
-                </dd>
-                <dt><span jhiTranslate="donationApp.organizer.status">Status</span></dt>
-                <dd>
-                    <span jhiTranslate="{{ 'donationApp.IsActiveStatus.' + organizer.status }}">{{ organizer.status }}</span>
-                </dd>
-                <dt><span jhiTranslate="donationApp.organizer.user">User</span></dt>
-                <dd>
+                </div>
+
+                <div class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.organizer.status">Status</span>:
+                    <span *ngIf="organizer.status === 'ACTIVE'"
+                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+                        jhiTranslate="{{ 'donationApp.IsActiveStatus.' + organizer.status }}">
+                        ACTIVE
+                    </span>
+                    <span *ngIf="organizer.status === 'DISABLED'"
+                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
+                        jhiTranslate="{{ 'donationApp.IsActiveStatus.' + organizer.status }}">
+                        ACTIVE
+                    </span>
+                </div>
+
+                <div class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.organizer.user">User</span>:
                     <span *ngFor="let user of organizer.users; let last = last">
                         {{ user.login }}{{ last ? '' : ', ' }}
                     </span>
-                </dd>
-            </dl>
-
-            <button type="submit"
-                    (click)="previousState()"
-                    class="btn btn-info">
-                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
-            </button>
-
-            <button type="button"
-                    [routerLink]="['/organizer', organizer.id, 'edit']"
-                    class="btn btn-primary">
-                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
-            </button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
