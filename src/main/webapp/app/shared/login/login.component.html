@@ -15,37 +15,51 @@
         <strong>Failed to sign in!</strong> Please check your credentials and try again.
     </div>
 
-    <div class="mb-4">
-      <label class="block text-gray-700 text-sm font-semibold mb-2" for="username" jhiTranslate="global.form.username.label">
-        Username
-      </label>
-      <input class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200 disabled:bg-gray-400 disabled:cursor-not-allowed leading-tight focus:outline-none focus:shadow-outline h-10" id="username" type="text" name="username" placeholder="{{ 'global.form.username.placeholder' | translate }}" formControlName="username" #usernam>
-    </div>
+    <form role="form" (ngSubmit)="login()" [formGroup]="loginForm">
+      <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-semibold mb-2" for="username"
+              jhiTranslate="global.form.username.label">
+              Username
+          </label>
+          <input
+              class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200 disabled:bg-gray-400 disabled:cursor-not-allowed leading-tight focus:outline-none focus:shadow-outline h-10"
+              id="username" type="text" name="username"
+              placeholder="{{ 'global.form.username.placeholder' | translate }}" formControlName="username" #usernam>
+      </div>
 
-    <div class="mb-4">
-      <label class="block text-gray-700 text-sm font-semibold mb-2" for="password" jhiTranslate="login.form.password">
-        Password
-      </label>
-      <input class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200 disabled:bg-gray-400 disabled:cursor-not-allowed leading-tight focus:outline-none focus:shadow-outline h-10" id="password" type="password" name="password" placeholder="{{ 'login.form.password.placeholder' | translate }}" formControlName="password">
-    </div>
+      <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-semibold mb-2" for="password"
+              jhiTranslate="login.form.password">
+              Password
+          </label>
+          <input
+              class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200 disabled:bg-gray-400 disabled:cursor-not-allowed leading-tight focus:outline-none focus:shadow-outline h-10"
+              id="password" type="password" name="password"
+              placeholder="{{ 'login.form.password.placeholder' | translate }}" formControlName="password">
+      </div>
 
-    <div class="mb-4">
-        <label class="md:w-2/3 block text-gray-700 text-sm">
-            <input class="mr-2 leading-tight" type="checkbox" name="rememberMe" id="rememberMe" formControlName="rememberMe">
-            <span class="text-sm" jhiTranslate="login.form.rememberme">
-                Remember me
-            </span>
-        </label>
-    </div>
+      <div class="mb-4">
+          <label class="md:w-2/3 block text-gray-700 text-sm">
+              <input class="mr-2 leading-tight" type="checkbox" name="rememberMe" id="rememberMe"
+                  formControlName="rememberMe">
+              <span class="text-sm" jhiTranslate="login.form.rememberme">
+                  Remember me
+              </span>
+          </label>
+      </div>
 
-    <div class="flex items-center justify-between">
-      <button class="bg-red-600 hover:bg-red-500 disabled:bg-red-200 disabled:cursor-not-allowed text-white text-sm py-2 px-4 font-semibold rounded focus:outline-none focus:shadow-outline h-10" type="submit" jhiTranslate="login.form.button">
-        Sign in
-      </button>
-      <a class="inline-block align-baseline text-sm text-blue-500 hover:text-blue-800 cursor-pointer text-sm text-right" (click)="requestResetPassword()" jhiTranslate="login.password.forgot">
-        Forgot Password?
-      </a>
-    </div>
+      <div class="flex items-center justify-between">
+          <button
+              class="bg-red-600 hover:bg-red-500 disabled:bg-red-200 disabled:cursor-not-allowed text-white text-sm py-2 px-4 font-semibold rounded focus:outline-none focus:shadow-outline h-10"
+              type="submit" jhiTranslate="login.form.button">
+              Sign in
+          </button>
+          <a class="inline-block align-baseline text-sm text-blue-500 hover:text-blue-800 cursor-pointer text-sm text-right"
+              (click)="requestResetPassword()" jhiTranslate="login.password.forgot">
+              Forgot Password?
+          </a>
+      </div>
+    </form>
 
     <hr class="my-3">
 
