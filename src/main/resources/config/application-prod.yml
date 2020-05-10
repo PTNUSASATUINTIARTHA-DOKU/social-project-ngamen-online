@@ -26,6 +26,9 @@ management:
         enabled: false
 
 spring:
+  profiles:
+    active: prod
+    include: swagger, no-liquibase
   devtools:
     restart:
       enabled: false
@@ -133,7 +136,7 @@ jhipster:
 application:
   mib-url: https://pay.doku.com/MIB/ServiceRequestPayment
   gmail:
-    active: true
+    active: false
     username: admin@saweran.charity
-    credential-folder: src/main/resources/config/gmail/
+    credential-folder: /var/lib/tomcat8/webapps/ROOT/WEB-INF/classes/config/gmail/
     credential: ../../../../config/gmail/client_secret.json
