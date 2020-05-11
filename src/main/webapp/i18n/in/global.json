@@ -3,7 +3,7 @@
     "title": "Donation",
     "browsehappy": "Kamu menggunakan peramban versi lama. Silakan <a href=\"http://browsehappy.com/?locale=en\">perbaharui peramban kamu</a> untuk meningkatkan kenyamanan kamu.",
     "menu": {
-      "home": "Berkamu",
+      "home": "Dashboard",
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Entitas",
