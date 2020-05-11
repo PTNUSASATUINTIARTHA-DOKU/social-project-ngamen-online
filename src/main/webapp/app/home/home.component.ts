@@ -60,6 +60,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.isDropdownCollapsed = !this.isDropdownCollapsed;
   }
 
+  register(): void {
+    this.router.navigate(['/account/register']);
+  }
+
   ngOnDestroy(): void {
     if (this.authSubscription) {
       this.authSubscription.unsubscribe();
