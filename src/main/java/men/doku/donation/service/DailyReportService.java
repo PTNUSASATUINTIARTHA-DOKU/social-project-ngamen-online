@@ -90,6 +90,7 @@ public class DailyReportService {
              + Instant.now().minus(daysBefore, ChronoUnit.DAYS).atZone(ZoneId.of("Asia/Jakarta")).toLocalDate().format(DateTimeFormatter.ofPattern("yyyy_MM_dd")) 
              + ".csv";
         File file = new File(fileName);
+        file.getParentFile().mkdirs();
         try {
             writer.writeValue(file, data);
         } catch (JsonGenerationException e) {
