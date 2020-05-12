@@ -153,6 +153,10 @@
                                     jhiTranslate="payment.error.min_amount">
                                     Minimum donation is Rp10.000.
                                 </small>
+                                <small class="text-xs text-red-400" *ngIf="paymentForm.get('amount')?.errors?.max"
+                                    jhiTranslate="payment.error.max_amount">
+                                    Maximum donation is Rp10.000.000.
+                                </small>
                             </div>
                         </div>
 

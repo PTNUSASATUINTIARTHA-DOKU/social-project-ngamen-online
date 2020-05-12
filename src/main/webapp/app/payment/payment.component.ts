@@ -35,7 +35,7 @@ export class PaymentComponent implements OnInit {
   paymentForm = this.fb.group({
     donor: [null, [Validators.required, Validators.maxLength(30)]],
     donorAnon: [null, []],
-    amount: [null, [Validators.required, Validators.min(10000)]],
+    amount: [null, [Validators.required, Validators.min(10000), Validators.max(10000000)]],
     phone: [null, [Validators.required, Validators.maxLength(13), Validators.minLength(10)]]
   });
 

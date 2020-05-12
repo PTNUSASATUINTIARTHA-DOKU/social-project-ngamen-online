@@ -5,7 +5,8 @@
     "powered": "Didukung oleh",
     "error": {
       "url": "Halaman pembayaran tidak ditemukan",
-      "min_amount": "Minimum donasi sebesar Rp10.000"
+      "min_amount": "Minimum donasi sebesar Rp 10.000",
+      "max_amount": "Maksimum donasi sebesar Rp 10.000.000"
     },
     "section": {
       "info": {
