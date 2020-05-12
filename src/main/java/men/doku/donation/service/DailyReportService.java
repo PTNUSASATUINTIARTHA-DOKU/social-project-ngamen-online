@@ -6,8 +6,6 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalAmount;
-import java.time.temporal.TemporalUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +23,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import men.doku.donation.config.ApplicationProperties;
+import men.doku.donation.domain.Organizer;
 import men.doku.donation.domain.Transaction;
 import men.doku.donation.service.dto.DailyReportSuccessDTO;
 
@@ -35,43 +35,49 @@ public class DailyReportService {
 
     private final TransactionService transactionService;
     private final MailService mailService;
+    private final ApplicationProperties applicationProperties;
 
-    public DailyReportService(TransactionService transactionService, MailService mailService) {
+    public DailyReportService(TransactionService transactionService, MailService mailService, ApplicationProperties applicationProperties) {
         this.transactionService = transactionService;
         this.mailService = mailService;
+        this.applicationProperties = applicationProperties;
     }
 
 
     @Scheduled(cron = "0 0 5 * * *")
     public void generate() {
         log.info("Daily Report Service running");
-        Map<String, List<DailyReportSuccessDTO>> data = generateData();
-        for (Map.Entry<String, List<DailyReportSuccessDTO>> entry: data.entrySet()) {
-            log.debug("key {}", entry.getKey());
-            String[] key = entry.getKey().split("\\|");
-            String organizerName = key[0].replace(' ', '_');
-            String organizerEmail = key[1];
-            String date = Instant.now().atZone(ZoneId.of("Asia/Jakarta")).toLocalDate().format(DateTimeFormatter.ofPattern("yyyy_MM_dd"));
-            String fileName = generateFile(organizerName, data.get(entry.getKey()));
-            mailService.sendEmail(organizerEmail, "Saweran.charity Daily Report " + date, "Dear all, <br/><br/>Terlampir laporan harian.<br/><br/>Terima kasih."
-                    , true, true, fileName.substring(8), fileName);
+        generateEmail(1);
+    }
+
+    public void generateEmail(Integer daysBefore) {
+        Map<Organizer, List<DailyReportSuccessDTO>> data = generateData(daysBefore);
+        for (Map.Entry<Organizer, List<DailyReportSuccessDTO>> entry: data.entrySet()) {
+            Organizer organizer = entry.getKey();
+            log.debug("Organizer {}", organizer);
+            String date = Instant.now().minus(daysBefore, ChronoUnit.DAYS).atZone(ZoneId.of("Asia/Jakarta")).toLocalDate().format(DateTimeFormatter.ofPattern("yyyy_MM_dd"));
+            String filePath = generateFile(organizer.getName(), data.get(organizer), daysBefore);
+            String fileName =  filePath.substring(filePath.indexOf(applicationProperties.getReport().getBasename()) + 8);
+            mailService.sendEmail(organizer.getEmail(), "Saweran.charity Daily Report " + date, "Dear all, <br/><br/>Terlampir laporan harian.<br/><br/>Terima kasih."
+                    , true, true, fileName, filePath);
         }
     }
 
-    public Map<String, List<DailyReportSuccessDTO>> generateData() {
-        List<Transaction> transactions = this.transactionService.findAllSuccessByPaymentDate(Instant.now().minus(1, ChronoUnit.DAYS).atZone(ZoneId.of("Asia/Jakarta")).toLocalDate());
-        Map<String, List<DailyReportSuccessDTO>> dailyReports = new HashMap<>();
+    public Map<Organizer, List<DailyReportSuccessDTO>> generateData(Integer daysBefore) {
+        List<Transaction> transactions = this.transactionService.findAllSuccessByPaymentDate(
+                Instant.now().minus(daysBefore, ChronoUnit.DAYS).atZone(ZoneId.of("Asia/Jakarta")).toLocalDate());
+        Map<Organizer, List<DailyReportSuccessDTO>> dailyReports = new HashMap<>();
         transactions.forEach(transaction -> {
-            String key = transaction.getDonation().getOrganizer().getName() + "|" + transaction.getDonation().getOrganizer().getEmail();
-            List<DailyReportSuccessDTO> dailyReport = dailyReports.get(key);
+            Organizer organizer = transaction.getDonation().getOrganizer();
+            List<DailyReportSuccessDTO> dailyReport = dailyReports.get(organizer);
             if (dailyReport == null) dailyReport = new ArrayList<DailyReportSuccessDTO>();
             dailyReport.add(fromTransactionToDTO(transaction));
-            dailyReports.put(key, dailyReport);
+            dailyReports.put(organizer, dailyReport);
         });
         return dailyReports;
     }
 
-    public String generateFile(String organizerName, List<DailyReportSuccessDTO> data) {
+    public String generateFile(String organizerName, List<DailyReportSuccessDTO> data, Integer daysBefore) {
         CsvMapper mapper = new CsvMapper();
         mapper.disable(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY);
         CsvSchema schema = mapper.schemaFor(DailyReportSuccessDTO.class);
@@ -79,7 +85,10 @@ public class DailyReportService {
         schema = schema.withHeader();
 
         ObjectWriter writer = mapper.writer(schema);
-        String fileName = "reports/donation_" + organizerName.replace(' ', '_') + "_"  + Instant.now().minus(1, ChronoUnit.DAYS).atZone(ZoneId.of("Asia/Jakarta")).toLocalDate().format(DateTimeFormatter.ofPattern("yyyy_MM_dd")) + ".csv";
+        String fileName = applicationProperties.getReport().getFolder() + applicationProperties.getReport().getBasename()
+             + organizerName.replace(' ', '_') + "_"  
+             + Instant.now().minus(daysBefore, ChronoUnit.DAYS).atZone(ZoneId.of("Asia/Jakarta")).toLocalDate().format(DateTimeFormatter.ofPattern("yyyy_MM_dd")) 
+             + ".csv";
         File file = new File(fileName);
         try {
             writer.writeValue(file, data);

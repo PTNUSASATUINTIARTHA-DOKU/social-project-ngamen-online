@@ -170,5 +170,8 @@ jhipster:
 
 application:
   name: Saweran Charity
+  report:
+    folder: reports/
+    basename: donation_
   gmail:
     active: false

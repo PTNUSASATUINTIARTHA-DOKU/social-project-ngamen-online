@@ -1,10 +1,6 @@
 package men.doku.donation.web.rest;
 
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -17,15 +13,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Example;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -36,8 +29,6 @@ import men.doku.donation.domain.Transaction;
 import men.doku.donation.security.AuthoritiesConstants;
 import men.doku.donation.service.DailyReportService;
 import men.doku.donation.service.DonationService;
-import men.doku.donation.service.MailService;
-import men.doku.donation.service.OrganizerService;
 import men.doku.donation.service.PaymentService;
 import men.doku.donation.service.TransactionService;
 import men.doku.donation.service.dto.DailyReportSuccessDTO;
@@ -57,18 +48,13 @@ public class PaymentResource {
     private final DonationService donationService;
     private final TransactionService transactionService;
     private final DailyReportService dailyReportService;
-    private final OrganizerService organizerService;
-    private final MailService mailService;
 
     public PaymentResource(PaymentService paymentService, DonationService donationService,
-            TransactionService transactionService, DailyReportService dailyReportService,
-            OrganizerService organizerService, MailService mailService) {
+            TransactionService transactionService, DailyReportService dailyReportService) {
         this.paymentService = paymentService;
         this.donationService = donationService;
         this.transactionService = transactionService;
         this.dailyReportService = dailyReportService;
-        this.organizerService = organizerService;
-        this.mailService = mailService;
     }
 
     /**
@@ -141,55 +127,30 @@ public class PaymentResource {
     }
 
     /**
-     * {@code GET  /payments/report/data} : get daily report data.
+     * {@code GET  /payments/reports } : get daily report data.
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list
      *         of Daily Reports in body.
      */
-    @GetMapping(value ="/payments/report/data", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value ="/payments/reports/{dayBefore}", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
-    public ResponseEntity<Map<String, List<DailyReportSuccessDTO>>> generateDailyReportData() {
+    public ResponseEntity<Map<Organizer, List<DailyReportSuccessDTO>>> generateDailyReportData(@PathVariable Integer dayBefore) {
         log.debug("REST request to create daily report");
-        Map<String, List<DailyReportSuccessDTO>> report = dailyReportService.generateData();
+        Map<Organizer, List<DailyReportSuccessDTO>> report = dailyReportService.generateData(dayBefore);
         return ResponseEntity.ok().body(report);
     }
 
     /**
-     * {@code GET  /payments/report/data} : get daily report data.
+     * {@code GET  /payments/reports/{dayBefore}/email } : trigger daily report send email.
      *
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list
-     *         of Daily Reports in body.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)}.
      * @throws IOException
      */
-    @GetMapping(value = "/payments/report/file/{organizerId}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    @GetMapping(value = "/payments/reports/{dayBefore}/email", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
-    public @ResponseBody byte[] generateDailyReportFile(@PathVariable Long organizerId) throws IOException {
-        log.debug("REST request to create daily report");
-        Organizer organizer = organizerService.findOne(organizerId).get();
-        String key = organizer.getName() + "|" + organizer.getEmail();
-        Map<String, List<DailyReportSuccessDTO>> data = dailyReportService.generateData();
-        List<DailyReportSuccessDTO> report = data.get(key);
-        String filename = dailyReportService.generateFile(organizer.getName() , report);    
-        FileInputStream is = new FileInputStream(filename);
-        return FileCopyUtils.copyToByteArray(is);
-    }
-
-    /**
-     * {@code GET  /payments/report/data} : get daily report data.
-     *
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list
-     *         of Daily Reports in body.
-     * @throws IOException
-     */
-    @GetMapping(value = "/payments/report/email/{organizerId}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
-    public ResponseEntity<Object> emailDailyReport(@PathVariable Long organizerId) throws IOException {
-        log.debug("REST request to create daily report");
-        Organizer organizer = organizerService.findOne(organizerId).get();
-        String date = Instant.now().atZone(ZoneId.of("Asia/Jakarta")).toLocalDate().format(DateTimeFormatter.ofPattern("yyyy_MM_dd"));
-        String fileName = "reports/donation_" + organizer.getName().replace(' ', '_') + "_"  + date + ".csv";
-        mailService.sendEmail(organizer.getEmail(), "Saweran.charity Daily Report " + date
-            , "Dear all, <br/>Terlampir laporan harian.<br/>Terima kasih.", true, true, fileName.substring(8), fileName);
-        return ResponseEntity.ok().headers(HeaderUtil.createAlert(applicationName, "Daily Report ", fileName)).body("Daily Report sent");
+    public ResponseEntity<Object> emailDailyReport(@PathVariable Integer dayBefore) throws IOException {
+        log.debug("REST request to trigger daily report email");
+        dailyReportService.generateEmail(dayBefore);
+        return ResponseEntity.ok().headers(HeaderUtil.createAlert(applicationName, "Daily ", "Report")).body("Daily Report sent");
     }
 }

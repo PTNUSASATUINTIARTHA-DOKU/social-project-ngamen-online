@@ -13,6 +13,7 @@ public class ApplicationProperties {
 
     private String name = new String();
     private String mibUrl = new String();
+    private Report report = new Report();
     private Gmail gmail = new Gmail();
 
     public String getName() {
@@ -29,6 +30,14 @@ public class ApplicationProperties {
 
     public void setMibUrl(String mibUrl) {
         this.mibUrl = mibUrl;
+    }
+
+    public Report getReport() {
+        return report;
+    }
+
+    public void setReport(Report report) {
+        this.report = report;
     }
 
     public Gmail getGmail() {
@@ -116,6 +125,28 @@ public class ApplicationProperties {
 
         public void setRegion(String region) {
             this.region = region;
+        }
+    }
+
+    public static class Report {
+
+        private String folder = new String();
+        private String basename = new String();
+
+        public String getFolder() {
+            return folder;
+        }
+
+        public void setFolder(String folder) {
+            this.folder = folder;
+        }
+
+        public String getBasename() {
+            return basename;
+        }
+
+        public void setBasename(String basename) {
+            this.basename = basename;
         }
     }
 }
