@@ -69,7 +69,7 @@ public class TransactionServiceImpl implements TransactionService {
         this.mibMapper = mibMapper;
         this.applicationProperties = applicationProperties;
         this.restTemplate = restTemplateBuilder.setConnectTimeout(Duration.ofSeconds(30))
-                .setReadTimeout(Duration.ofSeconds(65)).build();
+                .setReadTimeout(Duration.ofSeconds(70)).build();
         this.transactionProcessing = transactionProcessing;
     }
 
@@ -130,7 +130,7 @@ public class TransactionServiceImpl implements TransactionService {
     public Optional<Transaction> findOne(Example<Transaction> transaction) {
         log.debug("Request by {} to get Transaction : {}", SecurityUtils.getCurrentUserLogin().get(), transaction);
         // add method here, to do check status to MIB if Transaction Status still
-        // PROCESS and paymentdate already more than 65s than
+        // PROCESS and paymentdate already more than 70s than
         return transactionRepository.findOne(transaction);
     }
 
