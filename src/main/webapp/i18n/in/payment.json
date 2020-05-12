@@ -37,8 +37,8 @@
     },
     "loading": {
       "greeting": "Halo ",
-      "confirm1": "Mohon pastikan handphone kamu sudah berada di dalam jangkauan dan aplikasi OVO mu sudah dibuka",
-      "confirm2": "karena setelah mengeklik tombol OK di bawah, kamu hanya akan memiliki waktu 30 detik untuk menyelesaikan pembayaran",
+      "confirm1": "Pastikan aplikasi OVOmu sudah siap dibuka, ",
+      "confirm2": "harap selesaikan pembayaran dalam waktu 30 detik setelah menekan tombol OK di bawah ini",
       "counting": "kami masih menunggu penyelesaian pembayaran di aplikasi OVO mu dalam",
       "countunit": "detik",
       "checking": "Mohon menunggu, kami sedang mengecek status pembayaran kamu.",

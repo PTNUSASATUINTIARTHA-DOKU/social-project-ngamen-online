@@ -10,9 +10,8 @@
                     <span class="spinner mx-24 mb-10 inline-block"></span>
                     <br />
                     <p class="text-sm text-gray-700" jhiTranslate="payment.loading.greeting">Hello {{ this.paymentForm.get('donor')?.value }}</p>
-                    <p class="text-sm text-gray-700 mt-3" jhiTranslate="payment.loading.confirm1">Please make sure that you already have your mobile phone with you and your OVO app already open, <p>
-                    <p class="text-sm text-gray-700 mt-2" jhiTranslate="payment.loading.confirm2">since after you click OK button below, you will only
-                        have 30 seconds to complete the payment.</p>
+                    <p class="text-sm text-gray-700 mt-3" jhiTranslate="payment.loading.confirm1">Please make sure your OVO app is ready to open, <p>
+                    <p class="text-sm text-gray-700 mt-2" jhiTranslate="payment.loading.confirm2">complete your payment within 30 seconds after clicking the OK button below.</p>
                     <button (click)='confirm()' class=" mt-6 bg-red-600 hover:bg-red-500 disabled:bg-red-200 disabled:cursor-not-allowed
                 text-white text-sm py-2 px-4 font-semibold rounded focus:outline-none focus:shadow-outline h-10">OK</button>
                     
