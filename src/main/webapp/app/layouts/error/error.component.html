@@ -1,15 +1,14 @@
-<div>
-    <div class="row">
-        <div class="col-md-4">
-            <span class="hipster img-fluid rounded"></span>
-        </div>
-
-        <div class="col-md-8">
-            <h1 jhiTranslate="error.title">Error Page!</h1>
-
-            <div *ngIf="errorMessage">
-                <div class="alert alert-danger">{{ errorMessage }}</div>
+<div class="container mx-auto px-4 h-screen">
+    <section class="py-8 px-4 text-center">
+        <div class="max-w-auto mx-auto">
+            <div class="md:max-w-lg mx-auto">
+                <img src="../../../content/images/error-illustration.png" class="max-w-full max-h-full" alt="" />
             </div>
+            <h2 class="mt-8 text-xl lg:text-5xl font-black" jhiTranslate="error.title">Error Page!</h2>
+            <p class="mt-2 mb-8 text-sm lg:text-base text-gray-900" *ngIf="errorMessage">{{ errorMessage }}</p>
+            <a href="/" class="bg-red-600 hover:bg-red-500 disabled:bg-red-200 disabled:cursor-not-allowed text-white
+                    text-sm py-2 px-4 font-semibold rounded focus:outline-none focus:shadow-outline h-10">Back
+                To Homepage</a>
         </div>
-    </div>
+    </section>
 </div>

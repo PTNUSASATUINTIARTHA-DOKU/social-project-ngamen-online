@@ -1,10 +1,10 @@
 {
   "error": {
-    "title": "Kesalahan halaman!",
+    "title": "Oops!",
     "http": {
       "400": "Permintaan buruk.",
       "403": "Anda tidak memiliki izin untuk mengakses halaman ini.",
-      "404": "Halaman tidak ada.",
+      "404": "Halaman yang ingin Anda akses tidak dapat ditemukan.",
       "405": "Metode permintaan tidak didukung untuk URL ini.",
       "500": "Kesalahan internal server."
     },
