@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAmount;
+import java.time.temporal.TemporalUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -47,17 +50,16 @@ public class DailyReportService {
             log.debug("key {}", entry.getKey());
             String[] key = entry.getKey().split("\\|");
             String organizerName = key[0].replace(' ', '_');
-            log.debug("organizerName {}", organizerName);
             String organizerEmail = key[1];
-            log.debug("organizerEmail {}", organizerEmail);
             String date = Instant.now().atZone(ZoneId.of("Asia/Jakarta")).toLocalDate().format(DateTimeFormatter.ofPattern("yyyy_MM_dd"));
             String fileName = generateFile(organizerName, data.get(entry.getKey()));
-            mailService.sendEmailWithAttachment(organizerEmail, "Saweran.charity Daily Report " + date, "Dear all, <br/>Terlampir laporan harian.<br/>Terima kasih.", fileName.substring(8), fileName);
+            mailService.sendEmail(organizerEmail, "Saweran.charity Daily Report " + date, "Dear all, <br/><br/>Terlampir laporan harian.<br/><br/>Terima kasih."
+                    , true, true, fileName.substring(8), fileName);
         }
     }
 
     public Map<String, List<DailyReportSuccessDTO>> generateData() {
-        List<Transaction> transactions = this.transactionService.findAllSuccessByPaymentDate(Instant.now().atZone(ZoneId.of("Asia/Jakarta")).toLocalDate());
+        List<Transaction> transactions = this.transactionService.findAllSuccessByPaymentDate(Instant.now().minus(1, ChronoUnit.DAYS).atZone(ZoneId.of("Asia/Jakarta")).toLocalDate());
         Map<String, List<DailyReportSuccessDTO>> dailyReports = new HashMap<>();
         transactions.forEach(transaction -> {
             String key = transaction.getDonation().getOrganizer().getName() + "|" + transaction.getDonation().getOrganizer().getEmail();
@@ -77,7 +79,7 @@ public class DailyReportService {
         schema = schema.withHeader();
 
         ObjectWriter writer = mapper.writer(schema);
-        String fileName = "reports/donation_" + organizerName.replace(' ', '_') + "_"  + Instant.now().atZone(ZoneId.of("Asia/Jakarta")).toLocalDate().format(DateTimeFormatter.ofPattern("yyyy_MM_dd")) + ".csv";
+        String fileName = "reports/donation_" + organizerName.replace(' ', '_') + "_"  + Instant.now().minus(1, ChronoUnit.DAYS).atZone(ZoneId.of("Asia/Jakarta")).toLocalDate().format(DateTimeFormatter.ofPattern("yyyy_MM_dd")) + ".csv";
         File file = new File(fileName);
         try {
             writer.writeValue(file, data);

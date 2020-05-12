@@ -188,7 +188,8 @@ public class PaymentResource {
         Organizer organizer = organizerService.findOne(organizerId).get();
         String date = Instant.now().atZone(ZoneId.of("Asia/Jakarta")).toLocalDate().format(DateTimeFormatter.ofPattern("yyyy_MM_dd"));
         String fileName = "reports/donation_" + organizer.getName().replace(' ', '_') + "_"  + date + ".csv";
-        MimeMessageHelper message = mailService.sendEmailWithAttachment(organizer.getEmail(), "Saweran.charity Daily Report " + date, "Dear all, <br/>Terlampir laporan harian.<br/>Terima kasih.", fileName.substring(8), fileName);
-        return ResponseEntity.ok().headers(HeaderUtil.createAlert(applicationName, "Daily Report ", fileName)).body(message);
+        mailService.sendEmail(organizer.getEmail(), "Saweran.charity Daily Report " + date
+            , "Dear all, <br/>Terlampir laporan harian.<br/>Terima kasih.", true, true, fileName.substring(8), fileName);
+        return ResponseEntity.ok().headers(HeaderUtil.createAlert(applicationName, "Daily Report ", fileName)).body("Daily Report sent");
     }
 }

@@ -1,9 +1,9 @@
 {
   "name": "donation",
-  "version": "0.1.0-SNAPSHOT",
-  "description": "Description for donation",
+  "version": "0.2.0-SNAPSHOT",
+  "description": "Saweran Charity Frontend",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "MIT",
   "cacheDirectories": [
     "node_modules"
   ],

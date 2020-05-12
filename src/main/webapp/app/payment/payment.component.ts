@@ -13,6 +13,7 @@ import { PaymentService } from './payment.service';
 import { Donation } from 'app/shared/model/donation.model';
 import { TransactionStatus } from 'app/shared/model/enumerations/transaction-status.model';
 import * as moment from 'moment';
+import { PATTERN_WITHOUT_SYMBOL } from 'app/shared/constants/pattern.constants';
 
 @Component({
   selector: 'jhi-main',
@@ -157,7 +158,15 @@ export class PaymentComponent implements OnInit {
 
   private generateBasket(): string {
     const amt = this.paymentForm.get('amount')?.value;
-    return this.donation?.name + ' by ' + this.donation?.organizer?.name + ', ' + amt + ', 1, ' + amt;
+    return (
+      this.donation?.name?.replace(PATTERN_WITHOUT_SYMBOL, '') +
+      ' by ' +
+      this.donation?.organizer?.name?.replace(PATTERN_WITHOUT_SYMBOL, '') +
+      ', ' +
+      amt +
+      ', 1, ' +
+      amt
+    );
   }
 
   private generateDeviceId(): string {

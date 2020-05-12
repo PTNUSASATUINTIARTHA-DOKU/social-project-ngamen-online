@@ -136,7 +136,11 @@ jhipster:
 application:
   mib-url: https://pay.doku.com/MIB/ServiceRequestPayment
   gmail:
-    active: false
+    active: true
     username: admin@saweran.charity
-    credential-folder: /var/lib/tomcat8/webapps/ROOT/WEB-INF/classes/config/gmail/
-    credential: ../../../../config/gmail/client_secret.json
+    api:
+      host: www.saweran.charity
+      port: 34793
+      secret: prod/saweranCharity/googleApi
+      region: ap-southeast-1
+      credential-folder: /var/lib/tomcat8/webapps/ROOT/WEB-INF/classes/config/gmail/

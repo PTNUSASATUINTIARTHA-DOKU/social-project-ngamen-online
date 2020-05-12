@@ -7,7 +7,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
 import javax.mail.MessagingException;
-import javax.mail.MethodNotSupportedException;
 import javax.mail.internet.MimeMessage;
 
 import com.google.api.client.util.Base64;
@@ -59,7 +58,7 @@ public class MailService {
     }
 
     @Async
-    public void sendEmail(String to, String subject, String content, boolean isMultipart, boolean isHtml) {
+    public void sendEmail(String to, String subject, String content, boolean isMultipart, boolean isHtml, String attachmentName, String attachmentPath) {
         log.debug("Send email[multipart '{}' and html '{}'] to '{}' with subject '{}' and content={}",
             isMultipart, isHtml, to, subject, content);
 
@@ -71,9 +70,20 @@ public class MailService {
             message.setFrom(jHipsterProperties.getMail().getFrom());
             message.setSubject(subject);
             message.setText(content, isHtml);
-            javaMailSender.send(mimeMessage);
-            log.debug("Sent email to User '{}'", to);
-        }  catch (MailException | MessagingException e) {
+            if (isMultipart) message.addAttachment(attachmentName, new File(attachmentPath));
+            if (gmailService.getGmail().isPresent()) {
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                mimeMessage.writeTo(baos);
+                byte[] bytes = baos.toByteArray();
+                String encodedEmail = Base64.encodeBase64URLSafeString(bytes);
+                Message gmailMessage = new Message();
+                gmailMessage.setRaw(encodedEmail);
+                gmailMessage = gmailService.getGmail().get().users().messages().send("me", gmailMessage).execute();
+            } else {
+                javaMailSender.send(mimeMessage);
+            }
+            log.debug("Email sent to {} with subject {} ", to, subject);
+        }  catch (MailException | MessagingException | IOException e ) {
             log.warn("Email could not be sent to user '{}'", to, e);
         }
     }
@@ -90,7 +100,7 @@ public class MailService {
         context.setVariable(BASE_URL, jHipsterProperties.getMail().getBaseUrl());
         String content = templateEngine.process(templateName, context);
         String subject = messageSource.getMessage(titleKey, null, locale);
-        sendEmail(user.getEmail(), subject, content, false, true);
+        sendEmail(user.getEmail(), subject, content, false, true, null, null);
     }
 
     @Async
@@ -109,32 +119,5 @@ public class MailService {
     public void sendPasswordResetMail(User user) {
         log.debug("Sending password reset email to '{}'", user.getEmail());
         sendEmailFromTemplate(user, "mail/passwordResetEmail", "email.reset.title");
-    }
-
-    @Async
-    public MimeMessageHelper sendEmailWithAttachment(String to, String subject, String content, String attachmentName, String attachmentPath) {
-        log.debug("Send email to '{}' with subject '{}'", to, subject);
-        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-        MimeMessageHelper message = null;
-        try {
-            message = new MimeMessageHelper(mimeMessage, true, StandardCharsets.UTF_8.name());
-            message.setTo(to);
-            message.setFrom(jHipsterProperties.getMail().getFrom());
-            message.setSubject(subject);
-            message.setText(content, true);
-            message.addAttachment(attachmentName, new File(attachmentPath));
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            mimeMessage.writeTo(baos);
-            byte[] bytes = baos.toByteArray();
-            String encodedEmail = Base64.encodeBase64URLSafeString(bytes);
-            Message gmailMessage = new Message();
-            gmailMessage.setRaw(encodedEmail);
-            if (!gmailService.getGmail().isPresent()) throw new MethodNotSupportedException();
-            gmailMessage = gmailService.getGmail().get().users().messages().send("me", gmailMessage).execute();
-            log.debug("Email {} sent to {} with subject {}", gmailMessage.getId(), to, subject);
-        }  catch (IOException | MailException | MessagingException e) {
-            log.warn("Email could not be sent to user '{}'", to, e);
-        }
-        return message;
     }
 }

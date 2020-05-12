@@ -43,8 +43,7 @@ public class ApplicationProperties {
 
         private Boolean active = false;
         private String username = new String();
-        private String credential = new String();
-        private String credentialFolder = new String();
+        private Api api = new Api();
     
         public Boolean getActive() {
             return active;
@@ -62,13 +61,22 @@ public class ApplicationProperties {
             this.username = username;
         }
     
-        public String getCredential() {
-            return credential;
+        public Api getApi() {
+            return api;
         }
     
-        public void setCredential(String credential) {
-            this.credential = credential;
+        public void setApi(Api api) {
+            this.api = api;
         }
+    }  
+    
+    public static class Api {
+
+        private String host = new String();
+        private Integer port = 0;
+        private String secret = new String();
+        private String region = new String();
+        private String credentialFolder = new String();
 
         public String getCredentialFolder() {
             return credentialFolder;
@@ -77,5 +85,37 @@ public class ApplicationProperties {
         public void setCredentialFolder(String credentialFolder) {
             this.credentialFolder = credentialFolder;
         }
-    }    
+
+        public String getHost() {
+            return host;
+        }
+
+        public void setHost(String host) {
+            this.host = host;
+        }
+
+        public Integer getPort() {
+            return port;
+        }
+
+        public void setPort(Integer port) {
+            this.port = port;
+        }
+
+        public String getSecret() {
+            return secret;
+        }
+
+        public void setSecret(String secret) {
+            this.secret = secret;
+        }
+
+        public String getRegion() {
+            return region;
+        }
+
+        public void setRegion(String region) {
+            this.region = region;
+        }
+    }
 }
