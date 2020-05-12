@@ -1,7 +1,6 @@
-import { Component, OnInit, Inject, HostListener } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DOCUMENT } from '@angular/common';
 import { DonationService } from 'app/entities/donation/donation.service';
 import { PaymentChannel } from 'app/shared/model/enumerations/payment-channel.model';
 import { Transaction, ITransaction } from 'app/shared/model/transaction.model';
@@ -45,29 +44,12 @@ export class PaymentComponent implements OnInit {
     protected route: ActivatedRoute,
     private fb: FormBuilder,
     private device: DeviceDetectorService,
-    private router: Router,
-    @Inject(DOCUMENT) private document: Document
+    private router: Router
   ) {
     this.slug = '';
     this.donation = {};
     this.transaction = {};
     this.method = PaymentChannel.OVO;
-  }
-
-  @HostListener('window:scroll', [])
-  onWindowScroll(): void {
-    if (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop > 20) {
-      this.windowScrolled = true;
-    } else if ((this.windowScrolled && window.pageYOffset) || document.documentElement.scrollTop || document.body.scrollTop < 10) {
-      this.windowScrolled = false;
-    }
-  }
-
-  scrollToTop(): void {
-    const currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
-    if (currentScroll > 0) {
-      window.scrollTo(0, currentScroll - currentScroll / 0);
-    }
   }
 
   ngOnInit(): void {
@@ -88,7 +70,9 @@ export class PaymentComponent implements OnInit {
     }
   }
 
-  confirm(): void {
+  save(): void {
+    this.isSaving = true;
+    this.isChecking = false;
     this.isCounting = true;
     const transaction = this.createPayment();
     const sub = this.paymentService.initPayment(transaction).subscribe(
@@ -118,12 +102,6 @@ export class PaymentComponent implements OnInit {
         return this.count;
       })
     );
-  }
-
-  save(): void {
-    this.isSaving = true;
-    this.isChecking = false;
-    this.isCounting = false;
   }
 
   private createPayment(): ITransaction {

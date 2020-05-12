@@ -25,7 +25,8 @@
         "info": {
           "line1": "Pembayaran dengan OVO Pay hanya berlaku untuk OVO user. Pastikan akun OVO mu aktif.",
           "line2": "Kamu bisa download aplikasi OVO di Apple App Store atau Google Play Store.",
-          "line3": "Klik tombol \"Donasi Sekarang\" setelah itu lanjutkan konfirmasi pembayaran di aplikasi OVO mu."
+          "line3": "Klik tombol \"Donasi Sekarang\" setelah itu lanjutkan konfirmasi pembayaran di aplikasi OVO mu.",
+          "line4": "Mohon selesaikan pembayaran melalui aplikasi OVO Anda dalam waktu 30 detik setelah menekan tombol di bawah ini."
         },
         "button": "Donasi Sekarang",
         "validation": {

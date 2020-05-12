@@ -1,54 +1,56 @@
-<div class="container max-w-md mx-auto xl:max-w-3xl h-full flex bg-white rounded-lg shadow-lg overflow-hidden my-6 xl:my-8">
+<div
+    class="container max-w-md mx-auto xl:max-w-3xl h-full flex bg-white rounded-lg shadow-lg overflow-hidden my-6 xl:my-8">
     <div class="w-full p-8">
         <div>
             <img src="../../content/images/kolaborartsy_1024.jpg" alt="" class="w-full h-full">
         </div>
 
         <div class="loading" *ngIf="isSaving">
-            <div class="min-w-full min-h-full h-full absolute z-50 bg-gray-100 top-0 left-0" *ngIf="!isCounting&&!isChecking">
+            <div class="min-w-full min-h-full h-full absolute z-50 bg-gray-100 top-0 left-0"
+                *ngIf="isCounting&&!isChecking">
                 <div class="text-center m-24">
                     <span class="spinner mx-24 mb-10 inline-block"></span>
                     <br />
-                    <p class="text-sm text-gray-700" jhiTranslate="payment.loading.greeting">Hello {{ this.paymentForm.get('donor')?.value }}</p>
-                    <p class="text-sm text-gray-700 mt-3" jhiTranslate="payment.loading.confirm1">Please make sure your OVO app is ready to open, <p>
-                    <p class="text-sm text-gray-700 mt-2" jhiTranslate="payment.loading.confirm2">complete your payment within 30 seconds after clicking the OK button below.</p>
-                    <button (click)='confirm()' class=" mt-6 bg-red-600 hover:bg-red-500 disabled:bg-red-200 disabled:cursor-not-allowed
-                text-white text-sm py-2 px-4 font-semibold rounded focus:outline-none focus:shadow-outline h-10">OK</button>
-                    
+                    <p class="text-sm text-gray-700" jhiTranslate="payment.loading.greeting">Hello
+                        {{ this.paymentForm.get('donor')?.value }}</p>
+                    <p class="text-sm text-gray-700 mt-3"><span jhiTranslate="payment.loading.counting">We are still
+                            waiting for your payment on your OVO app in</span> {{ this.counter$ | async }} <span
+                            jhiTranslate="payment.loading.countunit">seconds</span>
+                        <p>
+                            <p class="text-sm text-gray-700 mt-6" jhiTranslate="payment.loading.steps">Do these 4 easy
+                                steps:</p>
+                            <ol class="text-sm text-gray-700 mt-2">
+                                <li>
+                                    <p jhiTranslate="payment.loading.step1" class="mb-1">1. Log in into your OVO app and
+                                        then click bell sign on top-right corner.</p>
+                                </li>
+                                <li>
+                                    <p jhiTranslate="payment.loading.step2" class="mb-1">2. Choose available payment
+                                        method.</p>
+                                </li>
+                                <li>
+                                    <p jhiTranslate="payment.loading.step3" class="mb-1">3. Click button Pay.</p>
+                                </li>
+                                <li>
+                                    <p jhiTranslate="payment.loading.step4">4. Input your PIN or scan your fingeprint to
+                                        authorize payment.</p>
+                                </li>
+                            </ol>
                 </div>
             </div>
 
-            <div class="min-w-full min-h-full h-full absolute z-50 bg-gray-100 top-0 left-0" *ngIf="isCounting&&!isChecking">
+            <div class="min-w-full min-h-full h-full absolute z-50 bg-gray-100 top-0 left-0"
+                *ngIf="!isCounting&&isChecking">
                 <div class="text-center m-24">
                     <span class="spinner mx-24 mb-10 inline-block"></span>
                     <br />
-                    <p class="text-sm text-gray-700" jhiTranslate="payment.loading.greeting">Hello {{ this.paymentForm.get('donor')?.value }}</p>
-                    <p class="text-sm text-gray-700 mt-3"><span jhiTranslate="payment.loading.counting">We are still waiting for your payment on your OVO app in</span> {{ this.counter$ | async }} <span jhiTranslate="payment.loading.countunit">seconds</span><p>
-                    <p class="text-sm text-gray-700 mt-6" jhiTranslate="payment.loading.steps">Do these 4 easy steps:</p>
-                    <ol class="text-sm text-gray-700 mt-2">
-                        <li>
-                            <p jhiTranslate="payment.loading.step1" class="mb-1">1. Log in into your OVO app and then click bell sign on top-right corner.</p>
-                        </li>
-                        <li>
-                            <p jhiTranslate="payment.loading.step2" class="mb-1">2. Choose available payment method.</p>
-                        </li>
-                        <li>
-                            <p jhiTranslate="payment.loading.step3" class="mb-1">3. Click button Pay.</p>
-                        </li>
-                        <li>
-                            <p jhiTranslate="payment.loading.step4">4. Input your PIN or scan your fingeprint to authorize payment.</p>
-                        </li>
-                    </ol>
-                </div>
-            </div>
-
-            <div class="min-w-full min-h-full h-full absolute z-50 bg-gray-100 top-0 left-0" *ngIf="!isCounting&&isChecking">
-                <div class="text-center m-24">
-                    <span class="spinner mx-24 mb-10 inline-block"></span>
-                    <br />
-                    <p class="text-sm text-gray-700" jhiTranslate="payment.loading.greeting">Hello {{ this.paymentForm.get('donor')?.value }}</p>
-                    <p class="text-sm text-gray-700 mt-3" jhiTranslate="payment.loading.checking">Please wait, we are still checking your payment result.<p>
-                    <p class="text-sm text-gray-700 mt-3"><span jhiTranslate="payment.loading.redirect">You will be directed within</span> {{ this.counter$ | async }} <span jhiTranslate="payment.loading.countunit">seconds</span></p>
+                    <p class="text-sm text-gray-700" jhiTranslate="payment.loading.greeting">Hello
+                        {{ this.paymentForm.get('donor')?.value }}</p>
+                    <p class="text-sm text-gray-700 mt-3" jhiTranslate="payment.loading.checking">Please wait, we are
+                        still checking your payment result.<p>
+                            <p class="text-sm text-gray-700 mt-3"><span jhiTranslate="payment.loading.redirect">You will
+                                    be directed within</span> {{ this.counter$ | async }} <span
+                                    jhiTranslate="payment.loading.countunit">seconds</span></p>
                 </div>
             </div>
         </div>
@@ -56,7 +58,7 @@
         <div class="row justify-content-center mt-5">
             <div class="col-8">
                 <jhi-alert-error></jhi-alert-error>
-                
+
                 <form name="paymentForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="paymentForm">
                     <h1 class="text-2xl font-bold mb-1" jhiTranslate="payment.title">Complete your Donation</h1>
 
@@ -66,7 +68,8 @@
                         Your donation will be received by
                     </p>
 
-                    <div class="border border-grey-light bg-white rounded p-4 flex flex-col justify-between leading-normal shadow-sm hover:shadow-md">
+                    <div
+                        class="border border-grey-light bg-white rounded p-4 flex flex-col justify-between leading-normal shadow-sm hover:shadow-md">
                         <div class="mb-4">
                             <div class="text-gray-900 font-bold text-xl">{{this.donation?.name}}</div>
                         </div>
@@ -75,16 +78,19 @@
                                 <img class="w-10 h-10 rounded-full mr-4" src="{{this.donation?.imageUrl}}"
                                     alt="Logo of the Organization">
                             </div>
-                            
+
                             <div class="text-sm">
                                 <p class="text-gray-600 text-xs"> {{this.donation?.description}} </p>
-                                <p class="text-gray-700 leading-none"><a href="{{this.donation?.url}}" class="text-blue-500 hover:text-blue-800 text-xs">{{this.donation?.url}}</a></p>
+                                <p class="text-gray-700 leading-none"><a href="{{this.donation?.url}}"
+                                        class="text-blue-500 hover:text-blue-800 text-xs">{{this.donation?.url}}</a></p>
                             </div>
                         </div>
                         <div class="text-sm mt-3">
                             <p class="text-gray-600 text-xs" jhiTranslate="payment.section.info.organizer">
                                 Organizer</p>
-                            <p class="text-gray-700 leading-none"><a href="{{this.donation?.organizer?.url}}" class="text-blue-500 hover:text-blue-800 text-xs">{{this.donation?.organizer?.name}}</a></p>
+                            <p class="text-gray-700 leading-none"><a href="{{this.donation?.organizer?.url}}"
+                                    class="text-blue-500 hover:text-blue-800 text-xs">{{this.donation?.organizer?.name}}</a>
+                            </p>
                         </div>
                     </div>
 
@@ -119,14 +125,12 @@
 
                             <div
                                 *ngIf="paymentForm.get('donor')!.invalid && (paymentForm.get('donor')!.dirty || paymentForm.get('donor')!.touched)">
-                                <small class="text-xs text-red-500"
-                                    *ngIf="paymentForm.get('donor')?.errors?.maxlength"
+                                <small class="text-xs text-red-500" *ngIf="paymentForm.get('donor')?.errors?.maxlength"
                                     jhiTranslate="payment.section.form.validation.maxlength"
                                     [translateValues]="{ max: 30 }">
                                     Please shorten your name. The maximum length is 30 characters.
                                 </small>
-                                <small class="text-xs text-red-500"
-                                    *ngIf="paymentForm.get('donor')?.errors?.required"
+                                <small class="text-xs text-red-500" *ngIf="paymentForm.get('donor')?.errors?.required"
                                     jhiTranslate="payment.section.form.validation.required">
                                     Please input your name, otherwise you may tick the anonymous checkbox.
                                 </small>
@@ -143,8 +147,11 @@
                                     <span
                                         class="flex items-center bg-gray-200 rounded rounded-r-none px-3 font-semibold text-sm text-gray-700">Rp</span>
                                 </div>
-                                <input class="flex-shrink flex-grow flex-auto leading-normal w-px flex-1 text-sm bg-gray-200 py-2 px-3 rounded rounded-l-none space-y-0 relative focus:outline-none focus:shadow-outline h-10"
-                                    placeholder="1.000.000" name="amount" id="field_amount" currencyMask formControlName="amount" [options]="{ prefix: '', thousands: '.', decimal: ',', precision: 0, align: 'left' }"
+                                <input
+                                    class="flex-shrink flex-grow flex-auto leading-normal w-px flex-1 text-sm bg-gray-200 py-2 px-3 rounded rounded-l-none space-y-0 relative focus:outline-none focus:shadow-outline h-10"
+                                    placeholder="1.000.000" name="amount" id="field_amount" currencyMask
+                                    formControlName="amount"
+                                    [options]="{ prefix: '', thousands: '.', decimal: ',', precision: 0, align: 'left' }"
                                     autocomplete="off">
                             </div>
                             <div
@@ -187,13 +194,12 @@
                                     <div class="flex -mr-px">
                                         <span
                                             class="flex items-center bg-gray-200 rounded rounded-r-none px-3 font-semibold text-sm text-gray-700"><img
-                                                src="../../content/images/payment/indonesia-flag.svg"
-                                                alt="" class="w-4"></span>
+                                                src="../../content/images/payment/indonesia-flag.svg" alt=""
+                                                class="w-4"></span>
                                     </div>
                                     <input type="text"
                                         class="flex-shrink flex-grow flex-auto leading-normal w-px flex-1 text-sm bg-gray-200 py-2 px-3 rounded rounded-l-none space-y-0 relative focus:outline-none focus:shadow-outline h-10"
-                                        placeholder="81212121212" name="phone" id="field_phone"
-                                        formControlName="phone">
+                                        placeholder="81212121212" name="phone" id="field_phone" formControlName="phone">
                                 </div>
                                 <div
                                     *ngIf="paymentForm.get('phone')!.invalid && (paymentForm.get('phone')!.dirty || paymentForm.get('phone')!.touched)">
@@ -225,6 +231,9 @@
                                             "Donate" button and
                                             complete your payment within your OVO
                                             application.</span></li>
+                                    <li><span jhiTranslate="payment.section.form.info.line4">Please complete the payment
+                                            through OVO app within 30 seconds after clicking the following
+                                            button.</span></li>
                                 </ol>
                             </div>
 
@@ -235,7 +244,7 @@
                                 <button type="submit" id="save-payment" [disabled]="paymentForm.invalid || isSaving"
                                     class="w-full bg-red-600 hover:bg-red-500 disabled:bg-red-200 disabled:cursor-not-allowed
                 text-white text-sm py-2 px-4 font-semibold rounded focus:outline-none focus:shadow-outline h-10"
-                                    jhiTranslate="payment.section.form.button" (click)="scrollToTop()">
+                                    jhiTranslate="payment.section.form.button">
                                     Donate
                                 </button>
                             </div>
@@ -243,8 +252,8 @@
 
                     <p class="text-center text-xs mt-8">
                         <span jhiTranslate="payment.powered">Powered by</span> <img
-                            src="../../content/images/payment/doku-logo.png" alt="DOKU Logo" width="25px"
-                            height="25px" class="inline-block">
+                            src="../../content/images/payment/doku-logo.png" alt="DOKU Logo" width="25px" height="25px"
+                            class="inline-block">
                     </p>
             </div>
         </div>
