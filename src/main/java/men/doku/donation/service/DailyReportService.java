@@ -54,11 +54,9 @@ public class DailyReportService {
         Map<Organizer, List<DailyReportSuccessDTO>> data = generateData(daysBefore);
         for (Map.Entry<Organizer, List<DailyReportSuccessDTO>> entry: data.entrySet()) {
             Organizer organizer = entry.getKey();
-            log.debug("Organizer {}", organizer);
-            String date = Instant.now().minus(daysBefore, ChronoUnit.DAYS).atZone(ZoneId.of("Asia/Jakarta")).toLocalDate().format(DateTimeFormatter.ofPattern("yyyy_MM_dd"));
             String filePath = generateFile(organizer.getName(), data.get(organizer), daysBefore);
-            String fileName =  filePath.substring(filePath.indexOf(applicationProperties.getReport().getBasename()) + 8);
-            mailService.sendEmail(organizer.getEmail(), "Saweran.charity Daily Report " + date, "Dear all, <br/><br/>Terlampir laporan harian.<br/><br/>Terima kasih."
+            String fileName =  filePath.substring(filePath.indexOf(applicationProperties.getReport().getBasename()));
+            mailService.sendEmail(organizer.getEmail(), applicationProperties.getName() + " - " + fileName.replaceAll("_", " "), "Dear all, <br/><br/>Terlampir laporan harian.<br/><br/>Terima kasih."
                     , true, true, fileName, filePath);
         }
     }
@@ -87,7 +85,7 @@ public class DailyReportService {
         ObjectWriter writer = mapper.writer(schema);
         String fileName = applicationProperties.getReport().getFolder() + applicationProperties.getReport().getBasename()
              + organizerName.replace(' ', '_') + "_"  
-             + Instant.now().minus(daysBefore, ChronoUnit.DAYS).atZone(ZoneId.of("Asia/Jakarta")).toLocalDate().format(DateTimeFormatter.ofPattern("yyyy_MM_dd")) 
+             + Instant.now().minus(daysBefore, ChronoUnit.DAYS).atZone(ZoneId.of("Asia/Jakarta")).toLocalDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) 
              + ".csv";
         File file = new File(fileName);
         file.getParentFile().mkdirs();
