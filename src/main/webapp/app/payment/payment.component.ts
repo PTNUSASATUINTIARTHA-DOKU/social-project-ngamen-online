@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DonationService } from 'app/entities/donation/donation.service';
@@ -50,6 +50,21 @@ export class PaymentComponent implements OnInit {
     this.donation = {};
     this.transaction = {};
     this.method = PaymentChannel.OVO;
+  }
+
+  @HostListener('window:scroll', [])
+  onWindowScroll(): void {
+    if (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop > 20) {
+      this.windowScrolled = true;
+    } else if ((this.windowScrolled && window.pageYOffset) || document.documentElement.scrollTop || document.body.scrollTop < 10) {
+      this.windowScrolled = false;
+    }
+  }
+  scrollToTop(): void {
+    const currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
+    if (currentScroll > 0) {
+      window.scrollTo(0, currentScroll - currentScroll / 0);
+    }
   }
 
   ngOnInit(): void {
