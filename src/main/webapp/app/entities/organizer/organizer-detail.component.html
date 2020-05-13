@@ -56,12 +56,20 @@
 
                 <div class="mb-2 text-gray-800">
                     <span class="font-semibold" jhiTranslate="donationApp.organizer.mdr">MDR</span>:
-                    <span>{{ organizer.mdr }}</span>
+                    <span *ngIf="organizer.status === 'ACTIVE'">{{ organizer.mdr }}</span>
+                    <span *ngIf="!organizer.status"
+                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
+                        WAITING FOR APPROVAL
+                    </span>
                 </div>
 
                 <div class="mb-2 text-gray-800">
                     <span class="font-semibold" jhiTranslate="donationApp.organizer.sharing">Sharing</span>:
-                    <span>{{ organizer.sharing }}</span>
+                    <span *ngIf="organizer.status === 'ACTIVE'">{{ organizer.sharing }}</span>
+                    <span *ngIf="!organizer.status"
+                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
+                        WAITING FOR APPROVAL
+                    </span>
                 </div>
 
                 <hr class="mb-2">
@@ -114,6 +122,10 @@
                         class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
                         jhiTranslate="{{ 'donationApp.IsActiveStatus.' + organizer.status }}">
                         DISABLED
+                    </span>
+                    <span *ngIf="!organizer.status"
+                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
+                        WAITING FOR APPROVAL
                     </span>
                 </div>
 
