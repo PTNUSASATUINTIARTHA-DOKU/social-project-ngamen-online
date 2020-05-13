@@ -1,6 +1,16 @@
-# donation
+# Project Management
 
-This application was generated using JHipster 6.8.0, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v6.8.0](https://www.jhipster.tech/documentation-archive/v6.8.0).
+For further development and new change request please kindly contact us via email to admin@saweran.charity . 
+
+You may check progress of future development and change request on this Trello board: 
+https://trello.com/b/ELZ7dhqY/social-project-ngamen-online-v1 .
+
+# Donation
+
+This application's purpose is for non Commercial purpose, if you want to donate to this application please visit https://www.saweran.charity/payment/donasi-saweran-charity .
+
+Special thank you to JHipster 6.8.0 for helping generating this application code base.
+To learn more about JHipster please visit [https://www.jhipster.tech/documentation-archive/v6.8.0](https://www.jhipster.tech/documentation-archive/v6.8.0).
 
 ## Development
 
