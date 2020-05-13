@@ -1,117 +1,173 @@
-<div class="row justify-content-center">
-    <div class="col-8">
-        <div *ngIf="transaction">
-            <h2><span jhiTranslate="donationApp.transaction.detail.title">Transaction</span> {{ transaction.id }}</h2>
+<div *ngIf="transaction">
+    <div class="container mx-auto bg-white my-6 px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between mb-6">
+            <div>
+                <h1 class="text-2xl font-bold mb-1"><span
+                        jhiTranslate="donationApp.transaction.detail.title">Transaction</span> {{ transaction.id }}</h1>
+            </div>
 
-            <hr>
+            <div>
+                <button type="submit" (click)="previousState()"
+                    class="bg-white hover:bg-red-500 disabled:border-red-200 disabled:text-red-200 border border-red-500 disabled:cursor-not-allowed text-red-500 hover:text-white text-sm py-2 px-4 font-semibold rounded focus:outline-none focus:shadow-outline h-10">
+                    <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+                </button>
+            </div>
+        </div>
 
-            <jhi-alert-error></jhi-alert-error>
+        <div class="flex bg-white rounded-lg shadow-lg">
+            <div class="w-full p-6 lg:px-8">
+                <div class="mb-2">
+                    <jhi-alert-error></jhi-alert-error>
+                </div>
 
-            <dl class="row-md jh-entity-details">
-                <dt><span jhiTranslate="donationApp.transaction.invoiceNumber">Invoice Number</span></dt>
-                <dd>
+                <div class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.transaction.invoiceNumber">Invoice Number</span>:
                     <span>{{ transaction.invoiceNumber }}</span>
-                </dd>
-                <dt><span jhiTranslate="donationApp.transaction.sessionId">Session Id</span></dt>
-                <dd>
-                    <span>{{ transaction.sessionId }}</span>
-                </dd>
-                <dt><span jhiTranslate="donationApp.transaction.basket">Basket</span></dt>
-                <dd>
-                    <span>{{ transaction.basket }}</span>
-                </dd>
-                <dt><span jhiTranslate="donationApp.transaction.ovoIdMasked">Ovo Id Masked</span></dt>
-                <dd>
-                    <span>{{ transaction.ovoIdMasked }}</span>
-                </dd>
-                <dt><span jhiTranslate="donationApp.transaction.deviceInformation">Device Information</span></dt>
-                <dd>
-                    <span>{{ transaction.deviceInformation }}</span>
-                </dd>
-                <dt><span jhiTranslate="donationApp.transaction.name">Name</span></dt>
-                <dd>
-                    <span>{{ transaction.name }}</span>
-                </dd>
-                <dt><span jhiTranslate="donationApp.transaction.mobile">Mobile</span></dt>
-                <dd>
-                    <span>{{ transaction.mobile }}</span>
-                </dd>
-                <dt><span jhiTranslate="donationApp.transaction.email">Email</span></dt>
-                <dd>
-                    <span>{{ transaction.email }}</span>
-                </dd>
-                <dt><span jhiTranslate="donationApp.transaction.amount">Amount</span></dt>
-                <dd>
-                    <span>{{ transaction.amount }}</span>
-                </dd>
-                <dt><span jhiTranslate="donationApp.transaction.paymentChannel">Payment Channel</span></dt>
-                <dd>
-                    <span jhiTranslate="{{ 'donationApp.PaymentChannel.' + transaction.paymentChannel }}">{{ transaction.paymentChannel }}</span>
-                </dd>
-                <dt><span jhiTranslate="donationApp.transaction.mallId">Mall Id</span></dt>
-                <dd>
-                    <span>{{ transaction.mallId }}</span>
-                </dd>
-                <dt><span jhiTranslate="donationApp.transaction.trxCode">Trx Code</span></dt>
-                <dd>
-                    <span>{{ transaction.trxCode }}</span>
-                </dd>
-                <dt><span jhiTranslate="donationApp.transaction.paymentDate">Payment Date</span></dt>
-                <dd>
+                </div>
+
+                <div class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.transaction.paymentDate">Payment Date</span>:
                     <span>{{ transaction.paymentDate | date:'medium' }}</span>
-                </dd>
-                <dt><span jhiTranslate="donationApp.transaction.responseCode">Response Code</span></dt>
-                <dd>
+                </div>
+
+                <div class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.transaction.status">Status</span>:
+                    <span *ngIf="transaction.status === 'INITIATE'"
+                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800"
+                        jhiTranslate="{{ 'donationApp.TransactionStatus.' + transaction.status }}">
+                        INITIATE
+                    </span>
+                    <span *ngIf="transaction.status === 'PROCESS'"
+                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800"
+                        jhiTranslate="{{ 'donationApp.TransactionStatus.' + transaction.status }}">
+                        PROCESS
+                    </span>
+                    <span *ngIf="transaction.status === 'SUCCESS'"
+                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+                        jhiTranslate="{{ 'donationApp.TransactionStatus.' + transaction.status }}">
+                        SUCCESS
+                    </span>
+                    <span *ngIf="transaction.status === 'FAILED'"
+                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
+                        jhiTranslate="{{ 'donationApp.TransactionStatus.' + transaction.status }}">
+                        FAILED
+                    </span>
+                </div>
+
+                <hr class="mb-2">
+
+                <div class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.transaction.ovoIdMasked">Ovo Id Masked</span>:
+                    <span>{{ transaction.ovoIdMasked }}</span>
+                </div>
+
+
+                <div class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.transaction.name">Name</span>:
+                    <span>{{ transaction.name }}</span>
+                </div>
+
+                <hr class="mb-2">
+
+                <div class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.transaction.mobile">Mobile</span>:
+                    <span>{{ transaction.mobile }}</span>
+                </div>
+
+                <div class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.transaction.email">Email</span>:
+                    <span>{{ transaction.email }}</span>
+                </div>
+
+                <hr class="mb-2">
+
+                <div class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.transaction.amount">Amount</span>:
+                    <span>{{ transaction.amount | currency:'IDR':'code' }}</span>
+                </div>
+
+                <div class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.transaction.paymentChannel">Payment Channel</span>:
+                    <span jhiTranslate="{{ 'donationApp.PaymentChannel.' + transaction.paymentChannel }}">{{ transaction.paymentChannel }}</span>
+                </div>
+
+                <hr class="mb-2">
+
+                <div *ngIf="transaction.donation" class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.transaction.donation">Donation</span>:
+                    <a [routerLink]="['/donation', transaction.donation?.id, 'view']"
+                        class="text-blue-600 hover:text-blue-700">{{ transaction.donation?.name }}</a>
+                </div>
+
+                <div *ngIf="transaction.donation" class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.transaction.organizer">Organizer</span>:
+                    <a class="text-blue-600 hover:text-blue-700"
+                        [routerLink]="['/organizer', transaction.donation?.organizer?.id, 'view']">{{ transaction.donation?.organizer?.name }}</a>
+                </div>
+
+                <div class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.transaction.sessionId">Session Id</span>:
+                    <span>{{ transaction.sessionId }}</span>
+                </div>
+
+                <div class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.transaction.basket">Basket</span>:
+                    <span>{{ transaction.basket }}</span>
+                </div>
+
+                <div class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.transaction.deviceInformation">Device
+                        Information</span>:
+                    <span>{{ transaction.deviceInformation }}</span>
+                </div>
+
+                <hr class="mb-2">
+
+                <div class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.transaction.mallId">Mall ID</span>:
+                    <span>{{ transaction.mallId }}</span>
+                </div>
+
+                <div class="mb-2 text-gray-800">
+                    <span jhiTranslate="donationApp.transaction.trxCode">Trx Code</span></dt>
+                    <span>{{ transaction.trxCode }}</span>
+                </div>
+
+                <div class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.transaction.responseCode">Response Code</span>:
                     <span>{{ transaction.responseCode }}</span>
-                </dd>
-                <dt><span jhiTranslate="donationApp.transaction.message">Message</span></dt>
-                <dd>
+                </div>
+
+                <div class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.transaction.message">Message</span>:
                     <span>{{ transaction.message }}</span>
-                </dd>
-                <dt><span jhiTranslate="donationApp.transaction.paymentSystrace">Payment Systrace</span></dt>
-                <dd>
+                </div>
+
+                <div class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.transaction.paymentSystrace">Payment Systrace</span>:
                     <span>{{ transaction.paymentSystrace }}</span>
-                </dd>
-                <dt><span jhiTranslate="donationApp.transaction.approvalCode">Approval Code</span></dt>
-                <dd>
+                </div>
+
+                <div class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.transaction.approvalCode">Approval Code</span>:
                     <span>{{ transaction.approvalCode }}</span>
-                </dd>
-                <dt><span jhiTranslate="donationApp.transaction.paymentHostRefNumber">Payment Host Ref Number</span></dt>
-                <dd>
+                </div>
+
+                <div class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.transaction.paymentHostRefNumber">Payment Host Ref Number</span>:
                     <span>{{ transaction.paymentHostRefNumber }}</span>
-                </dd>
-                <dt><span jhiTranslate="donationApp.transaction.lastUpdatedBy">Last Updated By</span></dt>
-                <dd>
+                </div>
+
+                <div class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.transaction.lastUpdatedBy">Last Updated By</span>:
                     <span>{{ transaction.lastUpdatedBy }}</span>
-                </dd>
-                <dt><span jhiTranslate="donationApp.transaction.lastUpdatedAt">Last Updated At</span></dt>
-                <dd>
-                    <span>{{ transaction.lastUpdatedAt | date:'medium'  }}</span>
-                </dd>
-                <dt><span jhiTranslate="donationApp.transaction.status">Status</span></dt>
-                <dd>
-                    <span jhiTranslate="{{ 'donationApp.TransactionStatus.' + transaction.status }}">{{ transaction.status }}</span>
-                </dd>
-                <dt><span jhiTranslate="donationApp.transaction.donation">Donation</span></dt>
-                <dd>
-                    <div *ngIf="transaction.donation">
-                        <a [routerLink]="['/donation', transaction.donation?.id, 'view']">{{ transaction.donation?.name }}</a>
-                    </div>
-                </dd>
-                <dt><span jhiTranslate="donationApp.transaction.donation">Organizer</span></dt>
-                <dd>
-                    <div *ngIf="transaction.donation">
-                        <a [routerLink]="['/organizer', transaction.donation?.organizer?.id, 'view']">{{ transaction.donation?.organizer?.name }}</a>
-                    </div>
-                </dd>
-            </dl>
+                </div>
 
-            <button type="submit"
-                    (click)="previousState()"
-                    class="btn btn-info">
-                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
-            </button>
-
+                <div class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.transaction.lastUpdatedAt">Last Updated At</span>:
+                    <span>{{ transaction.lastUpdatedAt | date:'medium' }}</span>
+                </div>
+            </div>
         </div>
     </div>
 </div>

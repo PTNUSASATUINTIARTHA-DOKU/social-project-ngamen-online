@@ -36,13 +36,29 @@
                         </div>
                     </div>
 
+                     <div class="my-4">
+                         <label class="block text-gray-700 text-sm font-semibold mb-2"
+                             jhiTranslate="donationApp.donation.paymentSlug" for="field_paymentSlug">Payment
+                             Slug</label>
+                         <input type="text"
+                             class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200
+                        disabled:bg-gray-400 disabled:cursor-not-allowed leading-tight focus:outline-none focus:shadow-outline h-10"
+                             name="paymentSlug" id="field_paymentSlug" formControlName="paymentSlug" disabled />
+                         <div
+                             *ngIf="editForm.get('paymentSlug')!.invalid && (editForm.get('paymentSlug')!.dirty || editForm.get('paymentSlug')!.touched)">
+                             <small class="text-xs text-red-500" *ngIf="editForm.get('paymentSlug')?.errors?.maxlength"
+                                 jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 100 }">
+                                 This field cannot be longer than 100 characters.
+                             </small>
+                         </div>
+                     </div>
+
                     <div class="my-4">
                         <label class="block text-gray-700 text-sm font-semibold mb-2"
                             jhiTranslate="donationApp.donation.description" for="field_description">Description</label>
-                        <input type="text"
-                            class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200
-                        disabled:bg-gray-400 disabled:cursor-not-allowed leading-tight focus:outline-none focus:shadow-outline h-10"
-                            name="description" id="field_description" formControlName="description" />
+                        <textarea class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200
+                        disabled:bg-gray-400 disabled:cursor-not-allowed leading-tight focus:outline-none focus:shadow-outline h-20"
+                            name="description" id="field_description" formControlName="description"></textarea>
                         <div
                             *ngIf="editForm.get('description')!.invalid && (editForm.get('description')!.dirty || editForm.get('description')!.touched)">
                             <small class="text-xs text-red-500" *ngIf="editForm.get('description')?.errors?.maxlength"
@@ -94,23 +110,33 @@
 
                     <div class="my-4">
                         <label class="block text-gray-700 text-sm font-semibold mb-2"
-                            jhiTranslate="donationApp.donation.paymentSlug" for="field_paymentSlug">Payment Slug</label>
-                        <input type="text"
-                            class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200
-                        disabled:bg-gray-400 disabled:cursor-not-allowed leading-tight focus:outline-none focus:shadow-outline h-10"
-                            name="paymentSlug" id="field_paymentSlug" formControlName="paymentSlug" disabled />
-                        <div
-                            *ngIf="editForm.get('paymentSlug')!.invalid && (editForm.get('paymentSlug')!.dirty || editForm.get('paymentSlug')!.touched)">
-                            <small class="text-xs text-red-500" *ngIf="editForm.get('paymentSlug')?.errors?.maxlength"
-                                jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 100 }">
-                                This field cannot be longer than 100 characters.
-                            </small>
+                            jhiTranslate="donationApp.donation.organizer" for="field_organizer">Organizer</label>
+                        <div class="relative">
+                            <select
+                                class="text-sm block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-2 px-3 rounded leading-tight focus:outline-none focus:bg-white disabled:bg-gray-400 disabled:cursor-not-allowed h-10"
+                                id="field_organizer" name="organizer" formControlName="organizer">
+                                <option [ngValue]="null"></option>
+                                <option
+                                    [ngValue]="organizerOption.id === editForm.get('organizer')!.value?.id ? editForm.get('organizer')!.value : organizerOption"
+                                    *ngFor="let organizerOption of organizers; trackBy: trackById">
+                                    {{ organizerOption.name }}
+                                </option>
+                            </select>
+                            <div
+                                class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 20 20">
+                                    <path
+                                        d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                                </svg>
+                            </div>
                         </div>
                     </div>
 
+                    <hr class="my-8">
+
                     <div class="my-4">
-                        <label class="block text-gray-700 text-sm font-semibold mb-2"
-                            jhiTranslate="donationApp.donation.bankAccountNumber" for="field_bankAccountNumber">Bank Account
+                        <label class="block text-gray-700 text-sm font-semibold mb-2" jhiTranslate="donationApp.donation.bankAccountNumber" for="field_bankAccountNumber">Bank Account
                             Number</label>
                         <input type="text"
                             class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200
@@ -164,7 +190,7 @@
                             jhiTranslate="donationApp.donation.status" for="field_status">Status</label>
                         <div class="relative">
                             <select
-                                class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                class="text-sm block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-2 px-3 rounded leading-tight focus:outline-none focus:bg-white disabled:bg-gray-400 disabled:cursor-not-allowed h-10"
                                 name="status" formControlName="status" id="field_status">
                                 <option value="ACTIVE">{{ 'donationApp.IsActiveStatus.ACTIVE' | translate }}</option>
                                 <option value="DISABLED">{{ 'donationApp.IsActiveStatus.DISABLED' | translate }}
@@ -178,22 +204,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="my-4">
-                        <label class="block text-gray-700 text-sm font-semibold mb-2"
-                            jhiTranslate="donationApp.donation.organizer" for="field_organizer">Organizer</label>
-                        <select
-                            class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200
-                        disabled:bg-gray-400 disabled:cursor-not-allowed leading-tight focus:outline-none focus:shadow-outline h-10"
-                            id="field_organizer" name="organizer" formControlName="organizer">
-                            <option [ngValue]="null"></option>
-                            <option
-                                [ngValue]="organizerOption.id === editForm.get('organizer')!.value?.id ? editForm.get('organizer')!.value : organizerOption"
-                                *ngFor="let organizerOption of organizers; trackBy: trackById">{{ organizerOption.name }}
-                            </option>
-                        </select>
-                    </div>
-                
 
                     <div class="mt-2 flex items-center justify-between">
                         <button type="button" id="cancel-save"

@@ -112,13 +112,22 @@
                                     [routerLink]="['/donation', transaction.donation?.id, 'view']" *ngIf="transaction.donation">{{ transaction.donation?.name }}</a>
                             </td>
                             <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm"><a
-                                    [routerLink]="['/transaction', transaction.donation?.organizer?.id, 'view']" *ngIf="transaction.donation">{{ transaction.donation?.organizer?.name }}</a>
+                                    [routerLink]="['/organizer', transaction.donation?.organizer?.id, 'view']" *ngIf="transaction.donation">{{ transaction.donation?.organizer?.name }}</a>
                             </td>
                     </tbody>
                 </table>
+            </div>
+        </div>
 
+        <div class="flex items-center justify-between mt-4 mb-6">
+            <div class="text-sm text-gray-800">
                 <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
-                <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
+            </div>
+
+            <div>
+                <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage"
+                    [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)">
+                </ngb-pagination>
             </div>
         </div>
     </div>

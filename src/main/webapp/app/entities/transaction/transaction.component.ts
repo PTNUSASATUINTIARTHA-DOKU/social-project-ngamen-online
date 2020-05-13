@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -12,7 +12,9 @@ import { TransactionService } from './transaction.service';
 
 @Component({
   selector: 'jhi-transaction',
-  templateUrl: './transaction.component.html'
+  templateUrl: './transaction.component.html',
+  styleUrls: ['../../shared/styles/custom-pagination.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class TransactionComponent implements OnInit, OnDestroy {
   transactions?: ITransaction[];
