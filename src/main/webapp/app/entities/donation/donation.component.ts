@@ -82,7 +82,10 @@ export class DonationComponent implements OnInit, OnDestroy {
   }
 
   delete(donation: IDonation): void {
-    const modalRef = this.modalService.open(DonationDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    const modalRef = this.modalService.open(DonationDeleteDialogComponent, {
+      windowClass: 'custom-modal',
+      backdropClass: 'fixed top-0 left-0 w-screen h-screen bg-gray-900 opacity-50'
+    });
     modalRef.componentInstance.donation = donation;
   }
 

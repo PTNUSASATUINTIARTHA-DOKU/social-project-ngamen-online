@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 
@@ -6,7 +6,9 @@ import { IDonation } from 'app/shared/model/donation.model';
 import { DonationService } from './donation.service';
 
 @Component({
-  templateUrl: './donation-delete-dialog.component.html'
+  templateUrl: './donation-delete-dialog.component.html',
+  styleUrls: ['../../shared/styles/custom-modal.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class DonationDeleteDialogComponent {
   donation?: IDonation;
