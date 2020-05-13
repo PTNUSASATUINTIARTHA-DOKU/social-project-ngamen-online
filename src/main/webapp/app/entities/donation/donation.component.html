@@ -1,77 +1,98 @@
-<div>
-    <h2 id="page-heading">
-        <span jhiTranslate="donationApp.donation.home.title">Donations</span>
-
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-donation" [routerLink]="['/donation/new']">
-            <fa-icon icon="plus"></fa-icon>
-            <span  jhiTranslate="donationApp.donation.home.createLabel">
-            Create a new Donation
-            </span>
-        </button>
-    </h2>
-
+<div class="container mx-auto bg-white my-6 px-2 md:px-0">
     <jhi-alert-error></jhi-alert-error>
 
     <jhi-alert></jhi-alert>
 
-    <div class="alert alert-warning" id="no-result" *ngIf="donations?.length === 0">
+    <div class="flex items-center justify-between mb-6">
+        <h1 class="text-2xl font-bold mb-1" jhiTranslate="donationApp.donation.home.title">Donations</h1>
+        <button type="button" [routerLink]="['/donation/new']" id="jh-create-entity"
+            class="bg-red-600 hover:bg-red-500 disabled:bg-red-200 disabled:cursor-not-allowed text-white text-sm py-2 px-4 font-semibold rounded focus:outline-none focus:shadow-outline h-10"
+            jhiTranslate="donationApp.donation.home.createLabel">
+            New Donation
+        </button>
+    </div>
+
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative text-sm" role="alert"
+        id="no-result" *ngIf="donations?.length === 0">
         <span jhiTranslate="donationApp.donation.home.notFound">No donations found</span>
     </div>
 
-    <div class="table-responsive" id="entities" *ngIf="donations?.length > 0">
-        <table class="table table-striped" aria-describedby="page-heading">
-            <thead>
-                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="reset.bind(this)">
-                    <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="name"><span jhiTranslate="donationApp.donation.name">Name</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="paymentSlug"><span jhiTranslate="donationApp.donation.paymentSlug">Payment Link</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="description"><span jhiTranslate="donationApp.donation.description">Description</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="url"><span jhiTranslate="donationApp.donation.url">Url</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="imageUrl"><span jhiTranslate="donationApp.donation.imageUrl">Image Url</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="status"><span jhiTranslate="donationApp.donation.status">Status</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="organizer.id"><span jhiTranslate="donationApp.donation.organizer">Organizer</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
-                <tr *ngFor="let donation of donations ;trackBy: trackId">
-                    <td><a [routerLink]="['/donation', donation.id, 'view']">{{ donation.id }}</a></td>
-                    <td>{{ donation.name }}</td>
-                    <td>{{ donation.paymentSlug }}</td>
-                    <td>{{ donation.description }}</td>
-                    <td>{{ donation.url }}</td>
-                    <td>{{ donation.imageUrl }}</td>
-                    <td jhiTranslate="{{ 'donationApp.IsActiveStatus.' + donation.status }}">{{ donation.status }}</td>
-                    <td>
-                        <div *ngIf="donation.organizer">
-                            <a [routerLink]="['/organizer', donation.organizer?.id, 'view']" >{{ donation.organizer?.name }}</a>
-                        </div>
-                    </td>
-                    <td class="text-right">
-                        <div class="btn-group">
-                            <button type="submit"
-                                    [routerLink]="['/donation', donation.id, 'view']"
-                                    class="btn btn-info btn-sm">
-                                <fa-icon icon="eye"></fa-icon>
-                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-                            </button>
-
-                            <button type="submit"
-                                    [routerLink]="['/donation', donation.id, 'edit']"
-                                    class="btn btn-primary btn-sm">
-                                <fa-icon icon="pencil-alt"></fa-icon>
-                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
-                            </button>
-
-                            <button *jhiHasAnyAuthority="'ROLE_ADMIN'" type="submit" (click)="delete(donation)"
-                                    class="btn btn-danger btn-sm">
-                                <fa-icon icon="times"></fa-icon>
-                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="flex flex-col" *ngIf="donations?.length > 0">
+        <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+            <div
+                class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
+                <table class="min-w-full" id="entities">
+                    <thead>
+                        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="reset.bind(this)">
+                            <th scope="col" jhiSortBy="id" class="px-6 py-3 border-b border-gray-200 bg-gray-50
+                                text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"><span
+                                    jhiTranslate="global.field.id">ID</span>
+                                <fa-icon icon="sort"></fa-icon>
+                            </th>
+                            <th scope="col" jhiSortBy="name" class="px-6 py-3 border-b border-gray-200 bg-gray-50
+                                text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"><span
+                                    jhiTranslate="donationApp.donation.name">Name</span>
+                                <fa-icon icon="sort"></fa-icon>
+                            </th>
+                            <th scope="col" jhiSortBy="lastUpdatedBy" class="px-6 py-3 border-b border-gray-200 bg-gray-50
+                                text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"><span
+                                    jhiTranslate="donationApp.donation.paymentSlug">Payment Link</span>
+                                <fa-icon icon="sort"></fa-icon>
+                            </th>
+                            <th scope="col" jhiSortBy="lastUpdatedAt" class="px-6 py-3 border-b border-gray-200 bg-gray-50
+                                text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"><span
+                                    jhiTranslate="donationApp.donation.status">Status</span>
+                                <fa-icon icon="sort"></fa-icon>
+                            </th>
+                            <th scope="col" jhiSortBy="status" class="px-6 py-3 border-b border-gray-200 bg-gray-50
+                                text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"><span
+                                    jhiTranslate="donationApp.donation.organizer">Organizer</span>
+                                <fa-icon icon="sort"></fa-icon>
+                            </th>
+                            <th scope="col" class="px-6 py-3 border-b border-gray-200 bg-gray-50"></th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white" infinite-scroll (scrolled)="loadPage(page + 1)"
+                        [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+                        <tr *ngFor="let donation of donations ;trackBy: trackId">
+                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm"><a
+                                    [routerLink]="['/donation', donation.id, 'view']">{{ donation.id }}</a></td>
+                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm"><a
+                                    [routerLink]="['/donation', donation.id, 'view']">{{ donation.name }}</a></td>
+                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm"><a
+                                    [routerLink]="['/donation', donation.id, 'view']">{{ donation.paymentSlug }}</a>
+                            </td>
+                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm">
+                                <a [routerLink]="['/donation', donation.id, 'view']">
+                                    <span *ngIf="donation.status === 'ACTIVE'"
+                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+                                        jhiTranslate="{{ 'donationApp.IsActiveStatus.' + donation.status }}">
+                                        ACTIVE
+                                    </span>
+                                    <span *ngIf="donation.status === 'DISABLED'"
+                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
+                                        jhiTranslate="{{ 'donationApp.IsActiveStatus.' + donation.status }}">
+                                        DISABLED
+                                    </span>
+                                </a>
+                            </td>
+                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm"><a
+                                    *ngIf="donation.organizer" [routerLink]="['/organizer', donation.organizer?.id, 'view']">{{ donation.donation.organizer?.name }}</a>
+                            </td>
+                            <td
+                                class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 leading-5 font-medium">
+                                <a class="text-blue-500 hover:text-blue-800 mr-3 cursor-pointer"
+                                    [routerLink]="['/donation', donation.id, 'edit']">
+                                    <fa-icon icon="pencil-alt"></fa-icon>
+                                </a>
+                                <a class="text-red-600 hover:text-red-500 cursor-pointer"
+                                    *jhiHasAnyAuthority="'ROLE_ADMIN'" (click)="delete(donation)">
+                                    <fa-icon icon="times"></fa-icon>
+                                </a>
+                            </td>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
