@@ -1,76 +1,104 @@
-<div class="row justify-content-center">
-    <div class="col-8">
-        <div *ngIf="donation">
-            <h2><span jhiTranslate="donationApp.donation.detail.title">Donation</span> {{ donation.id }}</h2>
+<div *ngIf="donation">
+    <div class="container mx-auto bg-white my-6 px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between mb-6">
+            <div>
+                <h1 class="text-2xl font-bold mb-1"><span
+                        jhiTranslate="donationApp.donation.detail.title">Donation</span> {{ donation.id }}</h1>
+            </div>
 
-            <hr>
+            <div>
+                <button type="submit" (click)="previousState()"
+                    class="bg-white hover:bg-red-500 disabled:border-red-200 disabled:text-red-200 border border-red-500 disabled:cursor-not-allowed text-red-500 hover:text-white text-sm py-2 px-4 font-semibold rounded focus:outline-none focus:shadow-outline h-10">
+                    <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+                </button>
 
-            <jhi-alert-error></jhi-alert-error>
+                <button type="button" [routerLink]="['/donation', donation.id, 'edit']"
+                    class="bg-red-600 hover:bg-red-500 disabled:bg-red-200 disabled:cursor-not-allowed text-white text-sm py-2 px-4 font-semibold rounded focus:outline-none focus:shadow-outline h-10">
+                    <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+                </button>
+            </div>
+        </div>
 
-            <dl class="row-md jh-entity-details">
-                <dt><span jhiTranslate="donationApp.donation.name">Name</span></dt>
-                <dd>
+        <div class="flex bg-white rounded-lg shadow-lg">
+            <div class="w-full p-6 lg:px-8">
+                <div class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.donation.name">Name</span>:
                     <span>{{ donation.name }}</span>
-                </dd>
-                <dt><span jhiTranslate="donationApp.donation.description">Description</span></dt>
-                <dd>
+                </div>
+
+                <div class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.donation.description">Description</span>:
                     <span>{{ donation.description }}</span>
-                </dd>
-                <dt><span jhiTranslate="donationApp.donation.url">Url</span></dt>
-                <dd>
-                    <span>{{ donation.url }}</span>
-                </dd>
-                <dt><span jhiTranslate="donationApp.donation.imageUrl">Image Url</span></dt>
-                <dd>
-                    <span>{{ donation.imageUrl }}</span>
-                </dd>
-                <dt><span jhiTranslate="donationApp.donation.paymentSlug">Payment Slug</span></dt>
-                <dd>
-                    <span>{{ donation.paymentSlug }}</span>
-                </dd>
-                <dt><span jhiTranslate="donationApp.donation.bankAccountNumber">Bank Account Number</span></dt>
-                <dd>
+                </div>
+
+                <div class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.donation.url">Url</span>:
+                    <a href="{{ donation.url}}" class="text-blue 600 hover:text-blue-700" target="_blank">{{ donation.url }}</span>
+                </div>
+
+                <div class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.donation.imageUrl">Image Url</span>:
+                    <img *ngIf="donation.imageUrl" src="{{ donation.imageUrl }}" class="h-10 w-10 rounded-full">
+                    
+                </div>
+
+                <div class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.donation.paymentSlug">Payment Link</span>:
+                    <a href="{{ donation.paymentSlug }}" class="text-blue-600 hover:text-blue-700" target="_blank">{{ donation.paymentSlug }}</a>
+                </div>
+
+                <hr class="mb-2">
+
+                <div class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.donation.bankAccountNumber">Bank Account
+                        Number</span>:
                     <span>{{ donation.bankAccountNumber }}</span>
-                </dd>
-                <dt><span jhiTranslate="donationApp.donation.bankAccountName">Bank Account Name</span></dt>
-                <dd>
+                </div>
+
+                <div class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.donation.bankAccountName">Bank Account
+                        Name</span>:
                     <span>{{ donation.bankAccountName }}</span>
-                </dd>
-                <dt><span jhiTranslate="donationApp.donation.bankName">Bank Name</span></dt>
-                <dd>
+                </div>
+
+                <div class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.donation.bankName">Bank Name</span>:
                     <span>{{ donation.bankName }}</span>
-                </dd>
-                <dt><span jhiTranslate="donationApp.donation.lastUpdatedBy">Last Updated By</span></dt>
-                <dd>
+                </div>
+
+                <hr class="mb-2">
+
+                <div class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.donation.lastUpdatedBy">Last Updated
+                        By</span>:
                     <span>{{ donation.lastUpdatedBy }}</span>
-                </dd>
-                <dt><span jhiTranslate="donationApp.donation.lastUpdatedAt">Last Updated At</span></dt>
-                <dd>
-                    <span>{{ donation.lastUpdatedAt  | date:'medium' }}</span>
-                </dd>
-                <dt><span jhiTranslate="donationApp.donation.status">Status</span></dt>
-                <dd>
-                    <span jhiTranslate="{{ 'donationApp.IsActiveStatus.' + donation.status }}">{{ donation.status }}</span>
-                </dd>
-                <dt><span jhiTranslate="donationApp.donation.organizer">Organizer</span></dt>
-                <dd>
-                    <div *ngIf="donation.organizer">
-                        <a [routerLink]="['/organizer', donation.organizer?.id, 'view']">{{ donation.organizer?.name }}</a>
-                    </div>
-                </dd>
-            </dl>
+                </div>
 
-            <button type="submit"
-                    (click)="previousState()"
-                    class="btn btn-info">
-                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
-            </button>
+                <div class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.donation.lastUpdatedAt">Last Updated
+                        At</span>:
+                    <span>{{ donation.lastUpdatedAt | date:'medium' }}</span>
+                </div>
 
-            <button type="button"
-                    [routerLink]="['/donation', donation.id, 'edit']"
-                    class="btn btn-primary">
-                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
-            </button>
+                <div class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.donation.status">Status</span>:
+                    <span *ngIf="donation.status === 'ACTIVE'"
+                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+                        jhiTranslate="{{ 'donationApp.IsActiveStatus.' + donation.status }}">
+                        ACTIVE
+                    </span>
+                    <span *ngIf="donation.status === 'DISABLED'"
+                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
+                        jhiTranslate="{{ 'donationApp.IsActiveStatus.' + donation.status }}">
+                        ACTIVE
+                    </span>
+                </div>
+
+                <div *ngIf="donation.organizer" class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.donation.organizer">Organizer</span>:
+                    <a [routerLink]="['/organizer', donation.organizer?.id, 'view']">{{ donation.organizer?.name }}</a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
