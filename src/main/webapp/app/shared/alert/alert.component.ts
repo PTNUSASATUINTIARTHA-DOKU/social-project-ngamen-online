@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { JhiAlertService, JhiAlert } from 'ng-jhipster';
 
 @Component({
@@ -7,11 +7,13 @@ import { JhiAlertService, JhiAlert } from 'ng-jhipster';
     <div class="alerts" role="alert">
       <div *ngFor="let alert of alerts" [ngClass]="setClasses(alert)">
         <ngb-alert *ngIf="alert && alert.type && alert.msg" [type]="alert.type" (close)="alert.close(alerts)">
-          <pre [innerHTML]="alert.msg"></pre>
+          <p [innerHTML]="alert.msg"></p>
         </ngb-alert>
       </div>
     </div>
-  `
+  `,
+  encapsulation: ViewEncapsulation.None,
+  styleUrls: ['../styles/custom-alert.scss']
 })
 export class AlertComponent implements OnInit, OnDestroy {
   alerts: JhiAlert[] = [];

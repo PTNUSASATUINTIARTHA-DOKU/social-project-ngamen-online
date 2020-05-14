@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
 import { JhiEventManager, JhiAlert, JhiAlertService, JhiEventWithContent } from 'ng-jhipster';
@@ -12,11 +12,13 @@ import { AlertError } from './alert-error.model';
     <div class="alerts" role="alert">
       <div *ngFor="let alert of alerts" [ngClass]="setClasses(alert)">
         <ngb-alert *ngIf="alert && alert.type && alert.msg" [type]="alert.type" (close)="alert.close(alerts)">
-          <pre [innerHTML]="alert.msg"></pre>
+          <p [innerHTML]="alert.msg"></p>
         </ngb-alert>
       </div>
     </div>
-  `
+  `,
+  encapsulation: ViewEncapsulation.None,
+  styleUrls: ['../styles/custom-alert.scss']
 })
 export class AlertErrorComponent implements OnDestroy {
   alerts: JhiAlert[] = [];
