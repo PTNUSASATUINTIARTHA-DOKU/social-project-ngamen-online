@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-// TODO: To be replaced with a constant once change has been made to https://github.com/jhipster/jhipster
 @Profile("aws")
 public class AwsSSMConfiguration implements PropertySourceLocator {
     private final Logger log = LoggerFactory.getLogger(AwsSSMConfiguration.class);
