@@ -921,6 +921,220 @@ video {
   border-color: #fc8181;
 }
 
+.custom-modal {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1060;
+}
+
+.custom-modal .modal-dialog {
+  background: white;
+  width: 91.666667%;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 0.25rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  z-index: 50;
+  overflow-y: auto;
+}
+
+.custom-modal .modal-dialog .modal-content {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-right: 1.5rem;
+  padding-left: 1.5rem;
+  text-align: left;
+}
+
+@media (min-width: 768px) {
+  .custom-modal .modal-dialog {
+    max-width: 28rem;
+  }
+}
+
+/* Custom alert */
+
+.alert {
+  position: relative;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  line-height: 1.5;
+  font-size: 0.875rem;
+}
+
+/* // Headings for larger alerts */
+
+.alert-heading {
+  /* // Specified to prevent conflicts of changing $headings-color */
+  color: inherit;
+}
+
+/* // Provide class for links that match alerts */
+
+.alert-link {
+  font-weight: 700;
+}
+
+/* // Dismissible alerts
+//
+// Expand the right padding and account for the close button's positioning. */
+
+.alert-dismissible {
+  padding-right: 3.5rem;
+}
+
+.alert-dismissible .close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.75rem 1.25rem;
+  color: inherit;
+}
+
+/* 
+// Alternate styles
+//
+// Generate contextual modifier classes for colorizing the alert. */
+
+.alert-primary {
+  color: #4a5568;
+  background-color: #f7fafc;
+  border-color: #cbd5e0;
+}
+
+.alert-primary hr {
+  border-top-color: #cbd5e0;
+}
+
+.alert-primary .alert-link {
+  color: #4a5568;
+}
+
+.alert-success {
+  color: #2f855a;
+  background-color: #f0fff4;
+  border-color: #68d391;
+}
+
+.alert-success hr {
+  border-top-color: #68d391;
+}
+
+.alert-success .alert-link {
+  color: #2f855a;
+}
+
+.alert-warning {
+  color: #c05621;
+  background-color: #fffaf0;
+  border-color: #f6ad55;
+}
+
+.alert-warning hr {
+  border-top-color: #f6ad55;
+}
+
+.alert-warning .alert-link {
+  color: #c05621;
+}
+
+.alert-danger {
+  color: #c53030;
+  background-color: #fff5f5;
+  border-color: #fc8181;
+}
+
+.alert-danger hr {
+  border-top-color: #fc8181;
+}
+
+.alert-danger .alert-link {
+  color: #c53030;
+}
+
+.alert-info {
+  color: #2b6cb0;
+  background-color: #ebf8ff;
+  border-color: #63b3ed;
+}
+
+.alert-info hr {
+  border-top-color: #63b3ed;
+}
+
+.alert-info .alert-link {
+  color: #2b6cb0;
+}
+
+/* Custom pagiation */
+
+.pagination {
+  display: flex;
+  font-size: 0.875rem;
+  list-style: none;
+}
+
+.page-link {
+  position: relative;
+  display: block;
+  padding: 0.5rem 0.75rem;
+  margin-left: -1px;
+  line-height: 1.25;
+  color: #2d3748;
+  background-color: white;
+  border: 1px solid #f7fafc;
+}
+
+.page-link:hover {
+  z-index: 2;
+  color: white;
+  text-decoration: none;
+  background-color: #edf2f7;
+  border-color: #edf2f7;
+}
+
+.page-link:focus {
+  z-index: 3;
+  outline: 0;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.page-item:first-child .page-link {
+  margin-left: 0;
+  border-top-left-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
+}
+
+.page-item:last-child .page-link {
+  border-top-right-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+}
+
+.page-item.active .page-link {
+  z-index: 3;
+  color: #2d3748;
+  background-color: white;
+  border-color: #f7fafc;
+}
+
+.page-item.disabled .page-link {
+  color: white;
+  pointer-events: none;
+  cursor: auto;
+  background-color: #e2e8f0;
+  border-color: #f7fafc;
+}
+
 .space-y-0 > :not(template) ~ :not(template) {
   --space-y-reverse: 0;
   margin-top: calc(0px * calc(1 - var(--space-y-reverse)));

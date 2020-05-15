@@ -17,8 +17,7 @@ import { AlertError } from './alert-error.model';
       </div>
     </div>
   `,
-  encapsulation: ViewEncapsulation.None,
-  styleUrls: ['../styles/custom-alert.scss']
+  encapsulation: ViewEncapsulation.None
 })
 export class AlertErrorComponent implements OnDestroy {
   alerts: JhiAlert[] = [];

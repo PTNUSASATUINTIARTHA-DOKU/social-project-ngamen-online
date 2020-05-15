@@ -13,7 +13,6 @@ import { TransactionService } from './transaction.service';
 @Component({
   selector: 'jhi-transaction',
   templateUrl: './transaction.component.html',
-  styleUrls: ['../../shared/styles/custom-pagination.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class TransactionComponent implements OnInit, OnDestroy {

@@ -12,8 +12,7 @@ import { JhiAlertService, JhiAlert } from 'ng-jhipster';
       </div>
     </div>
   `,
-  encapsulation: ViewEncapsulation.None,
-  styleUrls: ['../styles/custom-alert.scss']
+  encapsulation: ViewEncapsulation.None
 })
 export class AlertComponent implements OnInit, OnDestroy {
   alerts: JhiAlert[] = [];

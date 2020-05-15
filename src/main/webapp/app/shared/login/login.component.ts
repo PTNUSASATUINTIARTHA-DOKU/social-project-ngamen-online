@@ -8,8 +8,8 @@ import { LoginService } from 'app/core/login/login.service';
 @Component({
   selector: 'jhi-login-modal',
   templateUrl: './login.component.html',
-  encapsulation: ViewEncapsulation.None,
-  styleUrls: ['../styles/custom-modal.scss']
+  encapsulation: ViewEncapsulation.None
+  // styleUrls: ['../styles/custom-modal.scss']
 })
 export class LoginModalComponent implements AfterViewInit {
   @ViewChild('username', { static: false })
@@ -44,7 +44,8 @@ export class LoginModalComponent implements AfterViewInit {
     this.loginService
       .login({
         username: this.loginForm.get('username')!.value,
-        password: this.loginForm.get('password')!.value
+        password: this.loginForm.get('password')!.value,
+        rememberMe: this.loginForm.get('rememberMe')!.value
       })
       .subscribe(
         () => {
