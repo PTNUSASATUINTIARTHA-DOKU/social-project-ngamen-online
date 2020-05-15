@@ -5,6 +5,8 @@ import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 
 import { AccountService } from 'app/core/auth/account.service';
 
+declare let gtag: Function;
+
 @Component({
   selector: 'jhi-main',
   templateUrl: './main.component.html'
@@ -20,6 +22,12 @@ export class MainComponent implements OnInit {
     rootRenderer: RendererFactory2
   ) {
     this.renderer = rootRenderer.createRenderer(document.querySelector('html'), null);
+
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        gtag('config', 'UA-166522232-1', { page_path: event.urlAfterRedirects });
+      }
+    });
   }
 
   ngOnInit(): void {
