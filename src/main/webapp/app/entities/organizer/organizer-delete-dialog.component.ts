@@ -7,7 +7,6 @@ import { OrganizerService } from './organizer.service';
 
 @Component({
   templateUrl: './organizer-delete-dialog.component.html',
-  styleUrls: ['../../shared/styles/custom-modal.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class OrganizerDeleteDialogComponent {

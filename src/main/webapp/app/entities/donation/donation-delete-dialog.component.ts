@@ -7,7 +7,6 @@ import { DonationService } from './donation.service';
 
 @Component({
   templateUrl: './donation-delete-dialog.component.html',
-  styleUrls: ['../../shared/styles/custom-modal.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class DonationDeleteDialogComponent {
