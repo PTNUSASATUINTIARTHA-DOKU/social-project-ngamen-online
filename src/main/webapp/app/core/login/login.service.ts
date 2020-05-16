@@ -12,6 +12,7 @@ export class LoginService {
   constructor(private accountService: AccountService, private authServerProvider: AuthServerProvider) {}
 
   login(credentials: Login): Observable<Account | null> {
+    credentials.rememberMe = false; // disabling rememberMe function from backend
     return this.authServerProvider.login(credentials).pipe(flatMap(() => this.accountService.identity(true)));
   }
 
