@@ -42,14 +42,11 @@
                             <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm"><a [routerLink]="['/organizer', organizer.id, 'view']">{{ organizer.lastUpdatedAt | date:'medium' }}</a></td>
                             <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm">
                                 <a [routerLink]="['/organizer', organizer.id, 'view']">
-                                    <span *ngIf="organizer.status === 'ACTIVE'" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800" jhiTranslate="{{ 'donationApp.IsActiveStatus.' + organizer.status }}">
-                                        ACTIVE
-                                    </span>
-                                    <span *ngIf="organizer.status === 'DISABLED'" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800" jhiTranslate="{{ 'donationApp.IsActiveStatus.' + organizer.status }}">
-                                        DISABLED
-                                    </span>
-                                    <span *ngIf="!organizer.status" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
-                                        WAITING FOR APPROVAL
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full " 
+                                        [ngClass]="organizer.status === 'ACTIVE' ? 'bg-green-100 text-green-800' : 
+                                                    organizer.status === 'DISABLED' ? 'bg-red-100 text-red-800' :
+                                                    'bg-gray-100 text-gray-800'">
+                                        {{ 'donationApp.IsActiveStatus.' + organizer.status | translate }}
                                     </span>
                                 </a>
                             </td>

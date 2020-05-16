@@ -83,7 +83,7 @@
         {
             "fieldName": "status",
             "fieldType": "IsActiveStatus",
-            "fieldValues": "ACTIVE,DISABLED"
+            "fieldValues": "ACTIVE,DISABLED,WAITING_APPROVAL"
         }
     ],
     "relationships": [

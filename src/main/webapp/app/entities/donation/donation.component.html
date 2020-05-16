@@ -74,6 +74,11 @@
                                         jhiTranslate="{{ 'donationApp.IsActiveStatus.' + donation.status }}">
                                         DISABLED
                                     </span>
+                                    <span *ngIf="donation.status === 'WAITING_APPROVAL'"
+                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800"
+                                        jhiTranslate="{{ 'donationApp.IsActiveStatus.' + donation.status }}">
+                                        WAITING_APPROVAL
+                                    </span>
                                 </a>
                             </td>
                             <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm"><a

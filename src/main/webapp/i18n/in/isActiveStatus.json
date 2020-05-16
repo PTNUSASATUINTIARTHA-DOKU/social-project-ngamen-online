@@ -3,7 +3,8 @@
     "IsActiveStatus": {
       "null": "",
       "ACTIVE": "ACTIVE",
-      "DISABLED": "DISABLED"
+      "DISABLED": "DISABLED",
+      "WAITING_APPROVAL": "WAITING FOR APPROVAL"
     }
   }
 }

@@ -1,4 +1,5 @@
 export const enum IsActiveStatus {
   ACTIVE = 'ACTIVE',
-  DISABLED = 'DISABLED'
+  DISABLED = 'DISABLED',
+  WAITING_APPROVAL = 'WAITING_APPROVAL'
 }

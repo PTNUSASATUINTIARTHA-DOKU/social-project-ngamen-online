@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import men.doku.donation.config.Constants;
 import men.doku.donation.domain.Organizer;
+import men.doku.donation.domain.enumeration.IsActiveStatus;
 import men.doku.donation.repository.OrganizerRepository;
 import men.doku.donation.security.SecurityUtils;
 import men.doku.donation.service.OrganizerService;
@@ -57,6 +58,7 @@ public class OrganizerServiceImpl implements OrganizerService {
                 organizer.setMdr(null);
                 organizer.setSharing(null);
             }
+            organizer.setStatus(IsActiveStatus.WAITING_APPROVAL);
         }
         organizer.getUsers().add(userService.getUserWithAuthorities().get());
         organizer.setLastUpdatedAt(Instant.now());
