@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import men.doku.donation.config.Constants;
 import men.doku.donation.domain.Donation;
 import men.doku.donation.domain.Organizer;
+import men.doku.donation.domain.enumeration.IsActiveStatus;
 import men.doku.donation.repository.DonationRepository;
 import men.doku.donation.security.SecurityUtils;
 import men.doku.donation.service.DonationService;
@@ -60,6 +61,20 @@ public class DonationServiceImpl implements DonationService {
     public Boolean checkDonationAuthority(Long donationId, String login) {
         List<Long> organizerIds = organizerService.findAllIdsOwnedWithEagerRealtionships(login);
         return (donationRepository.checkDonationAuthority(donationId, organizerIds) == 0);
+    }
+
+    /**
+     * Update Donation Status based on Organizer Id and Organizer status
+     * 
+     * @param organizerId
+     * @param organizerStatus
+     */
+    @Override
+    public void updateStatusByOrganizerId(Long organizerId, IsActiveStatus organizerStatus) {
+        donationRepository.findAllByOrganizerId(organizerId).forEach(donation -> {
+            donation.setStatus(organizerStatus);
+            save(donation);
+        });
     }
 
     /**

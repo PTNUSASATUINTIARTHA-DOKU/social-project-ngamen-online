@@ -17,6 +17,7 @@ import men.doku.donation.domain.Organizer;
 import men.doku.donation.domain.enumeration.IsActiveStatus;
 import men.doku.donation.repository.OrganizerRepository;
 import men.doku.donation.security.SecurityUtils;
+import men.doku.donation.service.DonationService;
 import men.doku.donation.service.OrganizerService;
 import men.doku.donation.service.UserService;
 
@@ -49,10 +50,11 @@ public class OrganizerServiceImpl implements OrganizerService {
         log.debug("Request by {} to save Organizer : {}", login, organizer);
         if (!SecurityUtils.isCurrentUserInRole(Constants.ADMIN)) {
             if (organizer.getId() != null) {
-                Organizer current = findOne(organizer.getId()).get();
-                organizer.setUsers(current.getUsers());
-                organizer.setMdr(current.getMdr());
-                organizer.setSharing(current.getSharing());
+                findOne(organizer.getId()).ifPresent(currentOrganizer -> {
+                    organizer.setUsers(currentOrganizer.getUsers());
+                    organizer.setMdr(currentOrganizer.getMdr());
+                    organizer.setSharing(currentOrganizer.getSharing());    
+                });
             } else {
                 organizer.getUsers().clear();
                 organizer.setMdr(null);

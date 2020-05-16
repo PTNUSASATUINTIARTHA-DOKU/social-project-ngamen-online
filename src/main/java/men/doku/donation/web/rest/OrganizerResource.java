@@ -31,6 +31,7 @@ import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import men.doku.donation.domain.Organizer;
 import men.doku.donation.security.AuthoritiesConstants;
+import men.doku.donation.service.DonationService;
 import men.doku.donation.service.OrganizerService;
 import men.doku.donation.web.rest.errors.BadRequestAlertException;
 
@@ -49,9 +50,11 @@ public class OrganizerResource {
     private String applicationName;
 
     private final OrganizerService organizerService;
+    private final DonationService donationService;
 
-    public OrganizerResource(OrganizerService organizerService) {
+    public OrganizerResource(OrganizerService organizerService, DonationService donationService) {
         this.organizerService = organizerService;
+        this.donationService = donationService;
     }
 
     /**
@@ -86,9 +89,11 @@ public class OrganizerResource {
     public ResponseEntity<Organizer> updateOrganizer(@Valid @RequestBody Organizer organizer) throws URISyntaxException {
         log.debug("REST request to update Organizer : {}", organizer);
         if (organizer.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "id null");
         }
         Organizer result = organizerService.save(organizer);
+        donationService.updateStatusByOrganizerId(result.getId(), result.getStatus());
+
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, organizer.getId().toString()))
             .body(result);

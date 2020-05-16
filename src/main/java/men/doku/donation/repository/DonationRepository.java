@@ -22,4 +22,7 @@ public interface DonationRepository extends JpaRepository<Donation, Long> {
 
     @Query("select d from Donation d where d.organizer.id in :organizerIds")
     public Page<Donation> findAllByOrganizerIds(@Param("organizerIds") List<Long> organizerIds, Pageable pageable);
+
+    @Query("select d from Donation d where d.organizer.id = :organizerId")
+    public List<Donation> findAllByOrganizerId(@Param("organizerId") Long organizerId);
 }

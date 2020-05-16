@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import men.doku.donation.domain.Donation;
+import men.doku.donation.domain.enumeration.IsActiveStatus;
 
 /**
  * Service Interface for managing {@link Donation}.
@@ -29,6 +30,14 @@ public interface DonationService {
      * @return
      */
     Boolean checkDonationAuthority(Long donationId, String login);
+
+    /**
+     * Update Donation Status based on Organizer Id and Organizer status
+     * 
+     * @param organizerId
+     * @param organizerStatus
+     */
+    void updateStatusByOrganizerId(Long organizerId, IsActiveStatus organizerStatus);
 
     /**
      * Get all the donations.
