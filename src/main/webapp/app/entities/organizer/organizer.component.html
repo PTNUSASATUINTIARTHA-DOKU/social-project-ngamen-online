@@ -36,7 +36,7 @@
                     </thead>
                     <tbody class="bg-white" infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
                         <tr *ngFor="let organizer of organizers ;trackBy: trackId">
-                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm"><a [routerLink]="['/organizer', organizer.id, 'view']">{{ organizer.id }}</a></td>
+                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm"><a [routerLink]="['/organizer', organizer.id, 'view']" class="text-blue-600 hover:text-blue-700">{{ organizer.id }}</a></td>
                             <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm"><a [routerLink]="['/organizer', organizer.id, 'view']">{{ organizer.name }}</a></td>
                             <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm"><a [routerLink]="['/organizer', organizer.id, 'view']">{{ organizer.lastUpdatedBy }}</a></td>
                             <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm"><a [routerLink]="['/organizer', organizer.id, 'view']">{{ organizer.lastUpdatedAt | date:'medium' }}</a></td>

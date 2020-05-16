@@ -69,7 +69,7 @@
                     <tbody class="bg-white">
                         <tr *ngFor="let transaction of transactions ;trackBy: trackId">
                             <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm"><a
-                                    [routerLink]="['/transaction', transaction.id, 'view']">{{ transaction.id }}</a></td>
+                                    [routerLink]="['/transaction', transaction.id, 'view']" class="text-blue-600 hover:text-blue-700">{{ transaction.id }}</a></td>
                             <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm"><a
                                     [routerLink]="['/transaction', transaction.id, 'view']">{{ transaction.invoiceNumber }}</a></td>
                             <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm"><a

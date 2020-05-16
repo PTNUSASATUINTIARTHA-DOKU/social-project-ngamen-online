@@ -34,17 +34,17 @@
                                     jhiTranslate="donationApp.donation.name">Name</span>
                                 <fa-icon icon="sort"></fa-icon>
                             </th>
-                            <th scope="col" jhiSortBy="lastUpdatedBy" class="px-6 py-3 border-b border-gray-200 bg-gray-50
+                            <th scope="col" jhiSortBy="paymentSlug" class="px-6 py-3 border-b border-gray-200 bg-gray-50
                                 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"><span
                                     jhiTranslate="donationApp.donation.paymentSlug">Payment Link</span>
                                 <fa-icon icon="sort"></fa-icon>
                             </th>
-                            <th scope="col" jhiSortBy="lastUpdatedAt" class="px-6 py-3 border-b border-gray-200 bg-gray-50
+                            <th scope="col" jhiSortBy="status" class="px-6 py-3 border-b border-gray-200 bg-gray-50
                                 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"><span
                                     jhiTranslate="donationApp.donation.status">Status</span>
                                 <fa-icon icon="sort"></fa-icon>
                             </th>
-                            <th scope="col" jhiSortBy="status" class="px-6 py-3 border-b border-gray-200 bg-gray-50
+                            <th scope="col" jhiSortBy="organizer.name" class="px-6 py-3 border-b border-gray-200 bg-gray-50
                                 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"><span
                                     jhiTranslate="donationApp.donation.organizer">Organizer</span>
                                 <fa-icon icon="sort"></fa-icon>
@@ -56,7 +56,7 @@
                         [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
                         <tr *ngFor="let donation of donations ;trackBy: trackId">
                             <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm"><a
-                                    [routerLink]="['/donation', donation.id, 'view']">{{ donation.id }}</a></td>
+                                    [routerLink]="['/donation', donation.id, 'view']" class="text-blue-600 hover:text-blue-700">{{ donation.id }}</a></td>
                             <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm"><a
                                     [routerLink]="['/donation', donation.id, 'view']">{{ donation.name }}</a></td>
                             <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm"><a
