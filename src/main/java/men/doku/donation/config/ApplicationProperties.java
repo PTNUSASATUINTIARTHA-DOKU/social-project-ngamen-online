@@ -15,6 +15,7 @@ public class ApplicationProperties {
     private String mibUrl = new String();
     private Report report = new Report();
     private Gmail gmail = new Gmail();
+    private Recaptcha recaptcha = new Recaptcha();
 
     public String getName() {
         return name;
@@ -46,6 +47,14 @@ public class ApplicationProperties {
 
     public void setGmail(Gmail gmail) {
         this.gmail = gmail;
+    }
+
+    public Recaptcha getRecaptcha() {
+        return recaptcha;
+    }
+
+    public void setRecaptcha(Recaptcha recaptcha) {
+        this.recaptcha = recaptcha;
     }
 
     public static class Gmail {
@@ -147,6 +156,19 @@ public class ApplicationProperties {
 
         public void setBasename(String basename) {
             this.basename = basename;
+        }
+    }
+
+    public static class Recaptcha {
+
+        private String key = new String();
+
+        public String getKey() {
+            return key;
+        }
+
+        public void setKey(String key) {
+            this.key = key;
         }
     }
 }

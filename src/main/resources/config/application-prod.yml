@@ -146,3 +146,5 @@ application:
       secret: prod/saweranCharity/googleApi
       region: ap-southeast-1
       credential-folder: /var/lib/tomcat8/webapps/ROOT/WEB-INF/classes/config/gmail/
+  recaptcha:
+    key: prod/saweranCharity/recaptchaKey

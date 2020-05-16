@@ -17,7 +17,6 @@ import men.doku.donation.domain.Organizer;
 import men.doku.donation.domain.enumeration.IsActiveStatus;
 import men.doku.donation.repository.OrganizerRepository;
 import men.doku.donation.security.SecurityUtils;
-import men.doku.donation.service.DonationService;
 import men.doku.donation.service.OrganizerService;
 import men.doku.donation.service.UserService;
 
