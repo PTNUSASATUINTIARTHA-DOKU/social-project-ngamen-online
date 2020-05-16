@@ -64,25 +64,16 @@
                             </td>
                             <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm">
                                 <a [routerLink]="['/donation', donation.id, 'view']">
-                                    <span *ngIf="donation.status === 'ACTIVE'"
-                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
-                                        jhiTranslate="{{ 'donationApp.IsActiveStatus.' + donation.status }}">
-                                        ACTIVE
-                                    </span>
-                                    <span *ngIf="donation.status === 'DISABLED'"
-                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800"
-                                        jhiTranslate="{{ 'donationApp.IsActiveStatus.' + donation.status }}">
-                                        DISABLED
-                                    </span>
-                                    <span *ngIf="donation.status === 'WAITING_APPROVAL'"
-                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800"
-                                        jhiTranslate="{{ 'donationApp.IsActiveStatus.' + donation.status }}">
-                                        WAITING_APPROVAL
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full " 
+                                        [ngClass]="donation.status === 'ACTIVE' ? 'bg-green-100 text-green-800' : 
+                                        donation.status === 'DISABLED' ? 'bg-red-100 text-red-800' :
+                                                    'bg-gray-100 text-gray-800'">
+                                        {{ 'donationApp.IsActiveStatus.' + donation.status | translate }}
                                     </span>
                                 </a>
                             </td>
                             <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm"><a
-                                    *ngIf="donation.organizer" [routerLink]="['/organizer', donation.organizer?.id, 'view']">{{ donation.donation.organizer?.name }}</a>
+                                    *ngIf="donation.organizer" [routerLink]="['/organizer', donation.organizer?.id, 'view']">{{ donation.organizer?.name }}</a>
                             </td>
                             <td
                                 class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 leading-5 font-medium">
