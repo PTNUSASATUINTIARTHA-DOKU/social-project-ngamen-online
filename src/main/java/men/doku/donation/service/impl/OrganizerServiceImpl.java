@@ -48,9 +48,14 @@ public class OrganizerServiceImpl implements OrganizerService {
         log.debug("Request by {} to save Organizer : {}", login, organizer);
         if (!SecurityUtils.isCurrentUserInRole(Constants.ADMIN)) {
             if (organizer.getId() != null) {
-                organizer.setUsers(findOne(organizer.getId()).get().getUsers());;
+                Organizer current = findOne(organizer.getId()).get();
+                organizer.setUsers(current.getUsers());
+                organizer.setMdr(current.getMdr());
+                organizer.setSharing(current.getSharing());
             } else {
                 organizer.getUsers().clear();
+                organizer.setMdr(null);
+                organizer.setSharing(null);
             }
         }
         organizer.getUsers().add(userService.getUserWithAuthorities().get());
