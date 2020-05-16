@@ -13,7 +13,8 @@ import { Donation } from 'app/shared/model/donation.model';
 import { TransactionStatus } from 'app/shared/model/enumerations/transaction-status.model';
 import * as moment from 'moment';
 import { PATTERN_WITHOUT_SYMBOL } from 'app/shared/constants/pattern.constants';
-import { GoogleAnalyticsService } from 'app/shared/analytics/google.analytics.service';
+
+declare let dataLayer: any[];
 
 @Component({
   selector: 'jhi-main',
@@ -31,7 +32,7 @@ export class PaymentComponent implements OnInit {
   donation: Donation;
   transaction: Transaction;
   windowScrolled: boolean | undefined;
-  startTime: number = new Date().getTime();
+  startTime: number;
 
   paymentForm = this.fb.group({
     donor: [null, [Validators.required, Validators.maxLength(30)]],
@@ -46,13 +47,13 @@ export class PaymentComponent implements OnInit {
     protected route: ActivatedRoute,
     private fb: FormBuilder,
     private device: DeviceDetectorService,
-    private router: Router,
-    protected googleAnalytics: GoogleAnalyticsService
+    private router: Router
   ) {
     this.slug = '';
     this.donation = {};
     this.transaction = {};
     this.method = PaymentChannel.OVO;
+    this.startTime = new Date().getTime();
   }
 
   @HostListener('window:scroll', [])
@@ -89,7 +90,7 @@ export class PaymentComponent implements OnInit {
   }
 
   save(): void {
-    this.googleAnalytics.eventEmitter('finish_form_payment', 'payment', 'time in miliseconds', new Date().getTime() - this.startTime);
+    const submitTime = new Date().getTime();
     const timeCouting = 30;
     const timeChecking = 40;
     this.isSaving = true;
@@ -98,20 +99,17 @@ export class PaymentComponent implements OnInit {
     const transaction = this.createPayment();
     const sub = this.paymentService.initPayment(transaction).subscribe(
       result => {
-        this.googleAnalytics.eventEmitter(
-          'finish_payment_ovo',
-          'payment',
-          'time in seconds',
-          this.isCounting
-            ? timeCouting - this.count
-            : this.isChecking
-            ? timeCouting + timeChecking - this.count
-            : timeCouting + timeChecking
-        );
         if (result.body) this.onSaveSuccess(result.body);
         else this.onSaveError(transaction);
       },
-      () => this.onSaveError(transaction)
+      () => this.onSaveError(transaction),
+      () => {
+        dataLayer.push({
+          event: 'Submit Payment',
+          timeToFinishPaymentForm: submitTime - this.startTime,
+          timeToFinishPayment: new Date().getTime() - submitTime
+        });
+      }
     );
     this.count = timeCouting;
     this.counter$ = timer(0, 1000).pipe(
