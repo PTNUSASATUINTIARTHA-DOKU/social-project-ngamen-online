@@ -134,12 +134,12 @@
                         </label>
 
                         <div *ngIf="paymentForm.get('donor')!.invalid && (paymentForm.get('donor')!.dirty || paymentForm.get('donor')!.touched)">
-                            <small class="text-xs text-red-500" *ngIf="paymentForm.get('donor')?.errors?.maxlength"
+                            <small id="error_name_too_short" class="text-xs text-red-500" *ngIf="paymentForm.get('donor')?.errors?.maxlength"
                                 jhiTranslate="payment.section.form.validation.maxlength"
                                 [translateValues]="{ max: 30 }">
                                 Please shorten your name. The maximum length is 30 characters.
                             </small>
-                            <small class="text-xs text-red-500" *ngIf="paymentForm.get('donor')?.errors?.required"
+                            <small id="error_name_empty" class="text-xs text-red-500" *ngIf="paymentForm.get('donor')?.errors?.required"
                                 jhiTranslate="payment.section.form.validation.required">
                                 Please input your name, otherwise you may tick the anonymous checkbox.
                             </small>
@@ -163,11 +163,11 @@
                                 autocomplete="off" />
                         </div>
                         <div *ngIf="paymentForm.get('amount')!.invalid && (paymentForm.get('amount')!.dirty || paymentForm.get('amount')!.touched)">
-                            <small class="text-xs text-red-400" *ngIf="paymentForm.get('amount')?.errors?.min"
+                            <small id="error_donation_min"class="text-xs text-red-400" *ngIf="paymentForm.get('amount')?.errors?.min"
                                 jhiTranslate="payment.error.min_amount">
                                 Minimum donation is Rp10.000.
                             </small>
-                            <small class="text-xs text-red-400" *ngIf="paymentForm.get('amount')?.errors?.max"
+                            <small id="errror_donation_max" class="text-xs text-red-400" *ngIf="paymentForm.get('amount')?.errors?.max"
                                 jhiTranslate="payment.error.max_amount">
                                 Maximum donation is Rp10.000.000.
                             </small>
@@ -203,13 +203,13 @@
                                 <input type="text" class="flex-shrink flex-grow flex-auto leading-normal w-px flex-1 text-sm bg-gray-200 py-2 px-3 rounded rounded-l-none space-y-0 relative focus:outline-none focus:shadow-outline h-10" placeholder="81212121212" name="phone" id="field_phone" formControlName="phone" />
                             </div>
                             <div *ngIf="paymentForm.get('phone')!.invalid && (paymentForm.get('phone')!.dirty || paymentForm.get('phone')!.touched)">
-                                <small class="text-xs text-red-500"
+                                <small id="error_phone_number_too_long" class="text-xs text-red-500"
                                     *ngIf="paymentForm.get('phone')?.errors?.maxlength"
                                     jhiTranslate="payment.section.form.validation.phonemaxlength"
                                     [translateValues]="{ max: 13 }">
                                     Your phone number length is 13 characters
                                 </small>
-                                <small class="text-xs text-red-500"
+                                <small id="error_phone_number_too_short" class="text-xs text-red-500"
                                     *ngIf="paymentForm.get('phone')?.errors?.minlength"
                                     jhiTranslate="payment.section.form.validation.phoneminlength"
                                     [translateValues]="{ min: 10 }">
