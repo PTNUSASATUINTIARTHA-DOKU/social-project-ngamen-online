@@ -8,6 +8,7 @@
       "405": "Metode permintaan tidak didukung untuk URL ini.",
       "500": "Kesalahan internal server."
     },
+    "noauthority": "Anda tidak memiliki akses untuk melakukan perubahan ini.",
     "concurrencyFailure": "Pengguna lain melakukan modifikasi data ini disaat bersamaan. Perubahan anda ditolak.",
     "validation": "Kesalahan validasi pada server."
   }
