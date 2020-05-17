@@ -108,6 +108,10 @@ export class PaymentComponent implements OnInit {
 
   save(): void {
     const submitTime = new Date().getTime();
+    dataLayer.push({
+      event: 'Finish Form Payment',
+      timeToFinishPaymentForm: submitTime - this.startTime
+    });
     const timeCouting = 30;
     const timeChecking = 40;
     this.isSaving = true;
@@ -122,8 +126,7 @@ export class PaymentComponent implements OnInit {
       () => this.onSaveError(transaction),
       () => {
         dataLayer.push({
-          event: 'Submit Payment',
-          timeToFinishPaymentForm: submitTime - this.startTime,
+          event: 'Finish Payment OVO',
           timeToFinishPayment: new Date().getTime() - submitTime
         });
       }
