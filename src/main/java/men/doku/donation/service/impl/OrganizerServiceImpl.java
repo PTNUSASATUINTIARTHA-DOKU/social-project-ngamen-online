@@ -58,8 +58,8 @@ public class OrganizerServiceImpl implements OrganizerService {
                 organizer.getUsers().clear();
                 organizer.setMdr(null);
                 organizer.setSharing(null);
+                organizer.setStatus(IsActiveStatus.WAITING_APPROVAL);
             }
-            organizer.setStatus(IsActiveStatus.WAITING_APPROVAL);
         }
         organizer.getUsers().add(userService.getUserWithAuthorities().get());
         organizer.setLastUpdatedAt(Instant.now());

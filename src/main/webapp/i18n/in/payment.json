@@ -74,6 +74,10 @@
     },
     "recaptcha": {
       "checking": "Mohon menunggu, sistem sedang validasi ReCaptcha V3"
+    },
+    "disabled": {
+      "head": "Donasi ini diblokir!",
+      "body": "Hubungi penyelenggara untuk informasi lebih lanjut."
     }
   }
 }

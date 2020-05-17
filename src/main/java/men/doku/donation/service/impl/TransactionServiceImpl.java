@@ -33,6 +33,7 @@ import men.doku.donation.config.ApplicationProperties;
 import men.doku.donation.config.Constants;
 import men.doku.donation.domain.Donation;
 import men.doku.donation.domain.Transaction;
+import men.doku.donation.domain.enumeration.IsActiveStatus;
 import men.doku.donation.domain.enumeration.TransactionStatus;
 import men.doku.donation.repository.TransactionRepository;
 import men.doku.donation.security.SecurityUtils;
@@ -160,6 +161,11 @@ public class TransactionServiceImpl implements TransactionService {
             transaction.setStatus(TransactionStatus.FAILED);
             transaction.setResponseCode("DNF");
             transaction.setMessage("Donation Not Found");
+            return save(transaction);
+        } else if (don.get().getStatus().equals(IsActiveStatus.DISABLED)) {
+            transaction.setStatus(TransactionStatus.FAILED);
+            transaction.setResponseCode("DIS");
+            transaction.setMessage("Donation Disabled");
             return save(transaction);
         } else {
             transaction.setDonation(don.get());
