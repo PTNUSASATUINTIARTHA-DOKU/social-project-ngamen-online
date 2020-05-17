@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -30,6 +31,7 @@ import men.doku.donation.security.AuthoritiesConstants;
 import men.doku.donation.service.DailyReportService;
 import men.doku.donation.service.DonationService;
 import men.doku.donation.service.PaymentService;
+import men.doku.donation.service.RecaptchaService;
 import men.doku.donation.service.TransactionService;
 import men.doku.donation.service.dto.DailyReportSuccessDTO;
 import men.doku.donation.service.dto.MibRequestDTO;
@@ -48,13 +50,16 @@ public class PaymentResource {
     private final DonationService donationService;
     private final TransactionService transactionService;
     private final DailyReportService dailyReportService;
+    private final RecaptchaService recaptchaService;
 
     public PaymentResource(PaymentService paymentService, DonationService donationService,
-            TransactionService transactionService, DailyReportService dailyReportService) {
+            TransactionService transactionService, DailyReportService dailyReportService,
+            RecaptchaService recaptchaService) {
         this.paymentService = paymentService;
         this.donationService = donationService;
         this.transactionService = transactionService;
         this.dailyReportService = dailyReportService;
+        this.recaptchaService = recaptchaService;
     }
 
     /**
@@ -101,6 +106,17 @@ public class PaymentResource {
         Transaction result = transactionService.pay(transaction);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, "Transaction",
                 transaction.getId().toString())).body(result);
+    }
+
+    /**
+     * Check Recaptcha
+     * 
+     * @param token
+     * @return
+     */
+    @PostMapping("/payments/recaptcha")
+    public Boolean checkRecaptcha(@RequestBody String token, HttpServletRequest request) {
+        return recaptchaService.checkRecaptcha(token, HttpReqRespUtils.getClientIpAddress(request));
     }
 
     /**

@@ -11,7 +11,7 @@ import men.doku.donation.domain.Transaction;
 import men.doku.donation.service.PaymentService;
 import men.doku.donation.service.dto.MibRequestDTO;
 import men.doku.donation.service.dto.MibResponseDTO;
-import men.doku.donation.service.mapper.MibMapper;
+import men.doku.donation.service.mapper.DTOMapper;
 
 /**
  * Service Implementation for managing {@link Transaction}.
@@ -22,9 +22,9 @@ public class PaymentServiceImpl implements PaymentService {
 
     private final Logger log = LoggerFactory.getLogger(PaymentServiceImpl.class);
 
-    private final MibMapper mibMapper;
+    private final DTOMapper mibMapper;
 
-    public PaymentServiceImpl(MibMapper mibMapper) {
+    public PaymentServiceImpl(DTOMapper mibMapper) {
         this.mibMapper = mibMapper;
     }
 

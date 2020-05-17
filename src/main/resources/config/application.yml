@@ -175,3 +175,6 @@ application:
     basename: Daily_Report_
   gmail:
     active: false
+  recaptcha:
+    active: false
+    simulator-result: true

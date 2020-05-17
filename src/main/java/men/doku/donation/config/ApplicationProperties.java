@@ -162,6 +162,10 @@ public class ApplicationProperties {
     public static class Recaptcha {
 
         private String key = new String();
+        private Boolean active = false;
+        private String verifyUrl = new String();
+        private String region = new String();
+        private Boolean simulatorResult = true;
 
         public String getKey() {
             return key;
@@ -169,6 +173,38 @@ public class ApplicationProperties {
 
         public void setKey(String key) {
             this.key = key;
+        }
+
+        public Boolean getActive() {
+            return active;
+        }
+
+        public void setActive(Boolean active) {
+            this.active = active;
+        }
+
+        public String getVerifyUrl() {
+            return verifyUrl;
+        }
+
+        public void setVerifyUrl(String verifyUrl) {
+            this.verifyUrl = verifyUrl;
+        }
+
+        public String getRegion() {
+            return region;
+        }
+
+        public void setRegion(String region) {
+            this.region = region;
+        }
+
+        public Boolean getSimulatorResult() {
+            return simulatorResult;
+        }
+
+        public void setSimulatorResult(Boolean simulatorResult) {
+            this.simulatorResult = simulatorResult;
         }
     }
 }

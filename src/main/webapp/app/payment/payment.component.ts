@@ -15,6 +15,7 @@ import * as moment from 'moment';
 import { PATTERN_WITHOUT_SYMBOL } from 'app/shared/constants/pattern.constants';
 
 declare let dataLayer: any[];
+declare let grecaptcha: any;
 
 @Component({
   selector: 'jhi-main',
@@ -33,12 +34,14 @@ export class PaymentComponent implements OnInit {
   transaction: Transaction;
   windowScrolled: boolean | undefined;
   startTime: number;
+  recaptchaValid = false;
 
   paymentForm = this.fb.group({
     donor: [null, [Validators.required, Validators.maxLength(30)]],
     donorAnon: [null, []],
     amount: [null, [Validators.required, Validators.min(10000), Validators.max(10000000)]],
-    phone: [null, [Validators.required, Validators.maxLength(13), Validators.minLength(10)]]
+    phone: [null, [Validators.required, Validators.maxLength(13), Validators.minLength(10)]],
+    greToken: [null, []]
   });
 
   constructor(
@@ -76,6 +79,7 @@ export class PaymentComponent implements OnInit {
     this.donation = this.route.snapshot.data.donation;
     this.slug = this.route.snapshot.params.slug;
     this.paymentForm.patchValue({ phone: '08' });
+    this.checkRecaptcha(this);
   }
 
   anon(): void {
@@ -87,6 +91,19 @@ export class PaymentComponent implements OnInit {
       this.paymentForm.get('donor')?.enable();
       this.paymentForm.get('donor')?.setValidators([Validators.required, Validators.maxLength(30)]);
     }
+  }
+
+  checkRecaptcha(paymentComponent: PaymentComponent): void {
+    grecaptcha.ready(function(): void {
+      grecaptcha.execute('6LdMRfgUAAAAAM90L4mxhYqhnAuxzEerTbQFRUYq', { action: 'payment' }).then(function(token: any): void {
+        (document.getElementById('field_gre_token')! as HTMLInputElement).value = token;
+        paymentComponent.paymentService.checkRecaptcha(token).subscribe(response => {
+          if (response.body) {
+            paymentComponent.recaptchaValid = response.body.valueOf();
+          }
+        });
+      });
+    });
   }
 
   save(): void {

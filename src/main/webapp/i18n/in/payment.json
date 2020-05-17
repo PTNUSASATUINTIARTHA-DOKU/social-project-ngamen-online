@@ -71,6 +71,9 @@
       "approval": "Approval Code",
       "response": "Response Code",
       "message": "Informasi Pembayaran"
+    },
+    "recaptcha": {
+      "checking": "Mohon menunggu, sistem sedang validasi ReCaptcha V3"
     }
   }
 }

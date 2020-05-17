@@ -20,9 +20,10 @@ import men.doku.donation.domain.Transaction;
 import men.doku.donation.domain.enumeration.TransactionStatus;
 import men.doku.donation.service.dto.MibRequestDTO;
 import men.doku.donation.service.dto.MibResponseDTO;
+import men.doku.donation.service.dto.RecaptchaVerifyRequestDTO;
 
 @Service
-public class MibMapper {
+public class DTOMapper {
 
     public MibRequestDTO toMibRequestDTO(Transaction transaction, Organizer organizer) {
         MibRequestDTO mibRequestDTO = new MibRequestDTO();
@@ -97,4 +98,13 @@ public class MibMapper {
         transaction.setOvoIdMasked(mibResponseDTO.getAuth1());
         return transaction;
     }
+
+    public MultiValueMap<String, String> recaptchaVerifyRequestDTOToMultiValueMap(RecaptchaVerifyRequestDTO requestDTO) {
+        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+        body.add("secret", requestDTO.getSecret());
+        body.add("response", requestDTO.getResponse());
+        body.add("remoteip", requestDTO.getRemoteip());
+        return body;
+    }
+
 }

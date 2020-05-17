@@ -147,4 +147,7 @@ application:
       region: ap-southeast-1
       credential-folder: /var/lib/tomcat8/webapps/ROOT/WEB-INF/classes/config/gmail/
   recaptcha:
+    active: true
+    verify-url: https://www.google.com/recaptcha/api/siteverify
     key: prod/saweranCharity/recaptchaKey
+    region: ap-southeast-1

@@ -25,6 +25,10 @@ export class PaymentService {
     return this.http.post<ITransaction>(`${this.resourceUrl}`, transaction, { observe: 'response' });
   }
 
+  checkRecaptcha(token: string): Observable<HttpResponse<Boolean>> {
+    return this.http.post<Boolean>(`${this.resourceUrl}/recaptcha`, token, { observe: 'response' });
+  }
+
   paymentResult(transaction: Transaction): void {
     this.result.next(transaction);
   }

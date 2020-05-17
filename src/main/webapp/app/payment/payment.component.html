@@ -238,10 +238,13 @@
                             </ol>
                         </div>
 
+                        <input type="hidden" name="gre_token" id="field_gre_token" formControlName="greToken" />
+                        <span [hidden]="recaptchaValid" class="text-xs text-red-500" jhiTranslate="payment.recaptcha.checking">Checking ReCaptcha V3</span>
+
                         <!-- End if using OVO -->
 
                         <div class="flex w-full mt-6">
-                            <button type="submit" id="button_submit" [disabled]="paymentForm.invalid || isSaving"
+                            <button type="submit" id="button_submit" [disabled]="paymentForm.invalid || isSaving || !recaptchaValid"
                                 class="w-full bg-red-600 hover:bg-red-500 disabled:bg-red-200 disabled:cursor-not-allowed text-white text-sm py-2 px-4 font-semibold rounded focus:outline-none focus:shadow-outline h-10"
                                 jhiTranslate="payment.section.form.button" (click)="scrollToTop()">
                                 Donate

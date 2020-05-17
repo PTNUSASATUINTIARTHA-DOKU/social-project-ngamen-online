@@ -41,7 +41,7 @@ import men.doku.donation.service.OrganizerService;
 import men.doku.donation.service.TransactionService;
 import men.doku.donation.service.dto.MibRequestDTO;
 import men.doku.donation.service.dto.MibResponseDTO;
-import men.doku.donation.service.mapper.MibMapper;
+import men.doku.donation.service.mapper.DTOMapper;
 
 /**
  * Service Implementation for managing {@link Transaction}.
@@ -55,13 +55,13 @@ public class TransactionServiceImpl implements TransactionService {
     private final TransactionRepository transactionRepository;
     private final OrganizerService organizerService;
     private final DonationService donationService;
-    private final MibMapper mibMapper;
+    private final DTOMapper mibMapper;
     private final ApplicationProperties applicationProperties;
     private final RestTemplate restTemplate;
     private final TransactionProcessing transactionProcessing;
 
     public TransactionServiceImpl(TransactionRepository transactionRepository, OrganizerService organizerService,
-            DonationService donationService, MibMapper mibMapper, ApplicationProperties applicationProperties,
+            DonationService donationService, DTOMapper mibMapper, ApplicationProperties applicationProperties,
             RestTemplateBuilder restTemplateBuilder, TransactionProcessing transactionProcessing) {
         this.transactionRepository = transactionRepository;
         this.organizerService = organizerService;
