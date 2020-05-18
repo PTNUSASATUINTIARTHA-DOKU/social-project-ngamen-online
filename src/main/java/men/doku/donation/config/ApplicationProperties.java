@@ -221,6 +221,7 @@ public class ApplicationProperties {
 
         private Float payment = 0F;
         private Float login = 0F;
+        private Float resetPassword = 0F;
 
         public Float getPayment() {
             return payment;
@@ -236,6 +237,14 @@ public class ApplicationProperties {
 
         public void setLogin(Float login) {
             this.login = login;
+        }
+
+        public Float getResetPassword() {
+            return resetPassword;
+        }
+
+        public void setResetPassword(Float resetPassword) {
+            this.resetPassword = resetPassword;
         }
     }
 }

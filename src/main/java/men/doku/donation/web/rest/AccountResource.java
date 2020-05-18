@@ -1,9 +1,11 @@
 package men.doku.donation.web.rest;
 
+import men.doku.donation.config.ApplicationProperties;
 import men.doku.donation.domain.User;
 import men.doku.donation.repository.UserRepository;
 import men.doku.donation.security.SecurityUtils;
 import men.doku.donation.service.MailService;
+import men.doku.donation.service.RecaptchaService;
 import men.doku.donation.service.UserService;
 import men.doku.donation.service.dto.PasswordChangeDTO;
 import men.doku.donation.service.dto.UserDTO;
@@ -47,11 +49,18 @@ public class AccountResource {
 
     private final MailService mailService;
 
-    public AccountResource(UserRepository userRepository, UserService userService, MailService mailService) {
+    private final RecaptchaService recaptchaService;
 
+    private final ApplicationProperties applicationProperties;
+
+    public AccountResource(UserRepository userRepository, UserService userService
+            , MailService mailService, RecaptchaService recaptchaService
+            , ApplicationProperties applicationProperties) {
         this.userRepository = userRepository;
         this.userService = userService;
         this.mailService = mailService;
+        this.recaptchaService = recaptchaService;
+        this.applicationProperties = applicationProperties;
     }
 
     /**
@@ -153,9 +162,12 @@ public class AccountResource {
      * @param mail the mail of the user.
      */
     @PostMapping(path = "/account/reset-password/init")
-    public void requestPasswordReset(@RequestBody String mail) {
+    public void requestPasswordReset(@RequestParam String mail, @RequestParam String captchaToken, HttpServletRequest servletRequest) {
+        log.debug("mail : {}", mail);
+        log.debug("captchaToken: {}", captchaToken);
+        Optional<Float> score = recaptchaService.checkRecaptcha(captchaToken, servletRequest, "reset_password");
         Optional<User> user = userService.requestPasswordReset(mail);
-        if (user.isPresent()) {
+        if (user.isPresent() && score.isPresent() && score.get() > applicationProperties.getRecaptcha().getThreshold().getResetPassword()) {
             mailService.sendPasswordResetMail(user.get());
         } else {
             // Pretend the request has been successful to prevent checking which emails really exist

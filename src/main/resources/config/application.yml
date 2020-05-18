@@ -181,3 +181,4 @@ application:
     threshold:
       payment: 0.3F
       login: 0.5F
+      reset-password: 0.7F
