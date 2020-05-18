@@ -36,6 +36,8 @@
       "paymentHostRefNumber": "Payment Host Ref Number",
       "lastUpdatedBy": "Diubah oleh",
       "lastUpdatedAt": "Pengubahan terakhir",
+      "captchaToken": "Captcha Token",
+      "captchaScore": "Captcha Score",
       "status": "Status",
       "donation": "Donasi",
       "organizer": "Yayasan"

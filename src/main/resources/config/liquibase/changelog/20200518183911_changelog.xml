@@ -1,0 +1,31 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.8.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet author="rudythong (generated)" id="1589827159163-7">
+        <addColumn tableName="transaction">
+            <column name="captcha_score" type="float"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="rudythong (generated)" id="1589827159163-8">
+        <addColumn tableName="transaction">
+            <column name="captcha_token" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="rudythong (generated)" id="1589827159163-1">
+        <alterSequence incrementBy="50" sequenceName="sequence_generator"/>
+    </changeSet>
+    <changeSet author="rudythong (generated)" id="1589827159163-2">
+        <setTableRemarks tableName="donation"/>
+    </changeSet>
+    <changeSet author="rudythong (generated)" id="1589827159163-3">
+        <setTableRemarks tableName="organizer"/>
+    </changeSet>
+    <changeSet author="rudythong (generated)" id="1589827159163-4">
+        <setTableRemarks tableName="transaction"/>
+    </changeSet>
+    <changeSet author="rudythong (generated)" id="1589827159163-5">
+        <addNotNullConstraint columnDataType="bigint" columnName="donation_id" tableName="transaction" validate="true"/>
+    </changeSet>
+    <changeSet author="rudythong (generated)" id="1589827159163-6">
+        <addNotNullConstraint columnDataType="bigint" columnName="organizer_id" tableName="donation" validate="true"/>
+    </changeSet>
+</databaseChangeLog>

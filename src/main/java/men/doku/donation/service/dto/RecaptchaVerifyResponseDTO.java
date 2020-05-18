@@ -16,7 +16,7 @@ public class RecaptchaVerifyResponseDTO {
     @JsonProperty("error-codes")
     String[] errorCodes;
 
-    Long score;
+    Float score;
 
     String action;
 
@@ -24,7 +24,7 @@ public class RecaptchaVerifyResponseDTO {
     }
 
     public RecaptchaVerifyResponseDTO(Boolean success, String challengeTs, String hostname, String[] errorCodes,
-            Long score, String action) {
+            Float score, String action) {
         this.success = success;
         this.challengeTs = challengeTs;
         this.hostname = hostname;
@@ -65,11 +65,11 @@ public class RecaptchaVerifyResponseDTO {
         this.errorCodes = errorCodes;
     }
 
-    public Long getScore() {
+    public Float getScore() {
         return score;
     }
 
-    public void setScore(Long score) {
+    public void setScore(Float score) {
         this.score = score;
     }
 

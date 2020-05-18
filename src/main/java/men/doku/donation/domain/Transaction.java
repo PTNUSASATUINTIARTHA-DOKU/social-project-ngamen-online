@@ -118,6 +118,15 @@ public class Transaction implements Serializable {
     @JsonView(AuthoritiesConstants.User.class)
     private String paymentHostRefNumber;
 
+    @Size(max = 1000)
+    @Column(name = "captcha_token", length = 1000)
+    @JsonView(AuthoritiesConstants.User.class)
+    private String captchaToken;
+
+    @Column(name = "captcha_score")
+    @JsonView(AuthoritiesConstants.User.class)
+    private Float captchaScore;
+
     @Size(max = 100)
     @Column(name = "last_updated_by", length = 100)
     @JsonView(AuthoritiesConstants.User.class)
@@ -380,6 +389,32 @@ public class Transaction implements Serializable {
         this.paymentHostRefNumber = paymentHostRefNumber;
     }
 
+    public String getCaptchaToken() {
+        return captchaToken;
+    }
+
+    public Transaction captchaToken(String captchaToken) {
+        this.captchaToken = captchaToken;
+        return this;
+    }
+
+    public void setCaptchaToken(String captchaToken) {
+        this.captchaToken = captchaToken;
+    }
+
+    public Float getCaptchaScore() {
+        return captchaScore;
+    }
+
+    public Transaction captchaScore(Float captchaScore) {
+        this.captchaScore = captchaScore;
+        return this;
+    }
+
+    public void setCaptchaScore(Float captchaScore) {
+        this.captchaScore = captchaScore;
+    }
+
     public String getLastUpdatedBy() {
         return lastUpdatedBy;
     }
@@ -471,6 +506,8 @@ public class Transaction implements Serializable {
             ", paymentSystrace='" + getPaymentSystrace() + "'" +
             ", approvalCode='" + getApprovalCode() + "'" +
             ", paymentHostRefNumber='" + getPaymentHostRefNumber() + "'" +
+            ", captchaToken='" + getCaptchaToken() + "'" +
+            ", captchaScore=" + getCaptchaScore() +
             ", lastUpdatedBy='" + getLastUpdatedBy() + "'" +
             ", lastUpdatedAt='" + getLastUpdatedAt() + "'" +
             ", status='" + getStatus() + "'" +

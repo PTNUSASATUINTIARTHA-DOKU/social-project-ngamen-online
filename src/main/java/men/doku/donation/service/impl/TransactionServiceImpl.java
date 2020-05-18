@@ -154,19 +154,16 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public Transaction pay(Transaction transaction) {
         log.debug("Request to initiatePayment : {}", transaction);
+        if (transaction.getCaptchaScore() < applicationProperties.getRecaptcha().getThreshold()) {
+            return saveResult(transaction, TransactionStatus.FAILED, "BOT", "Your transaction was detected as fraudulant attempt.");
+        }
         transaction = this.transactionProcessing.saveProcessing(transaction);
         MibResponseDTO mibResponseDTO = new MibResponseDTO();
         Optional<Donation> don = donationService.findOne(transaction.getDonation().getId());
         if (!don.isPresent()) {
-            transaction.setStatus(TransactionStatus.FAILED);
-            transaction.setResponseCode("DNF");
-            transaction.setMessage("Donation Not Found");
-            return save(transaction);
+            return saveResult(transaction, TransactionStatus.FAILED, "DNF", "Donation Not Found");
         } else if (don.get().getStatus().equals(IsActiveStatus.DISABLED)) {
-            transaction.setStatus(TransactionStatus.FAILED);
-            transaction.setResponseCode("DIS");
-            transaction.setMessage("Donation Disabled");
-            return save(transaction);
+            return saveResult(transaction, TransactionStatus.FAILED, "DIS", "Donation Disabled");
         } else {
             transaction.setDonation(don.get());
             MibRequestDTO mibRequestDTO = mibMapper.toMibRequestDTO(transaction, don.get().getOrganizer());
@@ -189,22 +186,23 @@ public class TransactionServiceImpl implements TransactionService {
                     return save(mibMapper.mibResponseToTransaction(mibResponseDTO, transaction));
                 } catch (JsonProcessingException e) {
                     log.error("Failed to parse MIB Response into Object {}", e.getMessage());
-                    transaction.setStatus(TransactionStatus.FAILED);
-                    transaction.setResponseCode("MIB");
-                    transaction.setMessage("Failed to parse MIB Response into Object.");
-                    return save(transaction);
+                    return saveResult(transaction, TransactionStatus.FAILED, "MIB", "Failed to parse MIB Response into Object.");
                 }
             } else {
                 // try check status 
                 transaction = findOne(transaction.getId()).get();
                 // if check status already implemented inside findOne, there will be no need to manual update below:
-                transaction.setStatus(TransactionStatus.FAILED);
-                transaction.setResponseCode(String.valueOf(response.getStatusCode().value()));
-                transaction.setMessage("Payment not completed.");
-                return save(transaction);
+                return saveResult(transaction, TransactionStatus.FAILED, String.valueOf(response.getStatusCode().value()), "Payment not completed.");
             }
         }
     } 
+
+    private Transaction saveResult(Transaction transaction, TransactionStatus status, String responseCode, String message) {
+        transaction.setStatus(status);
+        transaction.setResponseCode(responseCode);
+        transaction.setMessage(message);
+        return save(transaction);
+    }
     
     /**
      * 

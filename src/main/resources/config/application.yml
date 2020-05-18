@@ -177,4 +177,5 @@ application:
     active: false
   recaptcha:
     active: false
-    simulator-result: true
+    simulator-result: 1F
+    threshold: 0.3F

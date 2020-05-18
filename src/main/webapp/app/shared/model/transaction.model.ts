@@ -23,6 +23,8 @@ export interface ITransaction {
   paymentSystrace?: string;
   approvalCode?: string;
   paymentHostRefNumber?: string;
+  captchaToken?: string;
+  captchaScore?: number;
   lastUpdatedBy?: string;
   lastUpdatedAt?: Moment;
   status?: TransactionStatus;
@@ -50,6 +52,8 @@ export class Transaction implements ITransaction {
     public paymentSystrace?: string,
     public approvalCode?: string,
     public paymentHostRefNumber?: string,
+    public captchaToken?: string,
+    public captchaScore?: number,
     public lastUpdatedBy?: string,
     public lastUpdatedAt?: Moment,
     public status?: TransactionStatus,

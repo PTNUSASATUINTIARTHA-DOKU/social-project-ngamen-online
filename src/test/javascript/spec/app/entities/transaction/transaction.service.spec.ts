@@ -47,6 +47,8 @@ describe('Service Tests', () => {
         'AAAAAAA',
         'AAAAAAA',
         'AAAAAAA',
+        0,
+        'AAAAAAA',
         currentDate,
         TransactionStatus.INITIATE
       );
@@ -115,6 +117,8 @@ describe('Service Tests', () => {
             paymentSystrace: 'BBBBBB',
             approvalCode: 'BBBBBB',
             paymentHostRefNumber: 'BBBBBB',
+            captchaToken: 'BBBBBB',
+            captchaScore: 1,
             lastUpdatedBy: 'BBBBBB',
             lastUpdatedAt: currentDate.format(DATE_TIME_FORMAT),
             status: 'BBBBBB'
@@ -158,6 +162,8 @@ describe('Service Tests', () => {
             paymentSystrace: 'BBBBBB',
             approvalCode: 'BBBBBB',
             paymentHostRefNumber: 'BBBBBB',
+            captchaToken: 'BBBBBB',
+            captchaScore: 1,
             lastUpdatedBy: 'BBBBBB',
             lastUpdatedAt: currentDate.format(DATE_TIME_FORMAT),
             status: 'BBBBBB'

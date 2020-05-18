@@ -75,6 +75,10 @@ export class AlertErrorComponent implements OnDestroy {
           this.addErrorAlert('Not found', 'error.url.not.found');
           break;
 
+        case 500:
+          this.addErrorAlert('Internal Server Error', httpErrorResponse.error.message, httpErrorResponse.error.params);
+          break;
+
         default:
           if (httpErrorResponse.error !== '' && httpErrorResponse.error.message) {
             this.addErrorAlert(httpErrorResponse.error.message);

@@ -165,7 +165,8 @@ public class ApplicationProperties {
         private Boolean active = false;
         private String verifyUrl = new String();
         private String region = new String();
-        private Boolean simulatorResult = true;
+        private Float simulatorResult = 1F;
+        private Float threshold = 0F;
 
         public String getKey() {
             return key;
@@ -199,12 +200,20 @@ public class ApplicationProperties {
             this.region = region;
         }
 
-        public Boolean getSimulatorResult() {
+        public Float getSimulatorResult() {
             return simulatorResult;
         }
 
-        public void setSimulatorResult(Boolean simulatorResult) {
+        public void setSimulatorResult(Float simulatorResult) {
             this.simulatorResult = simulatorResult;
+        }
+
+        public Float getThreshold() {
+            return threshold;
+        }
+
+        public void setThreshold(Float threshold) {
+            this.threshold = threshold;
         }
     }
 }

@@ -36,14 +36,13 @@ export class PaymentComponent implements OnInit {
   transaction: Transaction;
   windowScrolled: boolean | undefined;
   startTime: number;
-  recaptchaValid = false;
 
   paymentForm = this.fb.group({
     donor: [null, [Validators.required, Validators.maxLength(30)]],
     donorAnon: [null, []],
     amount: [null, [Validators.required, Validators.min(10000), Validators.max(10000000)]],
     phone: [null, [Validators.required, Validators.maxLength(13), Validators.minLength(10)]],
-    greToken: [null, []]
+    greToken: [null, [Validators.required]]
   });
 
   constructor(
@@ -102,12 +101,7 @@ export class PaymentComponent implements OnInit {
   checkRecaptcha(paymentComponent: PaymentComponent): void {
     grecaptcha.ready(function(): void {
       grecaptcha.execute('6LdMRfgUAAAAAM90L4mxhYqhnAuxzEerTbQFRUYq', { action: 'payment' }).then(function(token: any): void {
-        (document.getElementById('field_gre_token')! as HTMLInputElement).value = token;
-        paymentComponent.paymentService.checkRecaptcha(token).subscribe(response => {
-          if (response.body) {
-            paymentComponent.recaptchaValid = response.body.valueOf();
-          }
-        });
+        paymentComponent.paymentForm.patchValue({ greToken: token });
       });
     });
   }
@@ -129,7 +123,7 @@ export class PaymentComponent implements OnInit {
         if (result.body) this.onSaveSuccess(result.body);
         else this.onSaveError(transaction);
       },
-      () => this.onSaveError(transaction),
+      () => (this.isSaving = false),
       () => {
         dataLayer.push({
           event: 'Finish Payment OVO',
@@ -180,6 +174,8 @@ export class PaymentComponent implements OnInit {
       'Failed to communicate with Server',
       undefined,
       undefined,
+      undefined,
+      this.paymentForm.get('greToken')?.value,
       undefined,
       undefined,
       undefined,

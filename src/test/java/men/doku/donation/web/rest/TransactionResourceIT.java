@@ -89,6 +89,12 @@ public class TransactionResourceIT {
     private static final String DEFAULT_PAYMENT_HOST_REF_NUMBER = "AAAAAAAAAA";
     private static final String UPDATED_PAYMENT_HOST_REF_NUMBER = "BBBBBBBBBB";
 
+    private static final String DEFAULT_CAPTCHA_TOKEN = "AAAAAAAAAA";
+    private static final String UPDATED_CAPTCHA_TOKEN = "BBBBBBBBBB";
+
+    private static final Float DEFAULT_CAPTCHA_SCORE = 1F;
+    private static final Float UPDATED_CAPTCHA_SCORE = 2F;
+
     private static final String DEFAULT_LAST_UPDATED_BY = "AAAAAAAAAA";
     private static final String UPDATED_LAST_UPDATED_BY = "BBBBBBBBBB";
 
@@ -138,6 +144,8 @@ public class TransactionResourceIT {
             .paymentSystrace(DEFAULT_PAYMENT_SYSTRACE)
             .approvalCode(DEFAULT_APPROVAL_CODE)
             .paymentHostRefNumber(DEFAULT_PAYMENT_HOST_REF_NUMBER)
+            .captchaToken(DEFAULT_CAPTCHA_TOKEN)
+            .captchaScore(DEFAULT_CAPTCHA_SCORE)
             .lastUpdatedBy(DEFAULT_LAST_UPDATED_BY)
             .lastUpdatedAt(DEFAULT_LAST_UPDATED_AT)
             .status(DEFAULT_STATUS);
@@ -169,6 +177,8 @@ public class TransactionResourceIT {
             .paymentSystrace(UPDATED_PAYMENT_SYSTRACE)
             .approvalCode(UPDATED_APPROVAL_CODE)
             .paymentHostRefNumber(UPDATED_PAYMENT_HOST_REF_NUMBER)
+            .captchaToken(UPDATED_CAPTCHA_TOKEN)
+            .captchaScore(UPDATED_CAPTCHA_SCORE)
             .lastUpdatedBy(UPDATED_LAST_UPDATED_BY)
             .lastUpdatedAt(UPDATED_LAST_UPDATED_AT)
             .status(UPDATED_STATUS);
@@ -213,6 +223,8 @@ public class TransactionResourceIT {
         assertThat(testTransaction.getPaymentSystrace()).isEqualTo(DEFAULT_PAYMENT_SYSTRACE);
         assertThat(testTransaction.getApprovalCode()).isEqualTo(DEFAULT_APPROVAL_CODE);
         assertThat(testTransaction.getPaymentHostRefNumber()).isEqualTo(DEFAULT_PAYMENT_HOST_REF_NUMBER);
+        assertThat(testTransaction.getCaptchaToken()).isEqualTo(DEFAULT_CAPTCHA_TOKEN);
+        assertThat(testTransaction.getCaptchaScore()).isEqualTo(DEFAULT_CAPTCHA_SCORE);
         assertThat(testTransaction.getLastUpdatedBy()).isEqualTo(DEFAULT_LAST_UPDATED_BY);
         assertThat(testTransaction.getLastUpdatedAt()).isEqualTo(DEFAULT_LAST_UPDATED_AT);
         assertThat(testTransaction.getStatus()).isEqualTo(DEFAULT_STATUS);
@@ -285,6 +297,8 @@ public class TransactionResourceIT {
             .andExpect(jsonPath("$.[*].paymentSystrace").value(hasItem(DEFAULT_PAYMENT_SYSTRACE)))
             .andExpect(jsonPath("$.[*].approvalCode").value(hasItem(DEFAULT_APPROVAL_CODE)))
             .andExpect(jsonPath("$.[*].paymentHostRefNumber").value(hasItem(DEFAULT_PAYMENT_HOST_REF_NUMBER)))
+            .andExpect(jsonPath("$.[*].captchaToken").value(hasItem(DEFAULT_CAPTCHA_TOKEN)))
+            .andExpect(jsonPath("$.[*].captchaScore").value(hasItem(DEFAULT_CAPTCHA_SCORE.doubleValue())))
             .andExpect(jsonPath("$.[*].lastUpdatedBy").value(hasItem(DEFAULT_LAST_UPDATED_BY)))
             .andExpect(jsonPath("$.[*].lastUpdatedAt").value(hasItem(DEFAULT_LAST_UPDATED_AT.toString())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
@@ -319,6 +333,8 @@ public class TransactionResourceIT {
             .andExpect(jsonPath("$.paymentSystrace").value(DEFAULT_PAYMENT_SYSTRACE))
             .andExpect(jsonPath("$.approvalCode").value(DEFAULT_APPROVAL_CODE))
             .andExpect(jsonPath("$.paymentHostRefNumber").value(DEFAULT_PAYMENT_HOST_REF_NUMBER))
+            .andExpect(jsonPath("$.captchaToken").value(DEFAULT_CAPTCHA_TOKEN))
+            .andExpect(jsonPath("$.captchaScore").value(DEFAULT_CAPTCHA_SCORE.doubleValue()))
             .andExpect(jsonPath("$.lastUpdatedBy").value(DEFAULT_LAST_UPDATED_BY))
             .andExpect(jsonPath("$.lastUpdatedAt").value(DEFAULT_LAST_UPDATED_AT.toString()))
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
@@ -363,6 +379,8 @@ public class TransactionResourceIT {
             .paymentSystrace(UPDATED_PAYMENT_SYSTRACE)
             .approvalCode(UPDATED_APPROVAL_CODE)
             .paymentHostRefNumber(UPDATED_PAYMENT_HOST_REF_NUMBER)
+            .captchaToken(UPDATED_CAPTCHA_TOKEN)
+            .captchaScore(UPDATED_CAPTCHA_SCORE)
             .lastUpdatedBy(UPDATED_LAST_UPDATED_BY)
             .lastUpdatedAt(UPDATED_LAST_UPDATED_AT)
             .status(UPDATED_STATUS);
@@ -394,6 +412,8 @@ public class TransactionResourceIT {
         assertThat(testTransaction.getPaymentSystrace()).isEqualTo(UPDATED_PAYMENT_SYSTRACE);
         assertThat(testTransaction.getApprovalCode()).isEqualTo(UPDATED_APPROVAL_CODE);
         assertThat(testTransaction.getPaymentHostRefNumber()).isEqualTo(UPDATED_PAYMENT_HOST_REF_NUMBER);
+        assertThat(testTransaction.getCaptchaToken()).isEqualTo(UPDATED_CAPTCHA_TOKEN);
+        assertThat(testTransaction.getCaptchaScore()).isEqualTo(UPDATED_CAPTCHA_SCORE);
         assertThat(testTransaction.getLastUpdatedBy()).isEqualTo(UPDATED_LAST_UPDATED_BY);
         assertThat(testTransaction.getLastUpdatedAt()).isEqualTo(UPDATED_LAST_UPDATED_AT);
         assertThat(testTransaction.getStatus()).isEqualTo(UPDATED_STATUS);

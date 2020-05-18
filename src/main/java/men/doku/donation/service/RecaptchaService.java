@@ -53,7 +53,7 @@ public class RecaptchaService {
         this.dtoMapper = dtoMapper;
     }
 
-    public Boolean checkRecaptcha(String token, String remoteIp) {
+    public Optional<Float> checkRecaptcha(String token, String remoteIp) {
         if (applicationProperties.getRecaptcha().getActive()) {
             log.debug("TOKEN {}", token);
             log.debug("REMOTE IP {}", remoteIp);
@@ -75,14 +75,18 @@ public class RecaptchaService {
                     log.debug("Response {}", response);
                 } catch (RestClientException rce) {
                     log.error("RestClientException {}", rce.getMessage());
+                    return Optional.empty();
                 }
                 if (response.getStatusCode() == HttpStatus.OK) {
-                    return (response.getBody().getSuccess());
+                    return Optional.of(response.getBody().getScore());
+                } else {
+                    return Optional.of(0F);
                 }
+            } else {
+                return Optional.empty();
             }
-            return false;
         } else {
-            return applicationProperties.getRecaptcha().getSimulatorResult();
+            return Optional.of(applicationProperties.getRecaptcha().getSimulatorResult());
         }
     }
 

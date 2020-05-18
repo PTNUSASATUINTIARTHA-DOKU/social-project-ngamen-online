@@ -115,12 +115,6 @@
                     <span>{{ transaction.basket }}</span>
                 </div>
 
-                <div class="mb-2 text-gray-800">
-                    <span class="font-semibold" jhiTranslate="donationApp.transaction.deviceInformation">Device
-                        Information</span>:
-                    <span>{{ transaction.deviceInformation }}</span>
-                </div>
-
                 <hr class="mb-2">
 
                 <div class="mb-2 text-gray-800">
@@ -156,6 +150,26 @@
                 <div class="mb-2 text-gray-800">
                     <span class="font-semibold" jhiTranslate="donationApp.transaction.paymentHostRefNumber">Payment Host Ref Number</span>:
                     <span>{{ transaction.paymentHostRefNumber }}</span>
+                </div>
+
+                <hr class="mb-2">
+
+                <div class="mb-2 text-gray-800 break-words">
+                    <span class="font-semibold" jhiTranslate="donationApp.transaction.deviceInformation">Device
+                        Information</span>:
+                    <span>{{ transaction.deviceInformation }}</span>
+                </div>
+
+                <div class="mb-2 text-gray-800 break-words">
+                    <span class="font-semibold" jhiTranslate="donationApp.transaction.captchaToken">Captcha 
+                        Token </span>:
+                    <span>{{ transaction.captchaToken }}</span>
+                </div>
+
+                <div class="mb-2 text-gray-800">
+                    <span class="font-semibold" jhiTranslate="donationApp.transaction.captchaScore">Captcha
+                        Score</span>:
+                    <span>{{ transaction.captchaScore }}</span>
                 </div>
 
                 <div class="mb-2 text-gray-800">

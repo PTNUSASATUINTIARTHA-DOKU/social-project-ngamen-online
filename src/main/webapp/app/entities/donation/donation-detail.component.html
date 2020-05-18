@@ -33,13 +33,12 @@
 
                 <div class="mb-2 text-gray-800">
                     <span class="font-semibold" jhiTranslate="donationApp.donation.url">Url</span>:
-                    <a href="{{ donation.url}}" class="text-blue 600 hover:text-blue-700" target="_blank">{{ donation.url }}</span>
+                    <a href="{{ donation.url}}" class="text-blue 600 hover:text-blue-700" target="_blank">{{ donation.url }}</a>
                 </div>
 
                 <div class="mb-2 text-gray-800">
                     <span class="font-semibold" jhiTranslate="donationApp.donation.imageUrl">Image Url</span>:
                     <img *ngIf="donation.imageUrl" src="{{ donation.imageUrl }}" class="h-10 w-10 rounded-full">
-                    
                 </div>
 
                 <div class="mb-2 text-gray-800">

@@ -113,6 +113,18 @@
             "fieldType": "String"
         },
         {
+            "fieldName": "captchaToken",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": "1000"
+        },
+        {
+            "fieldName": "captchaScore",
+            "fieldType": "Float"
+        },
+        {
             "fieldName": "lastUpdatedBy",
             "fieldType": "String",
             "fieldValidateRules": [

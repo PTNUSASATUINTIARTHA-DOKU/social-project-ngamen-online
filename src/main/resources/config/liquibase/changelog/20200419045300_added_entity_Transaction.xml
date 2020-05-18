@@ -69,6 +69,12 @@
             <column name="payment_host_ref_number" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
+            <column name="captcha_token" type="varchar(1000)">
+                <constraints nullable="true" />
+            </column>
+            <column name="captcha_score" type="${floatType}">
+                <constraints nullable="true" />
+            </column>
             <column name="last_updated_by" type="varchar(100)">
                 <constraints nullable="true" />
             </column>
@@ -124,6 +130,8 @@
             <column name="payment_systrace" type="string"/>
             <column name="approval_code" type="string"/>
             <column name="payment_host_ref_number" type="string"/>
+            <column name="captcha_token" type="string"/>
+            <column name="captcha_score" type="numeric"/>
             <column name="last_updated_by" type="string"/>
             <column name="last_updated_at" type="datetime"/>
             <column name="status" type="string"/>
