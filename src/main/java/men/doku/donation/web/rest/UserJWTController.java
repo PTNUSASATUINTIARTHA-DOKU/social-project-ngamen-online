@@ -1,7 +1,9 @@
 package men.doku.donation.web.rest;
 
+import men.doku.donation.config.ApplicationProperties;
 import men.doku.donation.security.jwt.JWTFilter;
 import men.doku.donation.security.jwt.TokenProvider;
+import men.doku.donation.service.RecaptchaService;
 import men.doku.donation.web.rest.vm.LoginVM;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -15,6 +17,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 /**
@@ -28,13 +31,25 @@ public class UserJWTController {
 
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
-    public UserJWTController(TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder) {
+    private final RecaptchaService recaptchaService;
+
+    private final ApplicationProperties applicationProperties;
+
+    public UserJWTController(TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder,
+            RecaptchaService recaptchaService, ApplicationProperties applicationProperties) {
         this.tokenProvider = tokenProvider;
         this.authenticationManagerBuilder = authenticationManagerBuilder;
+        this.recaptchaService = recaptchaService;
+        this.applicationProperties = applicationProperties;
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<JWTToken> authorize(@Valid @RequestBody LoginVM loginVM) {
+    public ResponseEntity<JWTToken> authorize(@Valid @RequestBody LoginVM loginVM, HttpServletRequest request) {
+
+        Float score = recaptchaService.checkRecaptcha(loginVM.getCaptchaToken(), request, "login").get();
+        if (score < applicationProperties.getRecaptcha().getThreshold().getLogin()) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
 
         UsernamePasswordAuthenticationToken authenticationToken =
             new UsernamePasswordAuthenticationToken(loginVM.getUsername(), loginVM.getPassword());

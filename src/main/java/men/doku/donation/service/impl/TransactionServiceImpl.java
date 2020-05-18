@@ -154,7 +154,7 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public Transaction pay(Transaction transaction) {
         log.debug("Request to initiatePayment : {}", transaction);
-        if (transaction.getCaptchaScore() < applicationProperties.getRecaptcha().getThreshold()) {
+        if (transaction.getCaptchaScore() < applicationProperties.getRecaptcha().getThreshold().getPayment()) {
             return saveResult(transaction, TransactionStatus.FAILED, "BOT", "Your transaction was detected as fraudulant attempt.");
         }
         transaction = this.transactionProcessing.saveProcessing(transaction);

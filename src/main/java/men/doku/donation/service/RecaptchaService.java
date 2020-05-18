@@ -5,6 +5,8 @@ import java.util.Base64;
 import java.util.Collections;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.amazonaws.services.secretsmanager.AWSSecretsManager;
 import com.amazonaws.services.secretsmanager.AWSSecretsManagerClientBuilder;
 import com.amazonaws.services.secretsmanager.model.DecryptionFailureException;
@@ -35,6 +37,7 @@ import men.doku.donation.config.ApplicationProperties;
 import men.doku.donation.service.dto.RecaptchaVerifyRequestDTO;
 import men.doku.donation.service.dto.RecaptchaVerifyResponseDTO;
 import men.doku.donation.service.mapper.DTOMapper;
+import men.doku.donation.web.rest.HttpReqRespUtils;
 
 @Service
 public class RecaptchaService {
@@ -53,8 +56,9 @@ public class RecaptchaService {
         this.dtoMapper = dtoMapper;
     }
 
-    public Optional<Float> checkRecaptcha(String token, String remoteIp) {
+    public Optional<Float> checkRecaptcha(String token, HttpServletRequest servletRequest, String action) {
         if (applicationProperties.getRecaptcha().getActive()) {
+            String remoteIp = HttpReqRespUtils.getClientIpAddress(servletRequest);
             log.debug("TOKEN {}", token);
             log.debug("REMOTE IP {}", remoteIp);
             Optional<String> recaptchaKey = getKey();
@@ -78,7 +82,11 @@ public class RecaptchaService {
                     return Optional.empty();
                 }
                 if (response.getStatusCode() == HttpStatus.OK) {
-                    return Optional.of(response.getBody().getScore());
+                    if (response.getBody().getSuccess()) {
+                        return Optional.of(response.getBody().getScore());
+                    } else {
+                        return Optional.of(0F);
+                    }
                 } else {
                     return Optional.of(0F);
                 }

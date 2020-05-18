@@ -103,7 +103,7 @@ public class PaymentResource {
     @PostMapping("/payments")
     public ResponseEntity<Transaction> initiatePayment(@Valid @RequestBody Transaction transaction, HttpServletRequest request) {
         log.debug("REST request to initiate Payment : {}", transaction);
-        recaptchaService.checkRecaptcha(transaction.getCaptchaToken(), HttpReqRespUtils.getClientIpAddress(request))
+        recaptchaService.checkRecaptcha(transaction.getCaptchaToken(), request, "payment")
                 .ifPresent(score -> transaction.setCaptchaScore(score));
         Transaction result = transactionService.pay(transaction);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, "Transaction",

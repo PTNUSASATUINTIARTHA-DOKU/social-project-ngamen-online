@@ -5,7 +5,12 @@
       "password": "Password",
       "password.placeholder": "Password anda",
       "rememberme": "Ingat saya",
-      "button": "Masuk"
+      "button": "Masuk",
+      "recaptcha.checking": "Mohon menunggu, sistem sedang validasi ReCaptcha V3",
+      "validation": {
+        "username": "Mohon masukkan username Anda",
+        "password": "Mohon masukkan password Anda"
+      }
     },
     "messages": {
       "error": {

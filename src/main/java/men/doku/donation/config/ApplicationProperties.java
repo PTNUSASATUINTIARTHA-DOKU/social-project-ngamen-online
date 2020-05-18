@@ -166,7 +166,7 @@ public class ApplicationProperties {
         private String verifyUrl = new String();
         private String region = new String();
         private Float simulatorResult = 1F;
-        private Float threshold = 0F;
+        private Threshold threshold = new Threshold();
 
         public String getKey() {
             return key;
@@ -208,12 +208,34 @@ public class ApplicationProperties {
             this.simulatorResult = simulatorResult;
         }
 
-        public Float getThreshold() {
+        public Threshold getThreshold() {
             return threshold;
         }
 
-        public void setThreshold(Float threshold) {
+        public void setThreshold(Threshold threshold) {
             this.threshold = threshold;
+        }
+    }
+
+    public static class Threshold {
+
+        private Float payment = 0F;
+        private Float login = 0F;
+
+        public Float getPayment() {
+            return payment;
+        }
+
+        public void setPayment(Float payment) {
+            this.payment = payment;
+        }
+
+        public Float getLogin() {
+            return login;
+        }
+
+        public void setLogin(Float login) {
+            this.login = login;
         }
     }
 }

@@ -1,9 +1,11 @@
 import { Component, AfterViewInit, ElementRef, ViewChild, ViewEncapsulation } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 
 import { LoginService } from 'app/core/login/login.service';
+
+declare let grecaptcha: any;
 
 @Component({
   selector: 'jhi-login-modal',
@@ -18,9 +20,10 @@ export class LoginModalComponent implements AfterViewInit {
   authenticationError = false;
 
   loginForm = this.fb.group({
-    username: [''],
-    password: [''],
-    rememberMe: [false]
+    username: ['', [Validators.required]],
+    password: ['', [Validators.required]],
+    rememberMe: [false],
+    greToken: ['', [Validators.required]]
   });
 
   constructor(private loginService: LoginService, private router: Router, public activeModal: NgbActiveModal, private fb: FormBuilder) {}
@@ -29,13 +32,23 @@ export class LoginModalComponent implements AfterViewInit {
     if (this.username) {
       this.username.nativeElement.focus();
     }
+    this.checkRecaptcha(this);
+  }
+
+  checkRecaptcha(login: LoginModalComponent): void {
+    grecaptcha.ready(function(): void {
+      grecaptcha.execute('6LdMRfgUAAAAAM90L4mxhYqhnAuxzEerTbQFRUYq', { action: 'login' }).then(function(token: any): void {
+        login.loginForm.patchValue({ greToken: token });
+      });
+    });
   }
 
   cancel(): void {
     this.authenticationError = false;
     this.loginForm.patchValue({
       username: '',
-      password: ''
+      password: '',
+      greToken: ''
     });
     this.activeModal.dismiss('cancel');
   }
@@ -45,7 +58,8 @@ export class LoginModalComponent implements AfterViewInit {
       .login({
         username: this.loginForm.get('username')!.value,
         password: this.loginForm.get('password')!.value,
-        rememberMe: this.loginForm.get('rememberMe')!.value
+        rememberMe: this.loginForm.get('rememberMe')!.value,
+        captchaToken: this.loginForm.get('greToken')!.value
       })
       .subscribe(
         () => {

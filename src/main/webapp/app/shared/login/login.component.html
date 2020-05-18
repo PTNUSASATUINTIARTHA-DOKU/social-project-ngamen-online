@@ -11,50 +11,73 @@
 </div>
 
 <div class="modal-body">
-    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative text-sm mb-4" role="alert" *ngIf="authenticationError" jhiTranslate="login.messages.error.authentication">
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative text-sm mb-4" role="alert"
+        *ngIf="authenticationError" jhiTranslate="login.messages.error.authentication">
         <strong>Failed to sign in!</strong> Please check your credentials and try again.
     </div>
 
     <form role="form" (ngSubmit)="login()" [formGroup]="loginForm">
-      <div class="mb-4">
-          <label class="block text-gray-700 text-sm font-semibold mb-2" for="username"
-              jhiTranslate="global.form.username.label">
-              Username
-          </label>
-          <input
-              class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200 disabled:bg-gray-400 disabled:cursor-not-allowed leading-tight focus:outline-none focus:shadow-outline h-10"
-              id="username" type="text" name="username"
-              placeholder="{{ 'global.form.username.placeholder' | translate }}" formControlName="username" #usernam>
-      </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-semibold mb-2" for="username"
+                jhiTranslate="global.form.username.label">
+                Username
+            </label>
+            <input
+                class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200 disabled:bg-gray-400 disabled:cursor-not-allowed leading-tight focus:outline-none focus:shadow-outline h-10"
+                id="username" type="text" name="username"
+                placeholder="{{ 'global.form.username.placeholder' | translate }}" formControlName="username" #usernam>
+            <div *ngIf="loginForm.get('username')!.invalid && (loginForm.get('username')!.dirty || loginForm.get('username')!.touched)">
+                <small class="text-xs text-red-500"
+                    jhiTranslate="login.form.validation.username">
+                    Please input your username
+                </small>
+            </div>
+        </div>
 
-      <div class="mb-4">
-          <label class="block text-gray-700 text-sm font-semibold mb-2" for="password"
-              jhiTranslate="login.form.password">
-              Password
-          </label>
-          <input
-              class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200 disabled:bg-gray-400 disabled:cursor-not-allowed leading-tight focus:outline-none focus:shadow-outline h-10"
-              id="password" type="password" name="password"
-              placeholder="{{ 'login.form.password.placeholder' | translate }}" formControlName="password">
-      </div>
 
-      <div class="flex items-center justify-between">
-          <button
-              class="bg-red-600 hover:bg-red-500 disabled:bg-red-200 disabled:cursor-not-allowed text-white text-sm py-2 px-4 font-semibold rounded focus:outline-none focus:shadow-outline h-10"
-              type="submit" jhiTranslate="login.form.button">
-              Sign in
-          </button>
-          <a class="inline-block align-baseline text-sm text-blue-600 hover:text-blue-700 cursor-pointer text-sm text-right"
-              (click)="requestResetPassword()" jhiTranslate="login.password.forgot">
-              Forgot Password?
-          </a>
-      </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-semibold mb-2" for="password"
+                jhiTranslate="login.form.password">
+                Password
+            </label>
+            <input
+                class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200 disabled:bg-gray-400 disabled:cursor-not-allowed leading-tight focus:outline-none focus:shadow-outline h-10"
+                id="password" type="password" name="password"
+                placeholder="{{ 'login.form.password.placeholder' | translate }}" formControlName="password">
+            <div *ngIf="loginForm.get('password')!.invalid && (loginForm.get('password')!.dirty || loginForm.get('password')!.touched)">
+                <small class="text-xs text-red-500"
+                    jhiTranslate="login.form.validation.password">
+                    Please input your password
+                </small>
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <input type="hidden" name="gre_token" id="field_gre_token" formControlName="greToken" />
+            <span [hidden]="loginForm.controls.greToken.valid" id="error_recaptcha_processing"
+                class="text-xs text-red-500" jhiTranslate="login.form.recaptcha.checking">Checking ReCaptcha V3</span>
+        </div>
+
+        <div class="flex items-center justify-between">
+            <button
+                class="bg-red-600 hover:bg-red-500 disabled:bg-red-200 disabled:cursor-not-allowed text-white text-sm py-2 px-4 font-semibold rounded focus:outline-none focus:shadow-outline h-10"
+                type="submit" jhiTranslate="login.form.button" [disabled]="loginForm.invalid" >
+                Sign in
+            </button>
+            <a class="inline-block align-baseline text-sm text-blue-600 hover:text-blue-700 cursor-pointer text-sm text-right"
+                (click)="requestResetPassword()" jhiTranslate="login.password.forgot">
+                Forgot Password?
+            </a>
+        </div>
     </form>
 
     <hr class="my-3">
 
     <div class="flex items-center justify-between">
-        <span jhiTranslate="global.messages.info.register.noaccount" class="text-sm text-gray-800">You don't have an account yet? </span>    
-        <a href="mailto:admin@saweran.charity?subject=[Saweran.charity] Registration Request&body=Dear Admin, Saya tertarik untuk membuat akun di Saweran.charity. Mohon daftarkan email saya 'email@example.com'. Demikian disampaikan. Terima kasih." class="inline-block text-blue-600 hover:text-blue-700 cursor-pointer text-sm text-right align-baseline" jhiTranslate="global.messages.info.register.link">Register a new account</a>
+        <span jhiTranslate="global.messages.info.register.noaccount" class="text-sm text-gray-800">You don't have an
+            account yet? </span>
+        <a href="mailto:admin@saweran.charity?subject=[Saweran.charity] Registration Request&body=Dear Admin, Saya tertarik untuk membuat akun di Saweran.charity. Mohon daftarkan email saya 'email@example.com'. Demikian disampaikan. Terima kasih."
+            class="inline-block text-blue-600 hover:text-blue-700 cursor-pointer text-sm text-right align-baseline"
+            jhiTranslate="global.messages.info.register.link">Register a new account</a>
     </div>
 </div>
