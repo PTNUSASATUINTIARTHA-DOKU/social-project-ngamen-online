@@ -23,27 +23,16 @@ describe('Component Tests', () => {
       comp = fixture.componentInstance;
     });
 
-    it('sets focus after the view has been initialized', () => {
-      const node = {
-        focus(): void {}
-      };
-      comp.email = new ElementRef(node);
-      spyOn(node, 'focus');
-
-      comp.ngAfterViewInit();
-
-      expect(node.focus).toHaveBeenCalled();
-    });
-
     it('notifies of success upon successful requestReset', inject([PasswordResetInitService], (service: PasswordResetInitService) => {
       spyOn(service, 'save').and.returnValue(of({}));
       comp.resetRequestForm.patchValue({
-        email: 'user@domain.com'
+        email: 'user@domain.com',
+        captchaToken: 'token'
       });
 
       comp.requestReset();
 
-      expect(service.save).toHaveBeenCalledWith('user@domain.com');
+      expect(service.save).toHaveBeenCalledWith('user@domain.com', '');
       expect(comp.success).toBe(true);
     }));
 
@@ -59,7 +48,7 @@ describe('Component Tests', () => {
       });
       comp.requestReset();
 
-      expect(service.save).toHaveBeenCalledWith('user@domain.com');
+      expect(service.save).toHaveBeenCalledWith('user@domain.com', '');
       expect(comp.success).toBe(false);
     }));
   });

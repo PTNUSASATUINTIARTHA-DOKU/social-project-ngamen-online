@@ -49,13 +49,15 @@ describe('Component Tests', () => {
         const credentials = {
           username: 'admin',
           password: 'admin',
-          rememberMe: true
+          rememberMe: true,
+          captchaToken: ''
         };
 
         comp.loginForm.patchValue({
           username: 'admin',
           password: 'admin',
-          rememberMe: true
+          rememberMe: true,
+          captchaToken: 'token'
         });
         mockLoginService.setResponse({});
         mockRouter.url = '/admin/metrics';
