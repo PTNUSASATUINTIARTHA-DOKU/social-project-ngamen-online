@@ -167,6 +167,7 @@ public class TransactionServiceImpl implements TransactionService {
         } else {
             transaction.setDonation(don.get());
             MibRequestDTO mibRequestDTO = mibMapper.toMibRequestDTO(transaction, don.get().getOrganizer());
+            log.debug("MibRequestDTO {}", mibRequestDTO);
             String url = applicationProperties.getMibUrl();
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);

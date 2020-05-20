@@ -179,6 +179,6 @@ application:
     active: false
     simulator-result: 1F
     threshold:
-      payment: 0.3F
+      payment: -0.1F
       login: 0.5F
       reset-password: 0.7F
