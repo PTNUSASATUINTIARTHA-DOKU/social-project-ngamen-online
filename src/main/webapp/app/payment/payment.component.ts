@@ -127,7 +127,8 @@ export class PaymentComponent implements OnInit {
       () => {
         dataLayer.push({
           event: 'Finish Payment OVO',
-          timeToFinishPayment: new Date().getTime() - submitTime
+          timeToFinishPayment: new Date().getTime() - submitTime,
+          donationAmount: this.transaction.amount
         });
       }
     );
