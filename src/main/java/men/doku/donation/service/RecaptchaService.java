@@ -100,9 +100,9 @@ public class RecaptchaService {
 
     private Optional<String> getKey() {
         AWSSecretsManager client = AWSSecretsManagerClientBuilder.standard()
-                .withRegion(applicationProperties.getRecaptcha().getRegion()).build();
+                .withRegion(applicationProperties.getAws().getRegion()).build();
         GetSecretValueRequest getSecretValueRequest = new GetSecretValueRequest()
-                .withSecretId(applicationProperties.getRecaptcha().getKey());
+                .withSecretId(applicationProperties.getAws().getSecret().getRecaptcha());
         GetSecretValueResult getSecretValueResult = null;
 
         try {

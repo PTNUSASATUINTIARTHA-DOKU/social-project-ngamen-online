@@ -182,3 +182,14 @@ application:
       payment: -0.1F
       login: 0.5F
       reset-password: 0.7F
+  aws:
+    region: ap-southeast-1
+    secret:
+      gmail: prod/saweranCharity/googleApi
+      recaptcha: prod/saweranCharity/recaptchaKey
+    s3:
+      bucket:
+        upload: saweran-upload
+        cdn: saweran-cdn
+      duration-upload: 3
+      duration-download: 1

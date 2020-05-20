@@ -88,7 +88,7 @@ public class DTOMapper {
         transaction.setMallId(mibResponseDTO.getMallId());
         transaction.setTrxCode(mibResponseDTO.getTrxCode());
         LocalDateTime dateTime = LocalDateTime.parse(String.valueOf(mibResponseDTO.getPaymentDate()),
-                DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+                DateTimeFormatter.ofPattern("yyyyMMddHHmmss").withZone(ZoneId.of("Asia/Jakarta")));
         Instant instant = dateTime.atZone(ZoneId.of("Asia/Jakarta")).toInstant();
         transaction.setPaymentDate(instant);
         transaction.setResponseCode(mibResponseDTO.getResponseCode());

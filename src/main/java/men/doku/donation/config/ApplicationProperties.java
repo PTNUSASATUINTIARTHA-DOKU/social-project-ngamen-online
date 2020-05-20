@@ -16,6 +16,7 @@ public class ApplicationProperties {
     private Report report = new Report();
     private Gmail gmail = new Gmail();
     private Recaptcha recaptcha = new Recaptcha();
+    private Aws aws = new Aws();
 
     public String getName() {
         return name;
@@ -57,6 +58,14 @@ public class ApplicationProperties {
         this.recaptcha = recaptcha;
     }
 
+    public Aws getAws() {
+        return aws;
+    }
+
+    public void setAws(Aws aws) {
+        this.aws = aws;
+    }    
+
     public static class Gmail {
 
         private Boolean active = false;
@@ -92,8 +101,6 @@ public class ApplicationProperties {
 
         private String host = new String();
         private Integer port = 0;
-        private String secret = new String();
-        private String region = new String();
         private String credentialFolder = new String();
 
         public String getCredentialFolder() {
@@ -118,22 +125,6 @@ public class ApplicationProperties {
 
         public void setPort(Integer port) {
             this.port = port;
-        }
-
-        public String getSecret() {
-            return secret;
-        }
-
-        public void setSecret(String secret) {
-            this.secret = secret;
-        }
-
-        public String getRegion() {
-            return region;
-        }
-
-        public void setRegion(String region) {
-            this.region = region;
         }
     }
 
@@ -161,20 +152,10 @@ public class ApplicationProperties {
 
     public static class Recaptcha {
 
-        private String key = new String();
         private Boolean active = false;
         private String verifyUrl = new String();
-        private String region = new String();
         private Float simulatorResult = 1F;
         private Threshold threshold = new Threshold();
-
-        public String getKey() {
-            return key;
-        }
-
-        public void setKey(String key) {
-            this.key = key;
-        }
 
         public Boolean getActive() {
             return active;
@@ -190,14 +171,6 @@ public class ApplicationProperties {
 
         public void setVerifyUrl(String verifyUrl) {
             this.verifyUrl = verifyUrl;
-        }
-
-        public String getRegion() {
-            return region;
-        }
-
-        public void setRegion(String region) {
-            this.region = region;
         }
 
         public Float getSimulatorResult() {
@@ -245,6 +218,112 @@ public class ApplicationProperties {
 
         public void setResetPassword(Float resetPassword) {
             this.resetPassword = resetPassword;
+        }
+    }
+
+    public static class Aws {
+
+        private String region;
+        private Secret secret;
+        private S3 s3;
+
+        public String getRegion() {
+            return region;
+        }
+
+        public void setRegion(String region) {
+            this.region = region;
+        }
+
+        public Secret getSecret() {
+            return secret;
+        }
+
+        public void setSecret(Secret secret) {
+            this.secret = secret;
+        }
+
+        public S3 getS3() {
+            return s3;
+        }
+
+        public void setS3(S3 s3) {
+            this.s3 = s3;
+        }
+    }
+
+    public static class Secret {
+
+        private String gmail;
+        private String recaptcha;
+
+        public String getGmail() {
+            return gmail;
+        }
+
+        public void setGmail(String gmail) {
+            this.gmail = gmail;
+        }
+
+        public String getRecaptcha() {
+            return recaptcha;
+        }
+
+        public void setRecaptcha(String recaptcha) {
+            this.recaptcha = recaptcha;
+        }
+    }
+
+    public static class S3 {
+
+        private Bucket bucket;
+        private Integer durationUpload;
+        private Integer durationDownload;
+
+        public Bucket getBucket() {
+            return bucket;
+        }
+
+        public void setBucket(Bucket bucket) {
+            this.bucket = bucket;
+        }
+
+        public Integer getDurationUpload() {
+            return durationUpload;
+        }
+
+        public void setDurationUpload(Integer durationUpload) {
+            this.durationUpload = durationUpload;
+        }
+
+        public Integer getDurationDownload() {
+            return durationDownload;
+        }
+
+        public void setDurationDownload(Integer durationDownload) {
+            this.durationDownload = durationDownload;
+        }
+    }
+
+    public static class Bucket {
+
+        private String upload;
+        private String cdn;
+
+        public String getUpload() {
+            return upload;
+        }
+
+        public void setUpload(String upload) {
+            this.upload = upload;
+        }
+
+        public String getCdn() {
+            return cdn;
+        }
+
+        public void setCdn(String cdn) {
+            this.cdn = cdn;
         }
     }
 }

@@ -18,6 +18,7 @@ import men.doku.donation.domain.Organizer;
 import men.doku.donation.domain.enumeration.IsActiveStatus;
 import men.doku.donation.repository.DonationRepository;
 import men.doku.donation.security.SecurityUtils;
+import men.doku.donation.service.AwsStorageService;
 import men.doku.donation.service.DonationService;
 import men.doku.donation.service.OrganizerService;
 
@@ -32,12 +33,15 @@ public class DonationServiceImpl implements DonationService {
 
     private final DonationRepository donationRepository;
     private final OrganizerService organizerService;
+    private final AwsStorageService awsStorageService;
 
     public DonationServiceImpl(
             DonationRepository donationRepository,
-            OrganizerService organizerService) {
+            OrganizerService organizerService,
+            AwsStorageService awsStorageService) {
         this.donationRepository = donationRepository;
         this.organizerService = organizerService;
+        this.awsStorageService = awsStorageService;
     }
 
     /**
@@ -51,10 +55,11 @@ public class DonationServiceImpl implements DonationService {
         final String login = SecurityUtils.getCurrentUserLogin().get();
         log.debug("Request by {} to save Donation : {}", login, donation);
         Organizer organizer = organizerService.findOne(donation.getOrganizer().getId()).get();
+        donation.setImageUrl(this.awsStorageService.copyFromUploadToCdn(donation.getImageUrl()));
         donation.setLastUpdatedAt(Instant.now());
         donation.setLastUpdatedBy(login);
         donation.setStatus(organizer.getStatus());
-        return donationRepository.save(donation);    
+        return donationRepository.save(donation);
     }
 
     @Override

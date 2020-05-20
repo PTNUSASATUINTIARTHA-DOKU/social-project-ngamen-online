@@ -53,8 +53,7 @@ public class Donation implements Serializable {
     @JsonView(AuthoritiesConstants.Anonymous.class)
     private String url;
 
-    @Pattern(regexp = Constants.URL_REGEX)
-    @Size(max = 100)
+    @Size(max = 200)
     @Column(name = "image_url", length = 100)
     @JsonView(AuthoritiesConstants.Anonymous.class)
     private String imageUrl;

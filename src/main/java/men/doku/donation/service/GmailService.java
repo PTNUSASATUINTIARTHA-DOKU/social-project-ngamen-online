@@ -95,10 +95,10 @@ public class GmailService {
 
     private String getSecret() {
         AWSSecretsManager client  = AWSSecretsManagerClientBuilder.standard()
-                                        .withRegion(applicationProperties.getGmail().getApi().getRegion())
+                                        .withRegion(applicationProperties.getAws().getRegion())
                                         .build();
         GetSecretValueRequest getSecretValueRequest = new GetSecretValueRequest()
-                        .withSecretId(applicationProperties.getGmail().getApi().getSecret());
+                        .withSecretId(applicationProperties.getAws().getSecret().getGmail());
         GetSecretValueResult getSecretValueResult = null;
     
         try {

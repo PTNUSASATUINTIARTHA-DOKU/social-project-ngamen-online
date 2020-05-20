@@ -293,9 +293,8 @@ public class OrganizerResourceIT {
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
     }
     
-    @SuppressWarnings({"unchecked"})
     public void getAllOrganizersWithEagerRelationshipsIsEnabled() throws Exception {
-        when(organizerServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+        when(organizerServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl<>(new ArrayList<>()));
 
         restOrganizerMockMvc.perform(get("/api/organizers?eagerload=true"))
             .andExpect(status().isOk());

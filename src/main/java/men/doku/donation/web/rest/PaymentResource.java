@@ -41,7 +41,7 @@ import men.doku.donation.service.dto.MibResponseDTO;
 @RequestMapping("/api")
 public class PaymentResource {
 
-    private final Logger log = LoggerFactory.getLogger(DonationResource.class);
+    private final Logger log = LoggerFactory.getLogger(PaymentResource.class);
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;

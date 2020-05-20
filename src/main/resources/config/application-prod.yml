@@ -143,11 +143,16 @@ application:
     api:
       host: www.saweran.charity
       port: 34793
-      secret: prod/saweranCharity/googleApi
-      region: ap-southeast-1
       credential-folder: /var/lib/tomcat8/webapps/ROOT/WEB-INF/classes/config/gmail/
   recaptcha:
     active: true
     verify-url: https://www.google.com/recaptcha/api/siteverify
-    key: prod/saweranCharity/recaptchaKey
+  aws:
     region: ap-southeast-1
+    secret:
+      gmail: prod/saweranCharity/googleApi
+      recaptcha: prod/saweranCharity/recaptchaKey
+    s3:
+      bucket: saweran-upload
+      duration-upload: 3
+      duration-download: 1

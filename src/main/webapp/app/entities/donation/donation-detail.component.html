@@ -36,9 +36,10 @@
                     <a href="{{ donation.url}}" class="text-blue 600 hover:text-blue-700" target="_blank">{{ donation.url }}</a>
                 </div>
 
-                <div class="mb-2 text-gray-800">
-                    <span class="font-semibold" jhiTranslate="donationApp.donation.imageUrl">Image Url</span>:
-                    <img *ngIf="donation.imageUrl" src="{{ donation.imageUrl }}" class="h-10 w-10 rounded-full">
+                <div class="mb-2 text-gray-800 clearfix">
+                    <span class="font-semibold float-left" jhiTranslate="donationApp.donation.imageUrl">Image Url</span>
+                    <span class="float-left">:</span>
+                    <img *ngIf="donation.imageUrl" src="{{ donation.imageUrl }}" class="h-10 float-left ml-5">
                 </div>
 
                 <div class="mb-2 text-gray-800">
