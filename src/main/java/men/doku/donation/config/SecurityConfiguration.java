@@ -68,7 +68,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 + " frame-src 'self' data: https://www.google.com/ https://www.gstatic.com/;"
                 + " script-src 'self' 'unsafe-inline' 'unsafe-eval'" 
                 + " https://www.googletagmanager.com/gtm.js https://www.google.com/recaptcha/api.js"
-                + " https://www.gstatic.com/;"
+                + " https://www.gstatic.com/ https://www.google-analytics.com/analytics.js;"
                 + " style-src 'self' 'unsafe-inline';"
                 + " img-src 'self' data: https:;"
                 + " font-src 'self' data: https:;"
