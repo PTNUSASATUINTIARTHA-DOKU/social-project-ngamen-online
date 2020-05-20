@@ -43,7 +43,7 @@
       "applicationName": "saweran",
       "environmentName": "saweran-prod",
       "bucketName": "saweran-charity",
-      "instanceType": "t2.micro",
+      "instanceType": "t3.small",
       "awsRegion": "ap-southeast-1",
       "dbName": "donation",
       "dbInstanceClass": "db.t2.micro"
