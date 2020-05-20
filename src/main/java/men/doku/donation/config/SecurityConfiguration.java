@@ -65,11 +65,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .and()
             .headers()
             .contentSecurityPolicy("default-src 'self';"
-                + " frame-src 'self' data: https://www.google.com/ https://www.gstatic.com/;"
+                + " frame-src 'self' data: https://www.google.com/ https://www.gstatic.com/ https://optimize.google.com;"
                 + " script-src 'self' 'unsafe-inline' 'unsafe-eval'" 
-                + " https://www.googletagmanager.com/ https://www.google.com/"
+                + " https://www.googletagmanager.com/ https://www.google.com/ https://optimize.google.com/"
                 + " https://www.gstatic.com/ https://www.google-analytics.com/ https://tagmanager.google.com/;"
-                + " style-src 'self' 'unsafe-inline' https://tagmanager.google.com/ https://fonts.googleapis.com/;"
+                + " style-src 'self' 'unsafe-inline' https://tagmanager.google.com/ https://fonts.googleapis.com/"
+                + " https://optimize.google.com;"
                 + " img-src 'self' data: https:;"
                 + " font-src 'self' data: https:;"
                 + " object-src 'none';"
