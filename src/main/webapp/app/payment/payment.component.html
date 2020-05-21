@@ -104,8 +104,8 @@
                         <div class="text-gray-900 font-bold text-xl">{{this.donation?.name}}</div>
                     </div>
                     <div class="flex items-center">
-                        <div *ngIf="this.donation?.imageUrl">
-                            <img class="h-10 mr-4 text-xs" src="{{this.donation?.imageUrl}}" alt="Logo">
+                        <div *ngIf="this.donation?.logo">
+                            <img class="{{this.donation?.logoStyle}}" src="{{this.donation?.logo}}" alt="Logo">
                         </div>
 
                         <div class="text-sm">

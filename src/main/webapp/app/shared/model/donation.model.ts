@@ -8,7 +8,8 @@ export interface IDonation {
   name?: string;
   description?: string;
   url?: string;
-  imageUrl?: string;
+  logo?: string;
+  logoStyle?: string;
   paymentSlug?: string;
   bankAccountNumber?: string;
   bankAccountName?: string;
@@ -26,7 +27,8 @@ export class Donation implements IDonation {
     public name?: string,
     public description?: string,
     public url?: string,
-    public imageUrl?: string,
+    public logo?: string,
+    public logoStyle?: string,
     public paymentSlug?: string,
     public bankAccountNumber?: string,
     public bankAccountName?: string,

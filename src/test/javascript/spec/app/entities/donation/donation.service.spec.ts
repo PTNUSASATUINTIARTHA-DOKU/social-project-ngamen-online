@@ -36,6 +36,7 @@ describe('Service Tests', () => {
         'AAAAAAA',
         'AAAAAAA',
         'AAAAAAA',
+        'AAAAAAA',
         currentDate,
         IsActiveStatus.ACTIVE
       );
@@ -86,7 +87,8 @@ describe('Service Tests', () => {
             name: 'BBBBBB',
             description: 'BBBBBB',
             url: 'BBBBBB',
-            imageUrl: 'BBBBBB',
+            logo: 'BBBBBB',
+            logoStyle: 'BBBBBB',
             paymentSlug: 'BBBBBB',
             bankAccountNumber: 'BBBBBB',
             bankAccountName: 'BBBBBB',
@@ -118,7 +120,8 @@ describe('Service Tests', () => {
             name: 'BBBBBB',
             description: 'BBBBBB',
             url: 'BBBBBB',
-            imageUrl: 'BBBBBB',
+            logo: 'BBBBBB',
+            logoStyle: 'BBBBBB',
             paymentSlug: 'BBBBBB',
             bankAccountNumber: 'BBBBBB',
             bankAccountName: 'BBBBBB',

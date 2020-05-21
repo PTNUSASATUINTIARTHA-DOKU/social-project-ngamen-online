@@ -54,9 +54,14 @@ public class Donation implements Serializable {
     private String url;
 
     @Size(max = 200)
-    @Column(name = "image_url", length = 100)
+    @Column(name = "logo", length = 200)
     @JsonView(AuthoritiesConstants.Anonymous.class)
-    private String imageUrl;
+    private String logo;
+
+    @Size(max = 500)
+    @Column(name = "logo_style", length = 500)
+    @JsonView(AuthoritiesConstants.Anonymous.class)
+    private String logoStyle;
 
     @Size(max = 100)
     @JsonView(AuthoritiesConstants.Anonymous.class)
@@ -149,17 +154,30 @@ public class Donation implements Serializable {
         this.url = url;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getLogo() {
+        return logo;
     }
 
-    public Donation imageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public Donation logo(String logo) {
+        this.logo = logo;
         return this;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setLogo(String logo) {
+        this.logo = logo;
+    }
+
+    public String getLogoStyle() {
+        return logoStyle;
+    }
+
+    public Donation logoStyle(String logoStyle) {
+        this.logoStyle = logoStyle;
+        return this;
+    }
+
+    public void setLogoStyle(String logoStyle) {
+        this.logoStyle = logoStyle;
     }
 
     public String getPaymentSlug() {
@@ -315,7 +333,8 @@ public class Donation implements Serializable {
             ", name='" + getName() + "'" +
             ", description='" + getDescription() + "'" +
             ", url='" + getUrl() + "'" +
-            ", imageUrl='" + getImageUrl() + "'" +
+            ", logo='" + getLogo() + "'" +
+            ", logoStyle='" + getLogoStyle() + "'" +
             ", paymentSlug='" + getPaymentSlug() + "'" +
             ", bankAccountNumber='" + getBankAccountNumber() + "'" +
             ", bankAccountName='" + getBankAccountName() + "'" +

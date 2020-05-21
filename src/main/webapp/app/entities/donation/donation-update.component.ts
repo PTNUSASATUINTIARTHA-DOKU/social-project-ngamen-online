@@ -1,5 +1,5 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -26,7 +26,8 @@ export class DonationUpdateComponent implements OnInit, OnDestroy {
     name: [null, [Validators.required, Validators.maxLength(100)]],
     description: [null, [Validators.maxLength(2000)]],
     url: [null, [Validators.maxLength(100), Validators.pattern(PATTERN_URL)]],
-    imageUrl: [null, [Validators.maxLength(100)]],
+    logo: [null, [Validators.maxLength(200)]],
+    logoStyle: [null, [Validators.maxLength(500)]],
     paymentSlug: [null, [Validators.maxLength(100)]],
     bankAccountNumber: [null, [Validators.maxLength(15)]],
     bankAccountName: [null, [Validators.maxLength(100)]],
@@ -47,8 +48,9 @@ export class DonationUpdateComponent implements OnInit, OnDestroy {
     this.activatedRoute.data.subscribe(({ donation }) => {
       this.updateForm(donation);
       if (!this.editForm.get('url')?.value) this.editForm.patchValue({ url: 'http' });
-      if (!this.editForm.get('imageUrl')?.value) this.editForm.patchValue({ imageUrl: 'http' });
       this.organizerService.query().subscribe((res: HttpResponse<IOrganizer[]>) => (this.organizers = res.body || []));
+      this.editForm.get('paymentSlug')?.disable();
+      this.editForm.get('logo')?.disable();
     });
   }
 
@@ -62,7 +64,8 @@ export class DonationUpdateComponent implements OnInit, OnDestroy {
       name: donation.name,
       description: donation.description,
       url: donation.url,
-      imageUrl: donation.imageUrl,
+      logo: donation.logo,
+      logoStyle: donation.logoStyle,
       paymentSlug: donation.paymentSlug,
       bankAccountNumber: donation.bankAccountNumber,
       bankAccountName: donation.bankAccountName,
@@ -93,7 +96,8 @@ export class DonationUpdateComponent implements OnInit, OnDestroy {
       name: this.editForm.get(['name'])!.value,
       description: this.editForm.get(['description'])!.value,
       url: this.editForm.get(['url'])!.value,
-      imageUrl: this.editForm.get(['imageUrl'])!.value,
+      logo: this.editForm.get(['logo'])!.value,
+      logoStyle: this.editForm.get(['logoStyle'])!.value,
       paymentSlug: this.editForm.get(['paymentSlug'])!.value,
       bankAccountNumber: this.editForm.get(['bankAccountNumber'])!.value,
       bankAccountName: this.editForm.get(['bankAccountName'])!.value,
@@ -139,7 +143,7 @@ export class DonationUpdateComponent implements OnInit, OnDestroy {
       const file = target.files[0];
       this.storageService.upload(file);
       this.subscription = this.storageService.sharedFilename.subscribe(filename => {
-        this.editForm.patchValue({ imageUrl: filename.valueOf() });
+        this.editForm.patchValue({ logo: filename.valueOf() });
       });
     }
   }

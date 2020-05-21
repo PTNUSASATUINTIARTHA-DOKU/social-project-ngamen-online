@@ -28,12 +28,20 @@
             "fieldValidateRulesMaxlength": "100"
         },
         {
-            "fieldName": "imageUrl",
+            "fieldName": "logo",
             "fieldType": "String",
             "fieldValidateRules": [
                 "maxlength"
             ],
-            "fieldValidateRulesMaxlength": "100"
+            "fieldValidateRulesMaxlength": "200"
+        },
+        {
+            "fieldName": "logoStyle",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": "500"
         },
         {
             "fieldName": "paymentSlug",

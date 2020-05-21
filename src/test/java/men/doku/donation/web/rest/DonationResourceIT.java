@@ -43,8 +43,11 @@ public class DonationResourceIT {
     private static final String DEFAULT_URL = "AAAAAAAAAA";
     private static final String UPDATED_URL = "BBBBBBBBBB";
 
-    private static final String DEFAULT_IMAGE_URL = "AAAAAAAAAA";
-    private static final String UPDATED_IMAGE_URL = "BBBBBBBBBB";
+    private static final String DEFAULT_LOGO = "AAAAAAAAAA";
+    private static final String UPDATED_LOGO = "BBBBBBBBBB";
+
+    private static final String DEFAULT_LOGO_STYLE = "AAAAAAAAAA";
+    private static final String UPDATED_LOGO_STYLE = "BBBBBBBBBB";
 
     private static final String DEFAULT_PAYMENT_SLUG = "AAAAAAAAAA";
     private static final String UPDATED_PAYMENT_SLUG = "BBBBBBBBBB";
@@ -92,7 +95,8 @@ public class DonationResourceIT {
             .name(DEFAULT_NAME)
             .description(DEFAULT_DESCRIPTION)
             .url(DEFAULT_URL)
-            .imageUrl(DEFAULT_IMAGE_URL)
+            .logo(DEFAULT_LOGO)
+            .logoStyle(DEFAULT_LOGO_STYLE)
             .paymentSlug(DEFAULT_PAYMENT_SLUG)
             .bankAccountNumber(DEFAULT_BANK_ACCOUNT_NUMBER)
             .bankAccountName(DEFAULT_BANK_ACCOUNT_NAME)
@@ -113,7 +117,8 @@ public class DonationResourceIT {
             .name(UPDATED_NAME)
             .description(UPDATED_DESCRIPTION)
             .url(UPDATED_URL)
-            .imageUrl(UPDATED_IMAGE_URL)
+            .logo(UPDATED_LOGO)
+            .logoStyle(UPDATED_LOGO_STYLE)
             .paymentSlug(UPDATED_PAYMENT_SLUG)
             .bankAccountNumber(UPDATED_BANK_ACCOUNT_NUMBER)
             .bankAccountName(UPDATED_BANK_ACCOUNT_NAME)
@@ -147,7 +152,8 @@ public class DonationResourceIT {
         assertThat(testDonation.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testDonation.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
         assertThat(testDonation.getUrl()).isEqualTo(DEFAULT_URL);
-        assertThat(testDonation.getImageUrl()).isEqualTo(DEFAULT_IMAGE_URL);
+        assertThat(testDonation.getLogo()).isEqualTo(DEFAULT_LOGO);
+        assertThat(testDonation.getLogoStyle()).isEqualTo(DEFAULT_LOGO_STYLE);
         assertThat(testDonation.getPaymentSlug()).isEqualTo(DEFAULT_PAYMENT_SLUG);
         assertThat(testDonation.getBankAccountNumber()).isEqualTo(DEFAULT_BANK_ACCOUNT_NUMBER);
         assertThat(testDonation.getBankAccountName()).isEqualTo(DEFAULT_BANK_ACCOUNT_NAME);
@@ -209,7 +215,8 @@ public class DonationResourceIT {
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].url").value(hasItem(DEFAULT_URL)))
-            .andExpect(jsonPath("$.[*].imageUrl").value(hasItem(DEFAULT_IMAGE_URL)))
+            .andExpect(jsonPath("$.[*].logo").value(hasItem(DEFAULT_LOGO)))
+            .andExpect(jsonPath("$.[*].logoStyle").value(hasItem(DEFAULT_LOGO_STYLE)))
             .andExpect(jsonPath("$.[*].paymentSlug").value(hasItem(DEFAULT_PAYMENT_SLUG)))
             .andExpect(jsonPath("$.[*].bankAccountNumber").value(hasItem(DEFAULT_BANK_ACCOUNT_NUMBER)))
             .andExpect(jsonPath("$.[*].bankAccountName").value(hasItem(DEFAULT_BANK_ACCOUNT_NAME)))
@@ -233,7 +240,8 @@ public class DonationResourceIT {
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
             .andExpect(jsonPath("$.url").value(DEFAULT_URL))
-            .andExpect(jsonPath("$.imageUrl").value(DEFAULT_IMAGE_URL))
+            .andExpect(jsonPath("$.logo").value(DEFAULT_LOGO))
+            .andExpect(jsonPath("$.logoStyle").value(DEFAULT_LOGO_STYLE))
             .andExpect(jsonPath("$.paymentSlug").value(DEFAULT_PAYMENT_SLUG))
             .andExpect(jsonPath("$.bankAccountNumber").value(DEFAULT_BANK_ACCOUNT_NUMBER))
             .andExpect(jsonPath("$.bankAccountName").value(DEFAULT_BANK_ACCOUNT_NAME))
@@ -267,7 +275,8 @@ public class DonationResourceIT {
             .name(UPDATED_NAME)
             .description(UPDATED_DESCRIPTION)
             .url(UPDATED_URL)
-            .imageUrl(UPDATED_IMAGE_URL)
+            .logo(UPDATED_LOGO)
+            .logoStyle(UPDATED_LOGO_STYLE)
             .paymentSlug(UPDATED_PAYMENT_SLUG)
             .bankAccountNumber(UPDATED_BANK_ACCOUNT_NUMBER)
             .bankAccountName(UPDATED_BANK_ACCOUNT_NAME)
@@ -288,7 +297,8 @@ public class DonationResourceIT {
         assertThat(testDonation.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testDonation.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
         assertThat(testDonation.getUrl()).isEqualTo(UPDATED_URL);
-        assertThat(testDonation.getImageUrl()).isEqualTo(UPDATED_IMAGE_URL);
+        assertThat(testDonation.getLogo()).isEqualTo(UPDATED_LOGO);
+        assertThat(testDonation.getLogoStyle()).isEqualTo(UPDATED_LOGO_STYLE);
         assertThat(testDonation.getPaymentSlug()).isEqualTo(UPDATED_PAYMENT_SLUG);
         assertThat(testDonation.getBankAccountNumber()).isEqualTo(UPDATED_BANK_ACCOUNT_NUMBER);
         assertThat(testDonation.getBankAccountName()).isEqualTo(UPDATED_BANK_ACCOUNT_NAME);

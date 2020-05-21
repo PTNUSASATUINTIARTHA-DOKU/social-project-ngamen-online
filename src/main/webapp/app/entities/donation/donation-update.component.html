@@ -44,7 +44,7 @@
                     <input type="text"
                         class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200
                         disabled:bg-gray-400 disabled:cursor-not-allowed leading-tight focus:outline-none focus:shadow-outline h-10"
-                        name="paymentSlug" id="field_paymentSlug" formControlName="paymentSlug" disabled />
+                        name="paymentSlug" id="field_paymentSlug" formControlName="paymentSlug" />
                     <div
                         *ngIf="editForm.get('paymentSlug')!.invalid && (editForm.get('paymentSlug')!.dirty || editForm.get('paymentSlug')!.touched)">
                         <small class="text-xs text-red-500" *ngIf="editForm.get('paymentSlug')?.errors?.maxlength"
@@ -92,10 +92,10 @@
 
                 <div class="my-4">
                     <label class="block text-gray-700 text-sm font-semibold float-left"
-                        jhiTranslate="donationApp.donation.imageUrl">Image Url</label>
+                        jhiTranslate="donationApp.donation.logo">Logo</label>
                     <label
                         class="bg-gray-300 hover:bg-gray-400 text-gray-800 text-xs py-1 px-2 rounded inline-flex items-center float-left ml-5 mb-1"
-                        for="field_image">
+                        for="upload_logo">
                         <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                             <path d="M0 0h24v24H0z" fill="none" />
                             <path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z" />
@@ -105,18 +105,30 @@
                     <input type="text"
                         class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200
                         disabled:bg-gray-400 disabled:cursor-not-allowed leading-tight focus:outline-none focus:shadow-outline h-10"
-                        name="imageUrl" id="field_imageUrl" formControlName="imageUrl" />
-                    <input type="file" id="field_image" class="hidden" (change)="onFileSelected($event)" />
+                        name="logo" id="field_logo" formControlName="logo" />
+                    <input type="file" id="upload_logo" class="hidden" (change)="onFileSelected($event)" />
 
                     <div
-                        *ngIf="editForm.get('imageUrl')!.invalid && (editForm.get('imageUrl')!.dirty || editForm.get('imageUrl')!.touched)">
-                        <small class="text-xs text-red-500" *ngIf="editForm.get('imageUrl')?.errors?.maxlength"
-                            jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 100 }">
-                            This field cannot be longer than 100 characters.
+                        *ngIf="editForm.get('logo')!.invalid && (editForm.get('logo')!.dirty || editForm.get('logo')!.touched)">
+                        <small class="text-xs text-red-500" *ngIf="editForm.get('logo')?.errors?.maxlength"
+                            jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 200 }">
+                            This field cannot be longer than 200 characters.
                         </small>
-                        <small class="text-xs text-red-500" *ngIf="editForm.get('url')?.errors?.pattern"
-                            jhiTranslate="entity.validation.url">
-                            This field must in URL format.
+                    </div>
+                </div>
+
+                <div class="my-4">
+                    <label class="block text-gray-700 text-sm font-semibold mb-2" 
+                        jhiTranslate="donationApp.donation.logoStyle" for="field_logoStyle">Logo Style</label>
+                    <input type="text" 
+                        class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200
+                        disabled:bg-gray-400 disabled:cursor-not-allowed leading-tight focus:outline-none focus:shadow-outline h-10"
+                        name="logoStyle" id="field_logoStyle" formControlName="logoStyle" />
+                    <div 
+                        *ngIf="editForm.get('logoStyle')!.invalid && (editForm.get('logoStyle')!.dirty || editForm.get('logoStyle')!.touched)">
+                        <small class="text-xs text-red-500" *ngIf="editForm.get('logoStyle')?.errors?.maxlength" 
+                            jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 500 }">
+                            This field cannot be longer than 500 characters.
                         </small>
                     </div>
                 </div>

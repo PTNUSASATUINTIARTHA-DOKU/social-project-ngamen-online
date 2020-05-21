@@ -24,7 +24,10 @@
             <column name="url" type="varchar(100)">
                 <constraints nullable="true" />
             </column>
-            <column name="image_url" type="varchar(100)">
+            <column name="logo" type="varchar(200)">
+                <constraints nullable="true" />
+            </column>
+            <column name="logo_style" type="varchar(500)">
                 <constraints nullable="true" />
             </column>
             <column name="payment_slug" type="varchar(100)">
@@ -78,7 +81,8 @@
             <column name="name" type="string"/>
             <column name="description" type="string"/>
             <column name="url" type="string"/>
-            <column name="image_url" type="string"/>
+            <column name="logo" type="string"/>
+            <column name="logo_style" type="string"/>
             <column name="payment_slug" type="string"/>
             <column name="bank_account_number" type="string"/>
             <column name="bank_account_name" type="string"/>
