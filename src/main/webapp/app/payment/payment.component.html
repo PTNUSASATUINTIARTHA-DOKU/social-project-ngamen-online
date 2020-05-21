@@ -89,33 +89,34 @@
 
                 <hr class="border border-gray-100 mb-4">
 
-                <p class="text-gray-600 text-xs mb-3">
-                    Dalam pertunjukan ini, Jakarta City Philharmonic membuka donasi yang nantinya akan diberikan sepenuhnya kepada para seniman yang terdampak Covid-19.
-                </p>
-
                 <div class="border border-grey-light bg-white rounded p-4 flex flex-col justify-between leading-normal shadow-sm hover:shadow-md">
-                    <div class="mb-4">
-                        <div class="text-gray-900 font-bold text-xl">{{this.donation?.name}}</div>
+                    <div class="mb-2">
+                        <a href="{{this.donation?.url}}" class="text-blue-600 hover:text-blue-700 font-bold text-xl">{{this.donation?.name}}</a>
                     </div>
-                    <div class="flex items-center">
-                        <div class="w-10">
-                            <img class="h-10 mr-4 text-xs" src="https://www.saweran.charity/content/images/jcp-logo.jpeg" alt="Logo">
+
+                    <div class="flex flex-col lg:flex-row items-start">
+                        <div class="w-full lg:w-auto p-2">
+                            <img class="w-auto w-auto max-h-full" src="../../content/images/jcp-logo.jpeg">
                         </div>
 
-                        <div class="text-sm">
-                            <p class="text-gray-600 text-xs"> {{this.donation?.description}} </p>
-                            <p class="leading-none">
-                                <a href="{{this.donation?.url}}" class="text-blue-600 hover:text-blue-700 text-xs">{{this.donation?.url}}</a>
-                            </p>
+                        <div class="w-full lg:w-3/4 p-2">
+                            <div class="text-sm">
+                                <p class="text-gray-600 text-xs mb-2">
+                                    {{this.donation?.description}}
+                                </p>
+                            </div>
                         </div>
                     </div>
-                    <div class="flex items-center">
-                        <div class="w-10">
+
+                    <hr class="my-3">
+
+                    <div class="flex flex-row items-center">
+                        <div class="w-1/2 lg:w-auto p-2">
                             <!-- <img class="h-5 mr-4 text-xs" src="https://www.saweran.charity/content/images/benihbaik-logo.png" alt="Logo"> -->
-                            <img class="h-4 mr-4 text-xs" src="../../content/images/benihbaik-logo.png" alt="Logo">
+                            <img class="max-h-full w-auto" src="../../content/images/benihbaik-logo.png" alt="Logo">
                         </div>
 
-                        <div class="text-sm mt-3">
+                        <div class="w-1/2 lg:w-3/4 p-2 text-sm">
                             <p class="text-gray-600 text-xs" jhiTranslate="payment.section.info.organizer">Organizer</p>
                             <p class="leading-none">
                                 <a href="{{this.donation?.organizer?.url}}" class="text-blue-600 hover:text-blue-700 text-xs">{{this.donation?.organizer?.name}}</a>
