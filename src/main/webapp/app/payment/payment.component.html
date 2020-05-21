@@ -1,15 +1,21 @@
-<div *ngIf="disabled" class="modal pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center">
-    <div class="modal-overlay absolute w-full h-full bg-white opacity-50"></div>
-    <div class="modal-container fixed w-full h-full z-50 overflow-y-auto ">
-        <div class="modal-content container mx-auto h-auto text-center p-4 opacity-100 bg-red-600">
-        <div class="justify-between items-center pb-2">
-          <p class="text-2xl font-bold" jhiTranslate="payment.disabled.head">This donation is disabled!</p>
+<div *ngIf="isDisabled" class="container h-screen max-w-md mx-auto xl:max-w-3xl h-full flex bg-white rounded-lg shadow-lg overflow-hidden my-6 xl:my-8">
+    <div class="w-full p-8">
+        <div class="row justify-content-center mt-5">
+            <div class="col-8 text-center">
+                <div class="md:max-w-lg mx-auto">
+                    <img src="../../content/images/error-illustration.png" class="max-w-full max-h-full" alt="" />
+                </div>
+
+                <h1 class="text-2xl font-bold mb-1 mt-3" jhiTranslate="payment.disabled.head">This donation is disabled!</h1>
+                <p jhiTranslate="payment.disabled.body" class="mb-6">Please contact your Organizer for further info.</p>
+                <a href="/" class="bg-red-600 hover:bg-red-500 disabled:bg-red-200 disabled:cursor-not-allowed text-white
+                    text-sm py-2 px-4 font-semibold rounded focus:outline-none focus:shadow-outline h-10" jhiTranslate="payment.disabled.link">Back To Homepage</a>
+            </div>
         </div>
-        <p jhiTranslate="payment.disabled.body">Please contact your Organizer for further info.</p>      
-      </div>
     </div>
-  </div>
-  <div class="container max-w-md mx-auto xl:max-w-3xl h-full flex bg-white rounded-lg shadow-lg overflow-hidden my-6 xl:my-8">
+</div>
+
+<div *ngIf="!isDisabled" class="container max-w-md mx-auto xl:max-w-3xl h-full flex bg-white rounded-lg shadow-lg overflow-hidden my-6 xl:my-8">
     <div class="w-full p-8">
         <div>
             <img src="../../content/images/kolaborartsy_1024.jpg" alt="" class="w-full h-full">

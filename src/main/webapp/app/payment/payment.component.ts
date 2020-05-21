@@ -26,7 +26,7 @@ declare let grecaptcha: any;
 export class PaymentComponent implements OnInit {
   slug: string;
   method: PaymentChannel;
-  disabled = false;
+  isDisabled = false;
   isSaving = false;
   isCounting = false;
   isChecking = false;
@@ -79,7 +79,7 @@ export class PaymentComponent implements OnInit {
     // to access resolved item = this.route.snapshot.data.payment check using console.log(this.route); with comment eslint-disable-next-line no-console
     this.donation = this.route.snapshot.data.donation;
     if (this.donation.status === IsActiveStatus.DISABLED) {
-      this.disabled = true;
+      this.isDisabled = true;
       this.paymentForm.disable();
     }
     this.slug = this.route.snapshot.params.slug;

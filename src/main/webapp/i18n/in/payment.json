@@ -77,7 +77,8 @@
     },
     "disabled": {
       "head": "Donasi ini diblokir!",
-      "body": "Hubungi penyelenggara untuk informasi lebih lanjut."
+      "body": "Hubungi penyelenggara untuk informasi lebih lanjut.",
+      "link": "Kembali ke Halaman Utama"
     }
   }
 }
