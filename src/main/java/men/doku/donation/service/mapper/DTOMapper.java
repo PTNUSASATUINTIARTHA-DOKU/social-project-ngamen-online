@@ -91,7 +91,7 @@ public class DTOMapper {
                 DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
         Instant instant = dateTime.atZone(ZoneId.of("Asia/Jakarta")).toInstant();
         transaction.setPaymentDate(instant); */
-        transaction.setPaymentDate(Instant.now());
+        transaction.setPaymentDate(Instant.now().atZone(ZoneId.of("Asia/Jakarta")).toInstant());
         transaction.setResponseCode(mibResponseDTO.getResponseCode());
         transaction.setMessage(mibResponseDTO.getMessage());
         transaction.setPaymentSystrace(mibResponseDTO.getPaymentSystrace());
