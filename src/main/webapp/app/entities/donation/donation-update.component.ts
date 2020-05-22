@@ -32,6 +32,7 @@ export class DonationUpdateComponent implements OnInit, OnDestroy {
     bankAccountNumber: [null, [Validators.maxLength(15)]],
     bankAccountName: [null, [Validators.maxLength(100)]],
     bankName: [null, [Validators.maxLength(100)]],
+    chainMallId: [],
     status: [],
     organizer: []
   });
@@ -70,6 +71,7 @@ export class DonationUpdateComponent implements OnInit, OnDestroy {
       bankAccountNumber: donation.bankAccountNumber,
       bankAccountName: donation.bankAccountName,
       bankName: donation.bankName,
+      chainMallId: donation.chainMallId,
       status: donation.status,
       organizer: donation.organizer
     });
@@ -102,6 +104,7 @@ export class DonationUpdateComponent implements OnInit, OnDestroy {
       bankAccountNumber: this.editForm.get(['bankAccountNumber'])!.value,
       bankAccountName: this.editForm.get(['bankAccountName'])!.value,
       bankName: this.editForm.get(['bankName'])!.value,
+      chainMallId: this.editForm.get(['chainMallId'])!.value,
       status: this.editForm.get(['status'])!.value,
       organizer: this.editForm.get(['organizer'])!.value
     };

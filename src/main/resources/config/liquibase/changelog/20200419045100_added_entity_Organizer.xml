@@ -18,11 +18,17 @@
             <column name="name" type="varchar(100)">
                 <constraints nullable="false" unique="true" uniqueConstraintName="ux_organizer_name" />
             </column>
+            <column name="email" type="varchar(100)">
+                <constraints nullable="false" />
+            </column>
             <column name="url" type="varchar(100)">
                 <constraints nullable="true" />
             </column>
-            <column name="email" type="varchar(100)">
-                <constraints nullable="false" />
+            <column name="logo" type="varchar(200)">
+                <constraints nullable="true" />
+            </column>
+            <column name="logo_style" type="varchar(500)">
+                <constraints nullable="true" />
             </column>
             <column name="bank_account_number" type="varchar(15)">
                 <constraints nullable="true" />
@@ -48,10 +54,7 @@
             <column name="mall_id" type="integer">
                 <constraints nullable="true" />
             </column>
-            <column name="chain_mall_id" type="integer">
-                <constraints nullable="true" />
-            </column>
-            <column name="shared_key" type="varchar(255)">
+            <column name="shared_key" type="varchar(20)">
                 <constraints nullable="true" />
             </column>
             <column name="service_id" type="integer">
@@ -99,8 +102,10 @@
                   tableName="organizer">
             <column name="id" type="numeric"/>
             <column name="name" type="string"/>
-            <column name="url" type="string"/>
             <column name="email" type="string"/>
+            <column name="url" type="string"/>
+            <column name="logo" type="string"/>
+            <column name="logo_style" type="string"/>
             <column name="bank_account_number" type="string"/>
             <column name="bank_account_name" type="string"/>
             <column name="bank_name" type="string"/>
@@ -109,7 +114,6 @@
             <column name="last_updated_by" type="string"/>
             <column name="last_updated_at" type="datetime"/>
             <column name="mall_id" type="numeric"/>
-            <column name="chain_mall_id" type="numeric"/>
             <column name="shared_key" type="string"/>
             <column name="service_id" type="numeric"/>
             <column name="acquirer_id" type="numeric"/>

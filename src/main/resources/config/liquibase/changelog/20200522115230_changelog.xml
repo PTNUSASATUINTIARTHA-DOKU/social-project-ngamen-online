@@ -1,0 +1,52 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.8.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet author="rudythong (generated)" id="1590148361143-7">
+        <addColumn tableName="donation">
+            <column name="chain_mall_id" type="integer"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="rudythong (generated)" id="1590148361143-8">
+        <addColumn tableName="donation">
+            <column name="logo" type="varchar(200)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="rudythong (generated)" id="1590148361143-9">
+        <addColumn tableName="organizer">
+            <column name="logo" type="varchar(200)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="rudythong (generated)" id="1590148361143-10">
+        <addColumn tableName="donation">
+            <column name="logo_style" type="varchar(500)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="rudythong (generated)" id="1590148361143-11">
+        <addColumn tableName="organizer">
+            <column name="logo_style" type="varchar(500)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="rudythong (generated)" id="1590148361143-12">
+        <dropColumn columnName="CHAIN_MALL_ID" tableName="ORGANIZER"/>
+    </changeSet>
+    <changeSet author="rudythong (generated)" id="1590148361143-13">
+        <dropColumn columnName="IMAGE_URL" tableName="DONATION"/>
+    </changeSet>
+    <changeSet author="rudythong (generated)" id="1590148361143-1">
+        <alterSequence incrementBy="50" sequenceName="sequence_generator"/>
+    </changeSet>
+    <changeSet author="rudythong (generated)" id="1590148361143-2">
+        <setTableRemarks tableName="donation"/>
+    </changeSet>
+    <changeSet author="rudythong (generated)" id="1590148361143-3">
+        <setTableRemarks tableName="organizer"/>
+    </changeSet>
+    <changeSet author="rudythong (generated)" id="1590148361143-4">
+        <setTableRemarks tableName="transaction"/>
+    </changeSet>
+    <changeSet author="rudythong (generated)" id="1590148361143-5">
+        <addNotNullConstraint columnDataType="bigint" columnName="donation_id" tableName="transaction" validate="true"/>
+    </changeSet>
+    <changeSet author="rudythong (generated)" id="1590148361143-6">
+        <addNotNullConstraint columnDataType="bigint" columnName="organizer_id" tableName="donation" validate="true"/>
+    </changeSet>
+</databaseChangeLog>

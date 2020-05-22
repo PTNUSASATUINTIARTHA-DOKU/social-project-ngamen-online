@@ -15,6 +15,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 import men.doku.donation.config.Constants;
+import men.doku.donation.domain.Donation;
 import men.doku.donation.domain.Organizer;
 import men.doku.donation.domain.Transaction;
 import men.doku.donation.domain.enumeration.TransactionStatus;
@@ -25,11 +26,12 @@ import men.doku.donation.service.dto.RecaptchaVerifyRequestDTO;
 @Service
 public class DTOMapper {
 
-    public MibRequestDTO toMibRequestDTO(Transaction transaction, Organizer organizer) {
+    public MibRequestDTO toMibRequestDTO(Transaction transaction, Donation donation) {
         MibRequestDTO mibRequestDTO = new MibRequestDTO();
+        Organizer organizer = donation.getOrganizer();
         mibRequestDTO.setMALLID(String.valueOf(organizer.getMallId()));
-        if (organizer.getChainMallId() != null)
-            mibRequestDTO.setCHAINMALLID(String.valueOf(organizer.getChainMallId()));
+        if (donation.getChainMallId() != null)
+            mibRequestDTO.setCHAINMALLID(String.valueOf(donation.getChainMallId()));
         mibRequestDTO.setSERVICEID(String.valueOf(organizer.getServiceId()));
         mibRequestDTO.setACQUIRERID(String.valueOf(organizer.getAcquirerId()));
         mibRequestDTO.setINVOICENUMBER(transaction.getInvoiceNumber());

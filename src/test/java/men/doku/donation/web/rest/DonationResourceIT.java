@@ -61,6 +61,9 @@ public class DonationResourceIT {
     private static final String DEFAULT_BANK_NAME = "AAAAAAAAAA";
     private static final String UPDATED_BANK_NAME = "BBBBBBBBBB";
 
+    private static final Integer DEFAULT_CHAIN_MALL_ID = 1;
+    private static final Integer UPDATED_CHAIN_MALL_ID = 2;
+
     private static final String DEFAULT_LAST_UPDATED_BY = "AAAAAAAAAA";
     private static final String UPDATED_LAST_UPDATED_BY = "BBBBBBBBBB";
 
@@ -101,6 +104,7 @@ public class DonationResourceIT {
             .bankAccountNumber(DEFAULT_BANK_ACCOUNT_NUMBER)
             .bankAccountName(DEFAULT_BANK_ACCOUNT_NAME)
             .bankName(DEFAULT_BANK_NAME)
+            .chainMallId(DEFAULT_CHAIN_MALL_ID)
             .lastUpdatedBy(DEFAULT_LAST_UPDATED_BY)
             .lastUpdatedAt(DEFAULT_LAST_UPDATED_AT)
             .status(DEFAULT_STATUS);
@@ -123,6 +127,7 @@ public class DonationResourceIT {
             .bankAccountNumber(UPDATED_BANK_ACCOUNT_NUMBER)
             .bankAccountName(UPDATED_BANK_ACCOUNT_NAME)
             .bankName(UPDATED_BANK_NAME)
+            .chainMallId(UPDATED_CHAIN_MALL_ID)
             .lastUpdatedBy(UPDATED_LAST_UPDATED_BY)
             .lastUpdatedAt(UPDATED_LAST_UPDATED_AT)
             .status(UPDATED_STATUS);
@@ -158,6 +163,7 @@ public class DonationResourceIT {
         assertThat(testDonation.getBankAccountNumber()).isEqualTo(DEFAULT_BANK_ACCOUNT_NUMBER);
         assertThat(testDonation.getBankAccountName()).isEqualTo(DEFAULT_BANK_ACCOUNT_NAME);
         assertThat(testDonation.getBankName()).isEqualTo(DEFAULT_BANK_NAME);
+        assertThat(testDonation.getChainMallId()).isEqualTo(DEFAULT_CHAIN_MALL_ID);
         assertThat(testDonation.getLastUpdatedBy()).isEqualTo(DEFAULT_LAST_UPDATED_BY);
         assertThat(testDonation.getLastUpdatedAt()).isEqualTo(DEFAULT_LAST_UPDATED_AT);
         assertThat(testDonation.getStatus()).isEqualTo(DEFAULT_STATUS);
@@ -221,6 +227,7 @@ public class DonationResourceIT {
             .andExpect(jsonPath("$.[*].bankAccountNumber").value(hasItem(DEFAULT_BANK_ACCOUNT_NUMBER)))
             .andExpect(jsonPath("$.[*].bankAccountName").value(hasItem(DEFAULT_BANK_ACCOUNT_NAME)))
             .andExpect(jsonPath("$.[*].bankName").value(hasItem(DEFAULT_BANK_NAME)))
+            .andExpect(jsonPath("$.[*].chainMallId").value(hasItem(DEFAULT_CHAIN_MALL_ID)))
             .andExpect(jsonPath("$.[*].lastUpdatedBy").value(hasItem(DEFAULT_LAST_UPDATED_BY)))
             .andExpect(jsonPath("$.[*].lastUpdatedAt").value(hasItem(DEFAULT_LAST_UPDATED_AT.toString())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
@@ -246,6 +253,7 @@ public class DonationResourceIT {
             .andExpect(jsonPath("$.bankAccountNumber").value(DEFAULT_BANK_ACCOUNT_NUMBER))
             .andExpect(jsonPath("$.bankAccountName").value(DEFAULT_BANK_ACCOUNT_NAME))
             .andExpect(jsonPath("$.bankName").value(DEFAULT_BANK_NAME))
+            .andExpect(jsonPath("$.chainMallId").value(DEFAULT_CHAIN_MALL_ID))
             .andExpect(jsonPath("$.lastUpdatedBy").value(DEFAULT_LAST_UPDATED_BY))
             .andExpect(jsonPath("$.lastUpdatedAt").value(DEFAULT_LAST_UPDATED_AT.toString()))
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
@@ -281,6 +289,7 @@ public class DonationResourceIT {
             .bankAccountNumber(UPDATED_BANK_ACCOUNT_NUMBER)
             .bankAccountName(UPDATED_BANK_ACCOUNT_NAME)
             .bankName(UPDATED_BANK_NAME)
+            .chainMallId(UPDATED_CHAIN_MALL_ID)
             .lastUpdatedBy(UPDATED_LAST_UPDATED_BY)
             .lastUpdatedAt(UPDATED_LAST_UPDATED_AT)
             .status(UPDATED_STATUS);
@@ -303,6 +312,7 @@ public class DonationResourceIT {
         assertThat(testDonation.getBankAccountNumber()).isEqualTo(UPDATED_BANK_ACCOUNT_NUMBER);
         assertThat(testDonation.getBankAccountName()).isEqualTo(UPDATED_BANK_ACCOUNT_NAME);
         assertThat(testDonation.getBankName()).isEqualTo(UPDATED_BANK_NAME);
+        assertThat(testDonation.getChainMallId()).isEqualTo(UPDATED_CHAIN_MALL_ID);
         assertThat(testDonation.getLastUpdatedBy()).isEqualTo(UPDATED_LAST_UPDATED_BY);
         assertThat(testDonation.getLastUpdatedAt()).isEqualTo(UPDATED_LAST_UPDATED_AT);
         assertThat(testDonation.getStatus()).isEqualTo(UPDATED_STATUS);

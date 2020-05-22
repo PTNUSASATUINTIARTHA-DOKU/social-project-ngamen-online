@@ -54,6 +54,16 @@ public class Organizer implements Serializable {
     @JsonView(AuthoritiesConstants.Anonymous.class)
     private String email;
 
+    @Size(max = 200)
+    @Column(name = "logo", length = 200)
+    @JsonView(AuthoritiesConstants.Anonymous.class)
+    private String logo;
+
+    @Size(max = 500)
+    @Column(name = "logo_style", length = 500)
+    @JsonView(AuthoritiesConstants.Anonymous.class)
+    private String logoStyle;
+
     @Size(max = 15)
     @Column(name = "bank_account_number", length = 15)
     @JsonView(AuthoritiesConstants.User.class)
@@ -92,10 +102,8 @@ public class Organizer implements Serializable {
     @JsonView(AuthoritiesConstants.User.class)
     private Integer mallId;
 
-    @Column(name = "chain_mall_id")
-    private Integer chainMallId;
-
-    @Column(name = "shared_key")
+    @Size(max = 20)
+    @Column(name = "shared_key", length = 20)
     @JsonView(AuthoritiesConstants.User.class)
     private String sharedKey;
 
@@ -146,6 +154,19 @@ public class Organizer implements Serializable {
         this.name = name;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public Organizer email(String email) {
+        this.email = email;
+        return this;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getUrl() {
         return url;
     }
@@ -159,17 +180,30 @@ public class Organizer implements Serializable {
         this.url = url;
     }
 
-    public String getEmail() {
-        return email;
+    public String getLogo() {
+        return logo;
     }
 
-    public Organizer email(String email) {
-        this.email = email;
+    public Organizer logo(String logo) {
+        this.logo = logo;
         return this;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setLogo(String logo) {
+        this.logo = logo;
+    }
+
+    public String getLogoStyle() {
+        return logoStyle;
+    }
+
+    public Organizer logoStyle(String logoStyle) {
+        this.logoStyle = logoStyle;
+        return this;
+    }
+
+    public void setLogoStyle(String logoStyle) {
+        this.logoStyle = logoStyle;
     }
 
     public String getBankAccountNumber() {
@@ -274,19 +308,6 @@ public class Organizer implements Serializable {
 
     public void setMallId(Integer mallId) {
         this.mallId = mallId;
-    }
-
-    public Integer getChainMallId() {
-        return chainMallId;
-    }
-
-    public Organizer chainMallId(Integer chainMallId) {
-        this.chainMallId = chainMallId;
-        return this;
-    }
-
-    public void setChainMallId(Integer chainMallId) {
-        this.chainMallId = chainMallId;
     }
 
     public String getSharedKey() {
@@ -411,8 +432,10 @@ public class Organizer implements Serializable {
         return "Organizer{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", url='" + getUrl() + "'" +
             ", email='" + getEmail() + "'" +
+            ", url='" + getUrl() + "'" +
+            ", logo='" + getLogo() + "'" +
+            ", logoStyle='" + getLogoStyle() + "'" +
             ", bankAccountNumber='" + getBankAccountNumber() + "'" +
             ", bankAccountName='" + getBankAccountName() + "'" +
             ", bankName='" + getBankName() + "'" +
@@ -421,7 +444,6 @@ public class Organizer implements Serializable {
             ", lastUpdatedBy='" + getLastUpdatedBy() + "'" +
             ", lastUpdatedAt='" + getLastUpdatedAt() + "'" +
             ", mallId=" + getMallId() +
-            ", chainMallId=" + getChainMallId() +
             ", sharedKey='" + getSharedKey() + "'" +
             ", serviceId=" + getServiceId() +
             ", acquirerId=" + getAcquirerId() +

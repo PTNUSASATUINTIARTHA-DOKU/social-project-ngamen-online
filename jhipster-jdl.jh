@@ -4,8 +4,10 @@
  */
 entity Organizer {
 	name String maxlength(100) required unique
-    url String maxlength(100)
     email String maxlength(100) required
+    url String maxlength(100)
+    logo String maxlength(200)
+    logoStyle String maxlength(500)
     bankAccountNumber String maxlength(15)
     bankAccountName String maxlength(100)
     bankName String maxlength(100)
@@ -14,8 +16,7 @@ entity Organizer {
     lastUpdatedBy String maxlength(100)
     lastUpdatedAt Instant
     mallId Integer
-    chainMallId Integer
-    sharedKey String
+    sharedKey String maxlength(20)
     serviceId Integer
     acquirerId Integer
     status IsActiveStatus
@@ -35,6 +36,7 @@ entity Donation {
     bankAccountNumber String maxlength(15)
     bankAccountName String maxlength(100)
     bankName String maxlength(100)
+    chainMallId Integer
     lastUpdatedBy String maxlength(100)
     lastUpdatedAt Instant
     status IsActiveStatus

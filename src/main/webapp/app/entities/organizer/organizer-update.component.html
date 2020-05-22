@@ -1,6 +1,7 @@
 <div class="container mx-auto bg-white my-6 px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between mb-6">
-        <h1 class="text-2xl font-bold mb-1"><span jhiTranslate="donationApp.organizer.home.createOrEditLabel">Create or edit a Organizer</span></h1>
+        <h1 class="text-2xl font-bold mb-1"><span jhiTranslate="donationApp.organizer.home.createOrEditLabel">Create or
+                edit a Organizer</span></h1>
     </div>
 
     <div class="flex bg-white rounded-lg shadow-lg">
@@ -9,13 +10,12 @@
                 <jhi-alert-error></jhi-alert-error>
 
                 <div class="my-4" [hidden]="!editForm.get('id')!.value">
-                    <label class="block text-gray-700 text-sm font-semibold mb-2" for="id" jhiTranslate="global.field.id">
-                        ID
-                    </label>
+                    <label class="block text-gray-700 text-sm font-semibold mb-2" for="id"
+                        jhiTranslate="global.field.id">ID</label>
                     <input type="text"
                         class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200
-                disabled:bg-gray-400 disabled:cursor-not-allowed leading-tight focus:outline-none focus:shadow-outline h-10" id="id"
-                        name="id" formControlName="id" readonly />
+                        disabled:bg-gray-400 disabled:cursor-not-allowed leading-tight focus:outline-none focus:shadow-outline h-10"
+                        id="id" name="id" formControlName="id" readonly />
                 </div>
 
                 <div class="my-4">
@@ -24,9 +24,10 @@
                     </label>
                     <input type="text"
                         class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200
-                    disabled:bg-gray-400 disabled:cursor-not-allowed leading-tight focus:outline-none focus:shadow-outline h-10" name="name" id="field_name"
-                           formControlName="name" />
-                    <div *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)">
+                        disabled:bg-gray-400 disabled:cursor-not-allowed leading-tight focus:outline-none focus:shadow-outline h-10"
+                        name="name" id="field_name" formControlName="name" />
+                    <div
+                        *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)">
                         <small class="text-xs text-red-500" *ngIf="editForm.get('name')?.errors?.required"
                             jhiTranslate="entity.validation.required">
                             This field is required.
@@ -44,7 +45,7 @@
                     </label>
                     <input type="text"
                         class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200
-                    disabled:bg-gray-400 disabled:cursor-not-allowed leading-tight focus:outline-none focus:shadow-outline h-10"
+                        disabled:bg-gray-400 disabled:cursor-not-allowed leading-tight focus:outline-none focus:shadow-outline h-10"
                         name="url" id="field_url" formControlName="url" />
                     <div
                         *ngIf="editForm.get('url')!.invalid && (editForm.get('url')!.dirty || editForm.get('url')!.touched)">
@@ -65,7 +66,7 @@
                     </label>
                     <input type="text"
                         class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200
-                    disabled:bg-gray-400 disabled:cursor-not-allowed leading-tight focus:outline-none focus:shadow-outline h-10"
+                        disabled:bg-gray-400 disabled:cursor-not-allowed leading-tight focus:outline-none focus:shadow-outline h-10"
                         name="email" id="field_email" formControlName="email" />
                     <div
                         *ngIf="editForm.get('email')!.invalid && (editForm.get('email')!.dirty || editForm.get('email')!.touched)">
@@ -82,184 +83,207 @@
                             This field must in email format.
                         </small>
                     </div>
+                </div>
 
-                    <hr class="my-8">
-
-                    <div class="my-4">
-                        <label class="block text-gray-700 text-sm font-semibold mb-2" jhiTranslate="donationApp.organizer.bankAccountNumber"
-                            for="field_bankAccountNumber">Bank Account Number</label>
-                        <input type="text" class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200 disabled:bg-gray-400 disabled:cursor-not-allowed leading-tight focus:outline-none focus:shadow-outline h-10" name="bankAccountNumber" id="field_bankAccountNumber"
-                            formControlName="bankAccountNumber" />
-                        <div
-                            *ngIf="editForm.get('bankAccountNumber')!.invalid && (editForm.get('bankAccountNumber')!.dirty || editForm.get('bankAccountNumber')!.touched)">
-                            <small class="text-xs text-red-500"
-                                *ngIf="editForm.get('bankAccountNumber')?.errors?.maxlength"
-                                jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 15 }">
-                                This field cannot be longer than 15 characters.
-                            </small>
-                        </div>
+                <div class="my-4">
+                    <label class="block text-gray-700 text-sm font-semibold mb-2"
+                        jhiTranslate="donationApp.organizer.logo" for="field_logo">Logo</label>
+                    <input type="text"
+                        class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200
+                        disabled:bg-gray-400 disabled:cursor-not-allowed leading-tight focus:outline-none focus:shadow-outline h-10"
+                        name="logo" id="field_logo" formControlName="logo" />
+                    <div
+                        *ngIf="editForm.get('logo')!.invalid && (editForm.get('logo')!.dirty || editForm.get('logo')!.touched)">
+                        <small class="text-xs text-red-500" *ngIf="editForm.get('logo')?.errors?.maxlength"
+                            jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 200 }">
+                            This field cannot be longer than 200 characters.
+                        </small>
                     </div>
+                </div>
 
-                    <div class="my-4">
-                        <label class="block text-gray-700 text-sm font-semibold mb-2"
-                            jhiTranslate="donationApp.organizer.bankAccountName" for="field_bankAccountName">Bank
-                            Account Name</label>
-                        <input type="text"
-                            class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200 disabled:bg-gray-400 disabled:cursor-not-allowed leading-tight focus:outline-none focus:shadow-outline h-10"
-                            name="bankAccountName" id="field_bankAccountName" formControlName="bankAccountName" />
-                        <div
-                            *ngIf="editForm.get('bankAccountName')!.invalid && (editForm.get('bankAccountName')!.dirty || editForm.get('bankAccountName')!.touched)">
-                            <small class="text-xs text-red-500"
-                                *ngIf="editForm.get('bankAccountName')?.errors?.maxlength"
-                                jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 100 }">
-                                This field cannot be longer than 100 characters.
-                            </small>
-                        </div>
+                <div class="my-4">
+                    <label class="block text-gray-700 text-sm font-semibold mb-2"
+                        jhiTranslate="donationApp.organizer.logoStyle" for="field_logoStyle">Logo Style</label>
+                    <input type="text"
+                        class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200
+                        disabled:bg-gray-400 disabled:cursor-not-allowed leading-tight focus:outline-none focus:shadow-outline h-10"
+                        name="logoStyle" id="field_logoStyle" formControlName="logoStyle" />
+                    <div
+                        *ngIf="editForm.get('logoStyle')!.invalid && (editForm.get('logoStyle')!.dirty || editForm.get('logoStyle')!.touched)">
+                        <small class="text-xs text-red-500" *ngIf="editForm.get('logoStyle')?.errors?.maxlength"
+                            jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 500 }">
+                            This field cannot be longer than 500 characters.
+                        </small>
                     </div>
+                </div>
 
-                    <div class="my-4">
-                        <label class="block text-gray-700 text-sm font-semibold mb-2"
-                            jhiTranslate="donationApp.organizer.bankName" for="field_bankName">Bank Name</label>
-                        <input type="text"
-                            class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200 disabled:bg-gray-400 disabled:cursor-not-allowed leading-tight focus:outline-none focus:shadow-outline h-10"
-                            name="bankName" id="field_bankName" formControlName="bankName" />
-                        <div
-                            *ngIf="editForm.get('bankName')!.invalid && (editForm.get('bankName')!.dirty || editForm.get('bankName')!.touched)">
-                            <small class="text-xs text-red-500" *ngIf="editForm.get('bankName')?.errors?.maxlength"
-                                jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 100 }">
-                                This field cannot be longer than 100 characters.
-                            </small>
-                        </div>
+                <hr class="my-8">
+
+                <div class="my-4">
+                    <label class="block text-gray-700 text-sm font-semibold mb-2"
+                        jhiTranslate="donationApp.organizer.bankAccountNumber" for="field_bankAccountNumber">Bank
+                        Account Number</label>
+                    <input type="text"
+                        class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200 disabled:bg-gray-400 disabled:cursor-not-allowed leading-tight focus:outline-none focus:shadow-outline h-10"
+                        name="bankAccountNumber" id="field_bankAccountNumber" formControlName="bankAccountNumber" />
+                    <div
+                        *ngIf="editForm.get('bankAccountNumber')!.invalid && (editForm.get('bankAccountNumber')!.dirty || editForm.get('bankAccountNumber')!.touched)">
+                        <small class="text-xs text-red-500" *ngIf="editForm.get('bankAccountNumber')?.errors?.maxlength"
+                            jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 15 }">
+                            This field cannot be longer than 15 characters.
+                        </small>
                     </div>
+                </div>
 
-                    <hr class="my-8">
-
-                    <div class="my-4">
-                        <label class="block text-gray-700 text-sm font-semibold mb-2"
-                            jhiTranslate="donationApp.organizer.mallId" for="field_mallId">Mall ID</label>
-                        <input type="number"
-                            class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200 disabled:bg-gray-400 disabled:cursor-not-allowed leading-tight focus:outline-none focus:shadow-outline h-10"
-                            name="mallId" id="field_mallId" formControlName="mallId" />
+                <div class="my-4">
+                    <label class="block text-gray-700 text-sm font-semibold mb-2"
+                        jhiTranslate="donationApp.organizer.bankAccountName" for="field_bankAccountName">Bank
+                        Account Name</label>
+                    <input type="text"
+                        class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200 disabled:bg-gray-400 disabled:cursor-not-allowed leading-tight focus:outline-none focus:shadow-outline h-10"
+                        name="bankAccountName" id="field_bankAccountName" formControlName="bankAccountName" />
+                    <div
+                        *ngIf="editForm.get('bankAccountName')!.invalid && (editForm.get('bankAccountName')!.dirty || editForm.get('bankAccountName')!.touched)">
+                        <small class="text-xs text-red-500" *ngIf="editForm.get('bankAccountName')?.errors?.maxlength"
+                            jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 100 }">
+                            This field cannot be longer than 100 characters.
+                        </small>
                     </div>
+                </div>
 
-                    <div class="my-4">
-                        <label class="block text-gray-700 text-sm font-semibold mb-2"
-                            jhiTranslate="donationApp.organizer.chainMallId" for="field_chainMallId">Chain Mall ID</label>
-                        <input type="number"
-                            class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200 disabled:bg-gray-400 disabled:cursor-not-allowed leading-tight focus:outline-none focus:shadow-outline h-10"
-                            name="chainMallId" id="field_chainMallId" formControlName="chainMallId" />
+                <div class="my-4">
+                    <label class="block text-gray-700 text-sm font-semibold mb-2"
+                        jhiTranslate="donationApp.organizer.bankName" for="field_bankName">Bank Name</label>
+                    <input type="text"
+                        class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200 disabled:bg-gray-400 disabled:cursor-not-allowed leading-tight focus:outline-none focus:shadow-outline h-10"
+                        name="bankName" id="field_bankName" formControlName="bankName" />
+                    <div
+                        *ngIf="editForm.get('bankName')!.invalid && (editForm.get('bankName')!.dirty || editForm.get('bankName')!.touched)">
+                        <small class="text-xs text-red-500" *ngIf="editForm.get('bankName')?.errors?.maxlength"
+                            jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 100 }">
+                            This field cannot be longer than 100 characters.
+                        </small>
                     </div>
+                </div>
 
-                    <div class="my-4">
-                        <label class="block text-gray-700 text-sm font-semibold mb-2"
-                            jhiTranslate="donationApp.organizer.sharedKey" for="field_sharedKey">Shared Key</label>
-                        <input type="text"
-                            class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200 disabled:bg-gray-400 disabled:cursor-not-allowed leading-tight focus:outline-none focus:shadow-outline h-10"
-                            name="sharedKey" id="field_sharedKey" formControlName="sharedKey" />
+                <hr class="my-8">
+
+                <div class="my-4">
+                    <label class="block text-gray-700 text-sm font-semibold mb-2"
+                        jhiTranslate="donationApp.organizer.mallId" for="field_mallId">Mall ID</label>
+                    <input type="number"
+                        class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200 disabled:bg-gray-400 disabled:cursor-not-allowed leading-tight focus:outline-none focus:shadow-outline h-10"
+                        name="mallId" id="field_mallId" formControlName="mallId" />
+                </div>
+
+                <div class="my-4">
+                    <label class="block text-gray-700 text-sm font-semibold mb-2"
+                        jhiTranslate="donationApp.organizer.sharedKey" for="field_sharedKey">Shared Key</label>
+                    <input type="text"
+                        class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200 disabled:bg-gray-400 disabled:cursor-not-allowed leading-tight focus:outline-none focus:shadow-outline h-10"
+                        name="sharedKey" id="field_sharedKey" formControlName="sharedKey" />
+                </div>
+
+                <div class="my-4">
+                    <label class="block text-gray-700 text-sm font-semibold mb-2"
+                        jhiTranslate="donationApp.organizer.serviceId" for="field_serviceId">Service ID</label>
+                    <input type="number"
+                        class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200 disabled:bg-gray-400 disabled:cursor-not-allowed leading-tight focus:outline-none focus:shadow-outline h-10"
+                        name="serviceId" id="field_serviceId" formControlName="serviceId" />
+                </div>
+
+                <div class="my-4">
+                    <label class="block text-gray-700 text-sm font-semibold mb-2"
+                        jhiTranslate="donationApp.organizer.acquirerId" for="field_acquirerId">Acquirer ID</label>
+                    <input type="number"
+                        class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200 disabled:bg-gray-400 disabled:cursor-not-allowed leading-tight focus:outline-none focus:shadow-outline h-10"
+                        name="acquirerId" id="field_acquirerId" formControlName="acquirerId" />
+                </div>
+
+                <hr class="my-8" *jhiHasAnyAuthority="'ROLE_ADMIN'">
+
+                <div class="my-4" *jhiHasAnyAuthority="'ROLE_ADMIN'">
+                    <label class="block text-gray-700 text-sm font-semibold mb-2"
+                        jhiTranslate="donationApp.organizer.mdr" for="field_mdr">MDR Payment (%)</label>
+                    <input type="number"
+                        class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200 disabled:bg-gray-400 disabled:cursor-not-allowed leading-tight focus:outline-none focus:shadow-outline h-10"
+                        name="mdr" id="field_mdr" formControlName="mdr" />
+                    <div
+                        *ngIf="editForm.get('mdr')!.invalid && (editForm.get('mdr')!.dirty || editForm.get('mdr')!.touched)">
+                        <small class="text-xs text-red-500" *ngIf="editForm.get('mdr')?.errors?.max"
+                            jhiTranslate="entity.validation.max" [translateValues]="{ max: 100 }">
+                            This field cannot be more than 100.
+                        </small>
+                        <small class="text-xs text-red-500" [hidden]="!editForm.get('mdr')?.errors?.number"
+                            jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
                     </div>
+                </div>
 
-                    <div class="my-4">
-                        <label class="block text-gray-700 text-sm font-semibold mb-2"
-                            jhiTranslate="donationApp.organizer.serviceId" for="field_serviceId">Service ID</label>
-                        <input type="number"
-                            class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200 disabled:bg-gray-400 disabled:cursor-not-allowed leading-tight focus:outline-none focus:shadow-outline h-10"
-                            name="serviceId" id="field_serviceId" formControlName="serviceId" />
+                <div class="my-4" *jhiHasAnyAuthority="'ROLE_ADMIN'">
+                    <label class="block text-gray-700 text-sm font-semibold mb-2"
+                        jhiTranslate="donationApp.organizer.sharing" for="field_sharing">Sharing for Charity
+                        (%)</label>
+                    <input type="number"
+                        class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200 disabled:bg-gray-400 disabled:cursor-not-allowed leading-tight focus:outline-none focus:shadow-outline h-10"
+                        name="sharing" id="field_sharing" formControlName="sharing" />
+                    <div
+                        *ngIf="editForm.get('sharing')!.invalid && (editForm.get('sharing')!.dirty || editForm.get('sharing')!.touched)">
+                        <small class="text-xs text-red-500" *ngIf="editForm.get('sharing')?.errors?.max"
+                            jhiTranslate="entity.validation.max" [translateValues]="{ max: 100 }">
+                            This field cannot be more than 100.
+                        </small>
+                        <small class="text-xs text-red-500" [hidden]="!editForm.get('sharing')?.errors?.number"
+                            jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
                     </div>
+                </div>
 
-                    <div class="my-4">
-                        <label class="block text-gray-700 text-sm font-semibold mb-2"
-                            jhiTranslate="donationApp.organizer.acquirerId" for="field_acquirerId">Acquirer ID</label>
-                        <input type="number"
-                            class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200 disabled:bg-gray-400 disabled:cursor-not-allowed leading-tight focus:outline-none focus:shadow-outline h-10"
-                            name="acquirerId" id="field_acquirerId" formControlName="acquirerId" />
-                    </div>
-
-                    <hr class="my-8" *jhiHasAnyAuthority="'ROLE_ADMIN'">
-
-                    <div class="my-4" *jhiHasAnyAuthority="'ROLE_ADMIN'">
-                        <label class="block text-gray-700 text-sm font-semibold mb-2"
-                            jhiTranslate="donationApp.organizer.mdr" for="field_mdr">MDR Payment (%)</label>
-                        <input type="number"
-                            class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200 disabled:bg-gray-400 disabled:cursor-not-allowed leading-tight focus:outline-none focus:shadow-outline h-10"
-                            name="mdr" id="field_mdr" formControlName="mdr" />
-                        <div
-                            *ngIf="editForm.get('mdr')!.invalid && (editForm.get('mdr')!.dirty || editForm.get('mdr')!.touched)">
-                            <small class="text-xs text-red-500" *ngIf="editForm.get('mdr')?.errors?.max"
-                                jhiTranslate="entity.validation.max" [translateValues]="{ max: 100 }">
-                                This field cannot be more than 100.
-                            </small>
-                            <small class="text-xs text-red-500" [hidden]="!editForm.get('mdr')?.errors?.number"
-                                jhiTranslate="entity.validation.number">
-                                This field should be a number.
-                            </small>
-                        </div>
-                    </div>
-
-                    <div class="my-4" *jhiHasAnyAuthority="'ROLE_ADMIN'">
-                        <label class="block text-gray-700 text-sm font-semibold mb-2"
-                            jhiTranslate="donationApp.organizer.sharing" for="field_sharing">Sharing for Charity
-                            (%)</label>
-                        <input type="number"
-                            class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200 disabled:bg-gray-400 disabled:cursor-not-allowed leading-tight focus:outline-none focus:shadow-outline h-10"
-                            name="sharing" id="field_sharing" formControlName="sharing" />
-                        <div
-                            *ngIf="editForm.get('sharing')!.invalid && (editForm.get('sharing')!.dirty || editForm.get('sharing')!.touched)">
-                            <small class="text-xs text-red-500" *ngIf="editForm.get('sharing')?.errors?.max"
-                                jhiTranslate="entity.validation.max" [translateValues]="{ max: 100 }">
-                                This field cannot be more than 100.
-                            </small>
-                            <small class="text-xs text-red-500" [hidden]="!editForm.get('sharing')?.errors?.number"
-                                jhiTranslate="entity.validation.number">
-                                This field should be a number.
-                            </small>
-                        </div>
-                    </div>
-                    
-                    <div class="my-4" *jhiHasAnyAuthority="'ROLE_ADMIN'">
-                        <label class="block text-gray-700 text-sm font-semibold mb-2"
-                            jhiTranslate="donationApp.organizer.status" for="field_status">Status</label>
-                        <div class="relative">
-                            <select
-                                class="text-sm block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-2 px-3 rounded leading-tight focus:outline-none focus:bg-white disabled:bg-gray-400 disabled:cursor-not-allowed h-10"
-                                name="status" formControlName="status" id="field_status">
-                                <option value="ACTIVE">{{ 'donationApp.IsActiveStatus.ACTIVE' | translate }}</option>
-                                <option value="DISABLED">{{ 'donationApp.IsActiveStatus.DISABLED' | translate }}
-                                </option>
-                            </select>
-                            <div
-                                class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 20 20">
-                                    <path
-                                        d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="my-4" *jhiHasAnyAuthority="'ROLE_ADMIN'">
-                        <label jhiTranslate="donationApp.organizer.user" for="field_users">User</label>
+                <div class="my-4" *jhiHasAnyAuthority="'ROLE_ADMIN'">
+                    <label class="block text-gray-700 text-sm font-semibold mb-2"
+                        jhiTranslate="donationApp.organizer.status" for="field_status">Status</label>
+                    <div class="relative">
                         <select
-                            class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200 disabled:bg-gray-400 disabled:cursor-not-allowed leading-tight focus:outline-none focus:shadow-outline"
-                            id="field_users" multiple name="users" formControlName="users">
-                            <option [ngValue]="getSelected(editForm.get('users')!.value, userOption)"
-                                *ngFor="let userOption of users; trackBy: trackById">{{ userOption.login }}</option>
+                            class="text-sm block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-2 px-3 rounded leading-tight focus:outline-none focus:bg-white disabled:bg-gray-400 disabled:cursor-not-allowed h-10"
+                            name="status" formControlName="status" id="field_status">
+                            <option value="ACTIVE">{{ 'donationApp.IsActiveStatus.ACTIVE' | translate }}</option>
+                            <option value="DISABLED">{{ 'donationApp.IsActiveStatus.DISABLED' | translate }}
+                            </option>
                         </select>
+                        <div
+                            class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                            </svg>
+                        </div>
                     </div>
+                </div>
 
-                    <div class="mt-2 flex items-center justify-between">
-                        <button type="button" id="cancel-save" class="bg-white hover:bg-red-500 disabled:border-red-200 disabled:text-red-200 border border-red-500 disabled:cursor-not-allowed text-red-500 hover:text-white text-sm py-2 px-4 font-semibold rounded focus:outline-none focus:shadow-outline h-10" (click)="previousState()">
-                            <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
-                        </button>
+                <div class="my-4" *jhiHasAnyAuthority="'ROLE_ADMIN'">
+                    <label jhiTranslate="donationApp.organizer.user" for="field_users">User</label>
+                    <select
+                        class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200 disabled:bg-gray-400 disabled:cursor-not-allowed leading-tight focus:outline-none focus:shadow-outline"
+                        id="field_users" multiple name="users" formControlName="users">
+                        <option [ngValue]="getSelected(editForm.get('users')!.value, userOption)"
+                            *ngFor="let userOption of users; trackBy: trackById">{{ userOption.login }}</option>
+                    </select>
+                </div>
 
-                        <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving"
-                            class="bg-red-600 hover:bg-red-500 disabled:bg-red-200 disabled:cursor-not-allowed text-white text-sm py-2 px-4 font-semibold rounded focus:outline-none focus:shadow-outline h-10">
-                            <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
-                        </button>
-                    </div>
+                <div class="mt-2 flex items-center justify-between">
+                    <button type="button" id="cancel-save"
+                        class="bg-white hover:bg-red-500 disabled:border-red-200 disabled:text-red-200 border border-red-500 disabled:cursor-not-allowed text-red-500 hover:text-white text-sm py-2 px-4 font-semibold rounded focus:outline-none focus:shadow-outline h-10"
+                        (click)="previousState()">
+                        <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                    </button>
+
+                    <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving"
+                        class="bg-red-600 hover:bg-red-500 disabled:bg-red-200 disabled:cursor-not-allowed text-white text-sm py-2 px-4 font-semibold rounded focus:outline-none focus:shadow-outline h-10">
+                        <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                    </button>
                 </div>
             </form>
         </div>
     </div>
 </div>
-

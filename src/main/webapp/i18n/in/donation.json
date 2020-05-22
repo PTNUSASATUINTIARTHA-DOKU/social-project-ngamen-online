@@ -27,6 +27,7 @@
       "lastUpdatedAt": "Pengubahan terakhir",
       "logo": "Logo",
       "logoStyle": "Logo Style",
+      "chainMallId": "Chain Mall Id",
       "status": "Status",
       "transaction": "Transaction",
       "organizer": "Yayasan"

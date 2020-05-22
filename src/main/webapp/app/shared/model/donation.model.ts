@@ -14,6 +14,7 @@ export interface IDonation {
   bankAccountNumber?: string;
   bankAccountName?: string;
   bankName?: string;
+  chainMallId?: number;
   lastUpdatedBy?: string;
   lastUpdatedAt?: Moment;
   status?: IsActiveStatus;
@@ -33,6 +34,7 @@ export class Donation implements IDonation {
     public bankAccountNumber?: string,
     public bankAccountName?: string,
     public bankName?: string,
+    public chainMallId?: number,
     public lastUpdatedBy?: string,
     public lastUpdatedAt?: Moment,
     public status?: IsActiveStatus,

@@ -12,6 +12,15 @@
             "fieldValidateRulesMaxlength": "100"
         },
         {
+            "fieldName": "email",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength",
+                "required"
+            ],
+            "fieldValidateRulesMaxlength": "100"
+        },
+        {
             "fieldName": "url",
             "fieldType": "String",
             "fieldValidateRules": [
@@ -20,13 +29,20 @@
             "fieldValidateRulesMaxlength": "100"
         },
         {
-            "fieldName": "email",
+            "fieldName": "logo",
             "fieldType": "String",
             "fieldValidateRules": [
-                "maxlength",
-                "required"
+                "maxlength"
             ],
-            "fieldValidateRulesMaxlength": "100"
+            "fieldValidateRulesMaxlength": "200"
+        },
+        {
+            "fieldName": "logoStyle",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": "500"
         },
         {
             "fieldName": "bankAccountNumber",
@@ -85,12 +101,12 @@
             "fieldType": "Integer"
         },
         {
-            "fieldName": "chainMallId",
-            "fieldType": "Integer"
-        },
-        {
             "fieldName": "sharedKey",
-            "fieldType": "String"
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": "20"
         },
         {
             "fieldName": "serviceId",

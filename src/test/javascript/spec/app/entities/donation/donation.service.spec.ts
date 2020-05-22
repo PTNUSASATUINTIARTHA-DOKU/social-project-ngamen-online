@@ -36,6 +36,7 @@ describe('Service Tests', () => {
         'AAAAAAA',
         'AAAAAAA',
         'AAAAAAA',
+        0,
         'AAAAAAA',
         currentDate,
         IsActiveStatus.ACTIVE
@@ -93,6 +94,7 @@ describe('Service Tests', () => {
             bankAccountNumber: 'BBBBBB',
             bankAccountName: 'BBBBBB',
             bankName: 'BBBBBB',
+            chainMallId: 1,
             lastUpdatedBy: 'BBBBBB',
             lastUpdatedAt: currentDate.format(DATE_TIME_FORMAT),
             status: 'BBBBBB'
@@ -126,6 +128,7 @@ describe('Service Tests', () => {
             bankAccountNumber: 'BBBBBB',
             bankAccountName: 'BBBBBB',
             bankName: 'BBBBBB',
+            chainMallId: 1,
             lastUpdatedBy: 'BBBBBB',
             lastUpdatedAt: currentDate.format(DATE_TIME_FORMAT),
             status: 'BBBBBB'

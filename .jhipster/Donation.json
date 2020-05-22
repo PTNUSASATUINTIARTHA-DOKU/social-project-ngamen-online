@@ -77,6 +77,10 @@
             "fieldValidateRulesMaxlength": "100"
         },
         {
+            "fieldName": "chainMallId",
+            "fieldType": "Integer"
+        },
+        {
             "fieldName": "lastUpdatedBy",
             "fieldType": "String",
             "fieldValidateRules": [

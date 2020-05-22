@@ -8,6 +8,8 @@ export interface IOrganizer {
   name?: string;
   url?: string;
   email?: string;
+  logo?: string;
+  logoStyle?: string;
   bankAccountNumber?: string;
   bankAccountName?: string;
   bankName?: string;
@@ -16,7 +18,6 @@ export interface IOrganizer {
   lastUpdatedBy?: string;
   lastUpdatedAt?: Moment;
   mallId?: number;
-  chainMallId?: number;
   sharedKey?: string;
   serviceId?: number;
   acquirerId?: number;
@@ -31,6 +32,8 @@ export class Organizer implements IOrganizer {
     public name?: string,
     public url?: string,
     public email?: string,
+    public logo?: string,
+    public logoStyle?: string,
     public bankAccountNumber?: string,
     public bankAccountName?: string,
     public bankName?: string,
@@ -39,7 +42,6 @@ export class Organizer implements IOrganizer {
     public lastUpdatedBy?: string,
     public lastUpdatedAt?: Moment,
     public mallId?: number,
-    public chainMallId?: number,
     public sharedKey?: string,
     public serviceId?: number,
     public acquirerId?: number,

@@ -166,7 +166,7 @@ public class TransactionServiceImpl implements TransactionService {
             return saveResult(transaction, TransactionStatus.FAILED, "DIS", "Donation Disabled");
         } else {
             transaction.setDonation(don.get());
-            MibRequestDTO mibRequestDTO = mibMapper.toMibRequestDTO(transaction, don.get().getOrganizer());
+            MibRequestDTO mibRequestDTO = mibMapper.toMibRequestDTO(transaction, don.get());
             log.debug("MibRequestDTO {}", mibRequestDTO);
             String url = applicationProperties.getMibUrl();
             HttpHeaders headers = new HttpHeaders();

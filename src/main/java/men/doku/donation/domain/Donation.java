@@ -83,6 +83,10 @@ public class Donation implements Serializable {
     @JsonView(AuthoritiesConstants.User.class)
     private String bankName;
 
+    @Column(name = "chain_mall_id")
+    @JsonView(AuthoritiesConstants.User.class)
+    private Integer chainMallId;
+
     @Size(max = 100)
     @Column(name = "last_updated_by", length = 100)
     @JsonView(AuthoritiesConstants.User.class)
@@ -232,6 +236,19 @@ public class Donation implements Serializable {
         this.bankName = bankName;
     }
 
+    public Integer getChainMallId() {
+        return chainMallId;
+    }
+
+    public Donation chainMallId(Integer chainMallId) {
+        this.chainMallId = chainMallId;
+        return this;
+    }
+
+    public void setChainMallId(Integer chainMallId) {
+        this.chainMallId = chainMallId;
+    }
+
     public String getLastUpdatedBy() {
         return lastUpdatedBy;
     }
@@ -339,6 +356,7 @@ public class Donation implements Serializable {
             ", bankAccountNumber='" + getBankAccountNumber() + "'" +
             ", bankAccountName='" + getBankAccountName() + "'" +
             ", bankName='" + getBankName() + "'" +
+            ", chainMallId=" + getChainMallId() +
             ", lastUpdatedBy='" + getLastUpdatedBy() + "'" +
             ", lastUpdatedAt='" + getLastUpdatedAt() + "'" +
             ", status='" + getStatus() + "'" +
