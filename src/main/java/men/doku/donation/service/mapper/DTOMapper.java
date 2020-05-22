@@ -5,7 +5,6 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
@@ -89,10 +88,12 @@ public class DTOMapper {
     public Transaction mibResponseToTransaction(MibResponseDTO mibResponseDTO, Transaction transaction) {
         transaction.setMallId(mibResponseDTO.getMallId());
         transaction.setTrxCode(mibResponseDTO.getTrxCode());
+        /* There's bug in MIB, will stay like this until MIB fix it
         LocalDateTime dateTime = LocalDateTime.parse(String.valueOf(mibResponseDTO.getPaymentDate()),
                 DateTimeFormatter.ofPattern("yyyyMMddHHmmss").withZone(ZoneId.of("Asia/Jakarta")));
         Instant instant = dateTime.atZone(ZoneId.of("Asia/Jakarta")).toInstant();
-        transaction.setPaymentDate(instant);
+        transaction.setPaymentDate(instant); */
+        transaction.setPaymentDate(Instant.now());
         transaction.setResponseCode(mibResponseDTO.getResponseCode());
         transaction.setMessage(mibResponseDTO.getMessage());
         transaction.setPaymentSystrace(mibResponseDTO.getPaymentSystrace());

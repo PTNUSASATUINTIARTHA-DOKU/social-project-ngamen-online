@@ -532,29 +532,20 @@
                     <configuration>
                         <warSourceIncludes>WEB-INF/**,META-INF/**</warSourceIncludes>
                         <failOnMissingWebXml>false</failOnMissingWebXml>
-                            <warSourceDirectory>target/classes/static/</warSourceDirectory>
-                            <webResources>
-                                <resource>
-                                    <directory>src/main/webapp</directory>
-                                    <includes>
-                                        <include>WEB-INF/**</include>
-                                    </includes>
-                                </resource>
-                            </webResources>
-                            <webResources>
-                                <resource>
-                                    <directory>src/main/ebextensions</directory>
-                                    <targetPath>.ebextensions</targetPath>
-                                    <filtering>true</filtering>
-                                </resource>
-                            </webResources>
-                            <webResources>
-                                <resource>
-                                    <directory>src/main/webapp/WEB-INF</directory>
-                                    <targetPath>WEB-INF</targetPath>
-                                    <filtering>true</filtering>
-                                </resource>
-                            </webResources>
+                        <warSourceDirectory>target/classes/static/</warSourceDirectory>
+                        <webResources>
+                            <resource>
+                                <directory>src/main/ebextensions</directory>
+                                <targetPath>.ebextensions</targetPath>
+                                <filtering>true</filtering>
+                            </resource>
+                            <resource>
+                                <directory>src/main/webapp</directory>
+                                <includes>
+                                    <include>WEB-INF/**</include>
+                                </includes>
+                            </resource>
+                        </webResources>
                     </configuration>
                 </plugin>
                 <plugin>
