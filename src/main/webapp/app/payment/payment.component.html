@@ -16,7 +16,7 @@
 </div>
 
 <div *ngIf="!isDisabled" class="container max-w-md mx-auto xl:max-w-3xl h-full flex bg-white rounded-lg shadow-lg overflow-hidden my-6 xl:my-8">
-    <div class="w-full p-8">
+    <div class="w-full p-4 lg:p-8">
         <div>
             <img src="../../content/images/kolaborartsy_1024.jpg" alt="" class="w-full h-full">
         </div>
@@ -95,31 +95,38 @@
 
                 <hr class="border border-gray-100 mb-4">
 
-                <p class="text-gray-800 text-sm mb-2" jhiTranslate="payment.description">
-                    Your donation will be received by
-                </p>
-
                 <div class="border border-grey-light bg-white rounded p-4 flex flex-col justify-between leading-normal shadow-sm hover:shadow-md">
-                    <div class="mb-4">
-                        <div class="text-gray-900 font-bold text-xl">{{this.donation?.name}}</div>
+                    <div class="mb-2">
+                        <a href="{{this.donation?.url}}" class="text-blue-600 hover:text-blue-700 font-bold text-xl" target="_blank">{{this.donation?.name}}</a>
                     </div>
-                    <div class="flex items-center">
-                        <div *ngIf="this.donation?.logo">
+                    <div class="flex flex-col lg:flex-row items-start">
+                        <div class="w-32 rounded p-2" *ngIf="this.donation?.logo">
                             <img class="{{this.donation?.logoStyle}}" src="{{this.donation?.logo}}" alt="Logo">
                         </div>
 
-                        <div class="text-sm">
-                            <p class="text-gray-600 text-xs"> {{this.donation?.description}} </p>
-                            <p class="leading-none">
-                                <a href="{{this.donation?.url}}" class="text-blue-600 hover:text-blue-700 text-xs">{{this.donation?.url}}</a>
-                            </p>
+                        <div class="w-full p-2">
+                            <div class="text-sm">
+                                <p class="text-gray-600 text-xs mb-2">
+                                    {{this.donation?.description}}
+                                </p>
+                            </div>
                         </div>
                     </div>
-                    <div class="text-sm mt-3">
-                        <p class="text-gray-600 text-xs" jhiTranslate="payment.section.info.organizer">Organizer</p>
-                        <p class="leading-none">
-                            <a href="{{this.donation?.organizer?.url}}" class="text-blue-600 hover:text-blue-700 text-xs">{{this.donation?.organizer?.name}}</a>
-                        </p>
+
+                    <hr class="my-3">
+
+                    <div class="flex flex-row items-center">
+                        <div class="w-32 rounded p-2">
+                            <!-- <img class="h-5 mr-4 text-xs" src="https://www.saweran.charity/content/images/benihbaik-logo.png" alt="Logo"> -->
+                            <img class="max-w-full" src="../../content/images/benihbaik-logo.png" alt="Logo">
+                        </div>
+
+                        <div class="w-1/2 lg:w-3/4 p-2 text-sm">
+                            <p class="text-gray-600 text-xs" jhiTranslate="payment.section.info.organizer">Organizer</p>
+                            <p class="leading-none">
+                                <a href="{{this.donation?.organizer?.url}}" class="text-blue-600 hover:text-blue-700 text-xs" target="_blank">{{this.donation?.organizer?.name}}</a>
+                            </p>
+                        </div>
                     </div>
                 </div>
 
