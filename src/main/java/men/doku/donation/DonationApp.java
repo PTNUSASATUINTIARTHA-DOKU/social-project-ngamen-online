@@ -17,8 +17,10 @@ import org.springframework.core.env.Environment;
 import javax.annotation.PostConstruct;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.TimeZone;
 
 @SpringBootApplication
 @EnableConfigurationProperties({LiquibaseProperties.class, ApplicationProperties.class})
@@ -41,6 +43,7 @@ public class DonationApp {
      */
     @PostConstruct
     public void initApplication() {
+        TimeZone.setDefault(TimeZone.getTimeZone(ZoneId.of("Asia/Jakarta")));
         Collection<String> activeProfiles = Arrays.asList(env.getActiveProfiles());
         if (activeProfiles.contains(JHipsterConstants.SPRING_PROFILE_DEVELOPMENT) && activeProfiles.contains(JHipsterConstants.SPRING_PROFILE_PRODUCTION)) {
             log.error("You have misconfigured your application! It should not run " +

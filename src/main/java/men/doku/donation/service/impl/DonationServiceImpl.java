@@ -65,8 +65,11 @@ public class DonationServiceImpl implements DonationService {
 
     @Override
     public Boolean checkDonationAuthority(Long donationId, String login) {
-        List<Long> organizerIds = organizerService.findAllIdsOwnedWithEagerRealtionships(login);
-        return (donationRepository.checkDonationAuthority(donationId, organizerIds) == 0);
+        if (!SecurityUtils.isCurrentUserInRole(Constants.ADMIN)) {
+            List<Long> organizerIds = organizerService.findAllIdsOwnedWithEagerRealtionships(login);
+            return (donationRepository.checkDonationAuthority(donationId, organizerIds) == 1);
+        }
+        return true;
     }
 
     /**
