@@ -59,7 +59,8 @@ public class DonationServiceImpl implements DonationService {
             donation.setLogo(this.awsStorageService.copyFromUploadToCdn(donation.getLogo()));
         donation.setLastUpdatedAt(Instant.now());
         donation.setLastUpdatedBy(login);
-        donation.setStatus(organizer.getStatus());
+        if(!organizer.getStatus().equals(IsActiveStatus.ACTIVE))
+            donation.setStatus(organizer.getStatus());
         return donationRepository.save(donation);
     }
 

@@ -20,6 +20,7 @@ export class DonationUpdateComponent implements OnInit, OnDestroy {
   organizers: IOrganizer[] = [];
   generatedFileName = '';
   subscription: Subscription = new Subscription();
+  donation: Donation = {};
 
   editForm = this.fb.group({
     id: [],
@@ -47,6 +48,7 @@ export class DonationUpdateComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ donation }) => {
+      this.donation = donation;
       this.updateForm(donation);
       if (!this.editForm.get('url')?.value) this.editForm.patchValue({ url: 'http' });
       this.organizerService.query().subscribe((res: HttpResponse<IOrganizer[]>) => (this.organizers = res.body || []));
