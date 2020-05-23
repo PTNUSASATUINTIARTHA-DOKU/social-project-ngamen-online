@@ -89,7 +89,7 @@ public class DonationResource {
         if (donation.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (donationService.checkDonationAuthority(donation.getId(), SecurityUtils.getCurrentUserLogin().get())) {
+        if (!donationService.checkDonationAuthority(donation.getId(), SecurityUtils.getCurrentUserLogin().get())) {
             throw new NoAuthorityException("Donation", "Edit");
         }
         Donation result = donationService.save(donation);
