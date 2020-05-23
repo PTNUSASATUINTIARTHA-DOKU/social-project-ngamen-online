@@ -7,8 +7,9 @@ import { IUser } from 'app/core/user/user.model';
 import { UserService } from 'app/core/user/user.service';
 import { PATTERN_EMAIL, PATTERN_URL } from 'app/shared/constants/pattern.constants';
 import { IOrganizer, Organizer } from 'app/shared/model/organizer.model';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { OrganizerService } from './organizer.service';
+import { StorageService } from 'app/shared/service/storage.service';
 
 @Component({
   selector: 'jhi-organizer-update',
@@ -17,6 +18,8 @@ import { OrganizerService } from './organizer.service';
 export class OrganizerUpdateComponent implements OnInit {
   isSaving = false;
   users: IUser[] = [];
+  generatedFileName = '';
+  subscription: Subscription = new Subscription();
 
   editForm = this.fb.group({
     id: [],
@@ -41,6 +44,7 @@ export class OrganizerUpdateComponent implements OnInit {
   constructor(
     protected organizerService: OrganizerService,
     protected userService: UserService,
+    protected storageService: StorageService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
   ) {}
@@ -49,8 +53,8 @@ export class OrganizerUpdateComponent implements OnInit {
     this.activatedRoute.data.subscribe(({ organizer }) => {
       this.updateForm(organizer);
       if (!this.editForm.get('url')?.value) this.editForm.patchValue({ url: 'http' });
-
       this.userService.query().subscribe((res: HttpResponse<IUser[]>) => (this.users = res.body || []));
+      this.editForm.get('logo')?.disable();
     });
   }
 
@@ -142,5 +146,16 @@ export class OrganizerUpdateComponent implements OnInit {
       }
     }
     return option;
+  }
+
+  onFileSelected(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    if (target.files) {
+      const file = target.files[0];
+      this.storageService.upload(file);
+      this.subscription = this.storageService.sharedFilename.subscribe(filename => {
+        this.editForm.patchValue({ logo: filename.valueOf() });
+      });
+    }
   }
 }

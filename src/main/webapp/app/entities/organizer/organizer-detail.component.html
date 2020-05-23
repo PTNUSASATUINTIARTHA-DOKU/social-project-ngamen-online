@@ -35,9 +35,10 @@
                     <span>{{ organizer.email }}</span>
                 </div>
 
-                <div class="mb-2 text-gray-800">
-                    <span class="font-semibold" jhiTranslate="donationApp.organizer.logo">Logo</span>:
-                    <span>{{ organizer.logo }}</span>
+                <div class="mb-2 text-gray-800 clearfix">
+                    <span class="font-semibold float-left" jhiTranslate="donationApp.organizer.logo">Logo</span>
+                    <span class="float-left">:</span>
+                    <img *ngIf="organizer.logo" src="{{ organizer.logo }}" class="h-10 float-left ml-5">
                 </div>
 
                 <div class="mb-2 text-gray-800">

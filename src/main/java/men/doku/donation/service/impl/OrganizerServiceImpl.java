@@ -17,6 +17,7 @@ import men.doku.donation.domain.Organizer;
 import men.doku.donation.domain.enumeration.IsActiveStatus;
 import men.doku.donation.repository.OrganizerRepository;
 import men.doku.donation.security.SecurityUtils;
+import men.doku.donation.service.AwsStorageService;
 import men.doku.donation.service.OrganizerService;
 import men.doku.donation.service.UserService;
 
@@ -31,10 +32,13 @@ public class OrganizerServiceImpl implements OrganizerService {
 
     private final OrganizerRepository organizerRepository;
     private final UserService userService;
+    private final AwsStorageService awsStorageService;
 
-    public OrganizerServiceImpl(OrganizerRepository organizerRepository, UserService userService) {
+    public OrganizerServiceImpl(OrganizerRepository organizerRepository
+        , UserService userService, AwsStorageService awsStorageService) {
         this.organizerRepository = organizerRepository;
         this.userService = userService;
+        this.awsStorageService = awsStorageService;
     }
 
     /**
@@ -47,6 +51,8 @@ public class OrganizerServiceImpl implements OrganizerService {
     public Organizer save(Organizer organizer) {
         final String login = SecurityUtils.getCurrentUserLogin().get();
         log.debug("Request by {} to save Organizer : {}", login, organizer);
+        if (!organizer.getLogo().startsWith("https://"))
+            organizer.setLogo(this.awsStorageService.copyFromUploadToCdn(organizer.getLogo()));
         if (!SecurityUtils.isCurrentUserInRole(Constants.ADMIN)) {
             if (organizer.getId() != null) {
                 findOne(organizer.getId()).ifPresent(currentOrganizer -> {

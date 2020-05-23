@@ -86,12 +86,22 @@
                 </div>
 
                 <div class="my-4">
-                    <label class="block text-gray-700 text-sm font-semibold mb-2"
-                        jhiTranslate="donationApp.organizer.logo" for="field_logo">Logo</label>
+                    <label class="block text-gray-700 text-sm font-semibold float-left"
+                        jhiTranslate="donationApp.organizer.logo">Logo</label>
+                    <label
+                        class="bg-gray-300 hover:bg-gray-400 text-gray-800 text-xs py-1 px-2 rounded inline-flex items-center float-left ml-5 mb-1"
+                        for="upload_logo">
+                        <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                            <path d="M0 0h24v24H0z" fill="none" />
+                            <path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z" />
+                        </svg>
+                        <span>Upload Logo</span>
+                    </label>
                     <input type="text"
                         class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200
                         disabled:bg-gray-400 disabled:cursor-not-allowed leading-tight focus:outline-none focus:shadow-outline h-10"
                         name="logo" id="field_logo" formControlName="logo" />
+                    <input type="file" id="upload_logo" class="hidden" (change)="onFileSelected($event)" />
                     <div
                         *ngIf="editForm.get('logo')!.invalid && (editForm.get('logo')!.dirty || editForm.get('logo')!.touched)">
                         <small class="text-xs text-red-500" *ngIf="editForm.get('logo')?.errors?.maxlength"

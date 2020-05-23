@@ -180,8 +180,8 @@ application:
     simulator-result: 1F
     threshold:
       payment: -0.1F
-      login: 0.5F
-      reset-password: 0.7F
+      login: -0.1F
+      reset-password: -0.1F
   aws:
     region: ap-southeast-1
     secret:
