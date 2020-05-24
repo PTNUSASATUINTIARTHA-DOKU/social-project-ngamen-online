@@ -32,6 +32,9 @@ import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.GmailScopes;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import men.doku.donation.config.ApplicationProperties;
@@ -43,8 +46,11 @@ public class GmailService {
     private final String ACCESS_TYPE = "offline";
     private final String USER = "me";
 
+    private final Logger log = LoggerFactory.getLogger(GmailService.class);
 
     private Gmail gmail;
+    private Credential credential;
+
     // private static final List<String> SCOPES = Arrays.asList(
     //     GmailScopes.MAIL_GOOGLE_COM, GmailScopes.GMAIL_COMPOSE, GmailScopes.GMAIL_SEND, GmailScopes.GMAIL_LABELS,
     //     GmailScopes.GMAIL_INSERT, GmailScopes.GMAIL_MODIFY, GmailScopes.GMAIL_READONLY);
@@ -80,8 +86,26 @@ public class GmailService {
                 .setHost(applicationProperties.getGmail().getApi().getHost())
                 .setPort(applicationProperties.getGmail().getApi().getPort())
                 .build();
-        return new AuthorizationCodeInstalledApp(flow, receiver).authorize(USER);
+        credential = new AuthorizationCodeInstalledApp(flow, receiver).authorize(USER);
+        log.debug("Access token {}", credential.getAccessToken());
+        return credential;
     }
+
+    @Scheduled(cron = "0 */50 * * * *")
+    public void generate() {
+        try {
+            log.debug("Old Access token {}", credential.getAccessToken());            
+            if (credential.refreshToken()) {
+                log.info("Refresh Google Token Success");
+            } else {
+                log.warn("Refresh Google Token Failed");
+            } 
+            log.debug("New Access token {}", credential.getAccessToken());            
+        } catch (IOException e) {
+            log.error("Failed to Refresh Google Token {}", e.getMessage());
+            e.printStackTrace();
+        }
+    }    
 
     @PostConstruct
     public void initiateOAuth() throws IOException, GeneralSecurityException {

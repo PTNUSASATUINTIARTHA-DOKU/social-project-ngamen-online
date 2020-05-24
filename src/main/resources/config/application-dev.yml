@@ -133,3 +133,9 @@ application:
     simulator-result: 1F
   aws:
     active: false
+    s3:
+      bucket:
+        upload: saweran-upload
+        cdn: saweran-cdn
+      duration-upload: 3
+      duration-download: 1
