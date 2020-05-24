@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.UUID;
 
 import com.amazonaws.HttpMethod;
-import com.amazonaws.auth.profile.ProfileCredentialsProvider;
+import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
@@ -33,7 +33,7 @@ public class AwsStorageService {
     private AmazonS3 client() {
         return AmazonS3ClientBuilder
                 .standard()
-                .withCredentials(new ProfileCredentialsProvider())
+                .withCredentials(DefaultAWSCredentialsProviderChain.getInstance())
                 .withRegion(applicationProperties.getAws().getRegion())
                 .build();
     }

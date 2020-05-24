@@ -124,3 +124,12 @@ jhipster:
 
 application:
   mib-url: http://localhost:8080/api/payments/simulator
+  report:
+    folder: reports/
+  gmail:
+    active: false
+  recaptcha:
+    active: false
+    simulator-result: 1F
+  aws:
+    active: false

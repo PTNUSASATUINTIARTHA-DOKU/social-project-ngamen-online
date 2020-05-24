@@ -223,9 +223,18 @@ public class ApplicationProperties {
 
     public static class Aws {
 
-        private String region;
-        private Secret secret;
-        private S3 s3;
+        private Boolean active = false;
+        private String region = new String();
+        private Secret secret = new Secret();
+        private S3 s3 = new S3();
+
+        public Boolean getActive() {
+            return active;
+        }
+
+        public void setActive(Boolean active) {
+            this.active = active;
+        }
 
         public String getRegion() {
             return region;
@@ -254,8 +263,8 @@ public class ApplicationProperties {
 
     public static class Secret {
 
-        private String gmail;
-        private String recaptcha;
+        private String gmail = new String();
+        private String recaptcha = new String();
 
         public String getGmail() {
             return gmail;
@@ -276,9 +285,9 @@ public class ApplicationProperties {
 
     public static class S3 {
 
-        private Bucket bucket;
-        private Integer durationUpload;
-        private Integer durationDownload;
+        private Bucket bucket = new Bucket();
+        private Integer durationUpload = 0;
+        private Integer durationDownload = 0;
 
         public Bucket getBucket() {
             return bucket;
@@ -307,8 +316,8 @@ public class ApplicationProperties {
 
     public static class Bucket {
 
-        private String upload;
-        private String cdn;
+        private String upload = new String();
+        private String cdn = new String();
 
         public String getUpload() {
             return upload;

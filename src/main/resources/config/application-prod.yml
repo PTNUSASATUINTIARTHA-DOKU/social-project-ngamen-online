@@ -15,9 +15,9 @@
 
 logging:
   level:
-    ROOT: INFO
+    ROOT: DEBUG
     io.github.jhipster: INFO
-    men.doku.donation: INFO
+    men.doku.donation: DEBUG
 
 management:
   metrics:
@@ -148,11 +148,13 @@ application:
     active: true
     verify-url: https://www.google.com/recaptcha/api/siteverify
   aws:
-    region: ap-southeast-1
+    active: true
     secret:
       gmail: prod/saweranCharity/googleApi
       recaptcha: prod/saweranCharity/recaptchaKey
     s3:
-      bucket: saweran-upload
+      bucket:
+        upload: saweran-upload
+        cdn: saweran-cdn
       duration-upload: 3
       duration-download: 1
