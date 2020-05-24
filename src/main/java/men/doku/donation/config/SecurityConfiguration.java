@@ -28,11 +28,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final CorsFilter corsFilter;
     private final SecurityProblemSupport problemSupport;
+    private final ApplicationProperties applicationProperties;
 
-    public SecurityConfiguration(TokenProvider tokenProvider, CorsFilter corsFilter, SecurityProblemSupport problemSupport) {
+    public SecurityConfiguration(TokenProvider tokenProvider, CorsFilter corsFilter
+        , SecurityProblemSupport problemSupport, ApplicationProperties applicationProperties) {
         this.tokenProvider = tokenProvider;
         this.corsFilter = corsFilter;
         this.problemSupport = problemSupport;
+        this.applicationProperties = applicationProperties;
     }
 
     @Bean
@@ -64,18 +67,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .accessDeniedHandler(problemSupport)
         .and()
             .headers()
-            .contentSecurityPolicy("default-src 'self';"
-                + " frame-src 'self' data: https://www.google.com/ https://www.gstatic.com/ https://optimize.google.com;"
-                + " script-src 'self' 'unsafe-inline' 'unsafe-eval'" 
-                    + " https://www.googletagmanager.com/ https://www.google.com/ https://optimize.google.com/"
-                    + " https://www.gstatic.com/ https://www.google-analytics.com/ https://tagmanager.google.com/;"
-                + " style-src 'self' 'unsafe-inline' https://tagmanager.google.com/"
-                    + " https://fonts.googleapis.com/ https://optimize.google.com;"
-                + " img-src 'self' data: https:;"
-                + " font-src 'self' data: https:;"
-                + " object-src 'none';"
-                + " require-trusted-types-for 'script';"
-                + " base-uri 'self';")
+            .contentSecurityPolicy(applicationProperties.getCsp().replace('`', ':'))
         .and()
             .referrerPolicy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN)
         .and()

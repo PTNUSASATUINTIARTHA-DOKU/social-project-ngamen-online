@@ -12,6 +12,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class ApplicationProperties {
 
     private String name = new String();
+    private String csp = new String();
     private String mibUrl = new String();
     private Report report = new Report();
     private Gmail gmail = new Gmail();
@@ -24,6 +25,14 @@ public class ApplicationProperties {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCsp() {
+        return csp;
+    }
+
+    public void setCsp(String csp) {
+        this.csp = csp;
     }
 
     public String getMibUrl() {

@@ -42,7 +42,7 @@ public class AwsStorageService {
         String newName = FilenameUtils.getBaseName(fileName) + "-" 
                 + UUID.randomUUID().toString() 
                 + "." + FilenameUtils.getExtension(fileName);
-        log.debug("bucket {}", applicationProperties.getAws().getS3().getBucket());
+        log.debug("bucket {}", applicationProperties.getAws().getS3().getBucket().getUpload());
         log.debug("new name {}", newName);
         GeneratePresignedUrlRequest request = new GeneratePresignedUrlRequest(applicationProperties.getAws().getS3().getBucket().getUpload(), newName)
                 .withMethod(HttpMethod.PUT)
