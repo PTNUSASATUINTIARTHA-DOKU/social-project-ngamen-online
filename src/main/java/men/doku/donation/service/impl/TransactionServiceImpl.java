@@ -214,8 +214,10 @@ public class TransactionServiceImpl implements TransactionService {
      */
     @Override
     @Transactional(readOnly = true)
-    public List<Transaction> findAllSuccessByPaymentDate(LocalDate date) {
-        return transactionRepository.findAllSuccessByPaymentDate(date.atStartOfDay(ZoneId.of("Asia/Jakarta")).toInstant(), date.plusDays(1).atStartOfDay(ZoneId.of("Asia/Jakarta")).toInstant());
+    public List<Transaction> findAllSuccessByPaymentDate(LocalDate localDate) {
+        Instant start = localDate.atStartOfDay(ZoneId.of("Asia/Jakarta")).toInstant();
+        Instant end = localDate.plusDays(1).atStartOfDay(ZoneId.of("Asia/Jakarta")).toInstant();
+        return transactionRepository.findAllSuccessByPaymentDate(start, end);
     }
 }
 

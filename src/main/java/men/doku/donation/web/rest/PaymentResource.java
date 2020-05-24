@@ -1,6 +1,8 @@
 package men.doku.donation.web.rest;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -134,30 +136,32 @@ public class PaymentResource {
     }
 
     /**
-     * {@code GET  /payments/reports } : get daily report data.
+     * {@code GET  /payments/reports/{localDate} : get daily report data.
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list
      *         of Daily Reports in body.
      */
-    @GetMapping(value ="/payments/reports/{dayBefore}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value ="/payments/reports/{localDate}", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
-    public ResponseEntity<Map<Organizer, List<DailyReportSuccessDTO>>> generateDailyReportData(@PathVariable Integer dayBefore) {
-        log.debug("REST request to create daily report");
-        Map<Organizer, List<DailyReportSuccessDTO>> report = dailyReportService.generateData(dayBefore);
+    public ResponseEntity<Map<Organizer, List<DailyReportSuccessDTO>>> generateDailyReportData(@PathVariable CharSequence localDate) {
+        log.debug("REST request to create daily report for date {}", localDate);
+        LocalDate date = LocalDate.parse(localDate, DateTimeFormatter.ofPattern("yyyyMMdd"));
+        Map<Organizer, List<DailyReportSuccessDTO>> report = dailyReportService.generateData(date);
         return ResponseEntity.ok().body(report);
     }
 
     /**
-     * {@code GET  /payments/reports/{dayBefore}/email } : trigger daily report send email.
+     * {@code GET  /payments/reports/{localDate}/email } : trigger daily report send email.
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)}.
      * @throws IOException
      */
-    @GetMapping(value = "/payments/reports/{dayBefore}/email", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    @GetMapping(value = "/payments/reports/{localDate}/email", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
-    public ResponseEntity<Object> emailDailyReport(@PathVariable Integer dayBefore) throws IOException {
-        log.debug("REST request to trigger daily report email");
-        dailyReportService.generateEmail(dayBefore);
+    public ResponseEntity<Object> emailDailyReport(@PathVariable String localDate) throws IOException {
+        log.debug("REST request to trigger daily report email for date {}", localDate);
+        LocalDate date = LocalDate.parse(localDate, DateTimeFormatter.ofPattern("yyyyMMdd"));
+        dailyReportService.generateEmail(date);
         return ResponseEntity.ok().headers(HeaderUtil.createAlert(applicationName, "Daily ", "Report")).body("Daily Report sent");
     }
 }

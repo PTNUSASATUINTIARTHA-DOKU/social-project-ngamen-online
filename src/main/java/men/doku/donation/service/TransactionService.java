@@ -66,8 +66,8 @@ public interface TransactionService {
      * 
      * Find all success transaction for daily report
      * 
-     * @param date
+     * @param localDate
      * @return
      */
-    List<Transaction> findAllSuccessByPaymentDate(LocalDate date);
+    List<Transaction> findAllSuccessByPaymentDate(LocalDate localDate);
 }

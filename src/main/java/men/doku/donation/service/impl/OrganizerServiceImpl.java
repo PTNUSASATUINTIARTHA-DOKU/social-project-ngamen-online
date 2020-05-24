@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import men.doku.donation.config.Constants;
 import men.doku.donation.domain.Organizer;
+import men.doku.donation.domain.User;
 import men.doku.donation.domain.enumeration.IsActiveStatus;
 import men.doku.donation.repository.OrganizerRepository;
 import men.doku.donation.security.SecurityUtils;
@@ -135,6 +136,20 @@ public class OrganizerServiceImpl implements OrganizerService {
         final String login = SecurityUtils.getCurrentUserLogin().get();
         log.debug("Request by {} to get Organizer : {}", login, id);
         return organizerRepository.findOneWithEagerRelationships(id);
+    }
+
+    /**
+     * Find all users' email
+     * 
+     * @param id
+     * @return
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public List<User> findUserEmails(Long id) {
+        final String login = SecurityUtils.getCurrentUserLogin().get();
+        log.debug("Request by {} to get find user emails : {}", login, id);
+        return organizerRepository.findUserEmails(id);
     }
 
     /**

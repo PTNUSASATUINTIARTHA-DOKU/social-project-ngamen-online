@@ -1,12 +1,13 @@
 package men.doku.donation.service;
 
-import men.doku.donation.domain.Organizer;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.List;
-import java.util.Optional;
+import men.doku.donation.domain.Organizer;
+import men.doku.donation.domain.User;
 
 /**
  * Service Interface for managing {@link Organizer}.
@@ -51,6 +52,14 @@ public interface OrganizerService {
      * @return the entity.
      */
     Optional<Organizer> findOne(Long id);
+
+    /**
+     * Find all users' email
+     * 
+     * @param id
+     * @return
+     */
+    public List<User> findUserEmails(Long id);
 
     /**
      * Delete the "id" organizer.
