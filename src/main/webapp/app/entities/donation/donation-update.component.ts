@@ -1,5 +1,5 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, HostListener } from '@angular/core';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -21,6 +21,7 @@ export class DonationUpdateComponent implements OnInit, OnDestroy {
   generatedFileName = '';
   subscription: Subscription = new Subscription();
   donation: Donation = {};
+  windowScrolled: boolean | undefined;
 
   editForm = this.fb.group({
     id: [],
@@ -45,6 +46,21 @@ export class DonationUpdateComponent implements OnInit, OnDestroy {
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
   ) {}
+
+  @HostListener('window:scroll', [])
+  onWindowScroll(): void {
+    if (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop > 20) {
+      this.windowScrolled = true;
+    } else if ((this.windowScrolled && window.pageYOffset) || document.documentElement.scrollTop || document.body.scrollTop < 10) {
+      this.windowScrolled = false;
+    }
+  }
+  scrollToTop(): void {
+    const currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
+    if (currentScroll > 0) {
+      window.scrollTo(0, currentScroll - currentScroll / 0);
+    }
+  }
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ donation }) => {
