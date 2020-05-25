@@ -126,16 +126,28 @@ application:
   mib-url: http://localhost:8080/api/payments/simulator
   report:
     folder: reports/
-  gmail:
-    active: false
-  recaptcha:
-    active: false
-    simulator-result: 1F
+  google:
+    oauth:
+      active: false
+    gmail:
+      active: false
+      username: admin-dev@saweran.charity
+      host: localhost
+      port: 9001
+      credential-folder: gmail/
+    recaptcha:
+      active: false
+      simulator-result: 1F
   aws:
-    active: false
+    secret:
+      active: false
+      gmail: dev/saweranCharity/googleApi
+      recaptcha: dev/saweranCharity/recaptchaKey
+      oauth: dev/saweranCharity/googleOauth
     s3:
+      active: false
       bucket:
-        upload: saweran-upload
-        cdn: saweran-cdn
+        upload: saweran-upload-dev
+        cdn: saweran-cdn-dev
       duration-upload: 3
       duration-download: 1

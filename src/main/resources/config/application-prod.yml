@@ -137,22 +137,26 @@ application:
   mib-url: https://pay.doku.com/MIB/ServiceRequestPayment
   report:
     folder: /var/log/tomcat8/reports/
-  gmail:
-    active: true
-    username: admin@saweran.charity
-    api:
+  google:
+    oauth:
+      active: true
+    gmail:
+      active: true
+      username: admin@saweran.charity
       host: www.saweran.charity
       port: 34793
       credential-folder: /var/lib/tomcat8/webapps/ROOT/WEB-INF/classes/config/gmail/
-  recaptcha:
-    active: true
-    verify-url: https://www.google.com/recaptcha/api/siteverify
+    recaptcha:
+      active: true
+      verify-url: https://www.google.com/recaptcha/api/siteverify
   aws:
-    active: true
     secret:
+      active: true
       gmail: prod/saweranCharity/googleApi
       recaptcha: prod/saweranCharity/recaptchaKey
+      oauth: prod/saweranCharity/googleOauth
     s3:
+      active: true
       bucket:
         upload: saweran-upload
         cdn: saweran-cdn

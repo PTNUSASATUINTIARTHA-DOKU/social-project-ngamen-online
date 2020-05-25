@@ -167,7 +167,7 @@ public class AccountResource {
         log.debug("captchaToken: {}", captchaToken);
         Optional<Float> score = recaptchaService.checkRecaptcha(captchaToken, servletRequest, "reset_password");
         Optional<User> user = userService.requestPasswordReset(mail);
-        if (user.isPresent() && score.isPresent() && score.get() > applicationProperties.getRecaptcha().getThreshold().getResetPassword()) {
+        if (user.isPresent() && score.isPresent() && score.get() > applicationProperties.getGoogle().getRecaptcha().getThreshold().getResetPassword()) {
             mailService.sendPasswordResetMail(user.get());
         } else {
             // Pretend the request has been successful to prevent checking which emails really exist

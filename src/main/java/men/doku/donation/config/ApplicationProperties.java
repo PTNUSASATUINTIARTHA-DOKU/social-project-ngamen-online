@@ -15,8 +15,7 @@ public class ApplicationProperties {
     private String csp = new String();
     private String mibUrl = new String();
     private Report report = new Report();
-    private Gmail gmail = new Gmail();
-    private Recaptcha recaptcha = new Recaptcha();
+    private Google google = new Google();
     private Aws aws = new Aws();
 
     public String getName() {
@@ -51,20 +50,12 @@ public class ApplicationProperties {
         this.report = report;
     }
 
-    public Gmail getGmail() {
-        return gmail;
+    public Google getGoogle() {
+        return google;
     }
 
-    public void setGmail(Gmail gmail) {
-        this.gmail = gmail;
-    }
-
-    public Recaptcha getRecaptcha() {
-        return recaptcha;
-    }
-
-    public void setRecaptcha(Recaptcha recaptcha) {
-        this.recaptcha = recaptcha;
+    public void setGoogle(Google google) {
+        this.google = google;
     }
 
     public Aws getAws() {
@@ -73,14 +64,58 @@ public class ApplicationProperties {
 
     public void setAws(Aws aws) {
         this.aws = aws;
-    }    
+    }
+
+    public static class Google {
+        private Oauth oauth = new Oauth();
+        private Gmail gmail = new Gmail();
+        private Recaptcha recaptcha = new Recaptcha();
+
+        public Oauth getOauth() {
+            return oauth;
+        }
+
+        public void setOauth(Oauth oauth) {
+            this.oauth = oauth;
+        }
+
+        public Gmail getGmail() {
+            return gmail;
+        }
+
+        public void setGmail(Gmail gmail) {
+            this.gmail = gmail;
+        }
+
+        public Recaptcha getRecaptcha() {
+            return recaptcha;
+        }
+
+        public void setRecaptcha(Recaptcha recaptcha) {
+            this.recaptcha = recaptcha;
+        }
+    }
+
+    public static class Oauth {
+        private Boolean active = false;
+
+        public Boolean getActive() {
+            return active;
+        }
+
+        public void setActive(Boolean active) {
+            this.active = active;
+        }
+    }
 
     public static class Gmail {
 
         private Boolean active = false;
         private String username = new String();
-        private Api api = new Api();
-    
+        private String host = new String();
+        private Integer port = 0;
+        private String credentialFolder = new String();
+
         public Boolean getActive() {
             return active;
         }
@@ -92,30 +127,15 @@ public class ApplicationProperties {
         public String getUsername() {
             return username;
         }
-    
+
         public void setUsername(String username) {
             this.username = username;
         }
-    
-        public Api getApi() {
-            return api;
-        }
-    
-        public void setApi(Api api) {
-            this.api = api;
-        }
-    }  
-    
-    public static class Api {
-
-        private String host = new String();
-        private Integer port = 0;
-        private String credentialFolder = new String();
 
         public String getCredentialFolder() {
             return credentialFolder;
         }
-    
+
         public void setCredentialFolder(String credentialFolder) {
             this.credentialFolder = credentialFolder;
         }
@@ -232,18 +252,9 @@ public class ApplicationProperties {
 
     public static class Aws {
 
-        private Boolean active = false;
         private String region = new String();
         private Secret secret = new Secret();
         private S3 s3 = new S3();
-
-        public Boolean getActive() {
-            return active;
-        }
-
-        public void setActive(Boolean active) {
-            this.active = active;
-        }
 
         public String getRegion() {
             return region;
@@ -272,8 +283,18 @@ public class ApplicationProperties {
 
     public static class Secret {
 
+        private Boolean active = false;
         private String gmail = new String();
         private String recaptcha = new String();
+        private String oauth = new String();
+
+        public Boolean getActive() {
+            return active;
+        }
+
+        public void setActive(Boolean active) {
+            this.active = active;
+        }
 
         public String getGmail() {
             return gmail;
@@ -290,13 +311,30 @@ public class ApplicationProperties {
         public void setRecaptcha(String recaptcha) {
             this.recaptcha = recaptcha;
         }
+
+        public String getOauth() {
+            return oauth;
+        }
+
+        public void setOauth(String oauth) {
+            this.oauth = oauth;
+        }
     }
 
     public static class S3 {
 
+        private Boolean active = false;
         private Bucket bucket = new Bucket();
         private Integer durationUpload = 0;
         private Integer durationDownload = 0;
+
+        public Boolean getActive() {
+            return active;
+        }
+
+        public void setActive(Boolean active) {
+            this.active = active;
+        }
 
         public Bucket getBucket() {
             return bucket;

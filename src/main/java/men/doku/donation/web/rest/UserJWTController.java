@@ -47,7 +47,7 @@ public class UserJWTController {
     public ResponseEntity<JWTToken> authorize(@Valid @RequestBody LoginVM loginVM, HttpServletRequest request) {
 
         Float score = recaptchaService.checkRecaptcha(loginVM.getCaptchaToken(), request, "login").get();
-        if (score < applicationProperties.getRecaptcha().getThreshold().getLogin()) {
+        if (score < applicationProperties.getGoogle().getRecaptcha().getThreshold().getLogin()) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 

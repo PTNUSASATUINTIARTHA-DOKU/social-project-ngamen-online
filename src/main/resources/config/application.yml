@@ -173,10 +173,11 @@ application:
   csp: default-src 'self'; frame-src 'self' data` https`//www.google.com/ https`//www.gstatic.com/ https`//optimize.google.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https`//www.googletagmanager.com/ https`//www.google.com/ https`//optimize.google.com/ https`//www.gstatic.com/ https`//www.google-analytics.com/ https`//tagmanager.google.com/; style-src 'self' 'unsafe-inline' https`//tagmanager.google.com/ https`//fonts.googleapis.com/ https`//optimize.google.com; img-src 'self' data` https`; font-src 'self' data` https`; object-src 'none'; connect-src https`; require-trusted-types-for 'script'; base-uri 'self';
   report:
     basename: Daily_Report_
-  recaptcha:
-    threshold:
-      payment: -0.1F
-      login: -0.1F
-      reset-password: -0.1F
+  google:
+    recaptcha:
+      threshold:
+        payment: -0.1F
+        login: -0.1F
+        reset-password: -0.1F
   aws:
     region: ap-southeast-1

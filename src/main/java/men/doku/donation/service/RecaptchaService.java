@@ -57,7 +57,7 @@ public class RecaptchaService {
     }
 
     public Optional<Float> checkRecaptcha(String token, HttpServletRequest servletRequest, String action) {
-        if (applicationProperties.getRecaptcha().getActive()) {
+        if (applicationProperties.getGoogle().getRecaptcha().getActive()) {
             String remoteIp = HttpReqRespUtils.getClientIpAddress(servletRequest);
             log.debug("TOKEN {}", token);
             log.debug("REMOTE IP {}", remoteIp);
@@ -65,7 +65,7 @@ public class RecaptchaService {
             if (recaptchaKey.isPresent()) {
                 RecaptchaVerifyRequestDTO request = new RecaptchaVerifyRequestDTO(recaptchaKey.get(), token, remoteIp);
                 log.debug("REQUEST {}", request);
-                String url = applicationProperties.getRecaptcha().getVerifyUrl();
+                String url = applicationProperties.getGoogle().getRecaptcha().getVerifyUrl();
                 log.debug("URL {}", url);
                 HttpHeaders headers = new HttpHeaders();
                 headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
@@ -94,7 +94,7 @@ public class RecaptchaService {
                 return Optional.empty();
             }
         } else {
-            return Optional.of(applicationProperties.getRecaptcha().getSimulatorResult());
+            return Optional.of(applicationProperties.getGoogle().getRecaptcha().getSimulatorResult());
         }
     }
 
