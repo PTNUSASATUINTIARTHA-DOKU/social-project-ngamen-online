@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.security.GeneralSecurityException;
 import java.util.List;
 import java.util.Locale;
 
@@ -73,19 +74,19 @@ public class MailService {
             message.setSubject(subject);
             message.setText(content, isHtml);
             if (isMultipart) message.addAttachment(attachmentName, new File(attachmentPath));
-            if (gmailService.getGmail().isPresent()) {
+            if (gmailService.isAvailable()) {
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 mimeMessage.writeTo(baos);
                 byte[] bytes = baos.toByteArray();
                 String encodedEmail = Base64.encodeBase64URLSafeString(bytes);
                 Message gmailMessage = new Message();
                 gmailMessage.setRaw(encodedEmail);
-                gmailMessage = gmailService.getGmail().get().users().messages().send("me", gmailMessage).execute();
+                gmailMessage = gmailService.send(gmailMessage);
             } else {
                 javaMailSender.send(mimeMessage);
             }
             log.debug("Email sent to {} with subject {} ", to, subject);
-        }  catch (MailException | MessagingException | IOException e ) {
+        }  catch (MailException | MessagingException | IOException | GeneralSecurityException e) {
             log.warn("Email could not be sent to user '{}'", to, e);
         }
     }

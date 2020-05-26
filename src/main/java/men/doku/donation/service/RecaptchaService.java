@@ -1,21 +1,11 @@
 package men.doku.donation.service;
 
 import java.time.Duration;
-import java.util.Base64;
 import java.util.Collections;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.amazonaws.services.secretsmanager.AWSSecretsManager;
-import com.amazonaws.services.secretsmanager.AWSSecretsManagerClientBuilder;
-import com.amazonaws.services.secretsmanager.model.DecryptionFailureException;
-import com.amazonaws.services.secretsmanager.model.GetSecretValueRequest;
-import com.amazonaws.services.secretsmanager.model.GetSecretValueResult;
-import com.amazonaws.services.secretsmanager.model.InternalServiceErrorException;
-import com.amazonaws.services.secretsmanager.model.InvalidParameterException;
-import com.amazonaws.services.secretsmanager.model.InvalidRequestException;
-import com.amazonaws.services.secretsmanager.model.ResourceNotFoundException;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -47,13 +37,15 @@ public class RecaptchaService {
     private final ApplicationProperties applicationProperties;
     private final RestTemplate restTemplate;
     private final DTOMapper dtoMapper;
+    private final AwsSecretService awsSecretService;
 
     public RecaptchaService(ApplicationProperties applicationProperties, RestTemplateBuilder restTemplateBuilder,
-            DTOMapper dtoMapper) {
+            DTOMapper dtoMapper, AwsSecretService awsSecretService) {
         this.applicationProperties = applicationProperties;
         this.restTemplate = restTemplateBuilder.setConnectTimeout(Duration.ofSeconds(30))
                 .setReadTimeout(Duration.ofSeconds(30)).build();
         this.dtoMapper = dtoMapper;
+        this.awsSecretService = awsSecretService;
     }
 
     public Optional<Float> checkRecaptcha(String token, HttpServletRequest servletRequest, String action) {
@@ -61,9 +53,17 @@ public class RecaptchaService {
             String remoteIp = HttpReqRespUtils.getClientIpAddress(servletRequest);
             log.debug("TOKEN {}", token);
             log.debug("REMOTE IP {}", remoteIp);
-            Optional<String> recaptchaKey = getKey();
-            if (recaptchaKey.isPresent()) {
-                RecaptchaVerifyRequestDTO request = new RecaptchaVerifyRequestDTO(recaptchaKey.get(), token, remoteIp);
+            String recaptchaSecret = awsSecretService.getSecret(applicationProperties.getAws().getSecret().getRecaptcha());
+            ObjectMapper objectMapper = new ObjectMapper();
+            RecaptchaKey recaptcha = new RecaptchaKey();
+            try {
+                recaptcha = objectMapper.readValue(recaptchaSecret, RecaptchaKey.class);
+            } catch (JsonProcessingException e) {
+                log.error("Unable to parse Recaptcha Key from AWS {} ", e);
+                Optional.empty();
+            }    
+            if (recaptcha != null) {
+                RecaptchaVerifyRequestDTO request = new RecaptchaVerifyRequestDTO(recaptcha.getKey(), token, remoteIp);
                 log.debug("REQUEST {}", request);
                 String url = applicationProperties.getGoogle().getRecaptcha().getVerifyUrl();
                 log.debug("URL {}", url);
@@ -95,43 +95,6 @@ public class RecaptchaService {
             }
         } else {
             return Optional.of(applicationProperties.getGoogle().getRecaptcha().getSimulatorResult());
-        }
-    }
-
-    private Optional<String> getKey() {
-        AWSSecretsManager client = AWSSecretsManagerClientBuilder.standard()
-                .withRegion(applicationProperties.getAws().getRegion()).build();
-        GetSecretValueRequest getSecretValueRequest = new GetSecretValueRequest()
-                .withSecretId(applicationProperties.getAws().getSecret().getRecaptcha());
-        GetSecretValueResult getSecretValueResult = null;
-
-        try {
-            getSecretValueResult = client.getSecretValue(getSecretValueRequest);
-        } catch (DecryptionFailureException e) {
-            throw e;
-        } catch (InternalServiceErrorException e) {
-            throw e;
-        } catch (InvalidParameterException e) {
-            throw e;
-        } catch (InvalidRequestException e) {
-            throw e;
-        } catch (ResourceNotFoundException e) {
-            throw e;
-        }
-        String secretString = "";
-        if (getSecretValueResult.getSecretString() != null) {
-            secretString = getSecretValueResult.getSecretString();
-        } else {
-            secretString = new String(Base64.getDecoder().decode(getSecretValueResult.getSecretBinary()).array());
-        }
-        ObjectMapper objectMapper = new ObjectMapper();
-        RecaptchaKey recaptcha;
-        try {
-            recaptcha = objectMapper.readValue(secretString, RecaptchaKey.class);
-            return Optional.of(recaptcha.getKey());
-        } catch (JsonProcessingException e) {
-            log.error("Unable to parse Recaptcha Key from AWS {} ", e);
-            return Optional.empty();
         }
     }
 }

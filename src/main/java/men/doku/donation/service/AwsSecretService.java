@@ -1,6 +1,8 @@
 package men.doku.donation.service;
 
 import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.amazonaws.services.secretsmanager.AWSSecretsManager;
 import com.amazonaws.services.secretsmanager.AWSSecretsManagerClientBuilder;
@@ -25,6 +27,7 @@ public class AwsSecretService {
     private final Logger log = LoggerFactory.getLogger(AwsSecretService.class);
 
     private AWSSecretsManager awsSecretsManager;
+    private Map<String, String> secrets = new HashMap<>();
 
     public AwsSecretService(ApplicationProperties applicationProperties) {
         awsSecretsManager = AWSSecretsManagerClientBuilder.standard()
@@ -33,6 +36,12 @@ public class AwsSecretService {
 
     public String getSecret(String secretId) {
         log.debug("Request AWS Get Secret for id {}", secretId);
+
+        if (secrets.get(secretId) != null) {
+            log.debug("Local Secret exists, no need to go to AwsSecretManager");
+            return secrets.get(secretId);
+        }
+
         GetSecretValueRequest getSecretValueRequest = new GetSecretValueRequest().withSecretId(secretId);
         GetSecretValueResult getSecretValueResult = null;
 
@@ -49,11 +58,16 @@ public class AwsSecretService {
         } catch (ResourceNotFoundException e) {
             throw e;
         }
+
+        String result = "";
         if (getSecretValueResult.getSecretString() != null) {
-            return getSecretValueResult.getSecretString();
+            result = getSecretValueResult.getSecretString();
         } else {
-            return new String(Base64.getDecoder().decode(getSecretValueResult.getSecretBinary()).array());
+            result = new String(Base64.getDecoder().decode(getSecretValueResult.getSecretBinary()).array());
         }
+
+        secrets.put(secretId, result);
+        return result;
     }
 
     public void setSecret(String secretId, String secret) {
@@ -61,5 +75,6 @@ public class AwsSecretService {
         PutSecretValueRequest putSecretValueRequest = new PutSecretValueRequest().withSecretId(secretId)
                 .withSecretString(secret);
         awsSecretsManager.putSecretValue(putSecretValueRequest);
+        secrets.put(secretId, secret);
     }
 }
