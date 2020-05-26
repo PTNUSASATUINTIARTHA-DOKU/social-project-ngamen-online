@@ -147,8 +147,6 @@ public class OrganizerServiceImpl implements OrganizerService {
     @Override
     @Transactional(readOnly = true)
     public List<User> findUserEmails(Long id) {
-        final String login = SecurityUtils.getCurrentUserLogin().get();
-        log.debug("Request by {} to get find user emails : {}", login, id);
         return organizerRepository.findUserEmails(id);
     }
 
