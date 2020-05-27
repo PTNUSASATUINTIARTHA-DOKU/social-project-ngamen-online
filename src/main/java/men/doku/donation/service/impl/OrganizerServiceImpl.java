@@ -52,7 +52,7 @@ public class OrganizerServiceImpl implements OrganizerService {
     public Organizer save(Organizer organizer) {
         final String login = SecurityUtils.getCurrentUserLogin().get();
         log.debug("Request by {} to save Organizer : {}", login, organizer);
-        if (!organizer.getLogo().startsWith("https://"))
+        if (organizer.getLogo() != null && !organizer.getLogo().startsWith("https://"))
             organizer.setLogo(this.awsStorageService.copyFromUploadToCdn(organizer.getLogo()));
         if (!SecurityUtils.isCurrentUserInRole(Constants.ADMIN)) {
             if (organizer.getId() != null) {

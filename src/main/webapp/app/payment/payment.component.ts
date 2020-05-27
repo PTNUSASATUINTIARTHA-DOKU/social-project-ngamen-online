@@ -123,7 +123,7 @@ export class PaymentComponent implements OnInit {
         if (result.body) this.onSaveSuccess(result.body);
         else this.onSaveError(transaction);
       },
-      () => (this.isSaving = false),
+      () => this.onSaveError(transaction),
       () => {
         dataLayer.push({
           event: 'Finish Payment OVO',
