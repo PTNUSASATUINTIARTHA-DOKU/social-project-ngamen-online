@@ -117,20 +117,16 @@ export class PaymentComponent implements OnInit {
     this.isSaving = true;
     this.isChecking = false;
     this.isCounting = true;
-    const transaction = this.createPayment();
-    const sub = this.paymentService.initPayment(transaction).subscribe(
+    this.createPayment();
+    const sub = this.paymentService.initPayment(this.transaction).subscribe(
       result => {
-        if (result.body) this.onSaveSuccess(result.body);
-        else this.onSaveError(transaction);
+        if (result.body) {
+          this.transaction = result.body;
+          this.onSaveSuccess(this.transaction);
+        } else this.onSaveError(this.transaction);
       },
-      () => this.onSaveError(transaction),
-      () => {
-        dataLayer.push({
-          event: 'Finish Payment OVO',
-          timeToFinishPayment: new Date().getTime() - submitTime,
-          donationAmount: this.transaction.amount
-        });
-      }
+      () => this.onSaveError(this.transaction),
+      () => this.finishPaymentOvo(new Date().getTime() - submitTime)
     );
     this.count = timeCouting;
     this.counter$ = timer(0, 1000).pipe(
@@ -146,7 +142,8 @@ export class PaymentComponent implements OnInit {
             this.isChecking = false;
             this.isSaving = false;
             sub.unsubscribe();
-            this.onSaveError(transaction);
+            this.finishPaymentOvo(70000);
+            this.onSaveError(this.transaction);
           }
         }
         return this.count;
@@ -154,7 +151,7 @@ export class PaymentComponent implements OnInit {
     );
   }
 
-  private createPayment(): ITransaction {
+  private createPayment(): void {
     const uuids = uuid();
     this.transaction = new Transaction(
       undefined,
@@ -183,7 +180,6 @@ export class PaymentComponent implements OnInit {
       TransactionStatus.FAILED,
       this.donation
     );
-    return this.transaction;
   }
 
   private generateBasket(): string {
@@ -212,5 +208,14 @@ export class PaymentComponent implements OnInit {
     this.isSaving = false;
     this.paymentService.paymentResult(transaction);
     this.router.navigate(['../' + transaction.invoiceNumber + '/result'], { relativeTo: this.route });
+  }
+
+  private finishPaymentOvo(time: number): void {
+    dataLayer.push({
+      event: 'Finish Payment OVO',
+      timeToFinishPayment: time,
+      donationAmount: this.transaction.amount,
+      transactionStatus: this.transaction.status
+    });
   }
 }
