@@ -55,7 +55,7 @@ public class DonationServiceImpl implements DonationService {
         final String login = SecurityUtils.getCurrentUserLogin().get();
         log.debug("Request by {} to save Donation : {}", login, donation);
         Organizer organizer = organizerService.findOne(donation.getOrganizer().getId()).get();
-        if (!donation.getLogo().isEmpty() && !donation.getLogo().startsWith("https://"))
+        if (donation.getLogo() != null && !donation.getLogo().startsWith("https://"))
             donation.setLogo(this.awsStorageService.copyFromUploadToCdn(donation.getLogo()));
         donation.setLastUpdatedAt(Instant.now());
         donation.setLastUpdatedBy(login);

@@ -1,4 +1,4 @@
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SERVER_API_URL } from 'app/app.constants';
 import { IDonation } from 'app/shared/model/donation.model';
@@ -22,7 +22,10 @@ export class PaymentService {
   }
 
   initPayment(transaction: Transaction): Observable<HttpResponse<ITransaction>> {
-    return this.http.post<ITransaction>(`${this.resourceUrl}`, transaction, { observe: 'response' });
+    return this.http.post<ITransaction>(`${this.resourceUrl}`, transaction, {
+      observe: 'response',
+      headers: new HttpHeaders({ timeout: `${90000}` })
+    });
   }
 
   checkRecaptcha(token: string): Observable<HttpResponse<Boolean>> {

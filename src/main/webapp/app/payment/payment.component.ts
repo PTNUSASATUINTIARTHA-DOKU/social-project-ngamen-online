@@ -6,13 +6,13 @@ import { PaymentChannel } from 'app/shared/model/enumerations/payment-channel.mo
 import { Transaction, ITransaction } from 'app/shared/model/transaction.model';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { Observable, timer } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { map, take, finalize } from 'rxjs/operators';
 import { v4 as uuid } from 'uuid';
 import { PaymentService } from './payment.service';
 import { Donation } from 'app/shared/model/donation.model';
 import { TransactionStatus } from 'app/shared/model/enumerations/transaction-status.model';
 import * as moment from 'moment';
-import { PATTERN_WITHOUT_SYMBOL } from 'app/shared/constants/pattern.constants';
+import { PATTERN_WITHOUT_SYMBOL, PATTERN_MOBILE_PHONE } from 'app/shared/constants/pattern.constants';
 import { IsActiveStatus } from 'app/shared/model/enumerations/is-active-status.model';
 
 declare let dataLayer: any[];
@@ -38,10 +38,16 @@ export class PaymentComponent implements OnInit {
   startTime: number;
 
   paymentForm = this.fb.group({
-    donor: [null, [Validators.required, Validators.maxLength(30)]],
-    donorAnon: [null, []],
-    amount: [null, [Validators.required, Validators.min(10000), Validators.max(10000000)]],
-    phone: [null, [Validators.required, Validators.maxLength(13), Validators.minLength(10)]],
+    donor: [null, { validators: [Validators.required, Validators.maxLength(30)], updateOn: 'blur' }],
+    donorAnon: [null, { updateOn: 'change' }],
+    amount: [null, { validators: [Validators.required, Validators.min(10000), Validators.max(10000000)], updateOn: 'blur' }],
+    phone: [
+      null,
+      {
+        validators: [Validators.required, Validators.maxLength(13), Validators.minLength(10), Validators.pattern(PATTERN_MOBILE_PHONE)],
+        updateOn: 'blur'
+      }
+    ],
     greToken: [null, [Validators.required]]
   });
 
@@ -95,6 +101,7 @@ export class PaymentComponent implements OnInit {
     } else {
       this.paymentForm.get('donor')?.enable();
       this.paymentForm.get('donor')?.setValidators([Validators.required, Validators.maxLength(30)]);
+      this.paymentForm.get('donor')?.updateValueAndValidity();
     }
   }
 
@@ -118,16 +125,20 @@ export class PaymentComponent implements OnInit {
     this.isChecking = false;
     this.isCounting = true;
     this.createPayment();
-    const sub = this.paymentService.initPayment(this.transaction).subscribe(
-      result => {
-        if (result.body) {
-          this.transaction = result.body;
-          this.onSaveSuccess(this.transaction);
-        } else this.onSaveError(this.transaction);
-      },
-      () => this.onSaveError(this.transaction),
-      () => this.finishPaymentOvo(new Date().getTime() - submitTime)
-    );
+    const sub = this.paymentService
+      .initPayment(this.transaction)
+      .pipe(finalize(() => this.finishPaymentOvo(new Date().getTime() - submitTime)))
+      .subscribe(
+        result => {
+          if (result.body) {
+            this.transaction = result.body;
+            this.onSaveSuccess(this.transaction);
+          } else {
+            this.onSaveError(this.transaction);
+          }
+        },
+        () => this.onSaveError(this.transaction)
+      );
     this.count = timeCouting;
     this.counter$ = timer(0, 1000).pipe(
       take(timeChecking),
@@ -141,8 +152,8 @@ export class PaymentComponent implements OnInit {
           } else {
             this.isChecking = false;
             this.isSaving = false;
-            sub.unsubscribe();
             this.finishPaymentOvo(70000);
+            sub.unsubscribe();
             this.onSaveError(this.transaction);
           }
         }

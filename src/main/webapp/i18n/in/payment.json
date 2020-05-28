@@ -4,9 +4,7 @@
     "description": "Donasi Anda akan disalurkan kepada",
     "powered": "Didukung oleh",
     "error": {
-      "url": "Halaman pembayaran tidak ditemukan",
-      "min_amount": "Minimum donasi sebesar Rp 10.000",
-      "max_amount": "Maksimum donasi sebesar Rp 10.000.000"
+      "url": "Halaman pembayaran tidak ditemukan."
     },
     "section": {
       "info": {
@@ -30,10 +28,15 @@
         },
         "button": "Donasi Sekarang",
         "validation": {
-          "required": "Masukkan nama Anda. Untuk donasi anomim, centang \"Saya ingin donasi secara anonim\" di atas",
-          "maxlength": "Silakan singkat nama Anda karena maksimal adalah 30 karakter",
-          "phonemaxlength": "Nomor telepon Anda lebih dari 13 karakter",
-          "phoneminlength": "Nomor telepon Anda kurang dari 10 karakter"
+          "name_required": "Masukkan nama Anda. Untuk donasi anomim, centang \"Saya ingin donasi secara anonim\" di atas.",
+          "name_maxlength": "Silakan singkat nama Anda karena maksimal adalah 30 karakter.",
+          "phone_required": "Masukkan nomor telepon Anda.",
+          "phone_max_length": "Nomor telepon Anda lebih dari 13 karakter.",
+          "phone_min_length": "Nomor telepon Anda kurang dari 10 karakter.",
+          "phone_start_with_08": "Nomor telepon Anda tidak valid, wajib diisi angka dan diawali 08.",
+          "min_amount": "Minimum donasi sebesar Rp 10.000.",
+          "max_amount": "Maksimum donasi sebesar Rp 10.000.000.",
+          "amount_required": "Masukkan nominal donasi Anda."
         }
       }
     },
@@ -73,7 +76,7 @@
       "message": "Informasi Pembayaran"
     },
     "recaptcha": {
-      "checking": "Mohon menunggu, sistem sedang validasi ReCaptcha V3"
+      "checking": "Mohon menunggu, sistem sedang validasi ReCaptcha V3."
     },
     "disabled": {
       "head": "Donasi ini diblokir!",
