@@ -183,7 +183,8 @@
                                 placeholder="10.000" name="amount" id="field_amount" currencyMask
                                 formControlName="amount"
                                 [options]="{ prefix: '', thousands: '.', decimal: ',', precision: 0, align: 'left' }"
-                                autocomplete="off" />
+                                autocomplete="off" 
+                                (blur)="validateAmountMin($event)"/>
                         </div>
                         <div *ngIf="paymentForm.get('amount')!.invalid && (paymentForm.get('amount')!.dirty || paymentForm.get('amount')!.touched)">
                             <small id="error_donation_min"class="text-xs text-red-500" *ngIf="paymentForm.get('amount')?.errors?.min"
@@ -227,7 +228,7 @@
                                         <img src="../../content/images/payment/indonesia-flag.svg" alt="" class="w-4" />
                                     </span>
                                 </div>
-                                <input type="text" class="flex-shrink flex-grow flex-auto leading-normal w-px flex-1 text-sm bg-gray-200 py-2 px-3 rounded rounded-l-none space-y-0 focus:outline-none focus:shadow-outline h-10" placeholder="081212121212" name="phone" id="field_phone" formControlName="phone" />
+                                <input type="text" (blur)="validatePhoneMinLength($event)" class="flex-shrink flex-grow flex-auto leading-normal w-px flex-1 text-sm bg-gray-200 py-2 px-3 rounded rounded-l-none space-y-0 focus:outline-none focus:shadow-outline h-10" placeholder="081212121212" name="phone" id="field_phone" formControlName="phone" />
                             </div>
                             <div *ngIf="paymentForm.get('phone')!.invalid && (paymentForm.get('phone')!.dirty || paymentForm.get('phone')!.touched)">
                                 <small id="error_phone_number_too_long" class="text-xs text-red-500"
