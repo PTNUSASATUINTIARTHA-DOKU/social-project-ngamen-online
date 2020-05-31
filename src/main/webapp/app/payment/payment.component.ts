@@ -38,14 +38,14 @@ export class PaymentComponent implements OnInit {
   startTime: number;
 
   paymentForm = this.fb.group({
-    donor: [null, { validators: [Validators.required, Validators.maxLength(30)], updateOn: 'blur' }],
+    donor: [null, { validators: [Validators.required, Validators.maxLength(30)], updateOn: 'change' }],
     donorAnon: [null, { updateOn: 'change' }],
-    amount: [null, { validators: [Validators.required, Validators.min(10000), Validators.max(10000000)], updateOn: 'blur' }],
+    amount: [null, { validators: [Validators.required, Validators.max(10000000)], updateOn: 'change' }],
     phone: [
       null,
       {
-        validators: [Validators.required, Validators.maxLength(13), Validators.minLength(10), Validators.pattern(PATTERN_MOBILE_PHONE)],
-        updateOn: 'blur'
+        validators: [Validators.required, Validators.maxLength(13), Validators.pattern(PATTERN_MOBILE_PHONE)],
+        updateOn: 'change'
       }
     ],
     greToken: [null, [Validators.required]]
@@ -103,6 +103,16 @@ export class PaymentComponent implements OnInit {
       this.paymentForm.get('donor')?.setValidators([Validators.required, Validators.maxLength(30)]);
       this.paymentForm.get('donor')?.updateValueAndValidity();
     }
+  }
+
+  validateAmountMin(e: Event): void {
+    const amount = Number((e.target as HTMLInputElement).value.replace('.', ''));
+    if (amount < 10000) this.paymentForm.get('amount')?.setErrors({ min: { actual: amount, min: 10000 } });
+  }
+
+  validatePhoneMinLength(e: Event): void {
+    const phone = (e.target as HTMLInputElement).value;
+    if (phone.length < 10) this.paymentForm.get('phone')?.setErrors({ minlength: { actualLength: phone.length, requiredLength: 10 } });
   }
 
   checkRecaptcha(paymentComponent: PaymentComponent): void {
