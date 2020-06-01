@@ -70,4 +70,6 @@ public interface DonationService {
      */
     void delete(Long id);
 
+    void sendEmail(Long id);
+
 }

@@ -26,7 +26,6 @@ import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
 import io.github.jhipster.config.JHipsterProperties;
-import men.doku.donation.domain.Authority;
 import men.doku.donation.domain.User;
 import men.doku.donation.security.AuthoritiesConstants;
 
@@ -119,14 +118,29 @@ public class MailService {
     @Async
     public void sendCreationEmail(User user) {
         log.debug("Sending creation email to '{}'", user.getEmail());
-        log.info("User.getAuthorities() {} ", user.getAuthorities());
         if (!user.getAuthorities().stream()
                 .filter(authority -> authority.getName().equals(AuthoritiesConstants.OFFLINE_STORE)).findFirst()
                 .isPresent()) {
                     sendEmailFromTemplate(user, "mail/creationEmail", "email.activation.title");
         } else {
-            log.info("Offline Store no need to be sent activation email.");
+            log.debug("Offline Store no need to be sent activation email.");
         }
+    }
+
+    @Async
+    public void sendOfflineStoreCreationEmail(User user, File attachment) {
+        log.debug("Sending creation email to '{}'", user.getEmail());
+        if (user.getEmail() == null) {
+            log.debug("Email doesn't exist for user '{}'", user.getLogin());
+            return;
+        }
+        Locale locale = Locale.forLanguageTag(user.getLangKey());
+        Context context = new Context(locale);
+        context.setVariable(USER, user);
+        context.setVariable(BASE_URL, jHipsterProperties.getMail().getBaseUrl());
+        String content = templateEngine.process("mail/offlineEmail", context);
+        String subject = "DOKU Contactless - Payment Beyond Covid-19";
+        sendEmail(user.getEmail(), null, subject, content, true, true, attachment.getName(), attachment.getAbsolutePath());
     }
 
     @Async

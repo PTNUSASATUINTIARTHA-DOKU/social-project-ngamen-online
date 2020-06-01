@@ -48,6 +48,10 @@ export class DonationService {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
+  sendEmail(id: number): Observable<HttpResponse<{}>> {
+    return this.http.post<Boolean>(`${this.resourceUrl}/email`, id, { observe: 'response' });
+  }
+
   protected convertDateFromClient(donation: IDonation): IDonation {
     const copy: IDonation = Object.assign({}, donation, {
       lastUpdatedAt: donation.lastUpdatedAt && donation.lastUpdatedAt.isValid() ? donation.lastUpdatedAt.toJSON() : undefined
