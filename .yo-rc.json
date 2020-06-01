@@ -40,12 +40,12 @@
     "languages": ["in"],
     "blueprints": [],
     "aws": {
-      "applicationName": "saweran-offline",
-      "environmentName": "saweran-offline-test",
-      "bucketName": "saweran-offline",
-      "instanceType": "t2.micro",
+      "applicationName": "saweran",
+      "environmentName": "saweran-prod",
+      "bucketName": "saweran-charity",
+      "instanceType": "t3.small",
       "awsRegion": "ap-southeast-1",
-      "dbName": "saweran-offline",
+      "dbName": "donation",
       "dbInstanceClass": "db.t2.micro"
     }
   }
