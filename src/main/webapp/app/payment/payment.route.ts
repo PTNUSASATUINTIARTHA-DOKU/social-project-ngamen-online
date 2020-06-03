@@ -8,6 +8,7 @@ import { catchError, flatMap } from 'rxjs/operators';
 import { PaymentComponent } from './payment.component';
 import { PaymentResultComponent } from './payment.result.component';
 import { PaymentService } from './payment.service';
+import { PaymentOfflineComponent } from './payment.offline.component';
 
 @Injectable({ providedIn: 'root' })
 export class PaymentDonationResolver implements Resolve<Donation> {
@@ -73,6 +74,16 @@ export const PAYMENT_ROUTE: Routes = [
   {
     path: 'payment/:slug',
     component: PaymentComponent,
+    resolve: {
+      donation: PaymentDonationResolver
+    },
+    data: {
+      pageTitle: 'payment.title'
+    }
+  },
+  {
+    path: 'payment/:slug/offline/:key',
+    component: PaymentOfflineComponent,
     resolve: {
       donation: PaymentDonationResolver
     },
