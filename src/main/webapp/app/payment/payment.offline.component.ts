@@ -49,10 +49,11 @@ export class PaymentOfflineComponent implements OnInit {
   });
 
   paymentForm = this.fb.group({
-    amount: [null, { validators: [Validators.required, Validators.min(10000), Validators.max(1000000000)] }],
+    amountPay: [null, { validators: [Validators.required, Validators.min(10000), Validators.max(1000000000)] }],
     greToken: [null, [Validators.required]],
     mallId: [],
     chainMerchant: [],
+    amount: [],
     purchaseAmount: [],
     transIdMerchant: [],
     paymentType: [],
@@ -125,7 +126,7 @@ export class PaymentOfflineComponent implements OnInit {
   }
 
   generateWords(): void {
-    const amountStr = this.paymentForm.get('amount')?.value + '.00';
+    const amountStr = this.paymentForm.get('amountPay')?.value + '.00';
     const now = moment(new Date()).format('YYYYMMDDhhmmss');
     const basket1 = 'basket,' + amountStr + ',1,' + amountStr;
     const sha1words = crypto.SHA1(amountStr + '11580240' + 'DDWb9fRV585Q' + now);
