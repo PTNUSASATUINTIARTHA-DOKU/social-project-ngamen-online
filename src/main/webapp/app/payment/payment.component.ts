@@ -36,6 +36,7 @@ export class PaymentComponent implements OnInit {
   transaction: Transaction;
   windowScrolled: boolean | undefined;
   startTime: number;
+  denoms = ['Rp. 10.000', 'Rp. 50.000', 'Rp. 100.000', 'Rp. 500.000', 'Rp. 1.000.000', 'Rp. 5.000.000', 'Rp. 10.000.000'];
 
   paymentForm = this.fb.group({
     donor: [null, { validators: [Validators.required, Validators.maxLength(30)], updateOn: 'change' }],
@@ -90,6 +91,8 @@ export class PaymentComponent implements OnInit {
     }
     this.slug = this.route.snapshot.params.slug;
     this.paymentForm.patchValue({ phone: '08' });
+    this.paymentForm.patchValue({ donorAnon: true });
+    this.anon();
     this.checkRecaptcha(this);
   }
 
@@ -113,6 +116,10 @@ export class PaymentComponent implements OnInit {
   validatePhoneMinLength(e: Event): void {
     const phone = (e.target as HTMLInputElement).value;
     if (phone.length < 10) this.paymentForm.get('phone')?.setErrors({ minlength: { actualLength: phone.length, requiredLength: 10 } });
+  }
+
+  setDenom(denom: string): void {
+    this.paymentForm.patchValue({ amount: denom.replace(/[.|Rp]/g, '') });
   }
 
   checkRecaptcha(paymentComponent: PaymentComponent): void {

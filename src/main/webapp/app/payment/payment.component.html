@@ -180,11 +180,16 @@
                             </div>
                             <input
                                 class="flex-shrink flex-grow flex-auto leading-normal w-px flex-1 text-sm bg-gray-200 py-2 px-3 rounded rounded-l-none space-y-0 focus:outline-none focus:shadow-outline h-10"
-                                placeholder="10.000" name="amount" id="field_amount" currencyMask
+                                placeholder="100.000" name="amount" id="field_amount" currencyMask
                                 formControlName="amount"
                                 [options]="{ prefix: '', thousands: '.', decimal: ',', precision: 0, align: 'left' }"
                                 autocomplete="off" 
                                 (blur)="validateAmountMin($event)"/>
+                        </div>
+                        <div class="flex flex-wrap w-full"> 
+                            <button type="button"
+                                class="bg-green-600 hover:bg-green-500 disabled:bg-green-200 disabled:cursor-not-allowed text-white text-xs px-3 rounded focus:outline-none focus:shadow-outline mr-2 mt-2"
+                                *ngFor="let denom of denoms" (click)="setDenom(denom)">{{denom}}</button>
                         </div>
                         <div *ngIf="paymentForm.get('amount')!.invalid && (paymentForm.get('amount')!.dirty || paymentForm.get('amount')!.touched)">
                             <small id="error_donation_min"class="text-xs text-red-500" *ngIf="paymentForm.get('amount')?.errors?.min"
