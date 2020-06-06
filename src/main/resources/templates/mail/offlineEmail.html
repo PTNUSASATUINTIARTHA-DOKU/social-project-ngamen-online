@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}" lang="en">
+    <head>
+        <title>DOKU Contactless - Payment Beyond Covid-19</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="shortcut icon" th:href="@{|${baseUrl}/favicon.ico|}" />
+    </head>
+    <body>
+        <p>
+            Dear <span th:text="${user.login}"></span>,
+        </p>
+        <p>
+            Your DOKU Contactless account has been created. <br />
+            Attached QR code for your store to accept contactless payment. <br />
+            Please kindly print the QR code and place it in your store, <br /> 
+            to enable your customer to initiate contactless payment.
+        </p>
+        <p>
+            <a th:with="url=(@{|${baseUrl}/account/reset/finish?key=${user.resetKey}|})" th:href="${url}"
+            >Click here</a> to login to your dashboard for checking transaction. 
+        </p>
+        <p>
+            <span>Regards, </span>
+            <br/>
+            <em>DOKU Contactless Team.</em>
+        </p>
+    </body>
+</html>

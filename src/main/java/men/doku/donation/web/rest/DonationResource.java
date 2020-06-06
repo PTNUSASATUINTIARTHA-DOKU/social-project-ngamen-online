@@ -138,4 +138,11 @@ public class DonationResource {
         donationService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
+
+    @PostMapping("/donations/email") 
+    @PreAuthorize("hasAuthority(\""+ AuthoritiesConstants.ADMIN + "\")")
+    public ResponseEntity<Boolean> sendEmail(@RequestBody Long id) {
+        donationService.sendEmail(id);
+        return ResponseEntity.ok().body(true);
+    }
 }

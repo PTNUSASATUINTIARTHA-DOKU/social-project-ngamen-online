@@ -27,6 +27,7 @@ import org.thymeleaf.spring5.SpringTemplateEngine;
 
 import io.github.jhipster.config.JHipsterProperties;
 import men.doku.donation.domain.User;
+import men.doku.donation.security.AuthoritiesConstants;
 
 /**
  * Service for sending emails.
@@ -49,8 +50,7 @@ public class MailService {
     private final GmailService gmailService;
 
     public MailService(JHipsterProperties jHipsterProperties, JavaMailSender javaMailSender,
-            MessageSource messageSource, SpringTemplateEngine templateEngine,
-            GmailService gmailService) {
+            MessageSource messageSource, SpringTemplateEngine templateEngine, GmailService gmailService) {
 
         this.jHipsterProperties = jHipsterProperties;
         this.javaMailSender = javaMailSender;
@@ -60,20 +60,23 @@ public class MailService {
     }
 
     @Async
-    public void sendEmail(String to, List<String> cc, String subject, String content, boolean isMultipart, boolean isHtml, String attachmentName, String attachmentPath) {
-        log.debug("Send email[multipart '{}' and html '{}'] to '{}' with subject '{}' and content={}",
-            isMultipart, isHtml, to, subject, content);
+    public void sendEmail(String to, List<String> cc, String subject, String content, boolean isMultipart,
+            boolean isHtml, String attachmentName, String attachmentPath) {
+        log.debug("Send email[multipart '{}' and html '{}'] to '{}' with subject '{}' and content={}", isMultipart,
+                isHtml, to, subject, content);
 
         // Prepare message using a Spring helper
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         try {
             MimeMessageHelper message = new MimeMessageHelper(mimeMessage, isMultipart, StandardCharsets.UTF_8.name());
             message.setTo(to);
-            if (cc != null) message.setCc(cc.toArray(new String[0]));
+            if (cc != null)
+                message.setCc(cc.toArray(new String[0]));
             message.setFrom(jHipsterProperties.getMail().getFrom());
             message.setSubject(subject);
             message.setText(content, isHtml);
-            if (isMultipart) message.addAttachment(attachmentName, new File(attachmentPath));
+            if (isMultipart)
+                message.addAttachment(attachmentName, new File(attachmentPath));
             if (gmailService.isAvailable()) {
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 mimeMessage.writeTo(baos);
@@ -86,7 +89,7 @@ public class MailService {
                 javaMailSender.send(mimeMessage);
             }
             log.debug("Email sent to {} with subject {} ", to, subject);
-        }  catch (MailException | MessagingException | IOException | GeneralSecurityException e) {
+        } catch (MailException | MessagingException | IOException | GeneralSecurityException e) {
             log.warn("Email could not be sent to user '{}'", to, e);
         }
     }
@@ -115,7 +118,29 @@ public class MailService {
     @Async
     public void sendCreationEmail(User user) {
         log.debug("Sending creation email to '{}'", user.getEmail());
-        sendEmailFromTemplate(user, "mail/creationEmail", "email.activation.title");
+        if (!user.getAuthorities().stream()
+                .filter(authority -> authority.getName().equals(AuthoritiesConstants.OFFLINE_STORE)).findFirst()
+                .isPresent()) {
+                    sendEmailFromTemplate(user, "mail/creationEmail", "email.activation.title");
+        } else {
+            log.debug("Offline Store no need to be sent activation email.");
+        }
+    }
+
+    @Async
+    public void sendOfflineStoreCreationEmail(User user, File attachment) {
+        log.debug("Sending creation email to '{}'", user.getEmail());
+        if (user.getEmail() == null) {
+            log.debug("Email doesn't exist for user '{}'", user.getLogin());
+            return;
+        }
+        Locale locale = Locale.forLanguageTag(user.getLangKey());
+        Context context = new Context(locale);
+        context.setVariable(USER, user);
+        context.setVariable(BASE_URL, jHipsterProperties.getMail().getBaseUrl());
+        String content = templateEngine.process("mail/offlineEmail", context);
+        String subject = "DOKU Contactless - Payment Beyond Covid-19";
+        sendEmail(user.getEmail(), null, subject, content, true, true, attachment.getName(), attachment.getAbsolutePath());
     }
 
     @Async
