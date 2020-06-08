@@ -18,7 +18,7 @@
 <div *ngIf="!isDisabled" class="container max-w-md mx-auto xl:max-w-3xl h-full flex bg-white rounded-lg shadow-lg overflow-hidden my-6 xl:my-8">
     <div class="w-full p-4 lg:p-8">
         <div>
-            <img src="../../content/images/kolaborartsy_1024.jpg" alt="" class="w-full h-full">
+            <a class="curson-pointer" href="https://updateos.onelink.me/qQn2?pid=Email&af_web_dp=https%3A%2F%2Fwww.ovo.id%2F" target="_blank"><img src="../../content/images/kolaborartsy_1024.jpg" alt="" class="w-full h-full"></a>
         </div>
 
         <div class="loading" *ngIf="isSaving">
@@ -222,9 +222,13 @@
 
                         <!-- Start if using OVO -->
                         <div id="ovo_payment" class="my-4">
-                            <label class="block text-gray-700 text-sm font-semibold mb-2"
+                            <label class="block text-gray-700 text-sm font-semibold"
                                 jhiTranslate="payment.section.form.phone" for="field_phone">
                                 OVO Phone Number
+                            </label>
+                            <label class="block text-xs italic text-gray-600 mb-2" 
+                                jhiTranslate="payment.section.form.phone_warning">
+                                Please input your phone number registered on OVO
                             </label>
 
                             <div class="flex flex-wrap items-stretch w-full">

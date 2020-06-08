@@ -19,6 +19,7 @@
         "amount": "Jumlah Donasi",
         "method": "Metode Pembayaran",
         "phone": "No. Handphone OVO",
+        "phone_warning": "Pastikan kamu memasukkan No. Handphone yang terdaftar di OVO",
         "tnc": "Syarat dan Ketentuan:",
         "info": {
           "line1": "Pembayaran dengan OVO Pay hanya berlaku untuk OVO user. Pastikan akun OVO mu aktif.",
